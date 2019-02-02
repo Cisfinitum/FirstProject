@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.epam'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.9.RELEASE'
+}
