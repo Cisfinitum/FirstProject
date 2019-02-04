@@ -62,6 +62,5 @@ See it up and running on http://localhost:8080
            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 }
 >
-   ii. Edit configuration 
-   
-   iii. Use tomcatRun 
+     ii. Edit configuration 
+     iii. Use tomcatRun task
