@@ -1,0 +1,10 @@
+#Ignore list for WebProject
+/.gradle
+/.idea
+/build
+/out
+/gradle
+gradlew
+gradlew.bat
+*.class
+*.iml
