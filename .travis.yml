@@ -5,4 +5,4 @@ jdk:
   - oraclejdk8
 
 script:
-  - gradle build --scan -s
+  - gradle war --info
