@@ -1,10 +1,12 @@
 package com.epam;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-
-public class HelloUnitTest {
+@Slf4j
+class HelloUnitTest {
         @Test
-        public void testSomething() {
+        void testSomething() {
+                log.info("Test");
                 System.out.println("HelloUnitTest");
         }
 }
