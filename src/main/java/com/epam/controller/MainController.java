@@ -3,7 +3,6 @@ package com.epam.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
 
@@ -22,7 +21,7 @@ public class MainController {
   }
 
   @GetMapping("/403")
-  public ModelAndView accessDenied(Principal user) {
+  public ModelAndView accessDeniedPage(Principal user) {
     ModelAndView model = new ModelAndView();
 
     if (user != null) {
@@ -37,19 +36,18 @@ public class MainController {
     return model;
   }
 
-  //// TODO only for testing user
+  //// TODO only for testing user and admin
   @GetMapping("/testuser")
-  public String page(){
+  public String userPage(){
     return "redirect:/index";
   }
 
-  //// TODO only for testing admin
   @GetMapping("/testadmin")
-  public String page1(){
+  public String adminPage(){
     return "testadmin";
   }
 
-  @RequestMapping("/")
+  @GetMapping("/")
   public String anyPage(){
     return "redirect:/index";
   }
