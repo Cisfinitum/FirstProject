@@ -3,6 +3,7 @@ package com.epam.service;
 import com.epam.entity.User;
 import com.epam.entity.enums.UserRoleEnum;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,8 +20,12 @@ import java.util.stream.Stream;
 @Setter
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    private final UserService userService;
 
-    private UserService userService;
+    @Autowired
+    public UserDetailsServiceImpl(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
