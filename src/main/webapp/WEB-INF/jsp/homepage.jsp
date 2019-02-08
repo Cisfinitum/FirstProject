@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<a id="en" href="/index?lang=en">English</a> | <a id="fr" href="/index?lang=ru">Russian</a>
+<a id="en" href="/index?lang=en">English</a> | <a id="ru" href="/index?lang=ru">Russian</a>
 <div>Current Locale : ${pageContext.response.locale}</div>
 <div>
 <spring:message code="welcome" />, ${name} !</div>
