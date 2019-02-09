@@ -2,19 +2,22 @@ package com.epam.service;
 
 import com.epam.entity.User;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceImplTest {
+    @Mock
+    private User user;
+
     @Test
-    //simple unit test with mockito framework
     void getUser() {
+        MockitoAnnotations.initMocks(this);
         UserServiceImpl userService = new UserServiceImpl();
-        User user = mock(User.class);
         when(user.getUsername()).thenReturn("John");
-        User user1 = userService.getUser(user.getUsername());
-        System.out.println(user.getPassword());
-        assertEquals(user1.getUsername(), "John");
-        verify(user, atLeastOnce()).getPassword();
+        User actualUser = userService.getUser(user.getUsername());
+        User expectedUser = userService.getUser("John");
+        assertEquals(expectedUser.getUsername(), actualUser.getUsername());
     }
 }
