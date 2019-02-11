@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 @Setter
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     private final UserService userService;
 
     @Autowired
