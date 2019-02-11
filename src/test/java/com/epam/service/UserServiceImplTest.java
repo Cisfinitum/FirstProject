@@ -15,13 +15,13 @@ class UserServiceImplTest {
     private UserServiceImpl userService;
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
         userService = new UserServiceImpl();
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    private void getUser() {
+    void getUser() {
         when(user.getUsername()).thenReturn("John");
         User actualUser = userService.getUser(user.getUsername());
         User expectedUser = userService.getUser("John");
