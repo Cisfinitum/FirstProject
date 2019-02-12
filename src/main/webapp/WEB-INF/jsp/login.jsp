@@ -11,6 +11,7 @@
     <link type="text/css" rel="stylesheet" href="${css}"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="${login}"  media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login</title>
 </head>
 <body>
         <div class="login-page">            <div class="form">
@@ -22,22 +23,22 @@
                     <div class="rowlogin">
                         <div class="input-field col s12">
                             <input id="login" type="text" name="j_username"  class="validate">
-                            <label for="login">Login</label>
+                            <label for="login"><spring:message code="loginname" /></label>
                         </div>
                     </div>
                     <div class ="rowlogin">
                         <div class="input-field col s12">
                             <input id="password" type="password" name="j_password" class="validate">
-                            <label for="password">Password</label>
+                            <label for="password"><spring:message code="passwordname" /></label>
                         </div>
                     </div>
                     <div class ="rowlogin">
-                        <button type="submit" id="submit" class="waves-effect waves-light btn">Sign In</button>
+                        <button type="submit" id="submit" class="waves-effect waves-light btn"><spring:message code="signin" /></button>
                     </div>
                 </form>
                 <div class ="rowlogin">
                     <form action="registration">
-                        <button type="submit" class="waves-effect waves-light btn">Sign Up</button>
+                        <button type="submit" class="waves-effect waves-light btn"><spring:message code="signup" /></button>
                     </form>
                 </div>
             </div>

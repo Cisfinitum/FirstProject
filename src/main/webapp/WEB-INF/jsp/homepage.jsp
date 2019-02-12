@@ -85,7 +85,7 @@
 
 <main>
     <div class="container">
-        <form method="POST" action="search">
+        <form method="POST" action="#">
             <div class="row">
                 <div class="col s3">
                     <div class="input-field">
@@ -119,7 +119,7 @@
                 <div class="col s2">
                     <div class="input-field">
                         <p class="range-field">
-                            <label for="test5"><spring:message code="nod" /></label>
+                            <label for="test5"><spring:message code="nod" /> </label>
                             <label id="rangevalue" for="test5"></label>
                             <input type="range" id="test5" min="0" max="30" onchange="printValue()" />
                         </p>
