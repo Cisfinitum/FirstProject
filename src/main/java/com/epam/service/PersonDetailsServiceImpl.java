@@ -1,7 +1,7 @@
 package com.epam.service;
 
-import com.epam.entity.User;
-import com.epam.entity.enums.UserRoleEnum;
+import com.epam.model.Person;
+import com.epam.model.PersonRoleEnum;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,22 +19,21 @@ import java.util.stream.Stream;
 
 @Setter
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
-
-    private final UserService userService;
+public class PersonDetailsServiceImpl implements UserDetailsService{
+    private final PersonService personService;
 
     @Autowired
-    public UserDetailsServiceImpl(UserService userService) {
-        this.userService = userService;
+    public PersonDetailsServiceImpl(PersonService personService) {
+        this.personService = personService;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userService.getUser("user");
-        UserRoleEnum currole = user.getRole();
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Person person = personService.getPerson(username);
+        PersonRoleEnum personRoleEnum = person.getRole();
         Set<GrantedAuthority> roles = Stream.of(new SimpleGrantedAuthority
-                (Objects.requireNonNullElse(currole, UserRoleEnum.ANONYMOUS).getEnumrole()))
+                (Objects.requireNonNullElse(personRoleEnum, PersonRoleEnum.ANONYMOUS).getEnumrole()))
                 .collect(Collectors.toCollection(HashSet::new));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), roles);
+        return new org.springframework.security.core.userdetails.User(person.getName(), person.getPassword(), roles);
     }
 }

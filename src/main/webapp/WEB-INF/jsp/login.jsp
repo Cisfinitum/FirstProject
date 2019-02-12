@@ -18,10 +18,6 @@
                 <label>Пароль<input type="password" name="j_password" /></label>
             </td>
         </tr>
-     <!--   <tr>
-            <td align="right">Запомнить меня</td>
-            <td><input type="checkbox" name="_spring_security_remember_me" /></td>
-        </tr> -->
         <tr>
             <td colspan="2">
                 <input type="submit" value="Login" />

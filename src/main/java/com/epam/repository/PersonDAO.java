@@ -1,6 +1,7 @@
 package com.epam.repository;
 
 import com.epam.model.Person;
+import com.epam.model.PersonRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -23,7 +24,9 @@ public class PersonDAO {
         return jdbcTemplate.query("SELECT * FROM person",
                 (ResultSet rs, int rowNum) -> Person.builder()
                         .id(rs.getInt("id"))
-                        .name(rs.getString("name"))
+                        .name(rs.getString("nickname"))
+                        .password(rs.getString("password"))
+                        .role(PersonRoleEnum.valueOf(rs.getString("role")))
                         .build());
     }
 }

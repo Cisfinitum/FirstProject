@@ -1,11 +1,18 @@
 package com.epam.model;
 
-import lombok.Builder;
-import lombok.Data;
+import com.epam.entity.enums.UserRoleEnum;
+import lombok.*;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Setter
+@Getter
 public class Person {
     private Integer id;
     private String name;
+    private String password;
+    private PersonRoleEnum role;
+
+
 }
