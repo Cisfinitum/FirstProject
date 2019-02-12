@@ -1,6 +1,5 @@
 package com.epam.model;
 
-import com.epam.entity.enums.UserRoleEnum;
 import lombok.*;
 
 @NoArgsConstructor
