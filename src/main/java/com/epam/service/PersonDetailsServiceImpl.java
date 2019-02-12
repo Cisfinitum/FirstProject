@@ -1,7 +1,6 @@
 package com.epam.service;
 
 import com.epam.model.Person;
-import com.epam.model.PersonRoleEnum;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,14 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-@Setter
 @Service
 public class PersonDetailsServiceImpl implements UserDetailsService{
     private final PersonService personService;

@@ -2,16 +2,12 @@ package com.epam.model;
 
 import lombok.*;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Setter
-@Getter
+@Data
 public class Person {
     private Integer id;
     private String name;
     private String password;
     private PersonRoleEnum role;
-
-
 }

@@ -12,14 +12,6 @@ import java.security.Principal;
 @RequestMapping("/")
 public class MainController {
 
-
-    private final PersonService personsService;
-
-    @Autowired
-    public MainController(PersonService personsService) {
-        this.personsService = personsService;
-    }
-
     @GetMapping("/")
     public String mainPage() {
         return "login";
