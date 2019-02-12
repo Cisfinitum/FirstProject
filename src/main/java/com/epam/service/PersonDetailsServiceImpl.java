@@ -30,10 +30,8 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Person person = personService.getPerson(username);
-        PersonRoleEnum personRoleEnum = person.getRole();
-        Set<GrantedAuthority> roles = Stream.of(new SimpleGrantedAuthority
-                (Objects.requireNonNullElse(personRoleEnum, PersonRoleEnum.ANONYMOUS).getEnumrole()))
-                .collect(Collectors.toCollection(HashSet::new));
+        Set<GrantedAuthority> roles = new HashSet<>();
+        roles.add(new SimpleGrantedAuthority(person.getRole().getEnumrole()));
         return new org.springframework.security.core.userdetails.User(person.getName(), person.getPassword(), roles);
     }
 }
