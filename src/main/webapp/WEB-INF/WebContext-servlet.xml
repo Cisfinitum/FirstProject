@@ -16,6 +16,9 @@
 
   <context:component-scan base-package="com.epam.controller"/>
 
+
+  <mvc:resources mapping="/resources/**" location="/resources/" />
+
   <mvc:interceptors>
     <mvc:interceptor>
       <mvc:mapping path="/**" />
@@ -33,5 +36,4 @@
   <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
     <property name="defaultLocale" value="en"/>
   </bean>
-
 </beans>
