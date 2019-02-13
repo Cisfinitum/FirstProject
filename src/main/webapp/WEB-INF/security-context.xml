@@ -10,22 +10,19 @@
 
     <http>
         <csrf disabled="true"/>
-        <intercept-url pattern="/index*" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
+        <intercept-url pattern="/testpage" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/testuser" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
-        <intercept-url pattern="/registration" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
-        <intercept-url pattern="/search" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/testadmin" access="hasRole('ROLE_ADMIN')" />
-        <intercept-url pattern="/" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
-        <form-login login-page="/login" login-processing-url="/j_spring_security_check"  default-target-url="/index"
-                    authentication-failure-url="/login?error=true" password-parameter="j_password" username-parameter="j_username" />
-        <logout logout-url="/logout" logout-success-url="/index" />
-        <anonymous username="guest" granted-authority="ROLE_ANONYMOUS" />
-    <!--    <remember-me /> -->
+        <form-login login-page="/login" login-processing-url="/j_spring_security_check"  default-target-url="/testpage"
+                    authentication-failure-url="/403" password-parameter="j_password" username-parameter="j_username" />
+        <!--<logout logout-url="/logout" logout-success-url="/index" />-->
+        <!--<anonymous username="guest" granted-authority="ROLE_ANONYMOUS" />-->
+    <!--&lt;!&ndash;    <remember-me /> &ndash;&gt;-->
         <access-denied-handler error-page="/403" />
     </http>
 
     <authentication-manager>
-        <authentication-provider user-service-ref='MyUserDetailsService'/>
+        <authentication-provider user-service-ref='MyPersonDetailsService'/>
     </authentication-manager>
 
 </beans:beans>

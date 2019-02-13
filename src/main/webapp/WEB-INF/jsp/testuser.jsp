@@ -4,6 +4,6 @@
     <title>Test page</title>
 </head>
 <body>
-ADMIN
+USER
 </body>
 </html>
