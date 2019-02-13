@@ -51,16 +51,12 @@ public class PersonDetailsServiceImplTest {
         assertEquals(expectedPerson.getUsername(), actualPerson.getUsername());
     }
 
-    @Test
+    @Test(expected = UsernameNotFoundException.class)
     public void loadUserThrowsException() {
         when(personService.getPerson(nonExistUsername)).thenThrow(UsernameNotFoundException.class);
         when(person.getRole()).thenReturn(PersonRoleEnum.ADMIN);
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumrole()));
-        try {
-            personDetailsServiceImpl.loadUserByUsername(nonExistUsername);
-            fail();
-        } catch (UsernameNotFoundException thrown) {
-            assertNotNull(thrown);
-        }
+        personDetailsServiceImpl.loadUserByUsername(nonExistUsername);
+
     }
 }

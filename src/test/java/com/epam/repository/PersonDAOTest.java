@@ -5,6 +5,7 @@ import com.epam.model.PersonRoleEnum;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,48 +17,42 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 public class PersonDAOTest {
+
+    private String testUserName = "user";
+    private String testPassword = "123";
+    private String testPersonRoleEnum = "ADMIN";
+
     @Mock
     private ResultSet resultSet;
     @Mock
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private Person expectedPerson;
 
+    @InjectMocks
     private PersonDAO personDAO;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        personDAO = new PersonDAO(namedParameterJdbcTemplate);
     }
 
     @Test
     public void buildPersonPositiveCheck() throws SQLException {
         int testId = 1;
-        String testUserName = "user";
-        String testPassword = "123";
-        String testPersonRoleEnum = "ADMIN";
         when(resultSet.getInt("id")).thenReturn(testId);
         when(resultSet.getString("nickname")).thenReturn(testUserName);
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
-        Person expectedPerson = new Person(testId, testUserName, testPassword, PersonRoleEnum.ADMIN);
+        when(expectedPerson.getName()).thenReturn(testUserName);
         Person actualPerson = personDAO.buildPerson(resultSet);
         assertEquals(expectedPerson.getName(), actualPerson.getName());
     }
 
-    @Test
+    @Test(expected = SQLException.class)
     public void buildPersonThrowsException() throws SQLException {
-        String testUserName = "user";
-        String testPassword = "123";
-        String testPersonRoleEnum = "ADMIN";
         when(resultSet.getInt("id")).thenThrow(new SQLException());
         when(resultSet.getString("nickname")).thenReturn(testUserName);
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
-        try {
-            personDAO.buildPerson(resultSet);
-            fail();
-        } catch (SQLException thrown) {
-            assertNotNull(thrown);
-        }
+        personDAO.buildPerson(resultSet);
     }
 }
