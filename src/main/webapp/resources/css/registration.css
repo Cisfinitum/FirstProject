@@ -1,0 +1,36 @@
+.registration-page {
+    width: 720px;
+    padding: 8% 0 0;
+    margin: auto;
+}
+.registration {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 720px;
+    margin: 0 auto 100px;
+    padding: 45px 45px 25px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 10px;
+}
+.rowregistration {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+.btn{
+    background-color: #90caf9;
+}
+.btn:hover{
+    background-color: #bbdefb;
+}
+body {
+    background: #90caf9; /* fallback for old browsers */
+    background: -webkit-linear-gradient(right, #90caf9, #bbdefb);
+    background: -moz-linear-gradient(right, #90caf9, #bbdefb);
+    background: -o-linear-gradient(right, #90caf9, #bbdefb);
+    background: linear-gradient(to left, #90caf9, #bbdefb);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

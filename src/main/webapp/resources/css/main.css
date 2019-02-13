@@ -1,0 +1,38 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+    margin-top: 4%;
+}
+
+.nav-wrapper{
+    background: #90caf9;
+}
+
+.page-footer{
+    background: #90caf9;
+}
+.mm{
+    margin: 10%;
+}
+
+.promo{
+    background: #90caf9;
+    border-radius: 20px;
+}
+
+.promo-caption{
+    font-size: 16pt;
+}
+
+.btn-large{
+    background-color: #90caf9;
+}
+.btn-large:hover{
+    background-color: #bbdefb;
+}
+
