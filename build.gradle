@@ -40,9 +40,7 @@ dependencies {
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
-    testCompile "org.junit.jupiter:junit-jupiter-api:5.3.2"
-    testCompile "org.junit.jupiter:junit-jupiter-params:5.3.2"
-    testRuntime "org.junit.jupiter:junit-jupiter-engine:5.3.2"
+    testCompile 'junit:junit:4.12'
     testCompile group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.23.4'
     testCompile group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
@@ -56,11 +54,6 @@ tomcat {
     ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
     setContextPath("/")
 }
-jacoco {
-    toolVersion = "0.7.5.201505241946"
-}
-
 test {
-    useJUnitPlatform()
     finalizedBy jacocoTestReport
 }

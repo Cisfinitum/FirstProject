@@ -1,12 +1,11 @@
 package com.epam.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,10 +17,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 
-class PersonDetailsServiceImplTest {
+public class PersonDetailsServiceImplTest {
     @Mock
     private PersonService personService;
     @Mock
@@ -30,15 +30,15 @@ class PersonDetailsServiceImplTest {
     private Set<GrantedAuthority> roles;
     private PersonDetailsServiceImpl personDetailsServiceImpl;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         personDetailsServiceImpl = new PersonDetailsServiceImpl(personService);
         roles = new HashSet<>();
     }
 
     @Test
-    void loadUserPositiveResult() {
+    public void loadUserPositiveResult() {
         String username = "user";
         String password = "123";
         when(personService.getPerson(username)).thenReturn(new Person(1, username, password, PersonRoleEnum.ADMIN));
@@ -50,7 +50,7 @@ class PersonDetailsServiceImplTest {
     }
 
     @Test
-    void loadUserThrowsException() {
+    public void loadUserThrowsException() {
         String nonExistUsername = "1111";
         when(personService.getPerson(nonExistUsername)).thenThrow(UsernameNotFoundException.class);
         when(person.getRole()).thenReturn(PersonRoleEnum.ADMIN);

@@ -2,20 +2,20 @@ package com.epam.repository;
 
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.omg.CORBA.PERSIST_STORE;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
-class PersonDAOTest {
+public class PersonDAOTest {
     @Mock
     private ResultSet resultSet;
     @Mock
@@ -23,14 +23,14 @@ class PersonDAOTest {
 
     private PersonDAO personDAO;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         personDAO = new PersonDAO(namedParameterJdbcTemplate);
     }
 
     @Test
-    void buildPersonPositiveCheck() throws SQLException {
+    public void buildPersonPositiveCheck() throws SQLException {
         int testId = 1;
         String testUserName = "user";
         String testPassword = "123";
@@ -45,7 +45,7 @@ class PersonDAOTest {
     }
 
     @Test
-    void buildPersonThrowsException() throws SQLException {
+    public void buildPersonThrowsException() throws SQLException {
         String testUserName = "user";
         String testPassword = "123";
         String testPersonRoleEnum = "ADMIN";
