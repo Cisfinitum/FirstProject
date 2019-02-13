@@ -29,6 +29,9 @@ public class PersonDetailsServiceImplTest {
 
     private Set<GrantedAuthority> roles;
     private PersonDetailsServiceImpl personDetailsServiceImpl;
+    String username = "user";
+    String password = "123";
+    String nonExistUsername = "1111";
 
     @Before
     public void setUp() {
@@ -39,8 +42,7 @@ public class PersonDetailsServiceImplTest {
 
     @Test
     public void loadUserPositiveResult() {
-        String username = "user";
-        String password = "123";
+
         when(personService.getPerson(username)).thenReturn(new Person(1, username, password, PersonRoleEnum.ADMIN));
         when(person.getRole()).thenReturn(PersonRoleEnum.ADMIN);
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumrole()));
@@ -51,7 +53,6 @@ public class PersonDetailsServiceImplTest {
 
     @Test
     public void loadUserThrowsException() {
-        String nonExistUsername = "1111";
         when(personService.getPerson(nonExistUsername)).thenThrow(UsernameNotFoundException.class);
         when(person.getRole()).thenReturn(PersonRoleEnum.ADMIN);
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumrole()));
