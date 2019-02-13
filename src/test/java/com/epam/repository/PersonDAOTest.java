@@ -54,7 +54,7 @@ class PersonDAOTest {
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
         try {
-            Person actualPerson = personDAO.buildPerson(resultSet);
+            personDAO.buildPerson(resultSet);
             fail();
         } catch (SQLException thrown) {
             assertNotNull(thrown);
