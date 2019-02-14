@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Tour de Team</title>
@@ -72,10 +73,15 @@
             <li><a href="#"><spring:message code="contacts" /></a></li>
         </ul>
         <ul  class="right hide-on-med-and-down">
-            <li><a href="login"><spring:message code="signin" /></a></li>
-            <li><a href="registration"><spring:message code="signup" /></a></li>
-            <li><a href="index?lang=en"><img src="${imgen}" width="48" height="32"></a>
-            <a href="index?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
+            <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
+                <li><a href="login"><spring:message code="signin" /></a></li>
+                <li><a href="registration"><spring:message code="signup" /></a></li>
+            </sec:authorize>
+            <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+                <li><a href="logout"><spring:message code="logout" /></a></li>
+            </sec:authorize>
+            <li><a href="homepage?lang=en"><img src="${imgen}" width="48" height="32"></a>
+            <a href="homepage?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
         </ul>
     </div>
 </nav>

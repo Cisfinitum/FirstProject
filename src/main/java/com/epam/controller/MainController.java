@@ -14,7 +14,7 @@ public class MainController {
 
     @GetMapping("/")
     public String mainPage() {
-        return "login";
+        return "homepage";
     }
 
     @GetMapping("/testuser")
@@ -32,8 +32,23 @@ public class MainController {
         return "testpage";
     }
 
+    @GetMapping("/index")
+    public String index(Principal user, ModelMap modelMap) {
+        return "homepage";
+    }
+
     @GetMapping("/403")
     public String badRequest(Principal user, ModelMap modelMap) {
         return "403";
+    }
+
+    @GetMapping("/login")
+    public String loginPage (Principal user, ModelMap modelMap) {
+        return "/login";
+    }
+
+    @GetMapping("/homepage")
+    public String homePage (Principal user, ModelMap modelMap) {
+        return "/homepage";
     }
 }
