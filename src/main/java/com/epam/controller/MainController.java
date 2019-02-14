@@ -32,6 +32,11 @@ public class MainController {
         return "testpage";
     }
 
+    @GetMapping("/index")
+    public String index(Principal user, ModelMap modelMap) {
+        return "homepage";
+    }
+
     @GetMapping("/403")
     public String badRequest(Principal user, ModelMap modelMap) {
         return "403";
