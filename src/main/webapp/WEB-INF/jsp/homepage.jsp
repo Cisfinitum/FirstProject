@@ -91,7 +91,7 @@
 
 <main>
     <div class="container">
-        <form method="POST" action="#">
+        <form method="POST" action="/search">
             <div class="row">
                 <div class="col s3">
                     <div class="input-field">

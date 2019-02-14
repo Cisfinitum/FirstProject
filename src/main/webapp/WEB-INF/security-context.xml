@@ -8,6 +8,7 @@
                  http://www.springframework.org/schema/security/spring-security-4.2.xsd">
     <http>
         <csrf disabled="true"/>
+        <intercept-url pattern="/search" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/testpage" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/testuser" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/testadmin" access="hasRole('ROLE_ADMIN')" />
