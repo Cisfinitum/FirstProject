@@ -1,14 +1,12 @@
 package com.epam.repository;
 
 import com.epam.model.Person;
-import com.epam.model.PersonRoleEnum;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,12 +1,13 @@
 package com.epam.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Date;
 
-
+@AllArgsConstructor
 @Builder
 @Data
 public class TourOffer {

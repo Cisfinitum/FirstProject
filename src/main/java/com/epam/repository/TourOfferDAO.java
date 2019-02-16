@@ -3,10 +3,7 @@ package com.epam.repository;
 import com.epam.model.TourOffer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -28,15 +25,17 @@ public class TourOfferDAO {
          return simpleJdbcTemplate.update("DELETE FROM tourOffer WHERE id = ?", tourId);
     }
 
-    public int addTour(String tourType, Date startDate, Date endDate, int pricePerUnit, int hotel_id, String description, int discount_id){
+    public int addTour(TourOffer touroffer){
         return simpleJdbcTemplate.update("INSERT INTO tourOffer(tourType, startDate, endDate, pricePerUnit, hotel_id, description, discount_id) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)",tourType,startDate,endDate,pricePerUnit,hotel_id,description,discount_id);
+                "VALUES (?, ?, ?, ?, ?, ?, ?)",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),
+                touroffer.getPricePerUnit(),touroffer.getHotel_id(),touroffer.getDescription(),touroffer.getDiscount_id());
     }
 
-    public int updateTour(String tourType, Date startDate, Date endDate, int pricePerUnit, int hotel_id, String description, int discount_id, int tourId){
+    public int updateTour(TourOffer touroffer){
        return simpleJdbcTemplate.update("UPDATE tourOffer SET " +
                "tourType = ?, startDate = ?, endDate = ?, pricePerUnit = ?, hotel_id = ?, description = ?, discount_id = ? " +
-               "WHERE id = ?",tourType,startDate,endDate,pricePerUnit,hotel_id,description,discount_id,tourId);
+               "WHERE id = ?",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),touroffer.getPricePerUnit(),
+               touroffer.getHotel_id(),touroffer.getDescription(),touroffer.getDiscount_id(),touroffer.getId());
     }
 
     TourOffer buildTour(ResultSet rs) throws SQLException {
