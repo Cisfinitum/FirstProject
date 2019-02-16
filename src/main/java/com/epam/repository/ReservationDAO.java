@@ -1,6 +1,7 @@
 package com.epam.repository;
 
 import com.epam.model.Reservation;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -10,18 +11,18 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
+@NoArgsConstructor
 @Repository
 public class ReservationDAO {
     private JdbcTemplate jdbcTemplate;
     private RowMapper reservationMapper = (rs, rowNum) -> buildReservation(rs);
 
     @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public ReservationDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    private Reservation buildReservation(ResultSet rs) throws SQLException {
+    Reservation buildReservation(ResultSet rs) throws SQLException {
         return Reservation.builder()
                 .id(rs.getInt("id"))
                 .client_id(rs.getInt("client_id"))

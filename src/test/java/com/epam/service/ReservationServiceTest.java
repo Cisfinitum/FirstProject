@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,14 +57,14 @@ public class ReservationServiceTest {
     @Test
     public void listReservationsPositiveCheck() {
         when(reservationDAO.listReservations()).thenReturn(expectedReservationsList);
-        actualReservationList = reservationDAO.listReservations();
+        actualReservationList = reservationService.listReservations();
         assertEquals(expectedReservationsList, actualReservationList);
     }
 
     @Test
     public void listReservationsReturnsNull() {
         when(reservationDAO.listReservations()).thenReturn(null);
-        actualReservationList = reservationDAO.listReservations();
+        actualReservationList = reservationService.listReservations();
         assertNull(actualReservationList);
     }
 }
