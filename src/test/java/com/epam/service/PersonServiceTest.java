@@ -35,9 +35,9 @@ public class PersonServiceTest {
 
     @Test
    public void getPersonPositiveResult() {
-        String name = "user";
+        String email = "user";
         when(personDAO.getPersons()).thenReturn(personList);
-        Person actualPerson = personService.getPerson(name);
+        Person actualPerson = personService.getPerson(email);
         assertEquals(expectedPerson, actualPerson);
     }
 
