@@ -36,6 +36,8 @@ public class TourOfferDAOTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        expectedTour =  new TourOffer(1, "Active", Date.valueOf("2018-02-19"),  Date.valueOf("2018-02-25"),
+                1500, 1,"Best tour", 1);
     }
 
     @Test

@@ -17,7 +17,6 @@ import static org.mockito.Mockito.when;
 public class TourOfferServiceTest {
     @Mock
     private TourOfferDAO tourOfferDAO;
-    @Mock
     private TourOffer expectedTourOffer;
     private String testtourType = "Active";
     private Date teststartDate = Date.valueOf("2018-02-19");
@@ -33,6 +32,8 @@ public class TourOfferServiceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        expectedTourOffer = new TourOffer(1, testtourType, teststartDate,  testendDate,
+                testpricePerUnit, testhotel_id,testdescription, testdiscount_id);
         tourOfferService = new TourOfferService(tourOfferDAO);
         tourOfferList = new ArrayList<>();
         tourOfferList.add(expectedTourOffer);

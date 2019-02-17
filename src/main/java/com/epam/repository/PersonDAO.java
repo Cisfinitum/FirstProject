@@ -26,7 +26,7 @@ public class PersonDAO {
     Person buildPerson(ResultSet rs) throws SQLException {
         return Person.builder()
                 .id(rs.getInt("id"))
-                .name(rs.getString("email"))
+                .name(rs.getString("nickname"))
                 .password(rs.getString("password"))
                 .role(PersonRoleEnum.valueOf(rs.getString("role")))
                 .build();
