@@ -35,9 +35,9 @@ public class TourOfferService {
                 .startDate(startDate)
                 .endDate(endDate)
                 .pricePerUnit(pricePerUnit)
-                .hotel_id(hotel_id)
+                .hotelId(hotel_id)
                 .description(description)
-                .discount_id(discount_id)
+                .discountId(discount_id)
                 .build());
     }
 
@@ -48,9 +48,9 @@ public class TourOfferService {
                 .startDate(startDate)
                 .endDate(endDate)
                 .pricePerUnit(pricePerUnit)
-                .hotel_id(hotel_id)
+                .hotelId(hotel_id)
                 .description(description)
-                .discount_id(discount_id)
+                .discountId(discount_id)
                 .build());
     }
 

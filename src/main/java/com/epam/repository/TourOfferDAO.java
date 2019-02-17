@@ -30,14 +30,14 @@ public class TourOfferDAO {
     public int addTour(TourOffer touroffer){
         return simpleJdbcTemplate.update("INSERT INTO tourOffer(tourType, startDate, endDate, pricePerUnit, hotel_id, description, discount_id) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),
-                touroffer.getPricePerUnit(),touroffer.getHotel_id(),touroffer.getDescription(),touroffer.getDiscount_id());
+                touroffer.getPricePerUnit(),touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId());
     }
 
     public int updateTour(TourOffer touroffer){
        return simpleJdbcTemplate.update("UPDATE tourOffer SET " +
                "tourType = ?, startDate = ?, endDate = ?, pricePerUnit = ?, hotel_id = ?, description = ?, discount_id = ? " +
                "WHERE id = ?",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),touroffer.getPricePerUnit(),
-               touroffer.getHotel_id(),touroffer.getDescription(),touroffer.getDiscount_id(),touroffer.getId());
+               touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId(),touroffer.getId());
     }
 
 
@@ -60,9 +60,9 @@ public class TourOfferDAO {
                 .startDate(rs.getDate("startDate"))
                 .endDate(rs.getDate("endDate"))
                 .pricePerUnit(rs.getInt("pricePerUnit"))
-                .hotel_id(rs.getInt("hotel_id"))
+                .hotelId(rs.getInt("hotel_id"))
                 .description(rs.getString("description"))
-                .discount_id(rs.getInt("discount_id"))
+                .discountId(rs.getInt("discount_id"))
                 .build();
     }
 }

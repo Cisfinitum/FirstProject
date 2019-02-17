@@ -15,7 +15,7 @@ public class TourOffer {
     private Date startDate;
     private Date endDate;
     private Integer pricePerUnit;
-    private Integer hotel_id;
+    private Integer hotelId;
     private String description;
-    private Integer discount_id;
+    private Integer discountId;
 }

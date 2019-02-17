@@ -1,6 +1,5 @@
 package com.epam.controller;
 
-import com.epam.model.TourOffer;
 import com.epam.service.TourOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import java.sql.Date;
-import java.util.List;
 
 @Controller
 public class ToursController {
