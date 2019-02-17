@@ -72,20 +72,20 @@ public class TourOfferDAOTest {
         tourofferDAO.buildTour(resultSet);
     }
 
-//    @Test
-//    public void addTour(){
-//        tourofferDAO.addTour(expectedTour);
-//        List<TourOffer> allTours = tourofferDAO.getTours();
-//        assertEquals(allTours.size(),1);
-//    }
-//
-//    @Test
-//    public void deleteTour(){
-//        tourofferDAO.addTour(expectedTour);
-//        List<TourOffer> allTours = tourofferDAO.getTours();
-//        assertEquals(allTours.size(),1);
-//        tourofferDAO.deleteTour(1);
-//        allTours = tourofferDAO.getTours();
-//        assertEquals(allTours.size(),0);
-//    }
+    @Test
+    public void addTour(){
+        tourofferDAO.addTour(expectedTour);
+        List<TourOffer> allTours = tourofferDAO.getTours();
+        assertEquals(allTours.size(),1);
+    }
+
+    @Test
+    public void deleteTour(){
+        tourofferDAO.addTour(expectedTour);
+        List<TourOffer> allTours = tourofferDAO.getTours();
+        assertEquals(allTours.size(),1);
+        tourofferDAO.deleteTour(1);
+        allTours = tourofferDAO.getTours();
+        assertEquals(allTours.size(),0);
+    }
 }

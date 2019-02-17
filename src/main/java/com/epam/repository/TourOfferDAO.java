@@ -18,7 +18,7 @@ public class TourOfferDAO {
     }
 
     public List<TourOffer> getTours(){
-        return simpleJdbcTemplate.query("SELECT FROM tourOffer", (rs, rowNum) -> buildTour(rs));
+        return simpleJdbcTemplate.query("SELECT * FROM tourOffer", (rs, rowNum) -> buildTour(rs));
     }
 
     public int deleteTour(int tourId){
