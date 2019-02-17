@@ -19,16 +19,16 @@ public class TourOfferService {
     }
 
 
-    public List<TourOffer> getTours(){
+    List<TourOffer> getTours(){
             return tourOfferDAO.getTours();
     }
 
-    public int deleteTour(int tourId){
+    int deleteTour(Integer tourId){
          return tourOfferDAO.deleteTour(tourId);
     }
 
-    public int addTour(int tourId, String tourType, Date startDate, Date endDate, int pricePerUnit, int hotel_id, String description, int discount_id){
-        TourOffer touroffer = TourOffer.builder()
+    int addTour(Integer tourId, String tourType, Date startDate, Date endDate, Integer pricePerUnit, Integer hotel_id, String description, Integer discount_id){
+        return tourOfferDAO.addTour(TourOffer.builder()
                 .id(tourId)
                 .tourType(tourType)
                 .startDate(startDate)
@@ -37,12 +37,11 @@ public class TourOfferService {
                 .hotel_id(hotel_id)
                 .description(description)
                 .discount_id(discount_id)
-                .build();
-        return tourOfferDAO.addTour(touroffer);
+                .build());
     }
 
-    public int updateTour(int tourId, String tourType, Date startDate, Date endDate, int pricePerUnit, int hotel_id, String description, int discount_id){
-        TourOffer touroffer = TourOffer.builder()
+    int updateTour(Integer tourId, String tourType, Date startDate, Date endDate, Integer pricePerUnit, Integer hotel_id, String description, Integer discount_id){
+        return tourOfferDAO.updateTour(TourOffer.builder()
                 .id(tourId)
                 .tourType(tourType)
                 .startDate(startDate)
@@ -51,7 +50,6 @@ public class TourOfferService {
                 .hotel_id(hotel_id)
                 .description(description)
                 .discount_id(discount_id)
-                .build();
-        return tourOfferDAO.updateTour(touroffer);
+                .build());
     }
 }

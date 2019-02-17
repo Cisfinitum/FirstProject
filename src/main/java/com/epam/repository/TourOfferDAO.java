@@ -1,6 +1,7 @@
 package com.epam.repository;
 
 import com.epam.model.TourOffer;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -21,7 +22,7 @@ public class TourOfferDAO {
         return simpleJdbcTemplate.query("SELECT * FROM tourOffer", (rs, rowNum) -> buildTour(rs));
     }
 
-    public int deleteTour(int tourId){
+    public int deleteTour(Integer tourId){
          return simpleJdbcTemplate.update("DELETE FROM tourOffer WHERE id = ?", tourId);
     }
 
@@ -37,8 +38,8 @@ public class TourOfferDAO {
                "WHERE id = ?",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),touroffer.getPricePerUnit(),
                touroffer.getHotel_id(),touroffer.getDescription(),touroffer.getDiscount_id(),touroffer.getId());
     }
-
-    TourOffer buildTour(ResultSet rs) throws SQLException {
+    @SneakyThrows(SQLException.class)
+    TourOffer buildTour(ResultSet rs){
         return TourOffer.builder()
                 .id(rs.getInt("id"))
                 .tourType(rs.getString("tourType"))
