@@ -29,9 +29,9 @@ public class PersonDetailsServiceImplTest {
 
     private Set<GrantedAuthority> roles;
     private PersonDetailsServiceImpl personDetailsServiceImpl;
-    String username = "user";
+    String email = "user";
     String password = "123";
-    String nonExistUsername = "1111";
+    String nonExistEmail = "1111";
 
     @Before
     public void setUp() {
@@ -43,20 +43,20 @@ public class PersonDetailsServiceImplTest {
     @Test
     public void loadUserPositiveResult() {
 
-        when(personService.getPerson(username)).thenReturn(new Person(1, username, password, PersonRoleEnum.ADMIN));
+        when(personService.getPerson(email)).thenReturn(new Person(1, email, password, PersonRoleEnum.ADMIN));
         when(person.getRole()).thenReturn(PersonRoleEnum.ADMIN);
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumrole()));
-        UserDetails expectedPerson = new User(username, password, roles);
-        UserDetails actualPerson = personDetailsServiceImpl.loadUserByUsername(username);
+        UserDetails expectedPerson = new User(email, password, roles);
+        UserDetails actualPerson = personDetailsServiceImpl.loadUserByUsername(email);
         assertEquals(expectedPerson.getUsername(), actualPerson.getUsername());
     }
 
     @Test(expected = UsernameNotFoundException.class)
     public void loadUserThrowsException() {
-        when(personService.getPerson(nonExistUsername)).thenThrow(UsernameNotFoundException.class);
+        when(personService.getPerson(nonExistEmail)).thenThrow(UsernameNotFoundException.class);
         when(person.getRole()).thenReturn(PersonRoleEnum.ADMIN);
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumrole()));
-        personDetailsServiceImpl.loadUserByUsername(nonExistUsername);
+        personDetailsServiceImpl.loadUserByUsername(nonExistEmail);
 
     }
 }
