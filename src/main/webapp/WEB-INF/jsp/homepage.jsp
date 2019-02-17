@@ -91,7 +91,7 @@
 
 <main>
     <div class="container">
-        <form method="POST" action="/search">
+        <form method="POST" action="#">
             <div class="row">
                 <div class="col s3">
                     <div class="input-field">
@@ -103,8 +103,15 @@
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-date" class="datepicker">
-                        <label for="autocomplete-date"><spring:message code="dod" /></label>
+                        <input type="text" id="autocomplete-dateStart" class="datepicker">
+                        <label for="autocomplete-dateStart"><spring:message code="dod" /></label>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="input-field">
+                        <i class="material-icons prefix">event_available</i>
+                        <input type="text" id="autocomplete-dateEnd" class="datepicker">
+                        <label for="autocomplete-dateEnd"><spring:message code="ad" /></label>
                     </div>
                 </div>
                 <div class="col s2">
@@ -120,15 +127,6 @@
                             <option value="8" data-icon="${gr}" class="right">8</option>
                         </select>
                         <label><spring:message code="nop" /></label>
-                    </div>
-                </div>
-                <div class="col s2">
-                    <div class="input-field">
-                        <p class="range-field">
-                            <label for="test5"><spring:message code="nod" /> </label>
-                            <label id="rangevalue" for="test5"></label>
-                            <input type="range" id="test5" min="0" max="30" onchange="printValue()" />
-                        </p>
                     </div>
                 </div>
                 <div class="col s1">

@@ -8,7 +8,11 @@
                  http://www.springframework.org/schema/security/spring-security-4.2.xsd">
     <http>
         <csrf disabled="true"/>
-        <intercept-url pattern="/search" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
+        <intercept-url pattern="/listoftours" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/addtour" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/updatetour" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/deletetour" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/searchtours" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/testpage" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/testuser" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/testadmin" access="hasRole('ROLE_ADMIN')" />

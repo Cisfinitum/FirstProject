@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,15 +20,15 @@ public class TourOfferService {
     }
 
 
-    List<TourOffer> getTours(){
+    public List<TourOffer> getTours(){
             return tourOfferDAO.getTours();
     }
 
-    int deleteTour(Integer tourId){
+    public int deleteTour(Integer tourId){
          return tourOfferDAO.deleteTour(tourId);
     }
 
-    int addTour(Integer tourId, String tourType, Date startDate, Date endDate, Integer pricePerUnit, Integer hotel_id, String description, Integer discount_id){
+    public int addTour(Integer tourId, String tourType, Date startDate, Date endDate, Integer pricePerUnit, Integer hotel_id, String description, Integer discount_id){
         return tourOfferDAO.addTour(TourOffer.builder()
                 .id(tourId)
                 .tourType(tourType)
@@ -40,7 +41,7 @@ public class TourOfferService {
                 .build());
     }
 
-    int updateTour(Integer tourId, String tourType, Date startDate, Date endDate, Integer pricePerUnit, Integer hotel_id, String description, Integer discount_id){
+    public int updateTour(Integer tourId, String tourType, Date startDate, Date endDate, Integer pricePerUnit, Integer hotel_id, String description, Integer discount_id){
         return tourOfferDAO.updateTour(TourOffer.builder()
                 .id(tourId)
                 .tourType(tourType)
@@ -51,5 +52,12 @@ public class TourOfferService {
                 .description(description)
                 .discount_id(discount_id)
                 .build());
+    }
+
+    public List<TourOffer> searchTours(String country, Date startDate, Date endDate){
+        /// Arg "country" will used to get listOfHotelsId by CRUD method of Hotel entity
+        List<Integer> listOfHotelsId = new ArrayList<>();
+        listOfHotelsId.add(1);
+        return tourOfferDAO.searchTours(listOfHotelsId,startDate,endDate);
     }
 }

@@ -10,7 +10,3 @@ document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems, {});
 });
-function printValue() {
-    var val = document.getElementById('test5').value;
-    document.getElementById('rangevalue').innerText = val;
-}

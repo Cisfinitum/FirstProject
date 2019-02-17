@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.sql.Date;
 
 @Repository
 public class TourOfferDAO {
@@ -38,6 +39,19 @@ public class TourOfferDAO {
                "WHERE id = ?",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),touroffer.getPricePerUnit(),
                touroffer.getHotel_id(),touroffer.getDescription(),touroffer.getDiscount_id(),touroffer.getId());
     }
+
+
+    public List<TourOffer> searchTours(List<Integer> listOfHotelsId, Date startDate, Date endDate){
+        String requestSQL = "SELECT * FROM tourOffer WHERE startDate = '"+startDate+"' AND endDate = '"+endDate+"' AND hotel_id IN (";
+        String stringOfHotelId = "";
+        for(Integer hotel_id: listOfHotelsId){
+            stringOfHotelId = stringOfHotelId.concat(hotel_id.toString()).concat(",");
+        }
+        stringOfHotelId = stringOfHotelId.concat("0)");
+        return simpleJdbcTemplate.query(requestSQL.concat(stringOfHotelId), (rs, rowNum) -> buildTour(rs));
+    }
+
+
     @SneakyThrows(SQLException.class)
     TourOffer buildTour(ResultSet rs){
         return TourOffer.builder()
