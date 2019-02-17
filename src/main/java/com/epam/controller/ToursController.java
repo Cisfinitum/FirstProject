@@ -1,17 +1,17 @@
 package com.epam.controller;
 
+import com.epam.model.TourOffer;
 import com.epam.service.TourOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Controller
 public class ToursController {
     private final TourOfferService toursOfferService;
-
     @Autowired
     ToursController(TourOfferService toursOfferService){
         this.toursOfferService = toursOfferService;
@@ -28,7 +28,7 @@ public class ToursController {
     @PostMapping("/searchtours")
     public ModelAndView searchTours() {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("list",toursOfferService.searchTours("Turkey",Date.valueOf("2019-05-23"),Date.valueOf("2019-05-26")));
+        toursModel.addObject("list",toursOfferService.searchTours("Turkey",LocalDate.of(2019, 05, 23), LocalDate.of(2019,05,26)));
         toursModel.setViewName("homepage");
         return toursModel;
     }
@@ -43,18 +43,36 @@ public class ToursController {
 
     @PostMapping("/addtour")
     public ModelAndView addTour() {
+        Integer result = toursOfferService.addTour(TourOffer.builder()
+                .id(1)
+                .tourType("test")
+                .startDate(LocalDate.of(2025,10,10))
+                .endDate(LocalDate.of(2025,10,18))
+                .pricePerUnit(200)
+                .hotelId(1)
+                .description("test")
+                .discountId(1)
+                .build());
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("result", toursOfferService.addTour(110,"test",
-                Date.valueOf("2025-10-10"),Date.valueOf("2025-10-25"),200,1,"test",1));
+        toursModel.addObject("result", result);
         toursModel.setViewName("homepage");
         return toursModel;
     }
 
     @PostMapping("/updatetour")
     public ModelAndView updateTour() {
+        Integer result = toursOfferService.updateTour(TourOffer.builder()
+                .id(1)
+                .tourType("test")
+                .startDate(LocalDate.of(2025,10,10))
+                .endDate(LocalDate.of(2025,10,18))
+                .pricePerUnit(200)
+                .hotelId(1)
+                .description("test")
+                .discountId(1)
+                .build());
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("result", toursOfferService.updateTour(110,"test",
-                Date.valueOf("2025-10-10"),Date.valueOf("2025-10-25"),200,1,"test",1));
+        toursModel.addObject("result", result);
         toursModel.setViewName("homepage");
         return toursModel;
     }

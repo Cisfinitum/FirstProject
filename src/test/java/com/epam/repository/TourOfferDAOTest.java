@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import static org.mockito.Mockito.when;
 import static org.junit.Assert.*;
@@ -36,7 +37,7 @@ public class TourOfferDAOTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        expectedTour =  new TourOffer(1, "Active", Date.valueOf("2018-02-19"),  Date.valueOf("2018-02-25"),
+        expectedTour =  new TourOffer(1, "Active", LocalDate.of(2018,2,19),  LocalDate.of(2018,2,25),
                 1500, 1,"Best tour", 1);
     }
 

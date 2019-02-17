@@ -3,8 +3,7 @@ package com.epam.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.sql.Date;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @Builder
@@ -12,8 +11,8 @@ import java.sql.Date;
 public class TourOffer {
     private Integer id;
     private String tourType;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Integer pricePerUnit;
     private Integer hotelId;
     private String description;

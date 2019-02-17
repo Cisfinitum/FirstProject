@@ -7,8 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
-import java.sql.Date;
 
 @Repository
 public class TourOfferDAO {
@@ -41,8 +41,8 @@ public class TourOfferDAO {
     }
 
 
-    public List<TourOffer> searchTours(List<Integer> listOfHotelsId, Date startDate, Date endDate){
-        String requestSQL = "SELECT * FROM tourOffer WHERE startDate = '"+startDate+"' AND endDate = '"+endDate+"' AND hotel_id IN (";
+    public List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
+        String requestSQL = "SELECT * FROM tourOffer WHERE startDate = '"+startDate+"'  AND endDate = '"+endDate+"' AND hotel_id IN (";
         String stringOfHotelId = "";
         for(Integer hotel_id: listOfHotelsId){
             stringOfHotelId = stringOfHotelId.concat(hotel_id.toString()).concat(",");
@@ -57,8 +57,8 @@ public class TourOfferDAO {
         return TourOffer.builder()
                 .id(rs.getInt("id"))
                 .tourType(rs.getString("tourType"))
-                .startDate(rs.getDate("startDate"))
-                .endDate(rs.getDate("endDate"))
+                .startDate(rs.getDate("startDate").toLocalDate())
+                .endDate(rs.getDate("endDate").toLocalDate())
                 .pricePerUnit(rs.getInt("pricePerUnit"))
                 .hotelId(rs.getInt("hotel_id"))
                 .description(rs.getString("description"))

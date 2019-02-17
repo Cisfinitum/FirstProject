@@ -5,7 +5,7 @@ import com.epam.repository.TourOfferDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,39 +25,37 @@ public class TourOfferService {
     }
 
     public int deleteTour(Integer tourId){
+        if(tourId != null)
          return tourOfferDAO.deleteTour(tourId);
+        else {
+            throw new NullPointerException();
+        }
     }
 
-    public int addTour(Integer tourId, String tourType, Date startDate, Date endDate, Integer pricePerUnit, Integer hotel_id, String description, Integer discount_id){
-        return tourOfferDAO.addTour(TourOffer.builder()
-                .id(tourId)
-                .tourType(tourType)
-                .startDate(startDate)
-                .endDate(endDate)
-                .pricePerUnit(pricePerUnit)
-                .hotelId(hotel_id)
-                .description(description)
-                .discountId(discount_id)
-                .build());
+    public int addTour(TourOffer tourOffer){
+        if(tourOffer != null)
+        return tourOfferDAO.addTour(tourOffer);
+        else {
+            throw new NullPointerException();
+        }
     }
 
-    public int updateTour(Integer tourId, String tourType, Date startDate, Date endDate, Integer pricePerUnit, Integer hotel_id, String description, Integer discount_id){
-        return tourOfferDAO.updateTour(TourOffer.builder()
-                .id(tourId)
-                .tourType(tourType)
-                .startDate(startDate)
-                .endDate(endDate)
-                .pricePerUnit(pricePerUnit)
-                .hotelId(hotel_id)
-                .description(description)
-                .discountId(discount_id)
-                .build());
+    public int updateTour(TourOffer tourOffer){
+        if(tourOffer !=null)
+        return tourOfferDAO.updateTour(tourOffer);
+        else {
+            throw new NullPointerException();
+        }
     }
 
-    public List<TourOffer> searchTours(String country, Date startDate, Date endDate){
+    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate){
         /// Arg "country" will used to get listOfHotelsId by CRUD method of Hotel entity
-        List<Integer> listOfHotelsId = new ArrayList<>();
-        listOfHotelsId.add(1);
-        return tourOfferDAO.searchTours(listOfHotelsId,startDate,endDate);
+        if(country==null&&startDate==null&&endDate==null)
+            return tourOfferDAO.getTours();
+        else {
+            List<Integer> listOfHotelsId = new ArrayList<>();
+            listOfHotelsId.add(1);
+            return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
+        }
     }
 }
