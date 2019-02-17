@@ -1,14 +1,12 @@
 package com.epam.repository;
 
 import com.epam.model.Person;
-import com.epam.model.PersonRoleEnum;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 public class PersonDAOTest {
 
-    private String testUserName = "user";
+    private String testEmail = "user";
     private String testPassword = "123";
     private String testPersonRoleEnum = "ADMIN";
 
@@ -39,18 +37,18 @@ public class PersonDAOTest {
     public void buildPersonPositiveCheck() throws SQLException {
         int testId = 1;
         when(resultSet.getInt("id")).thenReturn(testId);
-        when(resultSet.getString("nickname")).thenReturn(testUserName);
+        when(resultSet.getString("email")).thenReturn(testEmail);
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
-        when(expectedPerson.getName()).thenReturn(testUserName);
+        when(expectedPerson.getEmail()).thenReturn(testEmail);
         Person actualPerson = personDAO.buildPerson(resultSet);
-        assertEquals(expectedPerson.getName(), actualPerson.getName());
+        assertEquals(expectedPerson.getEmail(), actualPerson.getEmail());
     }
 
     @Test(expected = SQLException.class)
     public void buildPersonThrowsException() throws SQLException {
         when(resultSet.getInt("id")).thenThrow(new SQLException());
-        when(resultSet.getString("nickname")).thenReturn(testUserName);
+        when(resultSet.getString("email")).thenReturn(testEmail);
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
         personDAO.buildPerson(resultSet);
