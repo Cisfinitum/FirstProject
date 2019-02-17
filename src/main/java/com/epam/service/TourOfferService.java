@@ -20,15 +20,16 @@ public class TourOfferService {
 
 
     public List<TourOffer> getTours(){
-        return tourOfferDAO.getTours();
+            return tourOfferDAO.getTours();
     }
 
     public int deleteTour(int tourId){
          return tourOfferDAO.deleteTour(tourId);
     }
 
-    public int addTour(String tourType, Date startDate, Date endDate, int pricePerUnit, int hotel_id, String description, int discount_id){
+    public int addTour(int tourId, String tourType, Date startDate, Date endDate, int pricePerUnit, int hotel_id, String description, int discount_id){
         TourOffer touroffer = TourOffer.builder()
+                .id(tourId)
                 .tourType(tourType)
                 .startDate(startDate)
                 .endDate(endDate)
@@ -40,7 +41,7 @@ public class TourOfferService {
         return tourOfferDAO.addTour(touroffer);
     }
 
-    public int updateTour(String tourType, Date startDate, Date endDate, int pricePerUnit, int hotel_id, String description, int discount_id, int tourId){
+    public int updateTour(int tourId, String tourType, Date startDate, Date endDate, int pricePerUnit, int hotel_id, String description, int discount_id){
         TourOffer touroffer = TourOffer.builder()
                 .id(tourId)
                 .tourType(tourType)

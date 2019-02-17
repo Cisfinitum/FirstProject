@@ -37,7 +37,7 @@ public class PersonDAOTest {
     public void buildPersonPositiveCheck() throws SQLException {
         int testId = 1;
         when(resultSet.getInt("id")).thenReturn(testId);
-        when(resultSet.getString("nickname")).thenReturn(testUserName);
+        when(resultSet.getString("email")).thenReturn(testUserName);
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
         when(expectedPerson.getName()).thenReturn(testUserName);
@@ -48,7 +48,7 @@ public class PersonDAOTest {
     @Test(expected = SQLException.class)
     public void buildPersonThrowsException() throws SQLException {
         when(resultSet.getInt("id")).thenThrow(new SQLException());
-        when(resultSet.getString("nickname")).thenReturn(testUserName);
+        when(resultSet.getString("email")).thenReturn(testUserName);
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
         personDAO.buildPerson(resultSet);

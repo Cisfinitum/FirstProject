@@ -6,21 +6,23 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.junit.Assert.*;
 
 public class TourOfferDAOTest {
-    private String testtourType = "Активный";
-    private Date teststartDate = Date.valueOf("20.02.19");
-    private Date testendDate = Date.valueOf("26.02.19");
+    private String testtourType = "Active";
+    private Date teststartDate = Date.valueOf("2018-02-19");
+    private Date testendDate = Date.valueOf("2018-02-25");
     private Integer testpricePerUnit = 1500;
     private Integer testhotel_id = 1;
-    private String testdescription = "Лучший курорт";
+    private String testdescription = "Best tour";
     private Integer testdiscount_id = 1;
 
     @Mock
@@ -31,15 +33,21 @@ public class TourOfferDAOTest {
     @InjectMocks
     private TourOfferDAO tourofferDAO;
 
+    @Mock
+    private JdbcTemplate jdbcTemplate;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        expectedTour =  new TourOffer(1, "Active", Date.valueOf("2018-02-19"),  Date.valueOf("2018-02-25"),
+                1500, 1,"Best tour", 1);
+        jdbcTemplate = new JdbcTemplate();
     }
 
     @Test
     public void buildTourPositiveCheck() throws SQLException {
-        int testId = 1;
-        when(resultSet.getInt("id")).thenReturn(testId);
+        int testtourID = 1;
+        when(resultSet.getInt("id")).thenReturn(testtourID);
         when(resultSet.getString("tourType")).thenReturn(testtourType);
         when(resultSet.getDate("startDate")).thenReturn(teststartDate);
         when(resultSet.getDate("endDate")).thenReturn(testendDate);
@@ -47,9 +55,8 @@ public class TourOfferDAOTest {
         when(resultSet.getInt("hotel_id")).thenReturn(testhotel_id);
         when(resultSet.getString("description")).thenReturn(testdescription);
         when(resultSet.getInt("discount_id")).thenReturn(testdiscount_id);
-        when(expectedTour.getTourType()).thenReturn(testtourType);
         TourOffer actualTourOffer = tourofferDAO.buildTour(resultSet);
-        assertEquals(expectedTour.getTourType(), actualTourOffer.getTourType());
+        assertEquals(expectedTour, actualTourOffer);
     }
 
     @Test(expected = SQLException.class)
@@ -64,4 +71,21 @@ public class TourOfferDAOTest {
         when(resultSet.getInt("discount_id")).thenReturn(testdiscount_id);
         tourofferDAO.buildTour(resultSet);
     }
+
+//    @Test
+//    public void addTour(){
+//        tourofferDAO.addTour(expectedTour);
+//        List<TourOffer> allTours = tourofferDAO.getTours();
+//        assertEquals(allTours.size(),1);
+//    }
+//
+//    @Test
+//    public void deleteTour(){
+//        tourofferDAO.addTour(expectedTour);
+//        List<TourOffer> allTours = tourofferDAO.getTours();
+//        assertEquals(allTours.size(),1);
+//        tourofferDAO.deleteTour(1);
+//        allTours = tourofferDAO.getTours();
+//        assertEquals(allTours.size(),0);
+//    }
 }
