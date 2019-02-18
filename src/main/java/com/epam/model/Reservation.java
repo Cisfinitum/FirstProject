@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class Reservation {
     private Integer id;
-    private Integer client_id;
-    private Integer tourOffer_id;
+    private Integer clientId;
+    private Integer tourOfferId;
     private Integer numberOfPeople;
-    private String status;
-    private Integer discount_id;
+    private ReservationStatusEnum status;
+    private Integer discountId;
     private Integer totalPrice;
 }

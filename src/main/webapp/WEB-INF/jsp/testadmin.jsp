@@ -237,12 +237,12 @@
                         <c:forEach var="reservation" items="${listReservation}">
                         <tr>
                             <td>${reservation.id}</td>
-                            <td>${reservation.discount_id}</td>
-                            <td> ${reservation.tourOffer_id}</td>
+                            <td>${reservation.discountId}</td>
+                            <td> ${reservation.tourOfferId}</td>
                             <td> ${reservation.numberOfPeople}</td>
                             <td> ${reservation.status}</td>
                             <td> ${reservation.totalPrice}</td>
-                            <td><a href="delete/${reservation.id}" class="secondary-content"> <i
+                            <td><a href="deleteReservation/${reservation.id}" class="secondary-content"> <i
                                     class="small material-icons">remove</i></a></td>
                             </c:forEach>
                         </tr>

@@ -7,7 +7,6 @@ VALUES ('Luxury Hotel', 'Moscow', 'Russia', '5');
 INSERT INTO tourOffer(tourType, startDate, endDate, pricePerUnit, hotel_id, description, discount_id)
 VALUES ('Shopping',CURRENT_DATE, CURRENT_DATE, '500000', '1', 'best tour ever', '1');
 INSERT INTO reservation(client_id, tourOffer_id, numberOfPeople, status, discount_id, totalPrice)
-VALUES ('1','1', '1', 'paid', '1', '500000');
-
+VALUES ('1','1', '1', 'PAID', '1', '500000');
 INSERT INTO reservation(client_id, tourOffer_id, numberOfPeople, status, discount_id, totalPrice)
-VALUES ('1','1', '1', 'paid', '1', '500000');
+VALUES ('1','1', '1', 'PAID', '1', '500000');

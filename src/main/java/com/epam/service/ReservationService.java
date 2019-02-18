@@ -18,25 +18,24 @@ public class ReservationService {
     }
 
 
-    public void addReservation(Reservation reservation) {
-        reservationDAO.addReservation(reservation);
+    int addReservation(Reservation reservation) {
+        return reservationDAO.addReservation(reservation);
     }
 
-    public Reservation getReservationById(Integer id) {
+    Reservation getReservationById(Integer id) {
         return reservationDAO.getReservationById(id);
     }
 
-    public List listReservations() {
-        List<Reservation> reservations = reservationDAO.listReservations();
-        return reservations;
+    public List<Reservation> listReservations() {
+        return reservationDAO.listReservations();
     }
 
-    public void removeReservation(Integer id) {
-        reservationDAO.removeReservation(id);
+    public int removeReservation(Integer id) {
+        return reservationDAO.removeReservation(id);
     }
 
-    public void updateReservation(Integer id, Integer Client_id, Integer TourOffer_id, Integer NumberOfPeople, String Status, Integer Discount_id, Integer TotalPrice) {
-    reservationDAO.updateReservation(id,Client_id,TourOffer_id,NumberOfPeople,Status,Discount_id,TotalPrice);
+    int updateReservation(Reservation reservation) {
+        return reservationDAO.updateReservation(reservation);
     }
 
 }
