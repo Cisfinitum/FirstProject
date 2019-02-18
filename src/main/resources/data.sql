@@ -1,4 +1,4 @@
-INSERT INTO person(email,  password, role)
+INSERT INTO person(email, password, role)
 VALUES ('user@gmail.com', '123','ADMIN');
 INSERT INTO discount(discount)
 VALUES ('50');

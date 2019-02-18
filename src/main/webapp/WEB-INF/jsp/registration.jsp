@@ -22,9 +22,9 @@
                 <input id="wrongpass" type="hidden" value="${val}"/>
                 <span id="forpass" style="color: red; font-weight: bold"></span>
                 <div class="row">
-                    <div class="input-field col s12">
-                        <input id="login" type="text" class="validate" name="username">
-                        <label for="login"><spring:message code="loginname" /></label>
+                    <div class="input-field col s6">
+                        <input id="email" type="email" class="validate" name="email">
+                        <label for="email"><spring:message code="emailname" /></label>
                     </div>
                 </div>
                 <div class="row">
@@ -32,31 +32,28 @@
                         <input id="password" type="password" class="validate" name="password" onchange="checkPass()">
                         <label for="password"><spring:message code="passwordname" /></label>
                     </div>
+                </div>
+                <div class="row">
                     <div class="input-field col s6">
                         <input id="password2" type="password" class="validate" name="password2" onchange="checkPass()">
                         <label for="password2"><spring:message code="passwordname" /></label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input id="email" type="email" class="validate" name="email">
-                        <label for="email"><spring:message code="emailname" /></label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="phone" type="text" class="validate" name="phone">
-                        <label for="phone"><spring:message code="phone" /></label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input id="first_name" type="text" class="validate" name="firstname">
-                        <label for="first_name"><spring:message code="firstname" /></label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="last_name" type="text" class="validate" name="secondname">
-                        <label for="last_name"><spring:message code="lastname" /></label>
-                    </div>
-                </div>
+                <%--</div>--%>
+                    <%--<div class="input-field col s6">--%>
+                        <%--<input id="phone" type="text" class="validate" name="phone">--%>
+                        <%--<label for="phone"><spring:message code="phone" /></label>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="row">--%>
+                    <%--<div class="input-field col s6">--%>
+                        <%--<input id="first_name" type="text" class="validate" name="firstname">--%>
+                        <%--<label for="first_name"><spring:message code="firstname" /></label>--%>
+                    <%--</div>--%>
+                    <%--<div class="input-field col s6">--%>
+                        <%--<input id="last_name" type="text" class="validate" name="secondname">--%>
+                        <%--<label for="last_name"><spring:message code="lastname" /></label>--%>
+                    <%--</div>--%>
                 <div class ="rowregistration">
                     <button type="submit" class="waves-effect waves-light btn"><spring:message code="send" /></button>
                 </div>

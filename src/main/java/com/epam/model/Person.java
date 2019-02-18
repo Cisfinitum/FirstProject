@@ -10,4 +10,10 @@ public class Person {
     private String email;
     private String password;
     private PersonRoleEnum role;
+
+    public Person(String email, String password, String role) {
+        this.email = email;
+        this.password = password;
+        this.role = PersonRoleEnum.valueOf(role);
+    }
 }

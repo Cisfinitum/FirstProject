@@ -3,8 +3,8 @@ package com.epam.repository;
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.List;
 @Repository
 public class PersonDAO {
 
-    private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PersonDAO(NamedParameterJdbcTemplate jdbcTemplate) {
+    public PersonDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -32,4 +32,52 @@ public class PersonDAO {
                 .build();
     }
 
+    public boolean doesEmailExists(String email) {
+        List<String> emailsList = jdbcTemplate.query("SELECT email FROM person", (rs, rowNum) -> getStringEmail(rs));
+        for(String stringEmail:  emailsList){
+            if (stringEmail.equals(email)) return true;
+        }
+        return false;
+    }
+
+    String getStringEmail(ResultSet rs) throws SQLException {
+        return rs.getString("email");
+    }
+
+    public boolean addPersonToDataBase(Person person) {
+        String email = person.getEmail();
+        System.out.println(email);
+        if (doesEmailExists(email)) return false;
+        String password = person.getPassword();
+        System.out.println(password);
+        String role = person.getRole().toString();
+        System.out.println(role);
+        String sql = "INSERT INTO person (email, password, role) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, email, password, role);
+        return true;
+    }
+
+    public boolean addToBlackList(String email) {
+        String sql = "UPDATE person SET role = BLOCKED WHERE email = ?";
+        jdbcTemplate.update(sql, email);
+        return true;
+    }
+
+    public boolean removeFromBlackList(String email) {
+        String sql = "UPDATE person SET role = USER WHERE email = ?";
+        jdbcTemplate.update(sql, email);
+        return true;
+    }
+
+    public boolean giveAdminRights(String email) {
+        String sql = "UPDATE person SET role = ADMIN WHERE email = ?";
+        jdbcTemplate.update(sql, email);
+        return true;
+    }
+
+    public boolean updatePassword(String email, String password) {
+        String sql = "UPDATE person SET password = ? WHERE email = ?";
+        jdbcTemplate.update(sql, password, email);
+        return true;
+    }
 }

@@ -1,6 +1,6 @@
 function validate() {
-    if (document.user.username.value === "" && document.user.password.value === "" && document.user.email.value === "" && document.user.password2.value === "") {
-        document.user.username.focus();
+    if (document.user.password.value === "" && document.user.email.value === "" && document.user.password2.value === "") {
+        document.user.email.focus();
         return false;
     }
     if (document.user.username.value === "") {

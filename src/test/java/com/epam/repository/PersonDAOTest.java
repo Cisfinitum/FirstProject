@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,9 @@ public class PersonDAOTest {
     private String testEmail = "user";
     private String testPassword = "123";
     private String testPersonRoleEnum = "ADMIN";
+
+    @Mock
+    private JdbcTemplate jdbcTemplate;
 
     @Mock
     private ResultSet resultSet;
@@ -53,4 +57,5 @@ public class PersonDAOTest {
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
         personDAO.buildPerson(resultSet);
     }
+
 }
