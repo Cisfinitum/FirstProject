@@ -1,6 +1,7 @@
 package com.epam.controller;
 
 import com.epam.model.Person;
+import com.epam.model.PersonRoleEnum;
 import com.epam.service.PersonDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,8 @@ public class RegistrationController {
         Pattern passwordPattern = Pattern.compile("^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,15})$");
         Matcher passwordMatcher = passwordPattern.matcher(password);
         if(!passwordMatcher.matches()) return "/registration";
-        if (personDetailsServiceImpl.addPerson(new Person(email, password, "USER"))) return "/login";
+//        if (personDetailsServiceImpl.addPerson(new Person(email, password, "USER"))) return "/login";
+        if (personDetailsServiceImpl.addPerson(new Person(email, password, PersonRoleEnum.valueOf("USER")))) return "/login";
         else return "/registration";
     }
 }
