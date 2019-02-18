@@ -58,4 +58,18 @@ public class PersonDAOTest {
         personDAO.buildPerson(resultSet);
     }
 
+    @Test
+    public void getEmailPositiveResult() throws SQLException {
+        when(resultSet.getString(("email"))).thenReturn(testEmail);
+        String actualEmail = personDAO.getStringEmail(resultSet);
+        assertEquals(testEmail, actualEmail);
+    }
+
+
+    @Test(expected = SQLException.class)
+    public void getEmailNegativeResult() throws SQLException {
+        when(resultSet.getString(("email"))).thenThrow(new SQLException());
+        personDAO.getStringEmail(resultSet);
+    }
+
 }
