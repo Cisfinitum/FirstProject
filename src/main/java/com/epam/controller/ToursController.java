@@ -23,7 +23,7 @@ public class ToursController {
     public ModelAndView getToursList() {
         ModelAndView toursModel = new ModelAndView();
         toursModel.addObject("list",toursOfferService.getTours());
-        toursModel.setViewName("homepage");
+        toursModel.setViewName("tours");
         return toursModel;
     }
 
@@ -116,6 +116,13 @@ public class ToursController {
         ModelAndView toursModel = new ModelAndView();
         toursModel.addObject("result", result);
         toursModel.setViewName("homepage");
+        return toursModel;
+    }
+
+    @GetMapping("/addtour")
+    public ModelAndView getAddTour(){
+        ModelAndView toursModel = new ModelAndView();
+        toursModel.setViewName("addtour");
         return toursModel;
     }
 }
