@@ -39,9 +39,10 @@ public class ToursController {
 
     @PostMapping("/deletetour")
     public ModelAndView deleteTour(@RequestParam String idOfTour) {
+        //Need to check here reservations which contain current tour id or we ll have exception
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("result",toursOfferService.deleteTour(110));
-        toursModel.setViewName("homepage");
+        toursModel.addObject("result",toursOfferService.deleteTour(Integer.valueOf(idOfTour))==1?"Success":"Failed to delete");
+        toursModel.setViewName("redirect:/listoftours");
         return toursModel;
     }
 

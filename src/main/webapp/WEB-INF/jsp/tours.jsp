@@ -59,6 +59,8 @@
                     <th>Hotel</th>
                     <th>Description</th>
                     <th>Discount</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -74,6 +76,19 @@
                         <td>FROM HOTEL ID</td>
                         <td>${list.get(i).description}</td>
                         <td>FROM DISCOUNT ID</td>
+                        <td>
+                            <form method="get" action="#">
+                                <button class="btn waves-effect waves-light" type="submit" name="action"> Edit
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" action="deletetour">
+                                <input name="idOfTour" type="hidden" value="${list.get(i).id}">
+                                <button class="btn waves-effect waves-light" type="submit" name="action"> Delete
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
