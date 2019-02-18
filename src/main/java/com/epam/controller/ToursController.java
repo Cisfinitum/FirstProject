@@ -2,6 +2,7 @@ package com.epam.controller;
 
 import com.epam.model.TourOffer;
 import com.epam.service.TourOfferService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDate;
 import java.time.DateTimeException;
 
-import static java.time.temporal.ChronoUnit.DAYS;
 
 @Controller
+@Slf4j
 public class ToursController {
     private final TourOfferService toursOfferService;
     @Autowired
@@ -61,40 +62,34 @@ public class ToursController {
                     addStartDate = LocalDate.of(Integer.valueOf(splitedStartDate[0]), Integer.valueOf(splitedStartDate[1]),
                             Integer.valueOf(splitedStartDate[2]));
                 } else {
-                    throw new NullPointerException("Day of department is empty");
+                    log.error("Day of department is empty. User current input date: "+startDate);
+                    throw new NullPointerException("Day of department is empty. Your current input date: "+startDate);
                 }
                 if (!endDate.isEmpty()) {
                     addEndDate = LocalDate.of(Integer.valueOf(splitedEndDate[0]), Integer.valueOf(splitedEndDate[1]),
                             Integer.valueOf(splitedEndDate[2]));
                 } else {
-                    throw new NullPointerException("Arrive date is empty");
+                    log.error("Day of department is empty. User current input date: "+startDate);
+                    throw new NullPointerException("Arrive date is empty. Your current input date: "+endDate);
                 }
             } catch (NumberFormatException | DateTimeException e) {
-                throw new Exception("One of the Date incorrect");
+                log.error("Date or Number format exception. User current first date: "+splitedStartDate[0]+" "+
+                        splitedStartDate[1]+" "+splitedStartDate[2]+". User current second date: "+splitedEndDate[0]+" "+
+                        splitedEndDate[1]+" "+splitedEndDate[2]+".");
+                throw new Exception("Date or Number format exception. User current first date: "+splitedStartDate[0]+" "+
+                        splitedStartDate[1]+" "+splitedStartDate[2]+". User current second date: "+splitedEndDate[0]+" "+
+                        splitedEndDate[1]+" "+splitedEndDate[2]+".");
             }
-
-            if(!(DAYS.between(addStartDate,addEndDate)>=1))
-                throw new Exception("Negative difference between Dates");
-
-            if (tourType.isEmpty()) {
-                throw new NullPointerException("Tour type is empty");
-            }
-
             try {
                 if (Integer.valueOf(pricePerPerson) < 0) {
-                    throw new Exception("Price per person negative or 0");
+                    log.error("Price per person negative or 0. User current price per person: "+pricePerPerson);
+                    throw new Exception("Price per person negative or 0. User current price per person: "+pricePerPerson);
                 }
             } catch (NumberFormatException e) {
-                throw new Exception("Price per person incorrect");
+                log.error("Price per person format exception. User current price per person: "+pricePerPerson);
+                throw new Exception("Price per person format exception. User current price per person: "+pricePerPerson);
             }
-
-            if (tourDescription.isEmpty())
-                throw new NullPointerException("Tour description is empty");
-
-            //Here we ll use method from HotelService to create new row in DB for Hotel entity, after that we rather to pull hotel_id
-            //The same actions we ll do for discount_id
-
-            Integer result = toursOfferService.addTour(TourOffer.builder()
+            int result = toursOfferService.addTour(TourOffer.builder()
                     .id(1)
                     .tourType(tourType)
                     .startDate(addStartDate)
