@@ -19,7 +19,7 @@ public class PersonService {
     public Person getPerson(String name){
         List<Person> persons = personDAO.getPersons();
         for (Person person: persons) {
-            if (person.getName().equals(name)) return person;
+            if (person.getEmail().equals(name)) return person;
         }
         return null;
     }
