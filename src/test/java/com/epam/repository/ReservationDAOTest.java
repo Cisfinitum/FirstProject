@@ -40,13 +40,13 @@ public class ReservationDAOTest {
     public void buildPerson() {
         Integer testId = 1;
         when(resultSet.getInt("id")).thenReturn(testId);
-        when(resultSet.getInt("clientId")).thenReturn(testClientId);
+        when(resultSet.getInt("client_id")).thenReturn(testClientId);
         when(expectedReservation.getId()).thenReturn(testId);
-        when(resultSet.getInt("tourOffer_id")).thenReturn(testTourOfferId);
-        when(resultSet.getInt("numberOfPeople")).thenReturn(testNumberOfPeople);
+        when(resultSet.getInt("tour_offer_id")).thenReturn(testTourOfferId);
+        when(resultSet.getInt("number_of_people")).thenReturn(testNumberOfPeople);
         when(resultSet.getString("status")).thenReturn(reservationStatusEnum.getEnumStatus());
         when(resultSet.getInt("discount_id")).thenReturn(testDiscountId);
-        when(resultSet.getInt("totalPrice")).thenReturn(testTotalPrice);
+        when(resultSet.getInt("total_price")).thenReturn(testTotalPrice);
         Reservation actualReservation = reservationDAO.buildReservation(resultSet);
         assertEquals(expectedReservation.getId(), actualReservation.getId());
     }
@@ -55,12 +55,12 @@ public class ReservationDAOTest {
     @Test(expected = SQLException.class)
     public void buildPersonThrowsException() {
         when(resultSet.getInt("id")).thenThrow(new SQLException());
-        when(resultSet.getInt("clientId")).thenReturn(testClientId);
-        when(resultSet.getInt("tourOfferId")).thenReturn(testTourOfferId);
-        when(resultSet.getInt("numberOfPeople")).thenReturn(testNumberOfPeople);
+        when(resultSet.getInt("client_id")).thenReturn(testClientId);
+        when(resultSet.getInt("tour_offer_id")).thenReturn(testTourOfferId);
+        when(resultSet.getInt("number_of_people")).thenReturn(testNumberOfPeople);
         when(resultSet.getString("status")).thenReturn(reservationStatusEnum.getEnumStatus());
-        when(resultSet.getInt("discountId")).thenReturn(testDiscountId);
-        when(resultSet.getInt("totalPrice")).thenReturn(testTotalPrice);
+        when(resultSet.getInt("discount_id")).thenReturn(testDiscountId);
+        when(resultSet.getInt("total_price")).thenReturn(testTotalPrice);
         reservationDAO.buildReservation(resultSet);
     }
 

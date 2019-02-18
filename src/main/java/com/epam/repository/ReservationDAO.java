@@ -47,11 +47,11 @@ public class ReservationDAO {
         return Reservation.builder()
                 .id(rs.getInt("id"))
                 .clientId(rs.getInt("client_id"))
-                .tourOfferId(rs.getInt("tourOffer_id"))
-                .numberOfPeople(rs.getInt("numberOfPeople"))
+                .tourOfferId(rs.getInt("tour_offer_id"))
+                .numberOfPeople(rs.getInt("number_of_people"))
                 .status(ReservationStatusEnum.valueOf(rs.getString("status")))
                 .discountId(rs.getInt("discount_id"))
-                .totalPrice(rs.getInt("totalPrice"))
+                .totalPrice(rs.getInt("total_price"))
                 .build();
     }
 
@@ -61,17 +61,17 @@ public class ReservationDAO {
                 reservation.getStatus(), reservation.getDiscountId(), reservation.getTotalPrice());
     }
 
-    public Reservation getReservationById(Integer id) {
+    public Reservation getReservationById(Integer reservationId) {
         String sql = "SELECT * FROM" + tableName + " WHERE " + id + " = ?";
         return jdbcTemplate.queryForObject(sql,
-                new Object[]{id}, (rs, rowNum) -> buildReservation(rs));
+                new Object[]{reservationId}, (rs, rowNum) -> buildReservation(rs));
     }
 
-    public int getTourOfferById(Integer TourOfferId) {
-        String sql = "SELECT tourOffer_id FROM" + tableName + " WHERE " + tourOfferId + " = ?";
-        List<Object> tourOffers = jdbcTemplate.query(sql, (rs, rowNub) ->
+    public int getTourOfferById(Integer offerId) {
+        String sql = "SELECT " + tourOfferId + "FROM" + tableName + " WHERE " + tourOfferId + " = ?";
+        Object tourOffer = jdbcTemplate.queryForObject(sql, new Object[]{offerId}, (rs, rowNub) ->
                 buildReservation(rs));
-        if (tourOffers.size() != 0) return 1;
+        if (tourOffer != null) return 1;
         return 0;
     }
 
@@ -80,9 +80,9 @@ public class ReservationDAO {
         return jdbcTemplate.query(sql, reservationMapper);
     }
 
-    public int removeReservation(Integer id) {
-        String sql = "DELETE FROM " + tableName + " WHERE" + id + "= ?";
-        return jdbcTemplate.update(sql, id);
+    public int removeReservation(Integer reservationId) {
+        String sql = "DELETE FROM " + tableName + " WHERE " + id + " = ?";
+        return jdbcTemplate.update(sql, reservationId);
     }
 
     public int updateReservation(Reservation reservation) {

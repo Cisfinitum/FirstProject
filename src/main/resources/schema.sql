@@ -41,11 +41,11 @@ CREATE TABLE reservation
 (
   id             NUMERIC IDENTITY PRIMARY KEY,
   client_id      INT          NOT NULL,
-  tourOffer_id   INT          NOT NULL,
-  numberOfPeople INT          NOT NULL,
+  tour_offer_id   INT          NOT NULL,
+  number_of_people INT          NOT NULL,
   status         VARCHAR(100) NOT NULL,
   discount_id    INT,
-  totalPrice     INT,
-  FOREIGN KEY (tourOffer_id) REFERENCES tourOffer (id),
+  total_price     INT,
+  FOREIGN KEY (tour_Offer_id) REFERENCES tourOffer (id),
   FOREIGN KEY (client_id) REFERENCES person (id),
 );
