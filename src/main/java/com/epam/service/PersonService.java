@@ -24,8 +24,8 @@ public class PersonService {
         return null;
     }
 
-    public boolean addPersonToDataBase(Person person){
-        return personDAO.addPersonToDataBase(person);
+    public boolean addPerson(Person person){
+        return personDAO.addPerson(person);
     }
 
     public boolean updatePassword(String email, String password) {

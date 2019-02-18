@@ -61,7 +61,7 @@ public class PersonDAOTest {
     @Test
     public void getEmailPositiveResult() throws SQLException {
         when(resultSet.getString(("email"))).thenReturn(testEmail);
-        String actualEmail = personDAO.getStringEmail(resultSet);
+        String actualEmail = personDAO.getEmail(resultSet);
         assertEquals(testEmail, actualEmail);
     }
 
@@ -69,7 +69,7 @@ public class PersonDAOTest {
     @Test(expected = SQLException.class)
     public void getEmailNegativeResult() throws SQLException {
         when(resultSet.getString(("email"))).thenThrow(new SQLException());
-        personDAO.getStringEmail(resultSet);
+        personDAO.getEmail(resultSet);
     }
 
 }

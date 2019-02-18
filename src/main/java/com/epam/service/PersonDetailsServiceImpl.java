@@ -30,8 +30,8 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
         return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), roles);
     }
 
-    public boolean addPersonToDataBase(Person person) {
-        return personService.addPersonToDataBase(person);
+    public boolean addPerson(Person person) {
+        return personService.addPerson(person);
     }
 
     public boolean addToBlackList(String email) {

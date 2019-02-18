@@ -33,18 +33,18 @@ public class PersonDAO {
     }
 
     public boolean doesEmailExists(String email) {
-        List<String> emailsList = jdbcTemplate.query("SELECT email FROM person", (rs, rowNum) -> getStringEmail(rs));
+        List<String> emailsList = jdbcTemplate.query("SELECT email FROM person", (rs, rowNum) -> getEmail(rs));
         for(String stringEmail:  emailsList){
             if (stringEmail.equals(email)) return true;
         }
         return false;
     }
 
-    String getStringEmail(ResultSet rs) throws SQLException {
+    String getEmail(ResultSet rs) throws SQLException {
         return rs.getString("email");
     }
 
-    public boolean addPersonToDataBase(Person person) {
+    public boolean addPerson(Person person) {
         String email = person.getEmail();
         System.out.println(email);
         if (doesEmailExists(email)) return false;
@@ -76,6 +76,7 @@ public class PersonDAO {
     }
 
     public boolean updatePassword(String email, String password) {
+        if (email.equals("") || password.equals("")) return false;
         String sql = "UPDATE person SET password = ? WHERE email = ?";
         jdbcTemplate.update(sql, password, email);
         return true;

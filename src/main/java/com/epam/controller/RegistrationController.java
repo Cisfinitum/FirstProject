@@ -35,7 +35,7 @@ public class RegistrationController {
         Pattern passwordPattern = Pattern.compile("^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,15})$");
         Matcher passwordMatcher = passwordPattern.matcher(password);
         if(!passwordMatcher.matches()) return "/registration";
-        if (personDetailsServiceImpl.addPersonToDataBase(new Person(email, password, "USER"))) return "/login";
+        if (personDetailsServiceImpl.addPerson(new Person(email, password, "USER"))) return "/login";
         else return "/registration";
     }
 }

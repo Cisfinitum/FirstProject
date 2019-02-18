@@ -5,6 +5,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Data
+@RequiredArgsConstructor
 public class Person {
     private Integer id;
     private String email;
