@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDate;
+import java.time.DateTimeException;
 
 @Controller
 public class ToursController {
@@ -35,8 +36,8 @@ public class ToursController {
         return toursModel;
     }
 
-    @GetMapping("/deletetour")
-    public ModelAndView deleteTour() {
+    @PostMapping("/deletetour")
+    public ModelAndView deleteTour(@RequestParam String idOfTour) {
         ModelAndView toursModel = new ModelAndView();
         toursModel.addObject("result",toursOfferService.deleteTour(110));
         toursModel.setViewName("homepage");
@@ -53,24 +54,24 @@ public class ToursController {
         String[] splitedStartDate = startDate.split(" ");
         String[] splitedEndDate = endDate.split(" ");
         try {
-            if (!startDate.isEmpty() && (Integer.valueOf(splitedStartDate[0]) >= 2019) && (Integer.valueOf(splitedStartDate[1]) >= 1) &&
-                    (Integer.valueOf(splitedStartDate[1]) <= 12) && (Integer.valueOf(splitedStartDate[2]) >= 1) && (Integer.valueOf(splitedStartDate[2]) <= 31)) {
-                addStartDate = LocalDate.of(Integer.valueOf(splitedStartDate[0]), Integer.valueOf(splitedStartDate[1]), Integer.valueOf(splitedStartDate[2]));
+            if (!startDate.isEmpty()) {
+                addStartDate = LocalDate.of(Integer.valueOf(splitedStartDate[0]), Integer.valueOf(splitedStartDate[1]),
+                        Integer.valueOf(splitedStartDate[2]));
             } else {
-                throw new Exception("Wrong input in startDate");
+                throw new Exception("Nullpointer in startDate");
             }
-            if (!endDate.isEmpty() && (Integer.valueOf(splitedEndDate[0]) >= 2019) && (Integer.valueOf(splitedEndDate[1]) >= 1) &&
-                    (Integer.valueOf(splitedEndDate[1]) <= 12) && (Integer.valueOf(splitedEndDate[2]) >= 1) && (Integer.valueOf(splitedEndDate[2]) <= 31)) {
-                addEndDate = LocalDate.of(Integer.valueOf(splitedEndDate[0]), Integer.valueOf(splitedEndDate[1]), Integer.valueOf(splitedEndDate[2]));
+            if (!endDate.isEmpty()) {
+                addEndDate = LocalDate.of(Integer.valueOf(splitedEndDate[0]), Integer.valueOf(splitedEndDate[1]),
+                        Integer.valueOf(splitedEndDate[2]));
             } else {
-                throw new Exception("Wrong input inendDate");
+                throw new Exception("Nullpointer in endDate");
             }
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException | DateTimeException e){
             throw new Exception("Wrong input in Date");
         }
 
         if(tourType.isEmpty())
-            throw new Exception("Empty input in tourType");
+            throw new Exception("Nullpointer in tourType");
 
         try {
             if(Integer.valueOf(pricePerPerson)==0){
@@ -81,7 +82,7 @@ public class ToursController {
         }
 
         if(tourDescription.isEmpty())
-            throw new Exception("Empty input in tourDescription");
+            throw new Exception("Nullpointer in tourDescription");
 
         //Here we ll use method from HotelService to create new row in DB for Hotel entity, after that we rather to pull hotel_id
         //The same actions we ll do for discount_id
