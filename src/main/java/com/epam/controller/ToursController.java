@@ -45,7 +45,6 @@ public class ToursController {
     }
 
     @PostMapping("/addtour")
-    @SneakyThrows(Exception.class)
     public ModelAndView addTour(@RequestParam String tourType, @RequestParam String startDate, @RequestParam String endDate,
                                 @RequestParam String country, @RequestParam String city, @RequestParam String hotel,
                                 @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription){
@@ -53,53 +52,62 @@ public class ToursController {
         LocalDate addEndDate;
         String[] splitedStartDate = startDate.split(" ");
         String[] splitedEndDate = endDate.split(" ");
-        try {
-            if (!startDate.isEmpty()) {
-                addStartDate = LocalDate.of(Integer.valueOf(splitedStartDate[0]), Integer.valueOf(splitedStartDate[1]),
-                        Integer.valueOf(splitedStartDate[2]));
-            } else {
-                throw new Exception("Nullpointer in startDate");
-            }
-            if (!endDate.isEmpty()) {
-                addEndDate = LocalDate.of(Integer.valueOf(splitedEndDate[0]), Integer.valueOf(splitedEndDate[1]),
-                        Integer.valueOf(splitedEndDate[2]));
-            } else {
-                throw new Exception("Nullpointer in endDate");
-            }
-        } catch (NumberFormatException | DateTimeException e){
-            throw new Exception("Wrong input in Date");
-        }
-
-        if(tourType.isEmpty())
-            throw new Exception("Nullpointer in tourType");
-
-        try {
-            if(Integer.valueOf(pricePerPerson)==0){
-                throw new Exception("0 input in pricePerPerson");
-            }
-        } catch (NumberFormatException e){
-            throw new Exception("Wrong input in pricePerPerson");
-        }
-
-        if(tourDescription.isEmpty())
-            throw new Exception("Nullpointer in tourDescription");
-
-        //Here we ll use method from HotelService to create new row in DB for Hotel entity, after that we rather to pull hotel_id
-        //The same actions we ll do for discount_id
-        Integer result = toursOfferService.addTour(TourOffer.builder()
-                .id(1)
-                .tourType(tourType)
-                .startDate(addStartDate)
-                .endDate(addEndDate)
-                .pricePerUnit(200)
-                .hotelId(1) //stub
-                .description(tourDescription)
-                .discountId(1) //stub
-                .build());
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("result", result);
-        toursModel.setViewName("testadmin");
-        return toursModel;
+        try {
+            try {
+                if (!startDate.isEmpty()) {
+                    addStartDate = LocalDate.of(Integer.valueOf(splitedStartDate[0]), Integer.valueOf(splitedStartDate[1]),
+                            Integer.valueOf(splitedStartDate[2]));
+                } else {
+                    throw new Exception("Nullpointer in startDate");
+                }
+                if (!endDate.isEmpty()) {
+                    addEndDate = LocalDate.of(Integer.valueOf(splitedEndDate[0]), Integer.valueOf(splitedEndDate[1]),
+                            Integer.valueOf(splitedEndDate[2]));
+                } else {
+                    throw new Exception("Nullpointer in endDate");
+                }
+            } catch (NumberFormatException | DateTimeException e) {
+                throw new Exception("Wrong input in Date");
+            }
+
+            if (tourType.isEmpty()) {
+                throw new Exception("Nullpointer in tourType");
+            }
+
+            try {
+                if (Integer.valueOf(pricePerPerson) < 0) {
+                    throw new Exception("0 or negative input in pricePerPerson");
+                }
+            } catch (NumberFormatException e) {
+                throw new Exception("Wrong input in pricePerPerson");
+            }
+
+            if (tourDescription.isEmpty())
+                throw new Exception("Nullpointer in tourDescription");
+
+            //Here we ll use method from HotelService to create new row in DB for Hotel entity, after that we rather to pull hotel_id
+            //The same actions we ll do for discount_id
+
+            Integer result = toursOfferService.addTour(TourOffer.builder()
+                    .id(1)
+                    .tourType(tourType)
+                    .startDate(addStartDate)
+                    .endDate(addEndDate)
+                    .pricePerUnit(200)
+                    .hotelId(1) //stub
+                    .description(tourDescription)
+                    .discountId(1) //stub
+                    .build());
+            toursModel.addObject("result",result);
+            toursModel.setViewName("testadmin");
+            return toursModel;
+
+        } catch (Exception e){
+            toursModel.addObject("result",e.toString());
+            toursModel.setViewName("redirect:/testadmin");
+            return toursModel;
+        }
     }
 
     @PostMapping("/updatetour")
