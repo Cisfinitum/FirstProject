@@ -94,7 +94,7 @@
 
 <main>
     <div class="container">
-        <form method="POST" action="#">
+        <form method="POST" action="searchtours">
             <div class="row">
                 <div class="col s3">
                     <div class="input-field">

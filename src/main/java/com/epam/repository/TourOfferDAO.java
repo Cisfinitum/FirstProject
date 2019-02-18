@@ -42,13 +42,29 @@ public class TourOfferDAO {
 
 
     public List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
-        String requestSQL = "SELECT * FROM tourOffer WHERE startDate = '"+startDate+"'  AND endDate = '"+endDate+"' AND hotel_id IN (";
-        String stringOfHotelId = "";
-        for(Integer hotel_id: listOfHotelsId){
-            stringOfHotelId = stringOfHotelId.concat(hotel_id.toString()).concat(",");
+        String requestSQL = "SELECT * FROM tourOffer WHERE startDate ";
+        if(startDate!=null)
+            requestSQL = requestSQL.concat("= '"+startDate+"'");
+        else
+            requestSQL = requestSQL.concat("NOT IN (NULL)");
+        requestSQL = requestSQL.concat(" AND endDate ");
+        if(endDate!=null)
+            requestSQL = requestSQL.concat("='"+endDate+"'");
+        else
+            requestSQL = requestSQL.concat("NOT IN (NULL)");
+        requestSQL = requestSQL.concat(" AND hotel_id ");
+        if(listOfHotelsId!=null) {
+            requestSQL = requestSQL.concat("IN (");
+            for(Integer hotel_id: listOfHotelsId){
+                requestSQL = requestSQL.concat(hotel_id.toString());
+                if(listOfHotelsId.get(listOfHotelsId.size()-1)!=hotel_id)
+                    requestSQL = requestSQL.concat(",");
+            }
+            requestSQL = requestSQL.concat(")");
         }
-        stringOfHotelId = stringOfHotelId.concat("0)");
-        return simpleJdbcTemplate.query(requestSQL.concat(stringOfHotelId), (rs, rowNum) -> buildTour(rs));
+        else
+            requestSQL = requestSQL.concat("NOT IN (NULL)");
+        return simpleJdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
     }
 
 

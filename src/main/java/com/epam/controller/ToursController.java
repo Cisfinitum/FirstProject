@@ -32,7 +32,7 @@ public class ToursController {
     @PostMapping("/searchtours")
     public ModelAndView searchTours() {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("list",toursOfferService.searchTours("Turkey",LocalDate.of(2019, 5, 23), LocalDate.of(2019,5,26)));
+        toursModel.addObject("list",toursOfferService.searchTours(null,null, null));
         toursModel.setViewName("homepage");
         return toursModel;
     }
