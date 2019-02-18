@@ -61,35 +61,35 @@ public class ToursController {
                     addStartDate = LocalDate.of(Integer.valueOf(splitedStartDate[0]), Integer.valueOf(splitedStartDate[1]),
                             Integer.valueOf(splitedStartDate[2]));
                 } else {
-                    throw new Exception("Nullpointer in startDate");
+                    throw new NullPointerException("Day of department is empty");
                 }
                 if (!endDate.isEmpty()) {
                     addEndDate = LocalDate.of(Integer.valueOf(splitedEndDate[0]), Integer.valueOf(splitedEndDate[1]),
                             Integer.valueOf(splitedEndDate[2]));
                 } else {
-                    throw new Exception("Nullpointer in endDate");
+                    throw new NullPointerException("Arrive date is empty");
                 }
             } catch (NumberFormatException | DateTimeException e) {
-                throw new Exception("Wrong input in Date");
+                throw new Exception("One of the Date incorrect");
             }
 
             if(!(DAYS.between(addStartDate,addEndDate)>=1))
-                throw new Exception("Negative diffrenece between days");
+                throw new Exception("Negative difference between Dates");
 
             if (tourType.isEmpty()) {
-                throw new Exception("Nullpointer in tourType");
+                throw new NullPointerException("Tour type is empty");
             }
 
             try {
                 if (Integer.valueOf(pricePerPerson) < 0) {
-                    throw new Exception("0 or negative input in pricePerPerson");
+                    throw new Exception("Price per person negative or 0");
                 }
             } catch (NumberFormatException e) {
-                throw new Exception("Wrong input in pricePerPerson");
+                throw new Exception("Price per person incorrect");
             }
 
             if (tourDescription.isEmpty())
-                throw new Exception("Nullpointer in tourDescription");
+                throw new NullPointerException("Tour description is empty");
 
             //Here we ll use method from HotelService to create new row in DB for Hotel entity, after that we rather to pull hotel_id
             //The same actions we ll do for discount_id
