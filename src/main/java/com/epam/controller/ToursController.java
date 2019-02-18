@@ -2,7 +2,6 @@ package com.epam.controller;
 
 import com.epam.model.TourOffer;
 import com.epam.service.TourOfferService;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDate;
 import java.time.DateTimeException;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Controller
 public class ToursController {
@@ -71,6 +72,9 @@ public class ToursController {
                 throw new Exception("Wrong input in Date");
             }
 
+            if(!(DAYS.between(addStartDate,addEndDate)>=1))
+                throw new Exception("Negative diffrenece between days");
+
             if (tourType.isEmpty()) {
                 throw new Exception("Nullpointer in tourType");
             }
@@ -99,13 +103,13 @@ public class ToursController {
                     .description(tourDescription)
                     .discountId(1) //stub
                     .build());
-            toursModel.addObject("result",result);
-            toursModel.setViewName("testadmin");
+
+            toursModel.addObject("result",result==1?"Success":"Failed to add");
+            toursModel.setViewName("addtour");
             return toursModel;
 
         } catch (Exception e){
-            toursModel.addObject("result",e.toString());
-            toursModel.setViewName("redirect:/testadmin");
+            toursModel.addObject("result",e.getMessage());
             return toursModel;
         }
     }
@@ -129,9 +133,7 @@ public class ToursController {
     }
 
     @GetMapping("/addtour")
-    public ModelAndView getAddTour(){
-        ModelAndView toursModel = new ModelAndView();
-        toursModel.setViewName("addtour");
-        return toursModel;
+    public String getAddTour(){
+        return "addtour";
     }
 }
