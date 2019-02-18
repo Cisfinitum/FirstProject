@@ -34,6 +34,10 @@ public class ReservationService {
         return reservationDAO.removeReservation(id);
     }
 
+    int getTourOfferById(Integer tourOfferId) {
+        return reservationDAO.getTourOfferById(tourOfferId);
+    }
+
     int updateReservation(Reservation reservation) {
         return reservationDAO.updateReservation(reservation);
     }
