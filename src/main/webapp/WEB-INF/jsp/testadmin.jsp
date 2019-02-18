@@ -27,11 +27,11 @@
 <body>
 <header>
     <nav>
-        <div class="nav-wrapper tab " >
-            <a href="/index" class="brand-logo">    Tour De Team</a>
+        <div class="nav-wrapper tab ">
+            <a href="/index" class="brand-logo"> Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
 
-                <li> <a href="javascript:void(0)" id="defaultTab"
+                <li><a href="javascript:void(0)" id="defaultTab"
                        onclick="openContent(event, 'Tours')">Tours
 
                 </a></li>
@@ -40,14 +40,12 @@
                     Tour
                 </a></li>
                 <li><a href="javascript:void(0)"
-
+                       id="Reservation"
                        onclick="openContent(event, 'Reservations')">
-                    <span class="new badge" style="background-color: #ab4160;">4</span>
+                    <span class="new badge" style="background-color: #ab4160;">2</span>
                     Reservations
                 </a></li>
-                <li style="margin-right: 20px" ><a href="javascript:void(0)"
-
-                       onclick="openContent(event, 'Clients')">Clients
+                <li style="margin-right: 20px"><a href="javascript:void(0)" onclick="openContent(event, 'Clients')">Clients
                 </a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">Log Out
@@ -131,13 +129,13 @@
                 </tbody>
             </table>
             <div class="row">
-            <div class="col s2 offset-s10">
-                <div class="input-field">
-                    <button class="btn waves-effect waves-light" type="submit" name="action"
-                            onclick="openContent(event, 'AddTour')"> Add Tour
-                    </button>
+                <div class="col s2 offset-s10">
+                    <div class="input-field">
+                        <button class="btn waves-effect waves-light" type="submit" name="action"
+                                onclick="openContent(event, 'AddTour')"> Add Tour
+                        </button>
+                    </div>
                 </div>
-            </div>
             </div>
             <br>
             <br>
@@ -226,40 +224,30 @@
             <h2>Reservations</h2>
             <form method="POST" action="#">
                 <div class="row">
-                    <ul class="collection">
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle green">star</i>
-                            <span class="title"><b>Thailand</b></span>
-                            <p>Jhon Smith <br>
-                                +1 24324 24
-                            </p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">done_outline</i></a>
-                        </li>
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle green">star</i>
-                            <span class="title"><b>Russia</b></span>
-                            <p>Fedor <br>
-                                +7900223232
-                            </p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">done_outline</i></a>
-                        </li>
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle green">star</i>
-                            <span class="title"><b>America</b></span>
-                            <p>Masha Ivanova <br>
-                                masha@vanova.ru
-                            </p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">done_outline</i></a>
-                        </li>
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle green">star</i>
-                            <span class="title"><b>Turkey</b></span>
-                            <p>Nastya Broti <br>
-                                +79800232
-                            </p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">done_outline</i></a>
-                        </li>
-                    </ul>
+                    <table>
+                        <tr>
+                            <th>№</th>
+                            <th>Discount Id</th>
+                            <th>Offer Id</th>
+                            <th>Number Of People</th>
+                            <th>Status</th>
+                            <th>Total Price</th>
+                            <th></th>
+                        </tr>
+                        <c:forEach var="reservation" items="${listReservation}">
+                        <tr>
+                            <td>${reservation.id}</td>
+                            <td>${reservation.discountId}</td>
+                            <td> ${reservation.tourOfferId}</td>
+                            <td> ${reservation.numberOfPeople}</td>
+                            <td> ${reservation.status}</td>
+                            <td> ${reservation.totalPrice}</td>
+                            <td><a href="deleteReservation/${reservation.id}" class="secondary-content"> <i
+                                    class="small material-icons">remove</i></a></td>
+                            </c:forEach>
+                        </tr>
+
+                    </table>
                 </div>
             </form>
 
