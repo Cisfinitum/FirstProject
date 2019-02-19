@@ -22,12 +22,20 @@ public class ReservationService {
         if (reservation != null) {
             return reservationDAO.addReservation(reservation);
         } else {
-            return 0;
+            throw new RuntimeException("Some fields are empty");
         }
     }
 
     Reservation getReservationById(Integer id) {
-        return reservationDAO.getReservationById(id);
+        if (id != null) {
+            if (id >= 0) {
+                return reservationDAO.getReservationById(id);
+            } else {
+                throw new IllegalArgumentException("Id must be >= 0");
+            }
+        } else {
+            throw new RuntimeException("Id must be specified.");
+        }
     }
 
     public List<Reservation> listReservations() {
@@ -35,15 +43,34 @@ public class ReservationService {
     }
 
     public int removeReservation(Integer id) {
-        return reservationDAO.removeReservation(id);
+        if (id != null) {
+            if (id >= 0) {
+                return reservationDAO.removeReservation(id);
+            } else {
+                throw new IllegalArgumentException("Id must be >= 0");
+            }
+        } else {
+            throw new RuntimeException("Reservation with such id does not exist.");
+        }
     }
 
     int getTourOfferById(Integer tourOfferId) {
+        if (tourOfferId != null) {
+            if (tourOfferId >= 0) {
         return reservationDAO.getTourOfferById(tourOfferId);
+            } else {
+                throw new IllegalArgumentException("Id must be >= 0");
+            }
+        } else {
+            throw new RuntimeException("Tour offer with such id does not exist.");
+        }
     }
 
     int updateReservation(Reservation reservation) {
-        return reservationDAO.updateReservation(reservation);
+        if(reservation != null) {
+            return reservationDAO.updateReservation(reservation);
+        }else {
+            throw new RuntimeException("There is no such reservation.");
+        }
     }
-
 }

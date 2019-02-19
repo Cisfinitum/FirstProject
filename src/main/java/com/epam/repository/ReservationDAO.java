@@ -31,8 +31,8 @@ public class ReservationDAO {
     private String discountId;
     @Value("${reservation.totalPrice}")
     private String totalPrice;
-
-    private String tableName = "reservation";
+    @Value("${reservation.tableName}")
+    private String tableName;
 
 
     private RowMapper reservationMapper = (rs, rowNum) -> buildReservation(rs);
