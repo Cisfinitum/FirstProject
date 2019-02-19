@@ -46,12 +46,12 @@ public class TourOfferDAO {
         if(startDate!=null)
             requestSQL = requestSQL.concat("= '"+startDate+"'");
         else
-            requestSQL = requestSQL.concat("NOT IN (NULL)");
+            requestSQL = requestSQL.concat("IS NOT NULL ");
         requestSQL = requestSQL.concat(" AND endDate ");
         if(endDate!=null)
             requestSQL = requestSQL.concat("='"+endDate+"'");
         else
-            requestSQL = requestSQL.concat("NOT IN (NULL)");
+            requestSQL = requestSQL.concat("IS NOT NULL ");
         requestSQL = requestSQL.concat(" AND hotel_id ");
         if(listOfHotelsId!=null) {
             requestSQL = requestSQL.concat("IN (");
@@ -63,7 +63,7 @@ public class TourOfferDAO {
             requestSQL = requestSQL.concat(")");
         }
         else
-            requestSQL = requestSQL.concat("NOT IN (NULL)");
+            requestSQL = requestSQL.concat("IS NOT NULL");
         return simpleJdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
     }
 

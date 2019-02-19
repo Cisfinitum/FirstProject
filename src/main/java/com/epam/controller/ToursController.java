@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Controller
@@ -88,21 +89,36 @@ public class ToursController {
     }
 
     @PostMapping("/updatetour")
-    public ModelAndView updateTour() {
-        Integer result = toursOfferService.updateTour(TourOffer.builder()
-                .id(1)
-                .tourType("test")
-                .startDate(LocalDate.of(2025,10,10))
-                .endDate(LocalDate.of(2025,10,18))
-                .pricePerUnit(200)
-                .hotelId(1)
-                .description("test")
-                .discountId(1)
-                .build());
+    public ModelAndView updateTour(@RequestParam String tourId, @RequestParam String tourType, @RequestParam String startDate, @RequestParam String endDate,
+                                   @RequestParam String country, @RequestParam String city, @RequestParam String hotel,
+                                   @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("result", result);
-        toursModel.setViewName("homepage");
-        return toursModel;
+        toursModel.setViewName("updatetour");
+        try {
+            LocalDate addStartDate = Validator.getDate(startDate,false);
+            LocalDate addEndDate = Validator.getDate(endDate,false);
+            Integer addPricePerPerson = Validator.getInt(pricePerPerson);
+            Validator.checkEmpty(tourType);
+            Validator.checkEmpty(tourDescription);
+            Validator.checkDateDifferent(addStartDate,addEndDate);
+            int result = toursOfferService.updateTour(TourOffer.builder()
+                    .id(Integer.valueOf(tourId))
+                    .tourType(tourType)
+                    .startDate(addStartDate)
+                    .endDate(addEndDate)
+                    .pricePerUnit(addPricePerPerson)
+                    .hotelId(1) //stub
+                    .description(tourDescription)
+                    .discountId(1) //stub
+                    .build());
+
+            toursModel.addObject("result",result==1?"Success":"Failed to update");
+            return toursModel;
+
+        } catch (Exception e){
+            toursModel.addObject("result",e.getMessage());
+            return toursModel;
+        }
     }
 
     @GetMapping("/addtour")
