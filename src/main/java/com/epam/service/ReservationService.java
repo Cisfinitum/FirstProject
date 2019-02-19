@@ -19,7 +19,11 @@ public class ReservationService {
 
 
     int addReservation(Reservation reservation) {
-        return reservationDAO.addReservation(reservation);
+        if (reservation != null) {
+            return reservationDAO.addReservation(reservation);
+        } else {
+            return 0;
+        }
     }
 
     Reservation getReservationById(Integer id) {
