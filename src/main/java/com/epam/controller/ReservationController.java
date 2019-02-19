@@ -5,8 +5,7 @@ import com.epam.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,8 +27,13 @@ public class ReservationController {
     }
 
     @GetMapping("/deleteReservation/{id}")
-    public String deleteReservation(@PathVariable int id) {
-        reservationService.removeReservation(id);
+    public String deleteReservation(@PathVariable int id, ModelMap reservationModel) {
+        int resp =  reservationService.removeReservation(id);
+        if(resp > 0 ) {
+            reservationModel.addAttribute("message", "Reservation deletes succesfully.");
+        } else {
+            reservationModel.addAttribute("message", "Deletion failed.");
+        }
         return "redirect:/testadmin";
     }
 }
