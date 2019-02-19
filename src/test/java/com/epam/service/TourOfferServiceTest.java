@@ -17,65 +17,67 @@ import static org.mockito.Mockito.when;
 public class TourOfferServiceTest {
     @Mock
     private TourOfferDAO tourOfferDAO;
+    @Mock
     private TourOffer expectedTourOffer;
-    private LocalDate teststartDate = LocalDate.of(2018,2,19);
-    private LocalDate testendDate = LocalDate.of(2018,2,25);
+    @Mock
     private List<TourOffer> tourOfferList;
+
     private TourOfferService tourOfferService;
-    private int expectedResultPositive = 1;
-    private List<Integer> testHotelIdList = new ArrayList<>();
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        String testtourType = "Active";
-        Integer testpricePerUnit = 1500;
-        Integer testhotelId = 1;
-        String testdescription = "Best tour";
-        Integer testdiscountid = 1;
-        expectedTourOffer = new TourOffer(1, testtourType, teststartDate,  testendDate,
-                testpricePerUnit, testhotelId, testdescription, testdiscountid);
         tourOfferService = new TourOfferService(tourOfferDAO);
-        tourOfferList = new ArrayList<>();
-        tourOfferList.add(expectedTourOffer);
-        testHotelIdList.add(testhotelId);
     }
 
     @Test
     public void deleteTourCheck() {
         when(tourOfferDAO.deleteTour(1)).thenReturn(1);
-        int actualResulat = tourOfferService.deleteTour(1);
-        assertEquals(actualResulat,expectedResultPositive);
+        assertEquals(tourOfferService.deleteTour(1),1);
     }
 
 
     @Test
     public void getToursCheck() {
         when(tourOfferDAO.getTours()).thenReturn(tourOfferList);
-        List<TourOffer> actualResulat = tourOfferService.getTours();
-        assertEquals(actualResulat,tourOfferList);
+        assertEquals(tourOfferService.getTours(),tourOfferList);
     }
 
     @Test
     public void addTourCheck(){
         when(tourOfferDAO.addTour(expectedTourOffer)).thenReturn(1);
-        int actualResulat = tourOfferService.addTour(expectedTourOffer);
-        assertEquals(actualResulat,expectedResultPositive);
+        assertEquals(tourOfferService.addTour(expectedTourOffer),1);
     }
 
     @Test
     public void updateTourCheck(){
         when(tourOfferDAO.updateTour(expectedTourOffer)).thenReturn(1);
-        int actualResulat = tourOfferService.updateTour(expectedTourOffer);
-        assertEquals(actualResulat,expectedResultPositive);
+        assertEquals(tourOfferService.updateTour(expectedTourOffer),1);
     }
     @Test
     public void searchTourCheck(){
-        when(tourOfferDAO.searchTours(testHotelIdList,teststartDate,testendDate)).thenReturn(tourOfferList);
-        String testCountry = "Turkey";
-        List<TourOffer> actualResulat = tourOfferService.searchTours(testCountry,teststartDate,testendDate);
-        assertEquals(actualResulat,tourOfferList);
+        when(tourOfferDAO.searchTours(new ArrayList<>(),LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
+        assertEquals(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now()),tourOfferList);
     }
 
+    @Test(expected = NullPointerException.class)
+    public void deleteTourThrowExceptionNull(){
+        when(tourOfferService.deleteTour(null)).thenThrow(NullPointerException.class);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void deleteTourThrowExceptionZero(){
+        when(tourOfferService.deleteTour(0)).thenThrow(NullPointerException.class);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void addTourThrowException(){
+        when(tourOfferService.addTour(null)).thenThrow(NullPointerException.class);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void updateTourThrowException(){
+        when(tourOfferService.updateTour(null)).thenThrow(NullPointerException.class);
+    }
 }
 

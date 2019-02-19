@@ -40,7 +40,6 @@ public class TourOfferDAO {
                touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId(),touroffer.getId());
     }
 
-
     public List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
         String requestSQL = "SELECT * FROM tourOffer WHERE startDate ";
         if(startDate!=null)
@@ -66,7 +65,6 @@ public class TourOfferDAO {
             requestSQL = requestSQL.concat("IS NOT NULL");
         return simpleJdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
     }
-
 
     @SneakyThrows(SQLException.class)
     TourOffer buildTour(ResultSet rs){

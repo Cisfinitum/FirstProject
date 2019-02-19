@@ -27,15 +27,30 @@ public class TourOfferService {
     }
 
     public int deleteTour(Integer tourId){
-         return tourOfferDAO.deleteTour(tourId);
+        if(tourId!=null&&tourId!=0)
+            return tourOfferDAO.deleteTour(tourId);
+        else {
+            log.error("tourId is null or 0");
+            throw new NullPointerException("tourId is null or 0");
+        }
     }
 
     public int addTour(TourOffer tourOffer){
-        return tourOfferDAO.addTour(tourOffer);
+        if(tourOffer!=null)
+            return tourOfferDAO.addTour(tourOffer);
+        else {
+            log.error("tourOffer is null");
+            throw new NullPointerException("tourOffer is null");
+        }
     }
 
     public int updateTour(TourOffer tourOffer){
-        return tourOfferDAO.updateTour(tourOffer);
+        if(tourOffer!=null)
+            return tourOfferDAO.updateTour(tourOffer);
+        else {
+            log.error("tourOffer is null");
+            throw new NullPointerException("tourOffer is null");
+        }
     }
 
     public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate){
