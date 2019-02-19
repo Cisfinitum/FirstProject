@@ -39,21 +39,6 @@
                         <label for="password2"><spring:message code="passwordname" /></label>
                     </div>
                 </div>
-                <%--</div>--%>
-                    <%--<div class="input-field col s6">--%>
-                        <%--<input id="phone" type="text" class="validate" name="phone">--%>
-                        <%--<label for="phone"><spring:message code="phone" /></label>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="row">--%>
-                    <%--<div class="input-field col s6">--%>
-                        <%--<input id="first_name" type="text" class="validate" name="firstname">--%>
-                        <%--<label for="first_name"><spring:message code="firstname" /></label>--%>
-                    <%--</div>--%>
-                    <%--<div class="input-field col s6">--%>
-                        <%--<input id="last_name" type="text" class="validate" name="secondname">--%>
-                        <%--<label for="last_name"><spring:message code="lastname" /></label>--%>
-                    <%--</div>--%>
                 <div class ="rowregistration">
                     <button type="submit" class="waves-effect waves-light btn"><spring:message code="send" /></button>
                 </div>

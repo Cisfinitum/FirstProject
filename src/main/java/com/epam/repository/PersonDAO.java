@@ -35,6 +35,7 @@ public class PersonDAO {
     public boolean doesEmailExists(String email) {
         List<String> emailsList = jdbcTemplate.query("SELECT email FROM person", (rs, rowNum) -> getEmail(rs));
         for(String stringEmail:  emailsList){
+            System.out.println("Im here");
             if (stringEmail.equals(email)) return true;
         }
         return false;
