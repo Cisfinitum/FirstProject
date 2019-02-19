@@ -3,8 +3,8 @@ package com.epam.repository;
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.List;
 @Repository
 public class PersonDAO {
 
-    private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PersonDAO(NamedParameterJdbcTemplate jdbcTemplate) {
+    public PersonDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -26,7 +26,7 @@ public class PersonDAO {
     Person buildPerson(ResultSet rs) throws SQLException {
         return Person.builder()
                 .id(rs.getInt("id"))
-                .name(rs.getString("nickname"))
+                .email(rs.getString("email"))
                 .password(rs.getString("password"))
                 .role(PersonRoleEnum.valueOf(rs.getString("role")))
                 .build();
