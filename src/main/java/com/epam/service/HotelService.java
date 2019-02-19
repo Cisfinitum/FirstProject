@@ -22,16 +22,18 @@ public class HotelService {
 
     public List<Hotel> getHotelsByCountry (String country) { return hotelDAO.getHotelsByCountry(country); }
 
-    public void createHotel(Hotel hotel) {
-        hotelDAO.createHotel(hotel);
+    public Hotel getHotelById (Integer id) { return hotelDAO.getHotelById(id); }
+
+    public Integer createHotel(Hotel hotel) {
+        return hotelDAO.createHotel(hotel);
     }
 
-    public void updateHotel (Hotel hotel) {
-        hotelDAO.updateHotel(hotel);
+    public Integer updateHotel (Hotel hotel) {
+        return hotelDAO.updateHotel(hotel);
     }
 
-    public void deleteHotel (Hotel hotel) {
-        hotelDAO.deleteHotel(hotel.getId());
+    public Integer deleteHotel (Hotel hotel) {
+        return hotelDAO.deleteHotel(hotel.getId());
     }
 
 }

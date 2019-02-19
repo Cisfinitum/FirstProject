@@ -30,19 +30,24 @@ public class HotelDAO {
         return jdbcTemplate.query ("SELECT * FROM hotel WHERE country = ?", parameters, (rs, rowNum) -> buildHotel(rs));
     }
 
-    public void createHotel (Hotel hotel) {
+    public Hotel getHotelById (Integer id) {
+        Object[] parameters = new Object[] { id };
+        return jdbcTemplate.queryForObject ("SELECT * FROM hotel WHERE id = ?", parameters, (rs, rowNum) -> buildHotel(rs));
+    }
+
+    public Integer createHotel (Hotel hotel) {
         String sql = "INSERT INTO hotel (name, city, country, numberOfStars) values (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, hotel.getName(), hotel.getCity(), hotel.getCountry(), hotel.getNumberOfStars() );
+        return jdbcTemplate.update(sql, hotel.getName(), hotel.getCity(), hotel.getCountry(), hotel.getNumberOfStars() );
     }
 
-    public void updateHotel (Hotel hotel) {
+    public Integer updateHotel (Hotel hotel) {
         String sql = "UPDATE hotel SET name = ?, city = ?, country = ?, numberOfStars = ? WHERE id = ?";
-        jdbcTemplate.update(sql, hotel.getName(), hotel.getCity(), hotel.getCountry(), hotel.getNumberOfStars(), hotel.getId());
+        return jdbcTemplate.update(sql, hotel.getName(), hotel.getCity(), hotel.getCountry(), hotel.getNumberOfStars(), hotel.getId());
     }
 
-    public void deleteHotel (int id) {
+    public Integer deleteHotel (int id) {
         String sql = "DELETE hotel WHERE id = ?";
-        jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, id);
     }
 
     @SneakyThrows(SQLException.class)
