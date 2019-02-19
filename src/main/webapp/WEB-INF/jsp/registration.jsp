@@ -21,6 +21,7 @@
                 <c:set var="val"><spring:message code="wrongpass"/></c:set>
                 <input id="wrongpass" type="hidden" value="${val}"/>
                 <span id="forpass" style="color: red; font-weight: bold"></span>
+                <p style="color: red;">${message}</p>
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="email" type="email" class="validate" name="email">

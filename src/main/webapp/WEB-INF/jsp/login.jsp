@@ -20,6 +20,7 @@
                         : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</span>
                 </c:if>
                 <form name="passlogform" method="POST" onsubmit="return validate()" action="<c:url value="/j_spring_security_check" />">
+                    <h2 style="font-style: italic; color: forestgreen;">${registration_status}</h2>
                     <div class="rowlogin">
                         <div class="input-field col s12">
                             <input id="login" type="text" name="j_username"  class="validate">
