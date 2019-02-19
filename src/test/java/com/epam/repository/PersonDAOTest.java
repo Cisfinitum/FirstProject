@@ -74,14 +74,4 @@ public class PersonDAOTest {
         personDAO.getEmail(resultSet);
     }
 
-    @Test
-    public void doesEmailExistsPositive() throws SQLException {
-        String sql = "SELECT email FROM person";
-        List<String> listOfEmails = new ArrayList<>();
-        listOfEmails.add(testEmail);
-        when(personDAO.getEmail(resultSet)).thenReturn(testEmail);
-        RowMapper rowMapper = (resultSet, rowNum) -> personDAO.getEmail(resultSet);
-        when(jdbcTemplate.query(sql, rowMapper)).thenReturn(listOfEmails);
-        assertTrue(personDAO.doesEmailExists(testEmail));
-    }
 }
