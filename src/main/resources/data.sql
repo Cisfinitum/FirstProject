@@ -10,3 +10,15 @@ INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, disc
 VALUES ('1','1', '1', 'PAID', '1', '500000');
 INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
 VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');

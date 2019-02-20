@@ -20,16 +20,27 @@ public class ReservationController {
     }
 
     @GetMapping("/testadmin")
-    public String listReservations(ModelMap modelMap) {
-        List<Reservation> list = reservationService.listReservations();
+    public String testadmin() {
+        return "redirect:/testadmin/1";
+    }
+
+    @GetMapping("/testadmin/{id}")
+    public String listReservations(@PathVariable int id, ModelMap modelMap) {
+        int total = 5;
+        if (id > 1) {
+            id = (id - 1) * total + 1;
+        }
+        List<Reservation> list = reservationService.listReservations(id, total);
+        int amount = reservationService.amountOfReservation();
         modelMap.addAttribute("listReservation", list);
+        modelMap.addAttribute("amount", (amount/total+1));
         return "testadmin";
     }
 
-    @GetMapping("/deleteReservation/{id}")
+    @GetMapping("testadmin/deleteReservation/{id}")
     public String deleteReservation(@PathVariable int id, ModelMap reservationModel) {
-        int resp =  reservationService.removeReservation(id);
-        if(resp > 0 ) {
+        int resp = reservationService.removeReservation(id);
+        if (resp > 0) {
             reservationModel.addAttribute("message", "Reservation deletes succesfully.");
         } else {
             reservationModel.addAttribute("message", "Deletion failed.");

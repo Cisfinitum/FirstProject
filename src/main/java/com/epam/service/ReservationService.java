@@ -39,8 +39,13 @@ public class ReservationService {
         }
     }
 
-    public List<Reservation> listReservations() {
-        return reservationDAO.listReservations();
+    public List<Reservation> listReservations(int page, int total) {
+        if (page > 0 && total > 0) {
+
+            return reservationDAO.listReservations(page, total);
+        } else {
+            throw new IllegalArgumentException("Numbers must be integer and > 0");
+        }
     }
 
     public int removeReservation(Integer id) {
@@ -58,7 +63,7 @@ public class ReservationService {
     int getTourOfferById(Integer tourOfferId) {
         if (tourOfferId != null) {
             if (tourOfferId > 0) {
-        return reservationDAO.getTourOfferById(tourOfferId);
+                return reservationDAO.getTourOfferById(tourOfferId);
             } else {
                 throw new IllegalArgumentException("Id must be > 0");
             }
@@ -68,10 +73,14 @@ public class ReservationService {
     }
 
     int updateReservation(Reservation reservation) {
-        if(reservation != null) {
+        if (reservation != null) {
             return reservationDAO.updateReservation(reservation);
-        }else {
+        } else {
             throw new NoSuchElementException("There is no such reservation.");
         }
+    }
+
+    public int amountOfReservation() {
+        return reservationDAO.amountOfReservations();
     }
 }

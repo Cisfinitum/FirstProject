@@ -31,7 +31,7 @@
             <a href="/index" class="brand-logo"> Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
 
-                <li><a href="javascript:void(0)" id="defaultTab"
+                <li><a href="javascript:void(0)"
                        onclick="openContent(event, 'Tours')">Tours
 
                 </a></li>
@@ -39,7 +39,7 @@
                        onclick="openContent(event, 'AddTour')">Add
                     Tour
                 </a></li>
-                <li><a href="javascript:void(0)"
+                <li><a href="javascript:void(0)" id="defaultTab"
                        id="Reservation"
                        onclick="openContent(event, 'Reservations')">
                     <span class="new badge" style="background-color: #ab4160;">2</span>
@@ -248,6 +248,11 @@
                         </tr>
 
                     </table>
+                    <c:if test="${amount>1}">
+                    <c:forEach var="i" begin="1" end = "${amount}">
+                    <a href="/testadmin/${i}">${i}</a>
+                    </c:forEach>
+                    </c:if>
                 </div>
             </form>
 
