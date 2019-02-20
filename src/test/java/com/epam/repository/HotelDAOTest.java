@@ -19,6 +19,7 @@ public class HotelDAOTest {
 
     @Mock
     private ResultSet resultSet;
+
     @Mock
     private Hotel expectedHotel;
 
@@ -44,18 +45,15 @@ public class HotelDAOTest {
         when(resultSet.getString("city")).thenReturn(testHotelCity);
         when(resultSet.getString("country")).thenReturn(testHotelCountry);
         when(resultSet.getInt("numberOfStars")).thenReturn(testHotelStars);
+        when(expectedHotel.getName()).thenReturn(testHotelName);
         Hotel actualHotel = hotelDAO.buildHotel(resultSet);
-        assertEquals(expectedHotel, actualHotel);
+        assertEquals(expectedHotel.getName(), actualHotel.getName());
     }
 
     @Test(expected = SQLException.class)
     @SneakyThrows(SQLException.class)
     public void buildHotelSQLException(){
         when(resultSet.getInt("id")).thenThrow(new SQLException());
-        when(resultSet.getString("name")).thenReturn(testHotelName);
-        when(resultSet.getString("city")).thenReturn(testHotelCity);
-        when(resultSet.getString("country")).thenReturn(testHotelCountry);
-        when(resultSet.getInt("numberOfStars")).thenReturn(testHotelStars);
         Hotel actualHotel = hotelDAO.buildHotel(resultSet);
     }
 }
