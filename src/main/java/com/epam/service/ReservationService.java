@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 @Service
 public class ReservationService {
     private final ReservationDAO reservationDAO;
-
+    public int totalAmountOfRows = 5;
 
     @Autowired
     public ReservationService(ReservationDAO reservationDAO) {
@@ -40,8 +40,11 @@ public class ReservationService {
     }
 
     public List<Reservation> listReservations(int page, int total) {
-        if (page > 0 && total > 0) {
 
+        if (page > 0 && total > 0) {
+            if (page > 1) {
+                page = (page - 1) * total + 1;
+            }
             return reservationDAO.listReservations(page, total);
         } else {
             throw new IllegalArgumentException("Numbers must be integer and > 0");

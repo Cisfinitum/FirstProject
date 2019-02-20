@@ -248,6 +248,7 @@
                         </tr>
 
                     </table>
+                    <p>${message}</p>
                     <c:if test="${amount>1}">
                     <c:forEach var="i" begin="1" end = "${amount}">
                     <a href="/testadmin/${i}">${i}</a>

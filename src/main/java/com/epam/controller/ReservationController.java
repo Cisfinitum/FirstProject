@@ -26,14 +26,10 @@ public class ReservationController {
 
     @GetMapping("/testadmin/{id}")
     public String listReservations(@PathVariable int id, ModelMap modelMap) {
-        int total = 5;
-        if (id > 1) {
-            id = (id - 1) * total + 1;
-        }
-        List<Reservation> list = reservationService.listReservations(id, total);
+        List<Reservation> list = reservationService.listReservations(id, reservationService.totalAmountOfRows);
         int amount = reservationService.amountOfReservation();
         modelMap.addAttribute("listReservation", list);
-        modelMap.addAttribute("amount", (amount/total+1));
+        modelMap.addAttribute("amount", (amount / reservationService.totalAmountOfRows + 1));
         return "testadmin";
     }
 
