@@ -3,6 +3,7 @@ package integration;
 import com.epam.model.Hotel;
 import com.epam.service.HotelService;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class HotelServiceTest {
 
     @Autowired
     private HotelService hotelService;
+
+    @Before
+    public void setUp() {
+        hotelService.createHotel(new Hotel(1, "test", "test", "Russia", 5));
+    }
 
 
     @Test
