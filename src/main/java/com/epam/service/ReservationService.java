@@ -21,9 +21,13 @@ public class ReservationService {
 
     int addReservation(Reservation reservation) {
         if (reservation != null) {
-            return reservationDAO.addReservation(reservation);
+            if (reservation.getId() != null && reservation.getStatus() != null) {
+                return reservationDAO.addReservation(reservation);
+            } else {
+                throw new IllegalArgumentException("Some fields are empty");
+            }
         } else {
-            throw new IllegalArgumentException("Some fields are empty");
+            throw new NoSuchElementException("Such reservation does not exist.");
         }
     }
 
@@ -77,7 +81,11 @@ public class ReservationService {
 
     int updateReservation(Reservation reservation) {
         if (reservation != null) {
-            return reservationDAO.updateReservation(reservation);
+            if (reservation.getId() != null) {
+                return reservationDAO.updateReservation(reservation);
+            } else {
+                throw new IllegalArgumentException("Id must be specified");
+            }
         } else {
             throw new NoSuchElementException("There is no such reservation.");
         }

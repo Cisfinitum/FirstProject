@@ -24,4 +24,23 @@ public class PersonService {
         return null;
     }
 
+    public boolean addPerson(Person person){
+        return personDAO.addPerson(person);
+    }
+
+    public boolean updatePassword(String email, String password) {
+        return personDAO.updatePassword(email, password);
+    }
+
+    public boolean addToBlackList(String email) {
+        return personDAO.addToBlackList(email);
+    }
+
+    public boolean removeFromBlackList(String email) {
+        return personDAO.removeFromBlackList(email);
+    }
+
+    public boolean giveAdminRights(String email) {
+        return personDAO.giveAdminRights(email);
+    }
 }
