@@ -8,8 +8,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @Controller
+@RequestMapping("/testadmin")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -19,24 +19,24 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping("/testadmin")
+    @GetMapping
     public String testadmin() {
         return "redirect:/testadmin/1";
     }
 
-    @GetMapping("/testadmin/{id}")
-    public String listReservations(@PathVariable int id, ModelMap modelMap) {
-        List<Reservation> list = reservationService.listReservations(id, reservationService.totalAmountOfRows);
+    @GetMapping("/{id}")
+    public String listReservations(@PathVariable Integer id, ModelMap modelMap) {
+        List<Reservation> reservations = reservationService.listReservations(id, reservationService.totalAmountOfRows);
         int amount = reservationService.amountOfReservation();
-        modelMap.addAttribute("listReservation", list);
+        modelMap.addAttribute("listReservation", reservations);
         modelMap.addAttribute("generalAmount",amount);
         modelMap.addAttribute("amount", (amount / reservationService.totalAmountOfRows + 1));
         return "testadmin";
     }
 
-    @GetMapping("testadmin/deleteReservation/{id}")
-    public String deleteReservation(@PathVariable int id, ModelMap reservationModel) {
-        int resp = reservationService.removeReservation(id);
+    @GetMapping("/deleteReservation/{id}")
+    public String deleteReservation(@PathVariable Integer id) {
+        reservationService.removeReservation(id);
         return "redirect:/testadmin";
     }
 }
