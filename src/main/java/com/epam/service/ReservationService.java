@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ReservationService {
@@ -22,19 +23,19 @@ public class ReservationService {
         if (reservation != null) {
             return reservationDAO.addReservation(reservation);
         } else {
-            throw new RuntimeException("Some fields are empty");
+            throw new IllegalArgumentException("Some fields are empty");
         }
     }
 
     Reservation getReservationById(Integer id) {
         if (id != null) {
-            if (id >= 0) {
+            if (id > 0) {
                 return reservationDAO.getReservationById(id);
             } else {
-                throw new IllegalArgumentException("Id must be >= 0");
+                throw new IllegalArgumentException("Id must be > 0");
             }
         } else {
-            throw new RuntimeException("Id must be specified.");
+            throw new IllegalArgumentException("Id must be specified.");
         }
     }
 
@@ -44,25 +45,25 @@ public class ReservationService {
 
     public int removeReservation(Integer id) {
         if (id != null) {
-            if (id >= 0) {
+            if (id > 0) {
                 return reservationDAO.removeReservation(id);
             } else {
-                throw new IllegalArgumentException("Id must be >= 0");
+                throw new IllegalArgumentException("Id must be > 0");
             }
         } else {
-            throw new RuntimeException("Reservation with such id does not exist.");
+            throw new NoSuchElementException("Reservation with such id does not exist.");
         }
     }
 
     int getTourOfferById(Integer tourOfferId) {
         if (tourOfferId != null) {
-            if (tourOfferId >= 0) {
+            if (tourOfferId > 0) {
         return reservationDAO.getTourOfferById(tourOfferId);
             } else {
-                throw new IllegalArgumentException("Id must be >= 0");
+                throw new IllegalArgumentException("Id must be > 0");
             }
         } else {
-            throw new RuntimeException("Tour offer with such id does not exist.");
+            throw new IllegalArgumentException("Tour offer with such id does not exist.");
         }
     }
 
@@ -70,7 +71,7 @@ public class ReservationService {
         if(reservation != null) {
             return reservationDAO.updateReservation(reservation);
         }else {
-            throw new RuntimeException("There is no such reservation.");
+            throw new NoSuchElementException("There is no such reservation.");
         }
     }
 }
