@@ -37,7 +37,7 @@ public class ReservationServiceTest {
     @Test(expected = EmptyResultDataAccessException.class)
     public void removeReservation() {
         reservationDAO.addReservation(new Reservation(10, 1, 1, 5, ReservationStatusEnum.PAID, 10, 20));
-        List<Reservation> reservations = reservationDAO.listReservations(testPage, testTotal);
+        List<Reservation> reservations = reservationDAO.listReservations(testPage, testTotal );
         List<Reservation> reservationsFromDb = reservations.stream().filter(reservation -> reservation.getNumberOfPeople().equals(5)).collect(Collectors.toList());
         Integer reservationId = reservationsFromDb.get(0).getId();
         reservationService.removeReservation(reservationId);
