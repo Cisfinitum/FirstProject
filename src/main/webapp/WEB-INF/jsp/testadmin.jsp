@@ -43,7 +43,8 @@
                 <li><a href="javascript:void(0)" id="defaultTab"
                        id="Reservation"
                        onclick="openContent(event, 'Reservations')">
-                    <span class="badge" style="background-color: #ab4160; color: #ffffff" id="myBadge">${generalAmount}</span>
+                    <span class="badge" style="background-color: #ab4160; color: #ffffff"
+                          id="myBadge">${generalAmount}</span>
                     Reservations
                 </a></li>
                 <li style="margin-right: 20px"><a href="javascript:void(0)" onclick="openContent(event, 'Clients')">Clients
@@ -252,9 +253,9 @@
                         </tr>
 
                     </table>
-                    <p>${message}</p>
+
                     <ul class="pagination">
-                        <c:if test="${amount > 1}">
+                        <c:if test="${generalAmount>5}">
                             <c:forEach var="i" begin="1" end="${amount}">
                                 <li class="waves-effect"><a href="/testadmin/${i}">${i}</a></li>
                             </c:forEach>
