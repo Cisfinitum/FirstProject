@@ -34,7 +34,6 @@ public class HotelDAOTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        expectedHotel =  new Hotel(1, "Luxury Hotel", "Moscow", "Russia",5);
     }
 
     @Test
