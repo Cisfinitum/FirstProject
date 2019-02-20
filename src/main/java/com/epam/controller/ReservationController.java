@@ -29,6 +29,7 @@ public class ReservationController {
         List<Reservation> list = reservationService.listReservations(id, reservationService.totalAmountOfRows);
         int amount = reservationService.amountOfReservation();
         modelMap.addAttribute("listReservation", list);
+        modelMap.addAttribute("generalAmount",amount);
         modelMap.addAttribute("amount", (amount / reservationService.totalAmountOfRows + 1));
         return "testadmin";
     }

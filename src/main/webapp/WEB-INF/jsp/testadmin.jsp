@@ -42,7 +42,7 @@
                 <li><a href="javascript:void(0)" id="defaultTab"
                        id="Reservation"
                        onclick="openContent(event, 'Reservations')">
-                    <span class="new badge" style="background-color: #ab4160;">2</span>
+                    <span class="badge" style="background-color: #ab4160; color: #ffffff" id="myBadge">${generalAmount}</span>
                     Reservations
                 </a></li>
                 <li style="margin-right: 20px"><a href="javascript:void(0)" onclick="openContent(event, 'Clients')">Clients
@@ -224,7 +224,7 @@
             <h2>Reservations</h2>
             <form method="POST" action="#">
                 <div class="row">
-                    <table>
+                    <table id="reservationTable">
                         <tr>
                             <th>№</th>
                             <th>Discount Id</th>
@@ -249,11 +249,13 @@
 
                     </table>
                     <p>${message}</p>
-                    <c:if test="${amount>1}">
-                    <c:forEach var="i" begin="1" end = "${amount}">
-                    <a href="/testadmin/${i}">${i}</a>
-                    </c:forEach>
-                    </c:if>
+                    <ul class="pagination">
+                        <c:if test="${amount > 1}">
+                            <c:forEach var="i" begin="1" end="${amount}">
+                                <li class="waves-effect"><a href="/testadmin/${i}">${i}</a></li>
+                            </c:forEach>
+                        </c:if>
+                    </ul>
                 </div>
             </form>
 
