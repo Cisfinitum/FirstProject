@@ -25,7 +25,7 @@ public class ReservationServiceTest {
     private ReservationDAO reservationDAO;
 
     private int testPage = 1;
-    private int testTotal = 5;
+    private int testTotal = 20;
 
     @Test
     public void getAll() {
