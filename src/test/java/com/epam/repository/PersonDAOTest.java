@@ -7,9 +7,13 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
@@ -19,6 +23,9 @@ public class PersonDAOTest {
     private String testEmail = "user";
     private String testPassword = "123";
     private String testPersonRoleEnum = "ADMIN";
+
+    @Mock
+    private JdbcTemplate jdbcTemplate;
 
     @Mock
     private ResultSet resultSet;
@@ -53,4 +60,18 @@ public class PersonDAOTest {
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
         personDAO.buildPerson(resultSet);
     }
+
+    @Test
+    public void getEmailPositiveResult() throws SQLException {
+        when(resultSet.getString(("email"))).thenReturn(testEmail);
+        String actualEmail = personDAO.getEmail(resultSet);
+        assertEquals(testEmail, actualEmail);
+    }
+
+    @Test(expected = SQLException.class)
+    public void getEmailNegativeResult() throws SQLException {
+        when(resultSet.getString(("email"))).thenThrow(new SQLException());
+        personDAO.getEmail(resultSet);
+    }
+
 }
