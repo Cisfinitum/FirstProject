@@ -36,7 +36,6 @@ public class TourOfferServiceTest {
         assertEquals(tourOfferService.deleteTour(1),1);
     }
 
-
     @Test
     public void getToursCheck() {
         when(tourOfferDAO.getTours()).thenReturn(tourOfferList);
