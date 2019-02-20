@@ -37,11 +37,6 @@ public class ReservationController {
     @GetMapping("testadmin/deleteReservation/{id}")
     public String deleteReservation(@PathVariable int id, ModelMap reservationModel) {
         int resp = reservationService.removeReservation(id);
-        if (resp > 0) {
-            reservationModel.addAttribute("message", "Reservation deletes succesfully.");
-        } else {
-            reservationModel.addAttribute("message", "Deletion failed.");
-        }
         return "redirect:/testadmin";
     }
 }
