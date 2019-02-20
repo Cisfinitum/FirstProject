@@ -22,7 +22,8 @@ public class ReservationServiceTest {
     private Reservation expectedReservation;
     @InjectMocks
     ReservationService reservationService;
-
+    private int testPage = 1;
+    private int testTotal = 5;
     private List<Reservation> expectedReservationsList;
     private Reservation actualReservation;
     private Integer testId = 1;
@@ -54,15 +55,15 @@ public class ReservationServiceTest {
 
     @Test
     public void listReservations() {
-        when(reservationDAO.listReservations()).thenReturn(expectedReservationsList);
-        actualReservationList = reservationService.listReservations();
+        when(reservationDAO.listReservations(testPage, testTotal)).thenReturn(expectedReservationsList);
+        actualReservationList = reservationService.listReservations(testPage, testTotal);
         assertEquals(expectedReservationsList, actualReservationList);
     }
 
     @Test
     public void listReservationsReturnsNull() {
-        when(reservationDAO.listReservations()).thenReturn(null);
-        actualReservationList = reservationService.listReservations();
+        when(reservationDAO.listReservations(testPage, testTotal)).thenReturn(null);
+        actualReservationList = reservationService.listReservations(testPage, testTotal);
         assertNull(actualReservationList);
     }
 
