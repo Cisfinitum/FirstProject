@@ -22,15 +22,15 @@ CREATE TABLE hotel
   name          VARCHAR(50) NOT NULL,
   city          VARCHAR(50) NOT NULL,
   country       VARCHAR(50) NOT NULL,
-  numberOfStars INT
+  number_of_stars INT
 );
 CREATE TABLE tourOffer
 (
   id           NUMERIC IDENTITY PRIMARY KEY,
-  tourType     VARCHAR(300) NOT NULL,
-  startDate    DATE,
-  endDate      DATE,
-  pricePerUnit INT          NOT NULL,
+  tour_type     VARCHAR(300) NOT NULL,
+  start_date    DATE,
+  end_date      DATE,
+  price_per_unit INT          NOT NULL,
   hotel_id     INT          NOT NULL,
   description  VARCHAR(512),
   discount_id  INT,
@@ -41,11 +41,11 @@ CREATE TABLE reservation
 (
   id              NUMERIC IDENTITY PRIMARY KEY,
   client_id       INT          NOT NULL,
-  tourOffer_id    INT          NOT NULL,
-  numberOfPersons INT          NOT NULL,
+  tour_offer_id    INT          NOT NULL,
+  number_of_persons INT          NOT NULL,
   status          VARCHAR(100) NOT NULL,
   discount_id     INT,
-  totalPrice      INT,
-  FOREIGN KEY (tourOffer_id) REFERENCES tourOffer (id),
+  total_price      INT,
+  FOREIGN KEY (tour_offer_id) REFERENCES tourOffer (id),
   FOREIGN KEY (client_id) REFERENCES person (id),
 );
