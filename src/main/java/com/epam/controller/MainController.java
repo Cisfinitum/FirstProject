@@ -25,11 +25,6 @@ public class MainController {
         return "testuser";
     }
 
-    @GetMapping("/testadmin")
-    public String testAdmin(Principal user, ModelMap modelMap) {
-        return "testadmin";
-    }
-
     @GetMapping("/testpage")
     public String testPage(Principal user, ModelMap modelMap) {
         return "testpage";
