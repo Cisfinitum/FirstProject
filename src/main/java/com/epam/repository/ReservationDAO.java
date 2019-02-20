@@ -75,7 +75,7 @@ public class ReservationDAO {
         return 0;
     }
 
-    public List<Reservation> listReservations(int page, int total) {
+    public List<Reservation> listReservations(Integer page, Integer total) {
         String sql = "SELECT * from " + tableName + " LIMIT " + (page - 1) + "," + total;
         return jdbcTemplate.query(sql, reservationMapper);
     }

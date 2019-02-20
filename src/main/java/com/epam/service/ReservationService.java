@@ -43,7 +43,7 @@ public class ReservationService {
         }
     }
 
-    public List<Reservation> listReservations(int page, int total) {
+    public List<Reservation> listReservations(Integer page, Integer total) {
 
         if (page > 0 && total > 0) {
             if (page > 1) {

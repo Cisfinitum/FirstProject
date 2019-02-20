@@ -24,8 +24,8 @@ public class ReservationServiceTest {
     @Autowired
     private ReservationDAO reservationDAO;
 
-    private int testPage = 1;
-    private int testTotal = 20;
+    private Integer testPage = 1;
+    private Integer testTotal = 20;
 
     @Test
     public void getAll() {
