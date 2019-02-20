@@ -56,9 +56,9 @@ public class ReservationDAO {
     }
 
     public int addReservation(Reservation reservation) {
-        String sql = "INSERT INTO " + tableName + " " + clientId + " " + tourOfferId + " " + numberOfPeople + " " + status + " " + discountId + " " + totalPrice + ") VALUES ( ?,?,?,?,?,?)";
+        String sql = "INSERT INTO " + tableName + " (" + clientId + ", " + tourOfferId + ", " + numberOfPeople + ", " + status + ", " + discountId + ", " + totalPrice + ") VALUES ( ?,?,?,?,?,?)";
         return jdbcTemplate.update(sql, reservation.getClientId(), reservation.getTourOfferId(), reservation.getNumberOfPeople(),
-                reservation.getStatus(), reservation.getDiscountId(), reservation.getTotalPrice());
+                reservation.getStatus().getEnumStatus(), reservation.getDiscountId(), reservation.getTotalPrice());
     }
 
     public Reservation getReservationById(Integer reservationId) {

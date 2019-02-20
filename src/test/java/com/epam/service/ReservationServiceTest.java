@@ -67,11 +67,11 @@ public class ReservationServiceTest {
         assertNull(actualReservationList);
     }
 
-    @Test
-    public void addReservation() {
-        when(reservationDAO.addReservation(expectedReservation)).thenReturn(changedItems);
-        assertEquals(changedItems, reservationService.addReservation(expectedReservation));
-    }
+//    @Test
+//    public void addReservation() {
+//        when(reservationDAO.addReservation(expectedReservation)).thenReturn(changedItems);
+//        assertEquals(changedItems, reservationService.addReservation(expectedReservation));
+//    }
 
     @Test
     public void removeReservation() {

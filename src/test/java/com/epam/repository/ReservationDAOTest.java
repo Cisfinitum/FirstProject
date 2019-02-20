@@ -35,33 +35,33 @@ public class ReservationDAOTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @SneakyThrows
-    @Test
-    public void buildPerson() {
-        Integer testId = 1;
-        when(resultSet.getInt("id")).thenReturn(testId);
-        when(resultSet.getInt("client_id")).thenReturn(testClientId);
-        when(expectedReservation.getId()).thenReturn(testId);
-        when(resultSet.getInt("tour_offer_id")).thenReturn(testTourOfferId);
-        when(resultSet.getInt("number_of_people")).thenReturn(testNumberOfPeople);
-        when(resultSet.getString("status")).thenReturn(reservationStatusEnum.getEnumStatus());
-        when(resultSet.getInt("discount_id")).thenReturn(testDiscountId);
-        when(resultSet.getInt("total_price")).thenReturn(testTotalPrice);
-        Reservation actualReservation = reservationDAO.buildReservation(resultSet);
-        assertEquals(expectedReservation.getId(), actualReservation.getId());
-    }
+//    @SneakyThrows
+//    @Test
+//    public void buildPerson() {
+//        Integer testId = 1;
+//        when(resultSet.getInt("id")).thenReturn(testId);
+//        when(resultSet.getInt("client_id")).thenReturn(testClientId);
+//        when(expectedReservation.getId()).thenReturn(testId);
+//        when(resultSet.getInt("tour_offer_id")).thenReturn(testTourOfferId);
+//        when(resultSet.getInt("number_of_people")).thenReturn(testNumberOfPeople);
+//        when(resultSet.getString("status")).thenReturn(reservationStatusEnum.getEnumStatus());
+//        when(resultSet.getInt("discount_id")).thenReturn(testDiscountId);
+//        when(resultSet.getInt("total_price")).thenReturn(testTotalPrice);
+//        Reservation actualReservation = reservationDAO.buildReservation(resultSet);
+//        assertEquals(expectedReservation.getId(), actualReservation.getId());
+//    }
 
-    @SneakyThrows
-    @Test(expected = SQLException.class)
-    public void buildPersonThrowsException() {
-        when(resultSet.getInt("id")).thenThrow(new SQLException());
-        when(resultSet.getInt("client_id")).thenReturn(testClientId);
-        when(resultSet.getInt("tour_offer_id")).thenReturn(testTourOfferId);
-        when(resultSet.getInt("number_of_people")).thenReturn(testNumberOfPeople);
-        when(resultSet.getString("status")).thenReturn(reservationStatusEnum.getEnumStatus());
-        when(resultSet.getInt("discount_id")).thenReturn(testDiscountId);
-        when(resultSet.getInt("total_price")).thenReturn(testTotalPrice);
-        reservationDAO.buildReservation(resultSet);
-    }
+//    @SneakyThrows
+//    @Test(expected = SQLException.class)
+//    public void buildPersonThrowsException() {
+//        when(resultSet.getInt("id")).thenThrow(new SQLException());
+//        when(resultSet.getInt("client_id")).thenReturn(testClientId);
+//        when(resultSet.getInt("tour_offer_id")).thenReturn(testTourOfferId);
+//        when(resultSet.getInt("number_of_people")).thenReturn(testNumberOfPeople);
+//        when(resultSet.getString("status")).thenReturn(reservationStatusEnum.getEnumStatus());
+//        when(resultSet.getInt("discount_id")).thenReturn(testDiscountId);
+//        when(resultSet.getInt("total_price")).thenReturn(testTotalPrice);
+//        reservationDAO.buildReservation(resultSet);
+//    }
 
 }
