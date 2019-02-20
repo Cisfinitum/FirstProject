@@ -45,30 +45,30 @@ public class ReservationDAO {
     @SneakyThrows
     Reservation buildReservation(ResultSet rs) {
         return Reservation.builder()
-                .id(rs.getInt("id"))
-                .clientId(rs.getInt("client_id"))
-                .tourOfferId(rs.getInt("tour_offer_id"))
-                .numberOfPeople(rs.getInt("number_of_people"))
-                .status(ReservationStatusEnum.valueOf(rs.getString("status")))
-                .discountId(rs.getInt("discount_id"))
-                .totalPrice(rs.getInt("total_price"))
+                .id(rs.getInt(id))
+                .clientId(rs.getInt(clientId))
+                .tourOfferId(rs.getInt(tourOfferId))
+                .numberOfPeople(rs.getInt(numberOfPeople))
+                .status(ReservationStatusEnum.valueOf(rs.getString(status)))
+                .discountId(rs.getInt(discountId))
+                .totalPrice(rs.getInt(totalPrice))
                 .build();
     }
 
     public int addReservation(Reservation reservation) {
-        String sql = "INSERT INTO " + tableName + clientId + tourOfferId + numberOfPeople + status + discountId + totalPrice + ")VALUES( ?,?,?,?,?,?)";
+        String sql = "INSERT INTO " + tableName + " " + clientId + " " + tourOfferId + " " + numberOfPeople + " " + status + " " + discountId + " " + totalPrice + ") VALUES ( ?,?,?,?,?,?)";
         return jdbcTemplate.update(sql, reservation.getClientId(), reservation.getTourOfferId(), reservation.getNumberOfPeople(),
                 reservation.getStatus(), reservation.getDiscountId(), reservation.getTotalPrice());
     }
 
     public Reservation getReservationById(Integer reservationId) {
-        String sql = "SELECT * FROM" + tableName + " WHERE " + id + " = ?";
+        String sql = "SELECT * FROM " + tableName + " WHERE " + id + " = ?";
         return jdbcTemplate.queryForObject(sql,
                 new Object[]{reservationId}, (rs, rowNum) -> buildReservation(rs));
     }
 
     public int getTourOfferById(Integer offerId) {
-        String sql = "SELECT " + tourOfferId + "FROM" + tableName + " WHERE " + tourOfferId + " = ?";
+        String sql = "SELECT " + tourOfferId + " FROM " + tableName + " WHERE " + tourOfferId + " = ?";
         Object tourOffer = jdbcTemplate.queryForObject(sql, new Object[]{offerId}, (rs, rowNub) ->
                 buildReservation(rs));
         if (tourOffer != null) return 1;
@@ -86,14 +86,14 @@ public class ReservationDAO {
     }
 
     public int updateReservation(Reservation reservation) {
-        String sql = "UPDATE" +
+        String sql = "UPDATE " +
                 tableName + " SET" + clientId + " = ?, " +
-                tourOfferId + "= ? ," +
-                numberOfPeople + "= ?," +
-                status + " = ?," +
-                discountId + "= ?," +
-                tourOfferId + " = ?," +
-                totalPrice + " = ? " +
+                " " + tourOfferId + "= ? ," +
+                " " + numberOfPeople + "= ?," +
+                " " + status + " = ?," +
+                " " + discountId + "= ?," +
+                " " + tourOfferId + " = ?," +
+                " " + totalPrice + " = ? " +
                 "WHERE" + id + "= ?";
         return jdbcTemplate.update(sql, reservation.getClientId(),
                 reservation.getTourOfferId(),
