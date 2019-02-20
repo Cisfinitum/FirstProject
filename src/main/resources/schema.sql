@@ -42,7 +42,7 @@ CREATE TABLE reservation
   id              NUMERIC IDENTITY PRIMARY KEY,
   client_id       INT          NOT NULL,
   tour_offer_id    INT          NOT NULL,
-  number_of_persons INT          NOT NULL,
+  number_of_people INT          NOT NULL,
   status          VARCHAR(100) NOT NULL,
   discount_id     INT,
   total_price      INT,
