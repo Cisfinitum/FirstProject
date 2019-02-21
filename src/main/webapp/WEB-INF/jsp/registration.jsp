@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
@@ -17,20 +18,20 @@
 <div class="registration-page">
     <div class="registration">
         <div class="row">
-            <form name="user" class="col s12" onsubmit="return validate()" action="registration" method="POST" >
+            <form name="person" class="col s12" onsubmit="return validate()" action="registration" method="POST">
                 <c:set var="val"><spring:message code="wrongpass"/></c:set>
                 <input id="wrongpass" type="hidden" value="${val}"/>
                 <span id="forpass" style="color: red; font-weight: bold"></span>
                 <p style="color: red;">${message}</p>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="email" type="email" class="validate" name="email">
+                        <input id="email" type="email" class="validate" name="email"/>
                         <label for="email"><spring:message code="emailname" /></label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="password" type="password" class="validate" name="password" onchange="checkPass()">
+                        <input id="password" type="password" class="validate" name="password" onchange="checkPass()"/>
                         <label for="password"><spring:message code="passwordname" /></label>
                     </div>
                 </div>

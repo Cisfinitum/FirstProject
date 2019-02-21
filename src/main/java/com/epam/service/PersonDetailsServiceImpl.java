@@ -31,22 +31,37 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
     }
 
     public boolean addPerson(Person person) {
-        return personService.addPerson(person);
+        int result = personService.addPerson(person);
+        if (result > 1) throw new RuntimeException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
     public boolean addToBlackList(String email) {
-        return personService.addToBlackList(email);
+        int result = personService.addToBlackList(email);
+        if (result > 1) throw new RuntimeException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
     public boolean removeFromBlackList(String email) {
-        return personService.removeFromBlackList(email);
+        int result = personService.removeFromBlackList(email);
+        if (result > 1) throw new RuntimeException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
     public boolean giveAdminRights(String email) {
-        return personService.giveAdminRights(email);
+        int result = personService.giveAdminRights(email);
+        if (result > 1) throw new RuntimeException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
     public boolean updatePassword(String email, String password) {
-        return  personService.updatePassword(email, password);
+        int result = personService.updatePassword(email, password);
+        if (result > 1) throw new RuntimeException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 }
