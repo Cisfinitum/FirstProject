@@ -6,13 +6,11 @@ import com.epam.service.PersonDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,10 +25,8 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration")
-    public ModelAndView registrationPage(ModelAndView modelAndView) {
-        modelAndView.addObject("person", new Person(PersonRoleEnum.valueOf("USER")));
-        modelAndView.setViewName("registration");
-        return modelAndView;
+    public String registrationPage() {
+        return "/registration";
     }
 
     @PostMapping("/registration")
