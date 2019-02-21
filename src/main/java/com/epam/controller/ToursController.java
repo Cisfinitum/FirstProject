@@ -42,7 +42,7 @@ public class ToursController {
             toursModel.addObject("list",toursOfferService.searchTours(null,addStartDate, addEndDate));
             return toursModel;
         } catch (Exception e){
-            toursModel.addObject("result",e.getMessage());
+            toursModel.addObject("error",e.getMessage());
             return toursModel;
         }
     }
@@ -50,7 +50,10 @@ public class ToursController {
     @PostMapping("/deletetour")
     public ModelAndView deleteTour(@RequestParam String idOfTour) {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("result",toursOfferService.deleteTour(Integer.valueOf(idOfTour))==1?"Success":"Failed to delete");
+        if(toursOfferService.deleteTour(Integer.valueOf(idOfTour))==1)
+        toursModel.addObject("result","Success");
+        else
+        toursModel.addObject("error","Failed to delete");
         toursModel.setViewName("redirect:/listoftours");
         return toursModel;
     }
@@ -79,11 +82,14 @@ public class ToursController {
                     .discountId(1) //stub
                     .build());
 
-            toursModel.addObject("result",result==1?"Success":"Failed to add");
+            if(result==1)
+                toursModel.addObject("result","Success");
+            else
+                toursModel.addObject("error","Failed to add");
             return toursModel;
 
         } catch (Exception e){
-            toursModel.addObject("result",e.getMessage());
+            toursModel.addObject("error",e.getMessage());
             return toursModel;
         }
     }
@@ -111,12 +117,13 @@ public class ToursController {
                     .description(tourDescription)
                     .discountId(1) //stub
                     .build());
-
-            toursModel.addObject("result",result==1?"Success":"Failed to update");
+            if(result==1)
+                 toursModel.addObject("result","Success");
+            else
+                toursModel.addObject("error","Failed to add");
             return toursModel;
-
         } catch (Exception e){
-            toursModel.addObject("result",e.getMessage());
+            toursModel.addObject("error",e.getMessage());
             return toursModel;
         }
     }
