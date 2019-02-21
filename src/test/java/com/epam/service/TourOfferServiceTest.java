@@ -19,7 +19,7 @@ public class TourOfferServiceTest {
     private TourOfferDAO tourOfferDAO;
     @Mock
     private TourOffer expectedTourOffer;
-    @Mock
+
     private List<TourOffer> tourOfferList;
 
     private TourOfferService tourOfferService;
@@ -28,6 +28,7 @@ public class TourOfferServiceTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         tourOfferService = new TourOfferService(tourOfferDAO);
+        tourOfferList = new ArrayList<>();
     }
 
     @Test
