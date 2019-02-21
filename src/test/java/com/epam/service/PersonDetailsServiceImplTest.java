@@ -1,6 +1,7 @@
 package com.epam.service;
 
 
+import com.epam.exception.InvalidDataBaseAffectedException;
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
 
@@ -71,7 +72,7 @@ public class PersonDetailsServiceImplTest {
         assertTrue(personDetailsServiceImpl.addPerson(testPerson));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = InvalidDataBaseAffectedException.class)
     public void addPersonMoreThanOneRow() {
         when(personService.addPerson(testPerson)).thenReturn(10);
         personDetailsServiceImpl.addPerson(testPerson);
@@ -89,7 +90,7 @@ public class PersonDetailsServiceImplTest {
         assertTrue(personDetailsServiceImpl.addToBlackList(testEmail));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = InvalidDataBaseAffectedException.class)
     public void addToBlackListMoreThanOneRow() {
         when(personService.addToBlackList(testEmail)).thenReturn(10);
         personDetailsServiceImpl.addToBlackList(testEmail);
@@ -107,7 +108,7 @@ public class PersonDetailsServiceImplTest {
         assertTrue(personDetailsServiceImpl.removeFromBlackList(testEmail));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = InvalidDataBaseAffectedException.class)
     public void removeFromBlackListMoreThanOneRow() {
         when(personService.removeFromBlackList(testEmail)).thenReturn(10);
         personDetailsServiceImpl.removeFromBlackList(testEmail);
@@ -125,7 +126,7 @@ public class PersonDetailsServiceImplTest {
         assertTrue(personDetailsServiceImpl.giveAdminRights(testEmail));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = InvalidDataBaseAffectedException.class)
     public void giveAdminRightsMoreThanOneRow() {
         when(personService.giveAdminRights(testEmail)).thenReturn(10);
         personDetailsServiceImpl.giveAdminRights(testEmail);
@@ -143,7 +144,7 @@ public class PersonDetailsServiceImplTest {
         assertTrue(personDetailsServiceImpl.updatePassword(testEmail, testPassword));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = InvalidDataBaseAffectedException.class)
     public void updatePasswordMoreThanOneRow() {
         when(personService.updatePassword(testEmail, testPassword)).thenReturn(10);
         personDetailsServiceImpl.updatePassword(testEmail, testPassword);

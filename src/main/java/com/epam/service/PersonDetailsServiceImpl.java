@@ -1,5 +1,6 @@
 package com.epam.service;
 
+import com.epam.exception.InvalidDataBaseAffectedException;
 import com.epam.model.Person;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,35 +33,35 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
 
     public boolean addPerson(Person person) {
         int result = personService.addPerson(person);
-        if (result > 1) throw new RuntimeException("Affected more then one row");
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
     }
 
     public boolean addToBlackList(String email) {
         int result = personService.addToBlackList(email);
-        if (result > 1) throw new RuntimeException("Affected more then one row");
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
     }
 
     public boolean removeFromBlackList(String email) {
         int result = personService.removeFromBlackList(email);
-        if (result > 1) throw new RuntimeException("Affected more then one row");
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
     }
 
     public boolean giveAdminRights(String email) {
         int result = personService.giveAdminRights(email);
-        if (result > 1) throw new RuntimeException("Affected more then one row");
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
     }
 
     public boolean updatePassword(String email, String password) {
         int result = personService.updatePassword(email, password);
-        if (result > 1) throw new RuntimeException("Affected more then one row");
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
     }
