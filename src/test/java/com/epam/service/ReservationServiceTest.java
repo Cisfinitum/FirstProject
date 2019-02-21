@@ -29,6 +29,8 @@ public class ReservationServiceTest {
     private Integer testId = 1;
     private List actualReservationList;
     private int changedItems = 1;
+    private int testPage = 1;
+    private int testTotal = 20;
 
     @Before
     public void setUp() {

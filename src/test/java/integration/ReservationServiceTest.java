@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class ReservationServiceTest {
+
     @Autowired
     private ReservationService reservationService;
 
@@ -29,8 +30,7 @@ public class ReservationServiceTest {
 
     @Test
     public void getAll() {
-
-        List<Reservation> actualReservations = reservationService.listReservations(testPage, testTotal);
+        List<Reservation> actualReservations = reservationService.listReservations();
         Assert.assertNotEquals(0, actualReservations.size());
     }
 

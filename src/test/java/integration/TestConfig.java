@@ -26,7 +26,7 @@ public class TestConfig {
     }
 
     @Bean
-    public JdbcTemplate simpleJdbcTemplate() {
+    public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }
 }

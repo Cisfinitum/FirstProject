@@ -1,15 +1,16 @@
 package com.epam.controller;
 
 import com.epam.model.Reservation;
-import com.epam.service.ReservationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+        import com.epam.service.ReservationService;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.stereotype.Controller;
+        import org.springframework.ui.ModelMap;
+        import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @Controller
-@RequestMapping("/testadmin")
+@RequestMapping("/reservation")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -21,7 +22,7 @@ public class ReservationController {
 
     @GetMapping
     public String testadmin() {
-        return "redirect:/testadmin/1";
+        return "redirect:/reservation/1";
     }
 
     @GetMapping("/{id}")
@@ -32,12 +33,12 @@ public class ReservationController {
         modelMap.addAttribute("listReservation", reservations);
         modelMap.addAttribute("generalAmount", generalAmount);
         modelMap.addAttribute("amount", (generalAmount % amount == 0) ? generalAmount / amount : generalAmount / amount + 1);
-        return "testadmin";
+        return "reservation";
     }
 
     @GetMapping("/deleteReservation/{id}")
     public String deleteReservation(@PathVariable Integer id) {
         reservationService.removeReservation(id);
-        return "redirect:/testadmin";
+        return "redirect:/reservation";
     }
 }
