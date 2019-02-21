@@ -18,6 +18,9 @@ import static org.mockito.Mockito.when;
 
 public class PersonDAOTest {
 
+    public static final int EXPECTED_RESULT = 1;
+    public static final int UNEXPECTED_RESULT = -1;
+    public static final String EMPTY_EMAIL = "";
     private String testEmail = "user@email.com";
     private String testPassword = "Goodpassword1";
     private String testPersonRoleEnum = "USER";
@@ -43,7 +46,7 @@ public class PersonDAOTest {
 
     @Test
     public void buildPersonPositiveCheck() throws SQLException {
-        int testId = 1;
+        int testId = EXPECTED_RESULT;
         when(resultSet.getInt("id")).thenReturn(testId);
         when(resultSet.getString("email")).thenReturn(testEmail);
         when(resultSet.getString("password")).thenReturn(testPassword);
@@ -87,69 +90,57 @@ public class PersonDAOTest {
 
     @Test
     public void addToBlackListPositiveResult() {
-        int expectedResult = 1;
         String sql = "UPDATE person SET role = BLOCKED WHERE email = ?";
-        when(jdbcTemplate.update(sql, testEmail)).thenReturn(1);
-        assertEquals(expectedResult, personDAO.addToBlackList(testEmail));
+        when(jdbcTemplate.update(sql, testEmail)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personDAO.addToBlackList(testEmail));
     }
 
     @Test
     public void addToBlackListEmailIsEmpty() {
-        int expectedResult = -1;
-        String emptyEmail = "";
         String sql = "UPDATE person SET role = BLOCKED WHERE email = ?";
-        when(jdbcTemplate.update(sql, emptyEmail)).thenReturn(1);
-        assertEquals(expectedResult, personDAO.addToBlackList(emptyEmail));
+        when(jdbcTemplate.update(sql, UNEXPECTED_RESULT)).thenReturn(UNEXPECTED_RESULT);
+        assertEquals(UNEXPECTED_RESULT, personDAO.addToBlackList(EMPTY_EMAIL));
     }
 
     @Test
     public void removeFromBlackListPositiveResult() {
-        int expectedResult = 1;
         String sql = "UPDATE person SET role = USER WHERE email = ?";
-        when(jdbcTemplate.update(sql, testEmail)).thenReturn(1);
-        assertEquals(expectedResult, personDAO.removeFromBlackList(testEmail));
+        when(jdbcTemplate.update(sql, testEmail)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personDAO.removeFromBlackList(testEmail));
     }
 
     @Test
     public void removeFromBlackListEmailIsEmpty() {
-        int expectedResult = -1;
-        String emptyEmail = "";
         String sql = "UPDATE person SET role = USER WHERE email = ?";
-        when(jdbcTemplate.update(sql, emptyEmail)).thenReturn(1);
-        assertEquals(expectedResult, personDAO.removeFromBlackList(emptyEmail));
+        when(jdbcTemplate.update(sql, EMPTY_EMAIL)).thenReturn(UNEXPECTED_RESULT);
+        assertEquals(UNEXPECTED_RESULT, personDAO.removeFromBlackList(EMPTY_EMAIL));
     }
 
     @Test
     public void giveAdminRightsPositiveResult() {
-        int expectedResult = 1;
         String sql = "UPDATE person SET role = ADMIN WHERE email = ?";
-        when(jdbcTemplate.update(sql, testEmail)).thenReturn(1);
-        assertEquals(expectedResult, personDAO.giveAdminRights(testEmail));
+        when(jdbcTemplate.update(sql, testEmail)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personDAO.giveAdminRights(testEmail));
     }
 
     @Test
     public void giveAdminRightsEmptyEmail() {
-        int expectedResult = -1;
-        String emptyEmail = "";
         String sql = "UPDATE person SET role = ADMIN WHERE email = ?";
-        when(jdbcTemplate.update(sql, emptyEmail)).thenReturn(1);
-        assertEquals(expectedResult, personDAO.giveAdminRights(emptyEmail));
+        when(jdbcTemplate.update(sql, EMPTY_EMAIL)).thenReturn(UNEXPECTED_RESULT);
+        assertEquals(UNEXPECTED_RESULT, personDAO.giveAdminRights(EMPTY_EMAIL));
     }
 
     @Test
     public void updatePasswordPositiveResult() {
-        int expectedResult = 1;
         String sql = "UPDATE person SET password = ? WHERE email = ?";
-        when(jdbcTemplate.update(sql, testPassword, testEmail)).thenReturn(1);
-        assertEquals(expectedResult, personDAO.updatePassword(testEmail, testPassword));
+        when(jdbcTemplate.update(sql, testPassword, testEmail)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personDAO.updatePassword(testEmail, testPassword));
     }
 
     @Test
     public void updatePasswordEmptyEmail() {
-        int expectedResult = -1;
-        String emptyEmail = "";
         String sql = "UPDATE person SET password = ? WHERE email = ?";
-        when(jdbcTemplate.update(sql, testPassword, emptyEmail)).thenReturn(-1);
-        assertEquals(expectedResult, personDAO.updatePassword(emptyEmail, testPassword));
+        when(jdbcTemplate.update(sql, testPassword, EMPTY_EMAIL)).thenReturn(UNEXPECTED_RESULT);
+        assertEquals(UNEXPECTED_RESULT, personDAO.updatePassword(EMPTY_EMAIL, testPassword));
     }
 }
