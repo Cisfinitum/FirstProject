@@ -77,6 +77,9 @@
                 <li><a href="login"><spring:message code="signin" /></a></li>
                 <li><a href="registration"><spring:message code="signup" /></a></li>
             </sec:authorize>
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <li><a href="listoftours"><spring:message code="adminpage" /></a></li>
+            </sec:authorize>
             <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
                 <li><a href="logout"><spring:message code="logout" /></a></li>
             </sec:authorize>
@@ -91,25 +94,32 @@
 
 <main>
     <div class="container">
-        <form method="POST" action="#">
+        <form method="POST" action="searchtours">
             <div class="row">
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">edit_location</i>
-                        <input type="text" id="autocomplete-input" class="autocomplete">
+                        <input type="text" id="autocomplete-input" class="autocomplete" name="country">
                         <label for="autocomplete-input"><spring:message code="country" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-date" class="datepicker">
-                        <label for="autocomplete-date"><spring:message code="dod" /></label>
+                        <input type="text" id="autocomplete-dateStart" class="datepicker" name="startDate">
+                        <label for="autocomplete-dateStart"><spring:message code="dod" /></label>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="input-field">
+                        <i class="material-icons prefix">event_available</i>
+                        <input type="text" id="autocomplete-dateEnd" class="datepicker" name="endDate">
+                        <label for="autocomplete-dateEnd"><spring:message code="ad" /></label>
                     </div>
                 </div>
                 <div class="col s2">
                     <div class="input-field">
-                        <select class="icons">
+                        <select class="icons" name="numberOfPeople">
                             <option value="1" data-icon="${gr}" class="right" selected>1</option>
                             <option value="2" data-icon="${gr}" class="right">2</option>
                             <option value="3" data-icon="${gr}" class="right">3</option>
@@ -122,15 +132,6 @@
                         <label><spring:message code="nop" /></label>
                     </div>
                 </div>
-                <div class="col s2">
-                    <div class="input-field">
-                        <p class="range-field">
-                            <label for="test5"><spring:message code="nod" /> </label>
-                            <label id="rangevalue" for="test5"></label>
-                            <input type="range" id="test5" min="0" max="30" onchange="printValue()" />
-                        </p>
-                    </div>
-                </div>
                 <div class="col s1">
                     <div class="input-field">
                         <button class="btn-large waves-effect waves-light" type="submit" name="action"><spring:message code="searchbutton" />
@@ -141,7 +142,48 @@
             </div>
         </form>
     </div>
-
+    <c:if test="${not empty list}">
+    <div class="container">
+        <table>
+            <thead>
+            <tr>
+                <th>Tour Type</th>
+                <th>Country</th>
+                <th>City</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Price</th>
+                <th>Hotel</th>
+                <th>Description</th>
+                <th>Discount</th>
+                <th>Reserve</th>
+            </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="i" begin="0" end="${list.size()-1}">
+                    <tr>
+                        <td>${list.get(i).tourType}</td>
+                        <td>FROM HOTEL ID</td>
+                        <td>FROM HOTEL ID</td>
+                        <td>${list.get(i).startDate}</td>
+                        <td>${list.get(i).endDate}</td>
+                        <td>${list.get(i).pricePerUnit}</td>
+                        <td>FROM HOTEL ID</td>
+                        <td>${list.get(i).description}</td>
+                        <td>FROM DISCOUNT ID</td>
+                        <td>
+                            <form method="post" action="#">
+                                <input name="idOfTour" type="hidden" value="${list.get(i).id}">
+                                <button class="btn waves-effect waves-light" type="submit" name="action"> Reserve
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
+    </c:if>
 <div class="container">
     <div class="row">
         <div class="col s4">

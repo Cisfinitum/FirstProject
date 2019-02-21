@@ -32,7 +32,9 @@ public class PersonDAO {
                 .build();
     }
 
-    public boolean doesEmailExists(String email) {
+    public boolean doesEmailExist(String email){
+        if (email == null) throw new IllegalArgumentException("Illegal email argument");
+        if (email.equals("")) return false;
         List<String> emailsList = jdbcTemplate.query("SELECT email FROM person", (rs, rowNum) -> getEmail(rs));
         for(String stringEmail:  emailsList){
             System.out.println("Im here");
@@ -45,41 +47,36 @@ public class PersonDAO {
         return rs.getString("email");
     }
 
-    public boolean addPerson(Person person) {
+    public int addPerson(Person person) {
         String email = person.getEmail();
-        System.out.println(email);
-        if (doesEmailExists(email)) return false;
+        if (doesEmailExist(email)) return -1;
         String password = person.getPassword();
-        System.out.println(password);
         String role = person.getRole().toString();
-        System.out.println(role);
         String sql = "INSERT INTO person (email, password, role) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, email, password, role);
-        return true;
+        return jdbcTemplate.update(sql, email, password, role);
     }
 
-    public boolean addToBlackList(String email) {
+    public int addToBlackList(String email) {
+        if (email.equals("")) return -1;
         String sql = "UPDATE person SET role = BLOCKED WHERE email = ?";
-        jdbcTemplate.update(sql, email);
-        return true;
+        return jdbcTemplate.update(sql, email);
     }
 
-    public boolean removeFromBlackList(String email) {
+    public int removeFromBlackList(String email) {
+        if (email.equals("")) return -1;
         String sql = "UPDATE person SET role = USER WHERE email = ?";
-        jdbcTemplate.update(sql, email);
-        return true;
+        return jdbcTemplate.update(sql, email);
     }
 
-    public boolean giveAdminRights(String email) {
+    public int giveAdminRights(String email) {
+        if (email.equals("")) return -1;
         String sql = "UPDATE person SET role = ADMIN WHERE email = ?";
-        jdbcTemplate.update(sql, email);
-        return true;
+        return jdbcTemplate.update(sql, email);
     }
 
-    public boolean updatePassword(String email, String password) {
-        if (email.equals("") || password.equals("")) return false;
+    public int updatePassword(String email, String password) {
+        if (email.equals("") || password.equals("")) return -1;
         String sql = "UPDATE person SET password = ? WHERE email = ?";
-        jdbcTemplate.update(sql, password, email);
-        return true;
+        return jdbcTemplate.update(sql, password, email);
     }
 }

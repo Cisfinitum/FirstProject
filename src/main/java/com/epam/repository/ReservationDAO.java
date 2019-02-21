@@ -75,8 +75,8 @@ public class ReservationDAO {
         return 0;
     }
 
-    public List<Reservation> listReservations() {
-        String sql = "SELECT * from " + tableName;
+    public List<Reservation> listReservations(Integer page, Integer total) {
+        String sql = "SELECT * from " + tableName + " LIMIT " + (page - 1) + "," + total;
         return jdbcTemplate.query(sql, reservationMapper);
     }
 
@@ -102,5 +102,11 @@ public class ReservationDAO {
                 reservation.getDiscountId(),
                 reservation.getTotalPrice(),
                 reservation.getId());
+    }
+
+    public int amountOfReservations() {
+        String sql = "SELECT COUNT(*) FROM " + tableName;
+        return jdbcTemplate.queryForObject(
+                sql, new Object[]{}, Integer.class);
     }
 }
