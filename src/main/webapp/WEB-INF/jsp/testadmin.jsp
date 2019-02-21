@@ -52,9 +52,9 @@
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
                         <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-                        <li><a href="logout"><spring:message code="logout" /></a></li>
-                        </sec:authorize>
-                    </button>
+                <li><a href="logout"><spring:message code="logout"/></a></li>
+                </sec:authorize>
+                </button>
                 </li>
 
             </ul>
@@ -224,7 +224,7 @@
         </div>
     </div>
 
-    <div id="Reservations" class="tabcontent">
+    <div id="Reservations" class="tabcontent" style="margin-bottom: 50px">
         <div class="container">
             <h2>Reservations</h2>
             <form method="POST" action="#">
@@ -251,16 +251,19 @@
                                     class="small material-icons">remove</i></a></td>
                             </c:forEach>
                         </tr>
-
                     </table>
-
-                    <ul class="pagination">
-                        <c:if test="${generalAmount>5}">
-                            <c:forEach var="i" begin="1" end="${amount}">
-                                <li class="waves-effect"><a href="/testadmin/${i}">${i}</a></li>
-                            </c:forEach>
-                        </c:if>
-                    </ul>
+                    <br>
+                    <div class="row">
+                        <div class="col s6 offset-s5">
+                            <ul class="pagination">
+                                <c:if test="${generalAmount>4}">
+                                    <c:forEach var="i" begin="1" end="${amount}">
+                                        <li class="waves-effect"><a href="/testadmin/${i}">${i}</a></li>
+                                    </c:forEach>
+                                </c:if>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </form>
 

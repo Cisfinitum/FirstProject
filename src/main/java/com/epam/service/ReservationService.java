@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 @Service
 public class ReservationService {
     private final ReservationDAO reservationDAO;
-    public int totalAmountOfRows = 5;
+    public int totalAmountOfRows = 4;
 
     @Autowired
     public ReservationService(ReservationDAO reservationDAO) {
