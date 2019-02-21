@@ -16,31 +16,39 @@ public class PersonService {
         this.personDAO = personDAO;
     }
 
-    public Person getPerson(String name){
+    public Person getPerson(String email){
+        if (email == null) throw  new IllegalArgumentException("Email must be not null");
         List<Person> persons = personDAO.getPersons();
         for (Person person: persons) {
-            if (person.getEmail().equals(name)) return person;
+            if (person.getEmail().equals(email)) return person;
         }
         return null;
     }
 
-    public boolean addPerson(Person person){
+    public int addPerson(Person person){
+        if (person == null) throw new IllegalArgumentException("Person must be not null");
         return personDAO.addPerson(person);
     }
 
-    public boolean updatePassword(String email, String password) {
+    public int updatePassword(String email, String password) {
+        if (email == null || password == null) {
+            throw new IllegalArgumentException("Email and password must be not null");
+        }
         return personDAO.updatePassword(email, password);
     }
 
-    public boolean addToBlackList(String email) {
+    public int addToBlackList(String email) {
+        if (email == null) throw new IllegalArgumentException("Email must be not null");
         return personDAO.addToBlackList(email);
     }
 
-    public boolean removeFromBlackList(String email) {
+    public int removeFromBlackList(String email) {
+        if (email == null) throw new IllegalArgumentException("Email must be not null");
         return personDAO.removeFromBlackList(email);
     }
 
-    public boolean giveAdminRights(String email) {
+    public int giveAdminRights(String email) {
+        if (email == null) throw new IllegalArgumentException("Email must be not null");
         return personDAO.giveAdminRights(email);
     }
 }

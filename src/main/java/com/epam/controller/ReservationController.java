@@ -1,15 +1,15 @@
 package com.epam.controller;
 
 import com.epam.model.Reservation;
-import com.epam.service.ReservationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+        import com.epam.service.ReservationService;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.stereotype.Controller;
+        import org.springframework.ui.ModelMap;
+        import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+        import java.util.List;
 @Controller
+@RequestMapping("/reservation")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -19,21 +19,25 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping("/testadmin")
-    public String listReservations(ModelMap modelMap) {
-        List<Reservation> list = reservationService.listReservations();
-        modelMap.addAttribute("listReservation", list);
-        return "testadmin";
+    @GetMapping
+    public String testadmin() {
+        return "redirect:/reservation/1";
+    }
+
+    @GetMapping("/{id}")
+    public String listReservations(@PathVariable Integer id, ModelMap modelMap) {
+        List<Reservation> reservations = reservationService.listReservations(id, reservationService.totalAmountOfRows);
+        int generalAmount = reservationService.amountOfReservation();
+        int amount = reservationService.totalAmountOfRows;
+        modelMap.addAttribute("listReservation", reservations);
+        modelMap.addAttribute("generalAmount", generalAmount);
+        modelMap.addAttribute("amount", (generalAmount % amount == 0) ? generalAmount / amount : generalAmount / amount + 1);
+        return "reservation";
     }
 
     @GetMapping("/deleteReservation/{id}")
-    public String deleteReservation(@PathVariable int id, ModelMap reservationModel) {
-        int resp =  reservationService.removeReservation(id);
-        if(resp > 0 ) {
-            reservationModel.addAttribute("message", "Reservation deletes succesfully.");
-        } else {
-            reservationModel.addAttribute("message", "Deletion failed.");
-        }
-        return "redirect:/testadmin";
+    public String deleteReservation(@PathVariable Integer id) {
+        reservationService.removeReservation(id);
+        return "redirect:/reservation";
     }
 }
