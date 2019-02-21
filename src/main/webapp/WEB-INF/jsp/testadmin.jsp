@@ -152,62 +152,62 @@
     <div id="AddTour" class="tabcontent">
         <div class="container">
             <h2>Add Tour</h2>
-            <form method="POST" action="#">
+            <form method="POST" action="addtour">
                 <div class="row">
                     <div class="col s3">
                         <div class="input-field">
-                            <input type="text" id="autocomplete-input" class="autocomplete">
+                            <input type="text" id="autocomplete-input" class="autocomplete" name="tourType">
                             <label for="autocomplete-input">Tour type</label>
                         </div>
                     </div>
                     <div class="col s3">
                         <div class="input-field">
                             <i class="material-icons prefix">event_available</i>
-                            <input type="text" id="autocomplete-date" class="datepicker">
+                            <input type="text" id="autocomplete-date" class="datepicker" name="startDate">
                             <label for="autocomplete-date">Start Date</label>
                         </div>
                     </div>
                     <div class="col s3">
                         <div class="input-field">
                             <i class="material-icons prefix">event_available</i>
-                            <input type="text" id="autocomplete-date2" class="datepicker">
+                            <input type="text" id="autocomplete-date2" class="datepicker" name="endDate">
                             <label for="autocomplete-date2">End Date</label>
                         </div>
                     </div>
                     <div class="col s3">
                         <div class="input-field">
-                            <input type="text" id="autocomplete-input4" class="pricePerPerson">
+                            <input type="text" id="autocomplete-input4" class="pricePerPerson" name="country">
                             <label for="autocomplete-input4">Country</label>
                         </div>
                     </div>
                     <div class="col s3">
                         <div class="input-field">
-                            <input type="text" id="autocomplete-input5" class="pricePerPerson">
+                            <input type="text" id="autocomplete-input5" class="pricePerPerson" name="city">
                             <label for="autocomplete-input5">City</label>
                         </div>
                     </div>
                     <div class="col s3">
                         <div class="input-field">
-                            <input type="text" id="autocomplete-input6" class="pricePerPerson">
+                            <input type="text" id="autocomplete-input6" class="pricePerPerson" name="hotel">
                             <label for="autocomplete-input6">Hotel</label>
                         </div>
                     </div>
 
                     <div class="col s3">
                         <div class="input-field">
-                            <input type="text" id="autocomplete-input2" class="pricePerPerson">
+                            <input type="text" id="autocomplete-input2" class="pricePerPerson" name="pricePerPerson">
                             <label for="autocomplete-input2">Price Per Person</label>
                         </div>
                     </div>
                     <div class="col s3">
                         <div class="input-field">
-                            <input type="text" id="autocomplete-input3" class="pricePerPerson">
+                            <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount">
                             <label for="autocomplete-input3">Discount</label>
                         </div>
                     </div>
                     <div class="input-field">
                         <div class="input-field col s12">
-                            <textarea id="textarea1" class="materialize-textarea"></textarea>
+                            <textarea id="textarea1" class="materialize-textarea" name="tourDescription"></textarea>
                             <label for="textarea1">Tour Description</label>
                         </div>
                     </div>

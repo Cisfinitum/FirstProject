@@ -19,11 +19,11 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping("/testadmin")
+    @GetMapping("/reservation")
     public String listReservations(ModelMap modelMap) {
         List<Reservation> list = reservationService.listReservations();
         modelMap.addAttribute("listReservation", list);
-        return "testadmin";
+        return "reservation";
     }
 
     @GetMapping("/deleteReservation/{id}")
@@ -34,6 +34,6 @@ public class ReservationController {
         } else {
             reservationModel.addAttribute("message", "Deletion failed.");
         }
-        return "redirect:/testadmin";
+        return "redirect:/reservation";
     }
 }
