@@ -36,8 +36,7 @@
                        onclick="openContent(event, 'Tours')">Tours
 
                 </a></li>
-                <li><a href="javascript:void(0)"
-                       onclick="openContent(event, 'AddTour')">Add
+                <li><a href="/addtour">Add
                     Tour
                 </a></li>
                 <li><a href="javascript:void(0)"
@@ -46,14 +45,15 @@
                     <span class="new badge" style="background-color: #ab4160;">2</span>
                     Reservations
                 </a></li>
-                <li style="margin-right: 20px"><a href="javascript:void(0)" onclick="openContent(event, 'Clients')">Clients
+                <li><a href="javascript:void(0)" onclick="openContent(event, 'Clients')">Clients
                 </a></li>
+                <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
                         <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-                        <li><a href="logout"><spring:message code="logout" /></a></li>
-                        </sec:authorize>
-                    </button>
+                <li><a href="logout"><spring:message code="logout"/></a></li>
+                </sec:authorize>
+                </button>
                 </li>
 
             </ul>
@@ -148,81 +148,6 @@
             <br>
         </div>
     </div>
-
-    <div id="AddTour" class="tabcontent">
-        <div class="container">
-            <h2>Add Tour</h2>
-            <form method="POST" action="#">
-                <div class="row">
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input" class="autocomplete">
-                            <label for="autocomplete-input">Tour type</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <i class="material-icons prefix">event_available</i>
-                            <input type="text" id="autocomplete-date" class="datepicker">
-                            <label for="autocomplete-date">Start Date</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <i class="material-icons prefix">event_available</i>
-                            <input type="text" id="autocomplete-date2" class="datepicker">
-                            <label for="autocomplete-date2">End Date</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input4" class="pricePerPerson">
-                            <label for="autocomplete-input4">Country</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input5" class="pricePerPerson">
-                            <label for="autocomplete-input5">City</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input6" class="pricePerPerson">
-                            <label for="autocomplete-input6">Hotel</label>
-                        </div>
-                    </div>
-
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input2" class="pricePerPerson">
-                            <label for="autocomplete-input2">Price Per Person</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input3" class="pricePerPerson">
-                            <label for="autocomplete-input3">Discount</label>
-                        </div>
-                    </div>
-                    <div class="input-field">
-                        <div class="input-field col s12">
-                            <textarea id="textarea1" class="materialize-textarea"></textarea>
-                            <label for="textarea1">Tour Description</label>
-                        </div>
-                    </div>
-                    <div class="col s2 offset-s10">
-                        <div class="input-field">
-                            <button class="btn waves-effect waves-light" type="submit" name="action"> Add
-                                <i class="material-icons right">add</i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <div id="Reservations" class="tabcontent">
         <div class="container">
             <h2>Reservations</h2>
