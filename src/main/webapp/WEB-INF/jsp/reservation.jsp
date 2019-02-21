@@ -48,40 +48,30 @@
             <h2>Reservations</h2>
             <form method="POST" action="#">
                 <div class="row">
-                    <ul class="collection">
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle green">star</i>
-                            <span class="title"><b>Thailand</b></span>
-                            <p>Jhon Smith <br>
-                                +1 24324 24
-                            </p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">done_outline</i></a>
-                        </li>
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle green">star</i>
-                            <span class="title"><b>Russia</b></span>
-                            <p>Fedor <br>
-                                +7900223232
-                            </p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">done_outline</i></a>
-                        </li>
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle green">star</i>
-                            <span class="title"><b>America</b></span>
-                            <p>Masha Ivanova <br>
-                                masha@vanova.ru
-                            </p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">done_outline</i></a>
-                        </li>
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle green">star</i>
-                            <span class="title"><b>Turkey</b></span>
-                            <p>Nastya Broti <br>
-                                +79800232
-                            </p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">done_outline</i></a>
-                        </li>
-                    </ul>
+                    <table>
+                        <tr>
+                            <th>№</th>
+                            <th>Discount Id</th>
+                            <th>Offer Id</th>
+                            <th>Number Of People</th>
+                            <th>Status</th>
+                            <th>Total Price</th>
+                            <th></th>
+                        </tr>
+                        <c:forEach var="reservation" items="${listReservation}">
+                        <tr>
+                            <td>${reservation.id}</td>
+                            <td>${reservation.discountId}</td>
+                            <td> ${reservation.tourOfferId}</td>
+                            <td> ${reservation.numberOfPeople}</td>
+                            <td> ${reservation.status}</td>
+                            <td> ${reservation.totalPrice}</td>
+                            <td><a href="deleteReservation/${reservation.id}" class="secondary-content"> <i
+                                    class="small material-icons">remove</i></a></td>
+                            </c:forEach>
+                        </tr>
+
+                    </table>
                 </div>
             </form>
 

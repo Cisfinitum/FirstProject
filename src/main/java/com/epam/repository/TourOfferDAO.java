@@ -12,29 +12,29 @@ import java.util.List;
 
 @Repository
 public class TourOfferDAO {
-    private final JdbcTemplate simpleJdbcTemplate;
+    private final JdbcTemplate JdbcTemplate;
 
     @Autowired
-    public TourOfferDAO(JdbcTemplate simpleJdbcTemplate) {
-        this.simpleJdbcTemplate = simpleJdbcTemplate;
+    public TourOfferDAO(JdbcTemplate JdbcTemplate) {
+        this.JdbcTemplate = JdbcTemplate;
     }
 
     public List<TourOffer> getTours(){
-        return simpleJdbcTemplate.query("SELECT * FROM tourOffer", (rs, rowNum) -> buildTour(rs));
+        return JdbcTemplate.query("SELECT * FROM tourOffer", (rs, rowNum) -> buildTour(rs));
     }
 
     public int deleteTour(Integer tourId){
-         return simpleJdbcTemplate.update("DELETE FROM tourOffer WHERE id = ?", tourId);
+         return JdbcTemplate.update("DELETE FROM tourOffer WHERE id = ?", tourId);
     }
 
     public int addTour(TourOffer touroffer){
-        return simpleJdbcTemplate.update("INSERT INTO tourOffer(tourType, startDate, endDate, pricePerUnit, hotel_id, description, discount_id) " +
+        return JdbcTemplate.update("INSERT INTO tourOffer(tourType, startDate, endDate, pricePerUnit, hotel_id, description, discount_id) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),
                 touroffer.getPricePerUnit(),touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId());
     }
 
     public int updateTour(TourOffer touroffer){
-       return simpleJdbcTemplate.update("UPDATE tourOffer SET " +
+       return JdbcTemplate.update("UPDATE tourOffer SET " +
                "tourType = ?, startDate = ?, endDate = ?, pricePerUnit = ?, hotel_id = ?, description = ?, discount_id = ? " +
                "WHERE id = ?",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),touroffer.getPricePerUnit(),
                touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId(),touroffer.getId());
@@ -63,7 +63,7 @@ public class TourOfferDAO {
         }
         else
             requestSQL = requestSQL.concat("IS NOT NULL");
-        return simpleJdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
+        return JdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
     }
 
     @SneakyThrows(SQLException.class)

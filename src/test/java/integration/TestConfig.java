@@ -1,14 +1,17 @@
-package com.epam.config;
+package integration;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+
 import javax.sql.DataSource;
 
 @Configuration
-public class DBConfiguration {
+@ComponentScan("com.epam")
+public class TestConfig {
 
     @Bean
     public DataSource dataSource() {
@@ -23,7 +26,7 @@ public class DBConfiguration {
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate() {
+    public JdbcTemplate simpleJdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }
 }

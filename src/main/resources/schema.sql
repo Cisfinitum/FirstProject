@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS reservation;
 CREATE TABLE person
 (
   id       NUMERIC IDENTITY PRIMARY KEY,
-  email    VARCHAR(200) NOT NULL,
+  email VARCHAR(200) NOT NULL,
   password VARCHAR(512) NOT NULL,
   role     VARCHAR(200) NOT NULL
 );
@@ -39,13 +39,13 @@ CREATE TABLE tourOffer
 );
 CREATE TABLE reservation
 (
-  id              NUMERIC IDENTITY PRIMARY KEY,
-  client_id       INT          NOT NULL,
-  tourOffer_id    INT          NOT NULL,
-  numberOfPersons INT          NOT NULL,
-  status          VARCHAR(100) NOT NULL,
-  discount_id     INT,
-  totalPrice      INT,
-  FOREIGN KEY (tourOffer_id) REFERENCES tourOffer (id),
+  id             NUMERIC IDENTITY PRIMARY KEY,
+  client_id      INT          NOT NULL,
+  tour_offer_id   INT          NOT NULL,
+  number_of_people INT          NOT NULL,
+  status         VARCHAR(100) NOT NULL,
+  discount_id    INT,
+  total_price     INT,
+  FOREIGN KEY (tour_Offer_id) REFERENCES tourOffer (id),
   FOREIGN KEY (client_id) REFERENCES person (id),
 );

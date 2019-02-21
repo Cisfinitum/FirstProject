@@ -32,4 +32,54 @@ public class PersonDAO {
                 .build();
     }
 
+    public boolean doesEmailExists(String email) {
+        List<String> emailsList = jdbcTemplate.query("SELECT email FROM person", (rs, rowNum) -> getEmail(rs));
+        for(String stringEmail:  emailsList){
+            System.out.println("Im here");
+            if (stringEmail.equals(email)) return true;
+        }
+        return false;
+    }
+
+    String getEmail(ResultSet rs) throws SQLException {
+        return rs.getString("email");
+    }
+
+    public boolean addPerson(Person person) {
+        String email = person.getEmail();
+        System.out.println(email);
+        if (doesEmailExists(email)) return false;
+        String password = person.getPassword();
+        System.out.println(password);
+        String role = person.getRole().toString();
+        System.out.println(role);
+        String sql = "INSERT INTO person (email, password, role) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, email, password, role);
+        return true;
+    }
+
+    public boolean addToBlackList(String email) {
+        String sql = "UPDATE person SET role = BLOCKED WHERE email = ?";
+        jdbcTemplate.update(sql, email);
+        return true;
+    }
+
+    public boolean removeFromBlackList(String email) {
+        String sql = "UPDATE person SET role = USER WHERE email = ?";
+        jdbcTemplate.update(sql, email);
+        return true;
+    }
+
+    public boolean giveAdminRights(String email) {
+        String sql = "UPDATE person SET role = ADMIN WHERE email = ?";
+        jdbcTemplate.update(sql, email);
+        return true;
+    }
+
+    public boolean updatePassword(String email, String password) {
+        if (email.equals("") || password.equals("")) return false;
+        String sql = "UPDATE person SET password = ? WHERE email = ?";
+        jdbcTemplate.update(sql, password, email);
+        return true;
+    }
 }

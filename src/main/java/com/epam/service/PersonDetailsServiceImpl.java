@@ -14,6 +14,7 @@ import java.util.Set;
 
 @Service
 public class PersonDetailsServiceImpl implements UserDetailsService{
+
     private final PersonService personService;
 
     @Autowired
@@ -27,5 +28,25 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
         Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumrole()));
         return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), roles);
+    }
+
+    public boolean addPerson(Person person) {
+        return personService.addPerson(person);
+    }
+
+    public boolean addToBlackList(String email) {
+        return personService.addToBlackList(email);
+    }
+
+    public boolean removeFromBlackList(String email) {
+        return personService.removeFromBlackList(email);
+    }
+
+    public boolean giveAdminRights(String email) {
+        return personService.giveAdminRights(email);
+    }
+
+    public boolean updatePassword(String email, String password) {
+        return  personService.updatePassword(email, password);
     }
 }

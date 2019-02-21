@@ -5,9 +5,10 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Data
+@RequiredArgsConstructor
 public class Person {
     private Integer id;
-    private String email;
-    private String password;
-    private PersonRoleEnum role;
+    private final String email;
+    private final String password;
+    private final PersonRoleEnum role;
 }
