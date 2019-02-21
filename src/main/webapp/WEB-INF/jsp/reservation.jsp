@@ -78,7 +78,7 @@
                             <ul class="pagination">
                                 <c:if test="${generalAmount>4}">
                                     <c:forEach var="i" begin="1" end="${amount}">
-                                        <li class="waves-effect"><a href="/testadmin/${i}">${i}</a></li>
+                                        <li class="waves-effect"><a href="/reservation/${i}">${i}</a></li>
                                     </c:forEach>
                                 </c:if>
                             </ul>
