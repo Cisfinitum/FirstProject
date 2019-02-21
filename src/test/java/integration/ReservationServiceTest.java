@@ -30,7 +30,7 @@ public class ReservationServiceTest {
 
     @Test
     public void getAll() {
-        List<Reservation> actualReservations = reservationService.listReservations();
+        List<Reservation> actualReservations = reservationService.listReservations(testPage, testTotal);
         Assert.assertNotEquals(0, actualReservations.size());
     }
 
