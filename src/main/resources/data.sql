@@ -5,11 +5,11 @@ VALUES ('50');
 INSERT INTO hotel(name, city, country, numberOfStars)
 VALUES ('Luxury Hotel', 'Moscow', 'Russia', '5');
 INSERT INTO hotel(name, city, country, numberOfStars)
-VALUES ('Court Yard Marriott', 'Moscow', 'Russia', '4');
+VALUES ('Court Yard Marriott', 'Moscow', 'Turkey', '4');
 INSERT INTO hotel(name, city, country, numberOfStars)
-VALUES ('5 seasons', 'Moscow', 'Russia', '3');
+VALUES ('5 seasons', 'Moscow', 'Thailand', '3');
 INSERT INTO hotel(name, city, country, numberOfStars)
-VALUES ('Motel', 'Moscow', 'Russia', '2');
+VALUES ('Motel', 'Moscow', 'Indonesia', '2');
 
 INSERT INTO tourOffer(tourType, startDate, endDate, pricePerUnit, hotel_id, description, discount_id)
 VALUES ('Shopping',CURRENT_DATE, CURRENT_DATE, '500000', '1', 'best tour ever', '1');

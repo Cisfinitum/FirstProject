@@ -51,7 +51,9 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
                 <li><a href="listoftours">Tours</a></li>
                 <li><a href="addtour">Add Tour</a></li>
-                <li><a href="#">Reservations</a></li>
+                <li><a href="/reservation/1" id="Reservation">
+                    Reservations
+                </a></li>
                 <li><a href="#">Clients</a></li>
                 <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
                 <li>
@@ -66,57 +68,61 @@
 <main>
     <div class="container">
         <h2>Add Tour</h2>
-        <form method="POST" action="#">
+        <form method="POST" action="addtour">
+            <div class="row">
+                    <span style="color: red; font-weight: bold">${result}</span>
+            </div>
             <div class="row">
                 <div class="col s4">
                     <div class="input-field">
-                        <input type="text" id="autocomplete-input" class="autocomplete">
+                        <input type="text" id="autocomplete-input" class="autocomplete" name="tourType" value="">
                         <label for="autocomplete-input">Tour type</label>
                     </div>
                 </div>
                 <div class="col s4">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-date" class="datepicker">
+                        <input type="text" id="autocomplete-date" class="datepicker" name="startDate" value="">
                         <label for="autocomplete-date">Start Date</label>
                     </div>
                 </div>
                 <div class="col s4">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-date2" class="datepicker">
+                        <input type="text" id="autocomplete-date2" class="datepicker" name="endDate" value="">
                         <label for="autocomplete-date2">End Date</label>
                     </div>
                 </div>
                 <div class="col s4">
                     <div class="input-field">
-                        <select>
-                            <c:forEach var="hotel" items="${listHotels}">
-                                <option value="${hotel.name}"> ${hotel.name} ${hotel.numberOfStars}★
+                        <select class="pricePerPerson" name="hotel">
+                            <c:forEach var="hotel" items="${hotelList}">
+                                <option value="${hotel.name}"> ${hotel.name}  ${hotel.numberOfStars}★
                                 </option>
                             </c:forEach>
                         </select>
                         <label>Hotel</label>
                     </div>
                 </div>
-
                 <div class="col s4">
                     <div class="input-field">
                         <i class="material-icons prefix">local_offer</i>
-                        <input type="text" id="autocomplete-input2" class="pricePerPerson">
+                        <input type="text" id="autocomplete-input2" class="pricePerPerson" name="pricePerPerson"
+                               value="">
                         <label for="autocomplete-input2">Price Per Person</label>
                     </div>
                 </div>
                 <div class="col s4">
                     <div class="input-field">
                         <i class="material-icons prefix">loyalty</i>
-                        <input type="text" id="autocomplete-input3" class="pricePerPerson">
+                        <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount" value="">
                         <label for="autocomplete-input3">Discount</label>
                     </div>
                 </div>
+
                 <div class="input-field">
                     <div class="input-field col s12">
-                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                        <input type="text" id="textarea1" class="materialize-textarea" name="tourDescription" value="">
                         <label for="textarea1">Tour Description</label>
                     </div>
                 </div>
