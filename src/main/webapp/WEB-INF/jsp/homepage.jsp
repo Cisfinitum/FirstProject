@@ -174,6 +174,7 @@
                             <form method="post" action="/reserveTour">
                                 <input name="idOfTour" type="hidden" value="${list.get(i).id}">
                                 <input name="pricePerUnit" type="hidden" value="${list.get(i).pricePerUnit}">
+                                <input name="numberOfPeople" type="hidden" value="${param.get("numberOfPeople")}">
                                 <button class="btn waves-effect waves-light" type="submit" name="action"> Reserve
                                 </button>
                             </form>

@@ -1,26 +1,34 @@
 package com.epam.controller;
 
+import com.epam.model.Reservation;
+import com.epam.model.ReservationStatusEnum;
 import com.epam.model.TourOffer;
+import com.epam.service.PersonService;
+import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
 import com.epam.validator.Validator;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.security.Principal;
 import java.time.LocalDate;
-import java.util.List;
 
 
 @Controller
 @Slf4j
 public class ToursController {
     private final TourOfferService toursOfferService;
-    @Autowired
-    ToursController(TourOfferService toursOfferService){
+    private final ReservationService reservationService;
+    private final PersonService personService;
+
+    public ToursController(TourOfferService toursOfferService, ReservationService reservationService, PersonService personService) {
         this.toursOfferService = toursOfferService;
+        this.reservationService = reservationService;
+        this.personService = personService;
     }
 
     @GetMapping("/listoftours")
@@ -124,5 +132,23 @@ public class ToursController {
     @GetMapping("/addtour")
     public String getAddTour(){
         return "addtour";
+    }
+
+    @PostMapping("/reserveTour")
+    public ModelAndView addReservation(@RequestParam(name = "idOfTour") Integer idOfTour,
+                                       @RequestParam(name = "pricePerUnit") Integer pricePerUnit,
+                                       @RequestParam(name = "numberOfPeople")Integer numberOfPeople,
+                                       Principal principal, ModelAndView modelAndView) {
+        if(principal == null){
+            modelAndView.setViewName("login");
+            modelAndView.addObject("message", "Please, sign in.");
+            return modelAndView;
+        }
+        String email = principal.getName();
+        modelAndView.setViewName("homepage");
+        Integer personId = personService.getIdByEmail(email);
+        Integer totalPrice = reservationService.getTotalPrice(numberOfPeople, pricePerUnit);
+        reservationService.addReservation(new Reservation(personId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, 1, totalPrice));
+        return modelAndView.addObject("message", "Tour was reserved successfully");
     }
 }
