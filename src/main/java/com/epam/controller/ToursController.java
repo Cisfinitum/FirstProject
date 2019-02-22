@@ -52,6 +52,7 @@ public class ToursController {
             return toursModel;
         } catch (Exception e) {
             toursModel.addObject("result", e.getMessage());
+            log.error(e.getMessage());
             return toursModel;
         }
     }
