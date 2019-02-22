@@ -27,12 +27,16 @@
 <body>
 <header>
     <nav>
-        <div class="nav-wrapper tab " >
+        <div class="nav-wrapper tab ">
             <a href="index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
                 <li><a href="listoftours">Tours</a></li>
                 <li><a href="addtour">Add Tour</a></li>
-                <li><a href="#">Reservations</a></li>
+                <li><a href="/reservation/1" id="Reservation">
+                    <span class="badge" style="background-color: #ab4160; color: #ffffff"
+                          id="myBadge">${generalAmount}</span>
+                    Reservations
+                </a></li>
                 <li><a href="#">Clients</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
@@ -44,11 +48,12 @@
     </nav>
 </header>
 <main>
-        <div class="container">
-            <h2>Reservations</h2>
-            <form method="POST" action="#">
-                <div class="row">
-                    <table>
+    <div class="container">
+        <h2>Reservations</h2>
+        <form method="POST" action="#">
+            <div class="row">
+                <table>
+                    <c:if test="${listReservation.size()>0}">
                         <tr>
                             <th>№</th>
                             <th>Discount Id</th>
@@ -58,24 +63,38 @@
                             <th>Total Price</th>
                             <th></th>
                         </tr>
-                        <c:forEach var="reservation" items="${listReservation}">
-                        <tr>
-                            <td>${reservation.id}</td>
-                            <td>${reservation.discountId}</td>
-                            <td> ${reservation.tourOfferId}</td>
-                            <td> ${reservation.numberOfPeople}</td>
-                            <td> ${reservation.status}</td>
-                            <td> ${reservation.totalPrice}</td>
-                            <td><a href="deleteReservation/${reservation.id}" class="secondary-content"> <i
-                                    class="small material-icons">remove</i></a></td>
-                            </c:forEach>
-                        </tr>
+                    </c:if>
+                    <c:if test="${listReservation.size() == 0}"><p>There are no active reservations</p></c:if>
+                    <c:forEach var="reservation" items="${listReservation}">
+                    <tr>
+                        <td>${reservation.id}</td>
+                        <td>${reservation.discountId}</td>
+                        <td> ${reservation.tourOfferId}</td>
+                        <td> ${reservation.numberOfPeople}</td>
+                        <td> ${reservation.status}</td>
+                        <td> ${reservation.totalPrice}</td>
+                        <td><a href="deleteReservation/${reservation.id}" class="secondary-content"> <i
+                                class="small material-icons">remove</i></a></td>
+                        </c:forEach>
+                    </tr>
 
-                    </table>
+                </table>
+                <br>
+                <div class="row">
+                    <div class="col s6 offset-s5">
+                        <ul class="pagination">
+                            <c:if test="${generalAmount>4}">
+                                <c:forEach var="i" begin="1" end="${amount}">
+                                    <li class="waves-effect"><a href="/reservation/${i}">${i}</a></li>
+                                </c:forEach>
+                            </c:if>
+                        </ul>
+                    </div>
                 </div>
-            </form>
+            </div>
+        </form>
 
-        </div>
+    </div>
 </main>
 <footer class="page-footer">
     <div class="container">

@@ -8,6 +8,20 @@ INSERT INTO tourOffer(tourType, startDate, endDate, pricePerUnit, hotel_id, desc
 VALUES ('Shopping',CURRENT_DATE, CURRENT_DATE, '500000', '1', 'best tour ever', '1');
 INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
 VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
+VALUES ('1','1', '1', 'PAID', '1', '500000');
 INSERT INTO tourOffer(tourType, startDate, endDate, pricePerUnit, hotel_id, description, discount_id)
 VALUES ('Aaaa',CURRENT_DATE, CURRENT_DATE, '100000', '1', 'Yyyy', '1');
 INSERT INTO tourOffer(tourType, startDate, endDate, pricePerUnit, hotel_id, description, discount_id)

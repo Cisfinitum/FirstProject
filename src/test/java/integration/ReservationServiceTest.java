@@ -25,16 +25,19 @@ public class ReservationServiceTest {
     @Autowired
     private ReservationDAO reservationDAO;
 
+    private Integer testPage = 1;
+    private Integer testTotal = 20;
+
     @Test
     public void getAll() {
-        List<Reservation> actualReservations = reservationService.listReservations();
+        List<Reservation> actualReservations = reservationService.listReservations(testPage, testTotal);
         Assert.assertNotEquals(0, actualReservations.size());
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void removeReservation() {
         reservationDAO.addReservation(new Reservation(10, 1, 1, 5, ReservationStatusEnum.PAID, 10, 20));
-        List<Reservation> reservations = reservationDAO.listReservations();
+        List<Reservation> reservations = reservationDAO.listReservations(testPage, testTotal );
         List<Reservation> reservationsFromDb = reservations.stream().filter(reservation -> reservation.getNumberOfPeople().equals(5)).collect(Collectors.toList());
         Integer reservationId = reservationsFromDb.get(0).getId();
         reservationService.removeReservation(reservationId);
