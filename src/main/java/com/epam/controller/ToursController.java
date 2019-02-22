@@ -67,7 +67,7 @@ public class ToursController {
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
-            Validator.checkDateDifferent(addStartDate,addEndDate);
+            Validator.dateDifference(addStartDate,addEndDate);
             int result = toursOfferService.addTour(TourOffer.builder()
                     .id(1)
                     .tourType(tourType)
@@ -100,7 +100,7 @@ public class ToursController {
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
-            Validator.checkDateDifferent(addStartDate,addEndDate);
+            Validator.dateDifference(addStartDate,addEndDate);
             int result = toursOfferService.updateTour(TourOffer.builder()
                     .id(Integer.valueOf(tourId))
                     .tourType(tourType)

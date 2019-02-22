@@ -7,38 +7,38 @@ import java.time.LocalDate;
 
 public class ValidatorTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void checkEmptyThrowException(){
         String emptyString = "";
         Validator.checkEmpty(emptyString);
     }
 
-    @Test(expected = Exception.class)
-    public void checkDateDifferentThrowException(){
+    @Test(expected = IllegalArgumentException.class)
+    public void dateDifferenceThrowException(){
         LocalDate firstDate = LocalDate.of(2020,12,5);
         LocalDate secondDate = LocalDate.of(2018,12,5);
-        Validator.checkDateDifferent(firstDate,secondDate);
+        Validator.dateDifference(firstDate,secondDate);
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getIntThrowException(){
-        String anyInt = "-2";
-        Integer a = Validator.getInt(anyInt);
+        String negativeInt = "-2";
+        Integer a = Validator.getInt(negativeInt);
     }
 
     @Test(expected = NumberFormatException.class)
     public void getIntThrowFormatException(){
-        String anyInt = "sss";
-        Integer a = Validator.getInt(anyInt);
+        String wrongFormatInt = "sss";
+        Integer a = Validator.getInt(wrongFormatInt);
     }
 
     @Test
     public void getIntPositive(){
-        String anyInt = "1";
-        Assert.assertEquals(Validator.getInt(anyInt),Integer.valueOf(1));
+        String positiveInt = "1";
+        Assert.assertEquals(Validator.getInt(positiveInt),Integer.valueOf(1));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getDateThrowException(){
         String emptyDate = "";
         LocalDate ld = Validator.getDate(emptyDate,false);
@@ -50,10 +50,10 @@ public class ValidatorTest {
         Assert.assertEquals(Validator.getDate(emptyDate,true),null);
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = NumberFormatException.class)
     public void getDateThrowFormatException(){
-        String anyDate = "ssss ss ss";
-        LocalDate ld = Validator.getDate(anyDate,false);
+        String wrongFormatDate = "ssss ss ss";
+        LocalDate ld = Validator.getDate(wrongFormatDate,false);
     }
 
     @Test
