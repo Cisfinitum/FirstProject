@@ -39,11 +39,14 @@ public class HotelController {
         Matcher cityMatcher = pattern.matcher(city);
         if (name.equals("")) {
             return modelAndView.addObject("errormessage", "Name is empty");
-        } else if (!cityMatcher.matches() || city.equals("")) {
+        }
+        if (!cityMatcher.matches() || city.equals("")) {
             return modelAndView.addObject("errormessage", "Invalid name for city");
-        } else if (!countryMatcher.matches() || country.equals("")) {
+        }
+        if (!countryMatcher.matches() || country.equals("")) {
             return modelAndView.addObject("errormessage", "Invalid name for country");
-        } else if (hotelService.createHotel(new Hotel(name.trim(), country.trim(), city.trim(), stars)) != 1) {
+        }
+        if (hotelService.createHotel(new Hotel(name.trim(), country.trim(), city.trim(), stars)) != 1) {
             return modelAndView.addObject("errormessage", "Some field are empty");
         }
         return modelAndView.addObject("message", "Hotel was created successfully");
