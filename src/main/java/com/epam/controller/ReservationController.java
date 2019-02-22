@@ -7,7 +7,8 @@ import com.epam.model.Reservation;
         import org.springframework.ui.ModelMap;
         import org.springframework.web.bind.annotation.*;
 
-        import java.util.List;
+import java.util.List;
+
 @Controller
 @RequestMapping("/reservation")
 public class ReservationController {

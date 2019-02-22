@@ -22,14 +22,13 @@ public class ReservationServiceTest {
     private Reservation expectedReservation;
     @InjectMocks
     ReservationService reservationService;
-
+    private int testPage = 1;
+    private int testTotal = 5;
     private List<Reservation> expectedReservationsList;
     private Reservation actualReservation;
     private Integer testId = 1;
     private List actualReservationList;
     private int changedItems = 1;
-    private int testPage = 1;
-    private int testTotal = 20;
 
     @Before
     public void setUp() {
