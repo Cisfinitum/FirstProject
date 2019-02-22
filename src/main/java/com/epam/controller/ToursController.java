@@ -35,7 +35,7 @@ public class ToursController {
     @GetMapping("/listoftours")
     public ModelAndView getToursList() {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("list", toursOfferService.getTours());
+        toursModel.addObject("list",toursOfferService.getTours());
         toursModel.setViewName("tours");
         return toursModel;
     }
@@ -46,13 +46,12 @@ public class ToursController {
         ModelAndView toursModel = new ModelAndView();
         toursModel.setViewName("homepage");
         try {
-            LocalDate addStartDate = Validator.getDate(startDate, true);
-            LocalDate addEndDate = Validator.getDate(endDate, true);
-            toursModel.addObject("list", toursOfferService.searchTours(null, addStartDate, addEndDate));
+            LocalDate addStartDate = Validator.getDate(startDate,true);
+            LocalDate addEndDate = Validator.getDate(endDate,true);
+            toursModel.addObject("list",toursOfferService.searchTours(null,addStartDate, addEndDate));
             return toursModel;
         } catch (Exception e) {
-            toursModel.addObject("result", e.getMessage());
-            log.error(e.getMessage());
+            toursModel.addObject("result",e.getMessage());
             return toursModel;
         }
     }
@@ -60,7 +59,7 @@ public class ToursController {
     @PostMapping("/deletetour")
     public ModelAndView deleteTour(@RequestParam String idOfTour) {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("result", toursOfferService.deleteTour(Integer.valueOf(idOfTour)) == 1 ? "Success" : "Failed to delete");
+        toursModel.addObject("result",toursOfferService.deleteTour(Integer.valueOf(idOfTour))==1?"Success":"Failed to delete");
         toursModel.setViewName("redirect:/listoftours");
         return toursModel;
     }
@@ -73,12 +72,12 @@ public class ToursController {
         List<Hotel> hotels = hotelService.getHotels();
         toursModel.addObject("hotelList", hotels );
         try {
-            LocalDate addStartDate = Validator.getDate(startDate, false);
-            LocalDate addEndDate = Validator.getDate(endDate, false);
+            LocalDate addStartDate = Validator.getDate(startDate,false);
+            LocalDate addEndDate = Validator.getDate(endDate,false);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
-            Validator.checkDateDifferent(addStartDate, addEndDate);
+            Validator.checkDateDifferent(addStartDate,addEndDate);
             int result = toursOfferService.addTour(TourOffer.builder()
                     .id(1)
                     .tourType(tourType)
@@ -90,7 +89,7 @@ public class ToursController {
                     .discountId(1) //stub
                     .build());
 
-            toursModel.addObject("result", result == 1 ? "Success" : "Failed to add");
+            toursModel.addObject("result",result==1?"Success":"Failed to add");
             return toursModel;
 
         } catch (Exception e) {
@@ -107,17 +106,17 @@ public class ToursController {
 
     @PostMapping("/updatetour")
     public ModelAndView updateTour(@RequestParam String tourId, @RequestParam String tourType, @RequestParam String startDate, @RequestParam String endDate,
-                                   @RequestParam String hotel,
+                                   @RequestParam String country, @RequestParam String city, @RequestParam String hotel,
                                    @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
         toursModel.setViewName("updatetour");
         try {
-            LocalDate addStartDate = Validator.getDate(startDate, false);
-            LocalDate addEndDate = Validator.getDate(endDate, false);
+            LocalDate addStartDate = Validator.getDate(startDate,false);
+            LocalDate addEndDate = Validator.getDate(endDate,false);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
-            Validator.checkDateDifferent(addStartDate, addEndDate);
+            Validator.checkDateDifferent(addStartDate,addEndDate);
             int result = toursOfferService.updateTour(TourOffer.builder()
                     .id(Integer.valueOf(tourId))
                     .tourType(tourType)
@@ -129,11 +128,11 @@ public class ToursController {
                     .discountId(1) //stub
                     .build());
 
-            toursModel.addObject("result", result == 1 ? "Success" : "Failed to update");
+            toursModel.addObject("result",result==1?"Success":"Failed to update");
             return toursModel;
 
-        } catch (Exception e) {
-            toursModel.addObject("result", e.getMessage());
+        } catch (Exception e){
+            toursModel.addObject("result",e.getMessage());
             return toursModel;
         }
     }
