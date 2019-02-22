@@ -46,10 +46,10 @@ public class TourOfferDAOTest {
     public void buildTourCheck(){
         Integer testtourID = 1;
         when(resultSet.getInt("id")).thenReturn(testtourID);
-        when(resultSet.getString("tourType")).thenReturn(testtourType);
-        when(resultSet.getDate("startDate")).thenReturn(teststartDate);
-        when(resultSet.getDate("endDate")).thenReturn(testendDate);
-        when(resultSet.getInt("pricePerUnit")).thenReturn(testpricePerUnit);
+        when(resultSet.getString("tour_type")).thenReturn(testtourType);
+        when(resultSet.getDate("start_date")).thenReturn(teststartDate);
+        when(resultSet.getDate("end_date")).thenReturn(testendDate);
+        when(resultSet.getInt("price_per_unit")).thenReturn(testpricePerUnit);
         when(resultSet.getInt("hotel_id")).thenReturn(testhotel_id);
         when(resultSet.getString("description")).thenReturn(testdescription);
         when(resultSet.getInt("discount_id")).thenReturn(testdiscount_id);
@@ -61,10 +61,10 @@ public class TourOfferDAOTest {
     @SneakyThrows(SQLException.class)
     public void buildTourThrowsSQLException(){
         when(resultSet.getInt("id")).thenThrow(new SQLException());
-        when(resultSet.getString("tourType")).thenReturn(testtourType);
-        when(resultSet.getDate("startDate")).thenReturn(teststartDate);
-        when(resultSet.getDate("endDate")).thenReturn(testendDate);
-        when(resultSet.getInt("pricePerUnit")).thenReturn(testpricePerUnit);
+        when(resultSet.getString("tour_type")).thenReturn(testtourType);
+        when(resultSet.getDate("start_date")).thenReturn(teststartDate);
+        when(resultSet.getDate("end_date")).thenReturn(testendDate);
+        when(resultSet.getInt("price_per_unit")).thenReturn(testpricePerUnit);
         when(resultSet.getInt("hotel_id")).thenReturn(testhotel_id);
         when(resultSet.getString("description")).thenReturn(testdescription);
         when(resultSet.getInt("discount_id")).thenReturn(testdiscount_id);
