@@ -19,7 +19,7 @@ public class ReservationService {
     }
 
 
-    int addReservation(Reservation reservation) {
+    public int addReservation(Reservation reservation) {
         if (reservation != null) {
             if (reservation.getId() != null && reservation.getStatus() != null) {
                 return reservationDAO.addReservation(reservation);

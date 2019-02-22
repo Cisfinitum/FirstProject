@@ -1,12 +1,14 @@
 package com.epam.controller;
 
 import com.epam.model.Reservation;
-        import com.epam.service.ReservationService;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Controller;
-        import org.springframework.ui.ModelMap;
-        import org.springframework.web.bind.annotation.*;
+import com.epam.service.ReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -41,4 +43,14 @@ public class ReservationController {
         reservationService.removeReservation(id);
         return "redirect:/reservation";
     }
+
+    @PostMapping("/homepage")
+    public ModelAndView addReservation(@RequestParam(name = "idOfTour") Integer idOfTour,
+                                       @RequestParam(name = "numberOfPeople") Integer numberOfPeople,
+                                       @RequestParam(name = "pricePerUnit") Integer pricePerUnit, Principal principal, ModelAndView modelAndView) {
+        String name = principal.getName();
+        reservationService.addReservation(new Reservation());
+        return modelAndView.addObject("message", "Tour was reserved successfully");
+    }
+
 }
