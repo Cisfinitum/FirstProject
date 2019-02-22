@@ -9,46 +9,57 @@ public class ValidatorTest {
 
     @Test(expected = NullPointerException.class)
     public void checkEmptyThrowException(){
-        Validator.checkEmpty("");
+        String emptyString = "";
+        Validator.checkEmpty(emptyString);
     }
 
     @Test(expected = Exception.class)
     public void checkDateDifferentThrowException(){
-        Validator.checkDateDifferent(LocalDate.of(2020,12,5),LocalDate.of(2018,12,5));
+        LocalDate firstDate = LocalDate.of(2020,12,5);
+        LocalDate secondDate = LocalDate.of(2018,12,5);
+        Validator.checkDateDifferent(firstDate,secondDate);
     }
 
     @Test(expected = Exception.class)
     public void getIntThrowException(){
-        Integer a = Validator.getInt("-2");
+        String anyInt = "-2";
+        Integer a = Validator.getInt(anyInt);
     }
 
     @Test(expected = NumberFormatException.class)
     public void getIntThrowFormatException(){
-        Integer a = Validator.getInt("sss");
+        String anyInt = "sss";
+        Integer a = Validator.getInt(anyInt);
     }
 
     @Test
     public void getIntPositive(){
-        Assert.assertEquals(Validator.getInt("1"),Integer.valueOf(1));
+        String anyInt = "1";
+        Assert.assertEquals(Validator.getInt(anyInt),Integer.valueOf(1));
     }
 
     @Test(expected = NullPointerException.class)
     public void getDateThrowException(){
-        LocalDate ld = Validator.getDate("",false);
+        String emptyDate = "";
+        LocalDate ld = Validator.getDate(emptyDate,false);
     }
 
     @Test
     public void getDateNull(){
-        Assert.assertEquals(Validator.getDate("",true),null);
+        String emptyDate = "";
+        Assert.assertEquals(Validator.getDate(emptyDate,true),null);
     }
 
     @Test(expected = Exception.class)
     public void getDateThrowFormatException(){
-        LocalDate ld = Validator.getDate("ssss ss ss",false);
+        String anyDate = "ssss ss ss";
+        LocalDate ld = Validator.getDate(anyDate,false);
     }
 
     @Test
     public void getDatePositive(){
-        Assert.assertEquals(Validator.getDate("2020 12 20",false),LocalDate.of(2020,12,20));
+        String anyDate = "2020 12 20";
+        LocalDate anyDateSame = LocalDate.of(2020,12,20);
+        Assert.assertEquals(Validator.getDate(anyDate,false),anyDateSame);
     }
 }
