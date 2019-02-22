@@ -21,7 +21,7 @@ public class ReservationService {
 
     public int addReservation(Reservation reservation) {
         if (reservation != null) {
-            if (reservation.getId() != null && reservation.getStatus() != null) {
+            if (reservation.getClientId() != null && reservation.getStatus() != null) {
                 return reservationDAO.addReservation(reservation);
             } else {
                 throw new IllegalArgumentException("Some fields are empty");
@@ -93,5 +93,9 @@ public class ReservationService {
 
     public int amountOfReservation() {
         return reservationDAO.amountOfReservations();
+    }
+
+    public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit) {
+        return pricePerUnit * numberOfPeople;
     }
 }

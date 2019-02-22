@@ -132,7 +132,7 @@
                 <div class="col s1">
                     <div class="input-field">
                         <button class="btn-large waves-effect waves-light" type="submit" name="action"><spring:message
-                                code="searchbutton"/>
+                            code="searchbutton"/>
                             <i class="material-icons right">event_available</i>
                         </button>
                     </div>
@@ -140,6 +140,7 @@
             </div>
         </form>
     </div>
+    <h3 style="text-align:center; color: green">${message}</h3>
     <c:if test="${not empty list}">
         <div class="container">
             <table>
@@ -170,7 +171,7 @@
                         <td>${list.get(i).description}</td>
                         <td>FROM DISCOUNT ID</td>
                         <td>
-                            <form method="post" action="">
+                            <form method="post" action="/reserveTour">
                                 <input name="idOfTour" type="hidden" value="${list.get(i).id}">
                                 <input name="pricePerUnit" type="hidden" value="${list.get(i).pricePerUnit}">
                                 <button class="btn waves-effect waves-light" type="submit" name="action"> Reserve

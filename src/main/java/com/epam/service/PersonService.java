@@ -51,4 +51,8 @@ public class PersonService {
         if (email == null) throw new IllegalArgumentException("Email must be not null");
         return personDAO.giveAdminRights(email);
     }
+    public Integer getIdByEmail(String email) {
+        if (email == null) throw new IllegalArgumentException("Email must be not null");
+        return personDAO.getIdByEmail(email);
+    }
 }

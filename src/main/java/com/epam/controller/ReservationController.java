@@ -1,6 +1,9 @@
 package com.epam.controller;
 
+import com.epam.model.Person;
 import com.epam.model.Reservation;
+import com.epam.model.ReservationStatusEnum;
+import com.epam.service.PersonService;
 import com.epam.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,22 +15,21 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/reservation")
 public class ReservationController {
 
     private final ReservationService reservationService;
-
+    private final PersonService personService;
     @Autowired
-    public ReservationController(ReservationService reservationService) {
+    public ReservationController(ReservationService reservationService, PersonService personService) {
         this.reservationService = reservationService;
+        this.personService = personService;
     }
-
-    @GetMapping
+    @GetMapping("/reservation")
     public String testadmin() {
         return "redirect:/reservation/1";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/reservation/{id}")
     public String listReservations(@PathVariable Integer id, ModelMap modelMap) {
         List<Reservation> reservations = reservationService.listReservations(id, reservationService.totalAmountOfRows);
         int generalAmount = reservationService.amountOfReservation();
@@ -38,19 +40,27 @@ public class ReservationController {
         return "reservation";
     }
 
-    @GetMapping("/deleteReservation/{id}")
+    @GetMapping("reservation/deleteReservation/{id}")
     public String deleteReservation(@PathVariable Integer id) {
         reservationService.removeReservation(id);
         return "redirect:/reservation";
     }
-
-    @PostMapping("/homepage")
+    @PostMapping("/reserveTour")
     public ModelAndView addReservation(@RequestParam(name = "idOfTour") Integer idOfTour,
-                                       @RequestParam(name = "numberOfPeople") Integer numberOfPeople,
-                                       @RequestParam(name = "pricePerUnit") Integer pricePerUnit, Principal principal, ModelAndView modelAndView) {
-        String name = principal.getName();
-        reservationService.addReservation(new Reservation());
+                                       @RequestParam(name = "pricePerUnit") Integer pricePerUnit,
+                                       Principal principal, ModelAndView modelAndView) {
+        if(principal == null){
+            modelAndView.setViewName("login");
+            modelAndView.addObject("message", "Please sign in");
+            return modelAndView;
+        }
+        String email = principal.getName();
+        modelAndView.setViewName("homepage");
+        Integer personId = personService.getIdByEmail(email);
+        Integer numberOfPeople = 1;
+        Integer totalPrice = reservationService.getTotalPrice(numberOfPeople, pricePerUnit);
+        reservationService.addReservation(new Reservation(personId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, 1, totalPrice));
         return modelAndView.addObject("message", "Tour was reserved successfully");
-    }
 
+    }
 }
