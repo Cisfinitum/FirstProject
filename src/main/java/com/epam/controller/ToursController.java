@@ -69,7 +69,8 @@ public class ToursController {
                                 @RequestParam String hotel, @RequestParam String pricePerPerson, @RequestParam String discount,
                                 @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.setViewName("addtour");
+        List<Hotel> hotels = hotelService.getHotels();
+        toursModel.addObject("hotelList", hotels );
         try {
             LocalDate addStartDate = Validator.getDate(startDate, false);
             LocalDate addEndDate = Validator.getDate(endDate, false);
@@ -99,7 +100,7 @@ public class ToursController {
 
     @PostMapping("/updatetour")
     public ModelAndView updateTour(@RequestParam String tourId, @RequestParam String tourType, @RequestParam String startDate, @RequestParam String endDate,
-                                   @RequestParam String country, @RequestParam String city, @RequestParam String hotel,
+                                   @RequestParam String hotel,
                                    @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
         toursModel.setViewName("updatetour");
