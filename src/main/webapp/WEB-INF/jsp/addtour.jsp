@@ -66,28 +66,31 @@
 <main>
     <div class="container">
         <h2>Add Tour</h2>
+        <p>Please note that all fields are required.</p>
         <form method="POST" action="addtour">
             <div class="row">
-                    <span style="color: red; font-weight: bold">${result}</span>
+                <span style="color: red; font-weight: bold">${result}</span>
             </div>
             <div class="row">
                 <div class="col s4">
                     <div class="input-field">
-                        <input type="text" id="autocomplete-input" class="autocomplete" name="tourType" value="">
+                        <input type="text" id="autocomplete-input" class="autocomplete" name="tourType"
+                               value="${tourType}">
                         <label for="autocomplete-input">Tour type</label>
                     </div>
                 </div>
                 <div class="col s4">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-date" class="datepicker" name="startDate" value="">
+                        <input type="text" id="autocomplete-date" class="datepicker" name="startDate"
+                               value="${startDate}">
                         <label for="autocomplete-date">Start Date</label>
                     </div>
                 </div>
                 <div class="col s4">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-date2" class="datepicker" name="endDate" value="">
+                        <input type="text" id="autocomplete-date2" class="datepicker" name="endDate" value="${endDate}">
                         <label for="autocomplete-date2">End Date</label>
                     </div>
                 </div>
@@ -95,7 +98,7 @@
                     <div class="input-field">
                         <select class="pricePerPerson" name="hotel">
                             <c:forEach var="hotel" items="${hotelList}">
-                                <option value="${hotel.name}"> ${hotel.name}  ${hotel.numberOfStars}★
+                                <option value="${hotel.name}"> ${hotel.name} ${hotel.numberOfStars}★
                                 </option>
                             </c:forEach>
                         </select>
@@ -106,21 +109,23 @@
                     <div class="input-field">
                         <i class="material-icons prefix">local_offer</i>
                         <input type="text" id="autocomplete-input2" class="pricePerPerson" name="pricePerPerson"
-                               value="">
+                               value="${price}">
                         <label for="autocomplete-input2">Price Per Person</label>
                     </div>
                 </div>
                 <div class="col s4">
                     <div class="input-field">
                         <i class="material-icons prefix">loyalty</i>
-                        <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount" value="">
+                        <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount"
+                               value="${discount}">
                         <label for="autocomplete-input3">Discount</label>
                     </div>
                 </div>
 
                 <div class="input-field">
                     <div class="input-field col s12">
-                        <input type="text" id="textarea1" class="materialize-textarea" name="tourDescription" value="">
+                        <input type="text" id="textarea1" class="materialize-textarea" name="tourDescription"
+                               value="${description}">
                         <label for="textarea1">Tour Description</label>
                     </div>
                 </div>
@@ -132,6 +137,7 @@
                     </div>
                 </div>
             </div>
+
         </form>
     </div>
 </main>

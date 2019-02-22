@@ -94,6 +94,12 @@ public class ToursController {
 
         } catch (Exception e) {
             toursModel.addObject("result", e.getMessage());
+            toursModel.addObject("tourType", tourType);
+            toursModel.addObject("startDate", startDate);
+            toursModel.addObject("endDate", endDate);
+            toursModel.addObject("price", pricePerPerson);
+            toursModel.addObject("discount", discount);
+            toursModel.addObject("description", tourDescription);
             return toursModel;
         }
     }

@@ -66,6 +66,7 @@
 <main>
     <div class="container">
         <h2>Add Hotel</h2>
+        <p>Please note that all fields are required.</p>
         <p style="color:green;">${message}</p>
         <p style="color:red;">${errormessage}</p>
         <form method="POST" action="/hotels" name="hotel">
