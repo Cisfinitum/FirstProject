@@ -93,6 +93,7 @@ public class ToursController {
             return toursModel;
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             toursModel.addObject("result", e.getMessage());
             toursModel.addObject("tourType", tourType);
             toursModel.addObject("startDate", startDate);
@@ -132,6 +133,7 @@ public class ToursController {
             return toursModel;
 
         } catch (Exception e){
+            log.error(e.getMessage());
             toursModel.addObject("result",e.getMessage());
             return toursModel;
         }
