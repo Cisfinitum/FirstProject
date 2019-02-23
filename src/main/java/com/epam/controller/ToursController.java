@@ -8,6 +8,7 @@ import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
 import com.epam.validator.Validator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ public class ToursController {
     private final ReservationService reservationService;
     private final PersonService personService;
 
+    @Autowired
     public ToursController(TourOfferService toursOfferService, ReservationService reservationService, PersonService personService) {
         this.toursOfferService = toursOfferService;
         this.reservationService = reservationService;
