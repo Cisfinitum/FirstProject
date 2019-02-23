@@ -95,7 +95,11 @@ public class ReservationService {
         return reservationDAO.amountOfReservations();
     }
 
-    public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit) {
-        return pricePerUnit * numberOfPeople;
+    public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discountId) {
+        if (numberOfPeople > 0 && pricePerUnit > 0 && discountId > 0) {
+            return pricePerUnit * numberOfPeople * discountId;
+        } else {
+            throw new IllegalArgumentException("All arguments must be strictly more than zero");
+        }
     }
 }

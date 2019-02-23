@@ -29,6 +29,8 @@ public class ReservationServiceTest {
     private Integer testId = 1;
     private List actualReservationList;
     private int changedItems = 1;
+    private Integer testDiscountId = 1;
+    private Integer numberOfPeople = 5;
 
     @Before
     public void setUp() {
@@ -83,5 +85,19 @@ public class ReservationServiceTest {
     public void updateReservation() {
         when(reservationDAO.updateReservation(expectedReservation)).thenReturn(changedItems);
         assertEquals(changedItems, reservationService.updateReservation(expectedReservation));
+    }
+
+    @Test
+    public void getTotalPrice(){
+        Integer testPricePerUnit = 100;
+        Integer expectedTotalPrice = 500;
+        Integer actualTotalPrice = reservationService.getTotalPrice(numberOfPeople,testPricePerUnit, testDiscountId);
+        assertEquals(expectedTotalPrice, actualTotalPrice);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getTotalPriceThrowsIllegalArgumentException(){
+        Integer wrongPricePerUnit = -1;
+        reservationService.getTotalPrice(numberOfPeople, wrongPricePerUnit , testDiscountId);
     }
 }

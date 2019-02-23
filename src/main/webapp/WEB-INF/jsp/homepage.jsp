@@ -132,7 +132,7 @@
                 <div class="col s1">
                     <div class="input-field">
                         <button class="btn-large waves-effect waves-light" type="submit" name="action"><spring:message
-                            code="searchbutton"/>
+                                code="searchbutton"/>
                             <i class="material-icons right">event_available</i>
                         </button>
                     </div>
@@ -170,15 +170,26 @@
                         <td>FROM HOTEL ID</td>
                         <td>${list.get(i).description}</td>
                         <td>FROM DISCOUNT ID</td>
-                        <td>
-                            <form method="post" action="/reserveTour">
-                                <input name="idOfTour" type="hidden" value="${list.get(i).id}">
-                                <input name="pricePerUnit" type="hidden" value="${list.get(i).pricePerUnit}">
-                                <input name="numberOfPeople" type="hidden" value="${param.get("numberOfPeople")}">
-                                <button class="btn waves-effect waves-light" type="submit" name="action"> Reserve
-                                </button>
-                            </form>
-                        </td>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <td>
+                                <form method="post" action="/updatetour">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action"> Update
+                                    </button>
+                                </form>
+                            </td>
+                        </sec:authorize>
+                        <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ANONYMOUS')">
+                            <td>
+                                <form method="post" action="/reserveTour">
+                                    <input name="idOfTour" type="hidden" value="${list.get(i).id}">
+                                    <input name="pricePerUnit" type="hidden" value="${list.get(i).pricePerUnit}">
+                                    <input name="numberOfPeople" type="hidden" value="${param.get("numberOfPeople")}">
+                                    <input name="discountId" type="hidden" value="1">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action"> Reserve
+                                    </button>
+                                </form>
+                            </td>
+                        </sec:authorize>
                     </tr>
                 </c:forEach>
                 </tbody>

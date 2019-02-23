@@ -14,6 +14,7 @@ import java.sql.SQLException;
 
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 public class PersonDAOTest {
@@ -142,5 +143,14 @@ public class PersonDAOTest {
         String sql = "UPDATE person SET password = ? WHERE email = ?";
         when(jdbcTemplate.update(sql, testPassword, EMPTY_EMAIL)).thenReturn(UNEXPECTED_RESULT);
         assertEquals(UNEXPECTED_RESULT, personDAO.updatePassword(EMPTY_EMAIL, testPassword));
+    }
+    @Test
+    public void getIdByEmailGetsNonExistEmail(){
+        Integer expectedResult = -1;
+        String nonExistEmail = "admin@mail.com";
+        String sql = "SELECT id FROM person WHERE email = " + "'"+nonExistEmail+ "'";
+        when(jdbcTemplate.queryForObject(sql, Integer.class)).thenReturn(-1);
+        Integer actualResult = personDAO.getIdByEmail(nonExistEmail);
+        assertEquals(expectedResult, actualResult);
     }
 }
