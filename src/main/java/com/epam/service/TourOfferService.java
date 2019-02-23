@@ -53,10 +53,7 @@ public class TourOfferService {
         }
     }
 
-    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate){
-        /// Arg "country" will used to get listOfHotelsId by CRUD method of Hotel entity
-            List<Integer> listOfHotelsId = new ArrayList<>();
-            listOfHotelsId.add(1);
+    public List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
             return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
     }
 }

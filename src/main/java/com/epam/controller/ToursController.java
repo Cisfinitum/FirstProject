@@ -1,6 +1,8 @@
 package com.epam.controller;
 
+import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
+import com.epam.service.HotelService;
 import com.epam.service.TourOfferService;
 import com.epam.validator.Validator;
 import lombok.extern.slf4j.Slf4j;
@@ -12,16 +14,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
 @Slf4j
 public class ToursController {
     private final TourOfferService toursOfferService;
+    private final HotelService hotelService;
 
     @Autowired
-    ToursController(TourOfferService toursOfferService) {
+    ToursController(TourOfferService toursOfferService, HotelService hotelService) {
         this.toursOfferService = toursOfferService;
+        this.hotelService = hotelService;
     }
 
     @GetMapping("/listoftours")
@@ -40,7 +48,21 @@ public class ToursController {
         try {
             LocalDate addStartDate = Validator.getDate(startDate, true);
             LocalDate addEndDate = Validator.getDate(endDate, true);
-            toursModel.addObject("list", toursOfferService.searchTours(null, addStartDate, addEndDate));
+            List<Hotel> myList = hotelService.getHotelsByCountry(country);
+            if(myList.size()==0&&!country.isEmpty()){
+                log.error("Wrong input country: "+country);
+                throw new IllegalArgumentException("Wrong input country: "+country);
+            }
+            List<Integer> listOfHotelsId = new ArrayList<>();
+            for(Hotel hotel: myList){
+                listOfHotelsId.add(hotel.getId());
+            }
+            Map<Integer,Hotel> hotelsMap = new HashMap<>();
+            for(Hotel hotel: hotelService.getHotels()){
+                hotelsMap.put(hotel.getId(),hotel);
+            }
+            toursModel.addObject("listOfHotels",hotelsMap);
+            toursModel.addObject("listOfTours", toursOfferService.searchTours(listOfHotelsId, addStartDate, addEndDate));
             return toursModel;
         } catch (Exception e) {
             toursModel.addObject("error", e.getMessage());
