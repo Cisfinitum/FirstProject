@@ -44,7 +44,7 @@ public class HotelDAOTest {
         when(resultSet.getString("name")).thenReturn(testHotelName);
         when(resultSet.getString("city")).thenReturn(testHotelCity);
         when(resultSet.getString("country")).thenReturn(testHotelCountry);
-        when(resultSet.getInt("numberOfStars")).thenReturn(testHotelStars);
+        when(resultSet.getInt("number_of_stars")).thenReturn(testHotelStars);
         when(expectedHotel.getName()).thenReturn(testHotelName);
         Hotel actualHotel = hotelDAO.buildHotel(resultSet);
         assertEquals(expectedHotel.getName(), actualHotel.getName());

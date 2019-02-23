@@ -14,7 +14,6 @@ import java.sql.SQLException;
 
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 public class PersonDAOTest {

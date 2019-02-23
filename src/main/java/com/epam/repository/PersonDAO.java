@@ -5,7 +5,6 @@ import com.epam.model.PersonRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -20,7 +19,7 @@ public class PersonDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Person> getPersons() {
+    public List<Person> getPersons(){
         return jdbcTemplate.query("SELECT * FROM person", (rs, rowNum) -> buildPerson(rs));
     }
 
@@ -33,11 +32,11 @@ public class PersonDAO {
                 .build();
     }
 
-    public boolean doesEmailExist(String email) {
+    public boolean doesEmailExist(String email){
         if (email == null) throw new IllegalArgumentException("Illegal email argument");
         if (email.equals("")) return false;
         List<String> emailsList = jdbcTemplate.query("SELECT email FROM person", (rs, rowNum) -> getEmail(rs));
-        for (String stringEmail : emailsList) {
+        for(String stringEmail:  emailsList){
             System.out.println("Im here");
             if (stringEmail.equals(email)) return true;
         }
