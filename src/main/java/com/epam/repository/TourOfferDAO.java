@@ -20,7 +20,7 @@ public class TourOfferDAO {
     }
 
     public List<TourOffer> getTours(){
-        return JdbcTemplate.query("SELECT * FROM tourOffer", (rs, rowNum) -> buildTour(rs));
+        return JdbcTemplate.query("SELECT * FROM tour_offer", (rs, rowNum) -> buildTour(rs));
     }
 
     public int deleteTour(Integer tourId){
@@ -34,7 +34,7 @@ public class TourOfferDAO {
     }
 
     public int updateTour(TourOffer touroffer){
-       return JdbcTemplate.update("UPDATE tour_ofer SET " +
+       return JdbcTemplate.update("UPDATE tour_offer SET " +
                "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
                "WHERE id = ?",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),touroffer.getPricePerUnit(),
                touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId(),touroffer.getId());
@@ -46,7 +46,7 @@ public class TourOfferDAO {
             requestSQL = requestSQL.concat("= '"+startDate+"'");
         else
             requestSQL = requestSQL.concat("IS NOT NULL ");
-        requestSQL = requestSQL.concat(" AND endDate ");
+        requestSQL = requestSQL.concat(" AND end_date ");
         if(endDate!=null)
             requestSQL = requestSQL.concat("='"+endDate+"'");
         else
