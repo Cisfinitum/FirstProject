@@ -111,8 +111,9 @@ public class TourOfferServiceTest {
 
         tourOfferService.updateTour(tourOffer);
 
-        Mockito.verify(jdbcTemplate, Mockito.times(1)).update("UPDATE tourOffer SET " +
-                "tourType = ?, startDate = ?, endDate = ?, pricePerUnit = ?, hotel_id = ?, description = ?, discount_id = ? WHERE id = ?",
+        Mockito.verify(jdbcTemplate, Mockito.times(1)).update("UPDATE tour_ofer SET " +
+                "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
+                "WHERE id = ?",
             tourOffer.getTourType(), tourOffer.getStartDate(), tourOffer.getEndDate(), tourOffer.getPricePerUnit(), tourOffer.getHotelId(),
             tourOffer.getDescription(), tourOffer.getDiscountId(), tourOffer.getId());
     }
