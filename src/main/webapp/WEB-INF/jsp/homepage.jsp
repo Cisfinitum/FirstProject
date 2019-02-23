@@ -96,6 +96,11 @@
     <div class="container">
         <form method="POST" action="searchtours">
             <div class="row">
+                <c:if test="${not empty error}">
+                    <span style="color: red; font-weight: bold">${error}</span>
+                </c:if>
+            </div>
+            <div class="row">
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">edit_location</i>
