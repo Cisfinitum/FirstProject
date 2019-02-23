@@ -15,11 +15,9 @@ import java.util.List;
 public class ReservationController {
 
     private final ReservationService reservationService;
-    private final PersonService personService;
     @Autowired
-    public ReservationController(ReservationService reservationService, PersonService personService) {
+    public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
-        this.personService = personService;
     }
     @GetMapping
     public String testadmin() {
