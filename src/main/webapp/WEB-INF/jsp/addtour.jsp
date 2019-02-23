@@ -32,7 +32,7 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
                 <li><a href="listoftours">Tours</a></li>
                 <li><a href="addtour">Add Tour</a></li>
-                <li><a href="reservation">Reservations</a></li>
+                <li><a href="#">Reservations</a></li>
                 <li><a href="#">Clients</a></li>
                 <li>
                         <button class="btn waves-effect waves-light" type="submit" name="action">

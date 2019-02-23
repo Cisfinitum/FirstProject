@@ -28,10 +28,10 @@
 <header>
     <nav>
         <div class="nav-wrapper tab ">
-            <a href="/index" class="brand-logo">Tour De Team</a>
+            <a href="index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/listoftours">Tours</a></li>
-                <li><a href="/addtour">Add Tour</a></li>
+                <li><a href="listoftours">Tours</a></li>
+                <li><a href="addtour">Add Tour</a></li>
                 <li><a href="/reservation/1" id="Reservation">
                     <span class="badge" style="background-color: #ab4160; color: #ffffff"
                           id="myBadge">${generalAmount}</span>
@@ -40,7 +40,7 @@
                 <li><a href="#">Clients</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="/logout">Log Out</a>
+                        <a class="forButton" href="logout">Log Out</a>
                     </button>
                 </li>
             </ul>
