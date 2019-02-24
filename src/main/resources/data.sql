@@ -1,5 +1,9 @@
 INSERT INTO person(email,  password, role)
 VALUES ('user@gmail.com', '123','ADMIN');
+INSERT INTO person(email,  password, role)
+VALUES ('user2@gmail.com', '123','USER');
+INSERT INTO person(email,  password, role)
+VALUES ('user3@gmail.com', '123','USER');
 INSERT INTO discount(discount)
 VALUES ('50');
 INSERT INTO hotel(name, city, country, number_of_stars)

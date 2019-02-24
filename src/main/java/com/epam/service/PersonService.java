@@ -25,6 +25,15 @@ public class PersonService {
         return null;
     }
 
+    public Person getPersonById (Integer id) {
+        if (id != null) {
+            return personDAO.getPersonById(id);
+        }
+        else {
+            throw new IllegalArgumentException("Id must be specified");
+        }
+    }
+
     public int addPerson(Person person){
         if (person == null) throw new IllegalArgumentException("Person must be not null");
         return personDAO.addPerson(person);
@@ -35,6 +44,13 @@ public class PersonService {
             throw new IllegalArgumentException("Email and password must be not null");
         }
         return personDAO.updatePassword(email, password);
+    }
+
+    public int updatePasswordById(Integer id, String password) {
+        if (id == null || password == null) {
+            throw new IllegalArgumentException("Email and password must be not null");
+        }
+        return personDAO.updatePasswordById(id, password);
     }
 
     public int addToBlackList(String email) {

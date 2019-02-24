@@ -67,6 +67,12 @@ public class ReservationDAO {
                 new Object[]{reservationId}, (rs, rowNum) -> buildReservation(rs));
     }
 
+    public List<Reservation> getReservationsByPersonId(Integer personId) {
+        String sql = "SELECT * FROM " + tableName + " WHERE " + clientId + " = ?";
+        Object[] parameters = new Object[] { personId };
+        return jdbcTemplate.query(sql, parameters, reservationMapper);
+    }
+
     public int getTourOfferById(Integer offerId) {
         String sql = "SELECT " + tourOfferId + " FROM " + tableName + " WHERE " + tourOfferId + " = ?";
         Object tourOffer = jdbcTemplate.queryForObject(sql, new Object[]{offerId}, (rs, rowNub) ->

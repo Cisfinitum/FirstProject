@@ -43,6 +43,18 @@ public class ReservationService {
         }
     }
 
+    public List<Reservation> getReservationsByPersonId(Integer personId) {
+        if (personId != null) {
+            if (personId > 0) {
+                return reservationDAO.getReservationsByPersonId(personId);
+            } else {
+                throw new IllegalArgumentException("Id must be > 0");
+            }
+        } else {
+            throw new IllegalArgumentException("Id must be specified.");
+        }
+    }
+
     public List<Reservation> listReservations(Integer page, Integer total) {
 
         if (page > 0 && total > 0) {

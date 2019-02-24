@@ -23,6 +23,11 @@ public class PersonDAO {
         return jdbcTemplate.query("SELECT * FROM person", (rs, rowNum) -> buildPerson(rs));
     }
 
+    public Person getPersonById(Integer personId){
+        Object[] parameters = new Object[] { personId };
+        return jdbcTemplate.queryForObject("SELECT * FROM person WHERE id = ?  ", parameters, (rs, rowNum) -> buildPerson(rs));
+    }
+
     Person buildPerson(ResultSet rs) throws SQLException {
         return Person.builder()
                 .id(rs.getInt("id"))
@@ -78,5 +83,11 @@ public class PersonDAO {
         if (email.equals("") || password.equals("")) return -1;
         String sql = "UPDATE person SET password = ? WHERE email = ?";
         return jdbcTemplate.update(sql, password, email);
+    }
+
+    public int updatePasswordById(Integer id, String password) {
+        if (id == null || password.equals("")) return -1;
+        String sql = "UPDATE person SET password = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, password, id);
     }
 }
