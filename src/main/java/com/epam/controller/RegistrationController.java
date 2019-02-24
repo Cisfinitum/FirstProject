@@ -32,6 +32,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public ModelAndView createUserAccIfPossible(@RequestParam(name="email") String email,
                                                 @RequestParam(name="password") String password,
+                                                @RequestParam(name="password2") String second_password,
                                                 ModelAndView modelAndView,
                                                 RedirectAttributes redirectAttributes) {
         Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9][a-zA-Z0-9\\-\\._]{4,}[a-zA-Z0-9]@[a-z]{2,}\\.[a-z]{2,}$");
@@ -44,6 +45,9 @@ public class RegistrationController {
         }
         else if (!passwordMatcher.matches()) {
             return modelAndView.addObject("message", "Password doesn't match the pattern");
+        }
+        else if (!password.equals(second_password)) {
+            return modelAndView.addObject("message", "Passwords are not equal");
         }
         else {
             if (!personDetailsServiceImpl.addPerson(new Person(email, password, PersonRoleEnum.valueOf("USER")))) {
