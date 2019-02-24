@@ -34,7 +34,8 @@ public class TourOfferDAO {
     }
 
     public int updateTour(TourOffer touroffer){
-       return JdbcTemplate.update("UPDATE tour_ofer SET " +
+        System.out.println(touroffer.toString()+"FROM DAO");
+       return JdbcTemplate.update("UPDATE tourOffer SET " +
                "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
                "WHERE id = ?",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),touroffer.getPricePerUnit(),
                touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId(),touroffer.getId());

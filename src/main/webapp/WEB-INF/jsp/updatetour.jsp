@@ -76,22 +76,17 @@
                         <label for="autocomplete-date2">End Date</label>
                     </div>
                 </div>
-                <div class="col s3">
+                <div class="col s4">
                     <div class="input-field">
-                        <input type="text" id="autocomplete-input4" class="pricePerPerson" name="country" value="${hotel.country}">
-                        <label for="autocomplete-input4">Country</label>
-                    </div>
-                </div>
-                <div class="col s3">
-                    <div class="input-field">
-                        <input type="text" id="autocomplete-input5" class="pricePerPerson" name="city" value="${hotel.city}">
-                        <label for="autocomplete-input5">City</label>
-                    </div>
-                </div>
-                <div class="col s3">
-                    <div class="input-field">
-                        <input type="text" id="autocomplete-input6" class="pricePerPerson" name="hotel" value="${hotel.name}">
-                        <label for="autocomplete-input6">Hotel</label>
+                        <select class="pricePerPerson" name="hotel">
+                            <c:forEach var="hotel" items="${hotelList}">
+                                <option value="${hotelCurrent.id}" selected> ${hotelCurrent.name} ${hotelCurrent.numberOfStars}★
+                                </option>
+                                <option value="${hotel.id}"> ${hotel.name} ${hotel.numberOfStars}★
+                                </option>
+                            </c:forEach>
+                        </select>
+                        <label>Hotel</label>
                     </div>
                 </div>
 
@@ -113,10 +108,10 @@
                         <label for="textarea1">Tour Description</label>
                     </div>
                 </div>
+                <input name="tourId" type="hidden" value="${tour.id}">
                 <div class="col s2 offset-s10">
                     <div class="input-field">
-                        <input name="tourId" type="hidden" value="${tour.id}">
-                        <button class="btn waves-effect waves-light" type="submit" name="action"> Update
+                        <button class="btn waves-effect waves-light" type="submit"> Update
                             <i class="material-icons right">add</i>
                         </button>
                     </div>

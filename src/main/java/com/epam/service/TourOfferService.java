@@ -45,11 +45,11 @@ public class TourOfferService {
     }
 
     public int updateTour(TourOffer tourOffer){
-        if(tourOffer!=null)
-            return tourOfferDAO.updateTour(tourOffer);
-        else {
+        if(tourOffer == null) {
             log.error("tourOffer is null");
             throw new NullPointerException("tourOffer is null");
+        } else {
+            return tourOfferDAO.updateTour(tourOffer);
         }
     }
 

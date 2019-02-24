@@ -103,26 +103,34 @@ public class ToursController {
 
     @PostMapping("/updatetour")
     public ModelAndView updateTour(@RequestParam String tourId, @RequestParam String tourType, @RequestParam String startDate, @RequestParam String endDate,
-                                   @RequestParam String country, @RequestParam String city, @RequestParam String hotel,
-                                   @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription) {
+                                   @RequestParam Integer hotel, @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
         try {
+            System.out.println(tourId+tourType+startDate+endDate+hotel+pricePerPerson+discount+tourDescription);
             LocalDate addStartDate = Validator.getDate(startDate, false);
+            System.out.println(addStartDate.toString()+"startDate");
             LocalDate addEndDate = Validator.getDate(endDate, false);
+            System.out.println(addStartDate.toString()+"endDate");
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
+            System.out.println(addPricePerPerson+"pricePerson");
             Validator.checkEmpty(tourType);
+            System.out.println("checkTourType");
             Validator.checkEmpty(tourDescription);
+            System.out.println("checkDescription");
             Validator.checkDateDifferent(addStartDate, addEndDate);
+            System.out.println("checkDifferent");
             int result = toursOfferService.updateTour(TourOffer.builder()
                     .id(Integer.valueOf(tourId))
                     .tourType(tourType)
                     .startDate(addStartDate)
                     .endDate(addEndDate)
                     .pricePerUnit(addPricePerPerson)
-                    .hotelId(1) //stub
+                    .hotelId(hotel) //stub
                     .description(tourDescription)
                     .discountId(1) //stub
                     .build());
+            System.out.println(toursOfferService.getTourById(Integer.valueOf(tourId)).toString());
+            System.out.println(result+"RESULT OF UPDATE");
             if (result == 1) {
                 toursModel.addObject("result", "Success");
                 toursModel.setViewName("tours");
@@ -148,11 +156,10 @@ public class ToursController {
         ModelAndView toursModel = new ModelAndView();
         toursModel.setViewName("updatetour");
         TourOffer tourOffer = toursOfferService.getTourById(Integer.valueOf(idOfTour));
-        System.out.println(tourOffer.toString());
         Hotel hotel = hotelService.getHotelById(tourOffer.getHotelId());
-        System.out.println(hotel.toString());
+        toursModel.addObject("hotelList",hotelService.getHotels());
         toursModel.addObject("tour",tourOffer);
-        toursModel.addObject("hotel",hotel);
+        toursModel.addObject("hotelCurrent",hotel);
         return toursModel;
     }
 }
