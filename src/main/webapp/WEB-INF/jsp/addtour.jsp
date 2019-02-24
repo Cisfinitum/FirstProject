@@ -20,6 +20,8 @@
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="${css}" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="${main}" media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
@@ -35,7 +37,7 @@
                 <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="logout">Log Out</a>
+                        <a class="forButton" href="/logout">Log Out</a>
                     </button>
                 </li>
             </ul>
@@ -48,8 +50,13 @@
         <p>Please note that all fields are required.</p>
         <form method="POST" action="addtour">
             <div class="row">
-                <span style="color: red; font-weight: bold">${result}</span>
-            </div>
+                <c:if test="${not empty result}">
+                    <span style="color: green; font-weight: bold">${result}</span>
+                </c:if>
+                <c:if test="${not empty error}">
+                    <span style="color: red; font-weight: bold">${error}</span>
+                </c:if>
+                </div>
             <div class="row">
                 <div class="col s4">
                     <div class="input-field">
@@ -142,6 +149,7 @@
         </div>
     </div>
 </footer>
+
 <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" src="${js}"></script>
 <script type="text/javascript" src="${tours}"></script>
