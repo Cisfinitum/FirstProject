@@ -59,4 +59,13 @@ public class TourOfferService {
             listOfHotelsId.add(1);
             return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
     }
+
+    public TourOffer getTourById(Integer tourId){
+        if( tourId == null || tourId == 0) {
+            log.error("toursId is null or 0");
+            throw new IllegalArgumentException("toursId is null or 0");
+        } else {
+            return tourOfferDAO.getTourById(tourId);
+        }
+    }
 }

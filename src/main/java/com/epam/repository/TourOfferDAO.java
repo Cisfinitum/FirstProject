@@ -66,6 +66,11 @@ public class TourOfferDAO {
         return JdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
     }
 
+    public TourOffer getTourById(Integer tourId){
+        Object[] parameters = new Object[] { tourId };
+        return JdbcTemplate.queryForObject ("SELECT * FROM tourOffer WHERE id = ?", parameters, (rs, rowNum) -> buildTour(rs));
+    }
+
     @SneakyThrows(SQLException.class)
     TourOffer buildTour(ResultSet rs){
         return TourOffer.builder()

@@ -77,7 +77,8 @@
                         <td>${list.get(i).description}</td>
                         <td>FROM DISCOUNT ID</td>
                         <td>
-                            <form method="get" action="#">
+                            <form method="get" action="updatetour">
+                                <input name="idOfTour" type="hidden" value="${list.get(i).id}">
                                 <button class="btn waves-effect waves-light" type="submit" name="action"> Edit
                                 </button>
                             </form>

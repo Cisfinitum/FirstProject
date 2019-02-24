@@ -1,6 +1,8 @@
 package com.epam.controller;
 
+import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
+import com.epam.service.HotelService;
 import com.epam.service.TourOfferService;
 import com.epam.validator.Validator;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +20,11 @@ import java.time.LocalDate;
 @Slf4j
 public class ToursController {
     private final TourOfferService toursOfferService;
+    private final HotelService hotelService;
 
     @Autowired
-    ToursController(TourOfferService toursOfferService) {
+    ToursController(TourOfferService toursOfferService, HotelService hotelService) {
+        this.hotelService = hotelService;
         this.toursOfferService = toursOfferService;
     }
 
@@ -102,7 +106,6 @@ public class ToursController {
                                    @RequestParam String country, @RequestParam String city, @RequestParam String hotel,
                                    @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.setViewName("updatetour");
         try {
             LocalDate addStartDate = Validator.getDate(startDate, false);
             LocalDate addEndDate = Validator.getDate(endDate, false);
@@ -122,11 +125,14 @@ public class ToursController {
                     .build());
             if (result == 1) {
                 toursModel.addObject("result", "Success");
+                toursModel.setViewName("tours");
             } else {
+                toursModel.setViewName("updatetour");
                 toursModel.addObject("error", "Failed to add");
             }
             return toursModel;
         } catch (Exception e) {
+            toursModel.setViewName("updatetour");
             toursModel.addObject("error", e.getMessage());
             return toursModel;
         }
@@ -135,5 +141,18 @@ public class ToursController {
     @GetMapping("/addtour")
     public String getAddTour() {
         return "addtour";
+    }
+
+    @GetMapping("/updatetour")
+    public ModelAndView getUpdateTour(@RequestParam String idOfTour) {
+        ModelAndView toursModel = new ModelAndView();
+        toursModel.setViewName("updatetour");
+        TourOffer tourOffer = toursOfferService.getTourById(Integer.valueOf(idOfTour));
+        System.out.println(tourOffer.toString());
+        Hotel hotel = hotelService.getHotelById(tourOffer.getHotelId());
+        System.out.println(hotel.toString());
+        toursModel.addObject("tour",tourOffer);
+        toursModel.addObject("hotel",hotel);
+        return toursModel;
     }
 }
