@@ -64,18 +64,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var = "i" begin = "0" end="${list.size()-1}" >
+                <c:forEach var = "i" begin = "0" end="${listOfTours.size()-1}" >
                     <tr>
-                        <td>${list.get(i).id}</td>
-                        <td>${list.get(i).tourType}</td>
-                        <td>FROM HOTEL ID</td>
-                        <td>FROM HOTEL ID</td>
-                        <td>${list.get(i).startDate}</td>
-                        <td>${list.get(i).endDate}</td>
-                        <td>${list.get(i).pricePerUnit}</td>
-                        <td>FROM HOTEL ID</td>
-                        <td>${list.get(i).description}</td>
-                        <td>FROM DISCOUNT ID</td>
+                        <td>${listOfTours.get(i).id}</td>
+                        <td>${listOfTours.get(i).tourType}</td>
+                        <td>${hotels.get(listOfTours.get(i).hotelId).country}</td>
+                        <td>${hotels.get(listOfTours.get(i).hotelId).city}</td>
+                        <td>${listOfTours.get(i).startDate}</td>
+                        <td>${listOfTours.get(i).endDate}</td>
+                        <td>${listOfTours.get(i).pricePerUnit}</td>
+                        <td>${hotels.get(listOfTours.get(i).hotelId).name}</td>
+                        <td>${listOfTours.get(i).description}</td>
+                        <td>${listOfTours.get(i).discountId}</td>
                         <td>
                             <form method="get" action="#">
                                 <button class="btn waves-effect waves-light" type="submit" name="action"> Edit
@@ -84,7 +84,7 @@
                         </td>
                         <td>
                             <form method="post" action="deletetour">
-                                <input name="idOfTour" type="hidden" value="${list.get(i).id}">
+                                <input name="idOfTour" type="hidden" value="${listOfTours.get(i).id}">
                                 <button class="btn waves-effect waves-light" type="submit" name="action"> Delete
                                 </button>
                             </form>

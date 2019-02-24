@@ -1,6 +1,9 @@
 package com.epam.controller;
 
+import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
+import com.epam.service.HotelService;
+import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
 import com.epam.validator.Validator;
 import lombok.extern.slf4j.Slf4j;
@@ -12,22 +15,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
 @Slf4j
 public class ToursController {
     private final TourOfferService toursOfferService;
+    private final HotelService hotelService;
+    private final ReservationService reservationService;
 
     @Autowired
-    ToursController(TourOfferService toursOfferService) {
+    ToursController(TourOfferService toursOfferService, HotelService hotelService, ReservationService reservationService) {
         this.toursOfferService = toursOfferService;
+        this.hotelService = hotelService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping("/listoftours")
     public ModelAndView getToursList() {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("list", toursOfferService.getTours());
+        List<Hotel> listOfHotels = hotelService.getHotels();
+        Map<Integer, Hotel> hotels = new HashMap<>();
+        for(Hotel hotel: listOfHotels){
+            hotels.put(hotel.getId(),hotel);
+        }
+        toursModel.addObject("listOfTours", toursOfferService.getTours());
+        toursModel.addObject("hotels", hotels);
         toursModel.setViewName("tours");
         return toursModel;
     }
