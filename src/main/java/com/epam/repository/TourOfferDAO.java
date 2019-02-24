@@ -1,6 +1,7 @@
 package com.epam.repository;
 
 import com.epam.model.TourOffer;
+import com.epam.repository.interfaces.TourOfferDAOInterface;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public class TourOfferDAO {
+public class TourOfferDAO implements TourOfferDAOInterface {
     private final JdbcTemplate JdbcTemplate;
 
     @Autowired

@@ -1,6 +1,7 @@
 package com.epam.repository;
 
 import com.epam.model.Hotel;
+import com.epam.repository.interfaces.HotelDAOInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,7 +13,7 @@ import java.util.List;
 import lombok.SneakyThrows;
 
 @Repository
-public class HotelDAO {
+public class HotelDAO implements HotelDAOInterface {
 
     private final JdbcTemplate jdbcTemplate;
 

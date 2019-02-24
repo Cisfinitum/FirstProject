@@ -2,6 +2,7 @@ package com.epam.repository;
 
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
+import com.epam.repository.interfaces.PersonDAOInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class PersonDAO {
+public class PersonDAO implements PersonDAOInterface {
 
     private final JdbcTemplate jdbcTemplate;
 
