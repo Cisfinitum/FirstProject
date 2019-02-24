@@ -7,7 +7,10 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,10 @@ public class ReservationServiceTest {
     private Reservation expectedReservation;
     @InjectMocks
     ReservationService reservationService;
+    @Mock
+    Principal principal;
+    @Spy
+    ModelAndView modelAndView;
     private int testPage = 1;
     private int testTotal = 5;
     private List<Reservation> expectedReservationsList;
@@ -31,6 +38,7 @@ public class ReservationServiceTest {
     private int changedItems = 1;
     private Integer testDiscountId = 1;
     private Integer numberOfPeople = 5;
+    private Integer testPricePerUnit = 100;
 
     @Before
     public void setUp() {
@@ -88,16 +96,30 @@ public class ReservationServiceTest {
     }
 
     @Test
-    public void getTotalPrice(){
-        Integer testPricePerUnit = 100;
+    public void getTotalPrice() {
         Integer expectedTotalPrice = 500;
-        Integer actualTotalPrice = reservationService.getTotalPrice(numberOfPeople,testPricePerUnit, testDiscountId);
+        Integer actualTotalPrice = reservationService.getTotalPrice(numberOfPeople, testPricePerUnit, testDiscountId);
         assertEquals(expectedTotalPrice, actualTotalPrice);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void getTotalPriceThrowsIllegalArgumentException(){
+    public void getTotalPriceThrowsIllegalArgumentException() {
         Integer wrongPricePerUnit = -1;
-        reservationService.getTotalPrice(numberOfPeople, wrongPricePerUnit , testDiscountId);
+        reservationService.getTotalPrice(numberOfPeople, wrongPricePerUnit, testDiscountId);
+    }
+
+    @Test
+    public void reserveTour() {
+        String expectedView = "homepage";
+        modelAndView = reservationService.reserveTour(modelAndView, principal, testId, testPricePerUnit, numberOfPeople, testDiscountId);
+        assertEquals(expectedView , modelAndView.getViewName());
+    }
+
+    @Test
+    public void reserveTourUserDidNotLogIn(){
+        principal = null;
+        String expectedView = "login";
+        modelAndView = reservationService.reserveTour(modelAndView, principal, testId, testPricePerUnit, numberOfPeople, testDiscountId);
+        assertEquals(expectedView , modelAndView.getViewName());
     }
 }

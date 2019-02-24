@@ -1,7 +1,5 @@
 package com.epam.controller;
 
-import com.epam.model.Reservation;
-import com.epam.model.ReservationStatusEnum;
 import com.epam.model.TourOffer;
 import com.epam.service.PersonService;
 import com.epam.service.ReservationService;
@@ -152,17 +150,6 @@ public class ToursController {
                                        @RequestParam(name = "numberOfPeople") Integer numberOfPeople,
                                        @RequestParam(name = "discountId") Integer discountId,
                                        Principal principal, ModelAndView modelAndView) {
-        if (principal == null) {
-            modelAndView.setViewName("login");
-            modelAndView.addObject("message", "Please, sign in.");
-            return modelAndView;
-        } else {
-            String email = principal.getName();
-            modelAndView.setViewName("homepage");
-            Integer clientId = personService.getIdByEmail(email);
-            Integer totalPrice = reservationService.getTotalPrice(numberOfPeople, pricePerUnit, discountId);
-            reservationService.addReservation(new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discountId, totalPrice));
-            return modelAndView.addObject("message", "Tour was reserved successfully.");
-        }
+        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discountId);
     }
 }

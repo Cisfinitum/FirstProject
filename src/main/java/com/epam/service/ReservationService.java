@@ -1,21 +1,26 @@
 package com.epam.service;
 
 import com.epam.model.Reservation;
+import com.epam.model.ReservationStatusEnum;
 import com.epam.repository.ReservationDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
 public class ReservationService {
     private final ReservationDAO reservationDAO;
+    private final PersonService personService;
     public int totalAmountOfRows = 4;
 
     @Autowired
-    public ReservationService(ReservationDAO reservationDAO) {
+    public ReservationService(ReservationDAO reservationDAO, PersonService personService) {
         this.reservationDAO = reservationDAO;
+        this.personService = personService;
     }
 
 
@@ -100,6 +105,21 @@ public class ReservationService {
             return pricePerUnit * numberOfPeople * discountId;
         } else {
             throw new IllegalArgumentException("All arguments must be strictly more than zero");
+        }
+    }
+
+    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discountId){
+        if (principal == null) {
+            modelAndView.setViewName("login");
+            modelAndView.addObject("message", "Please, sign in.");
+            return modelAndView;
+        } else {
+            String email = principal.getName();
+            modelAndView.setViewName("homepage");
+            Integer clientId = personService.getIdByEmail(email);
+            Integer totalPrice = getTotalPrice(numberOfPeople, pricePerUnit, discountId);
+            addReservation(new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discountId, totalPrice));
+            return modelAndView.addObject("message", "Tour was reserved successfully.");
         }
     }
 }
