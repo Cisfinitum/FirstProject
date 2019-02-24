@@ -15,15 +15,19 @@ import java.util.List;
 public class TourOfferService {
 
     private final TourOfferDAO tourOfferDAO;
+    public int rowsPerPage = 4;
 
     @Autowired
     public TourOfferService(TourOfferDAO tourOfferDAO){
         this.tourOfferDAO = tourOfferDAO;
     }
 
-
     public List<TourOffer> getTours(){
-            return tourOfferDAO.getTours();
+        return tourOfferDAO.getTours();
+    }
+
+    public List<TourOffer> getToursByPage(Integer from, Integer offset){
+            return tourOfferDAO.getToursByPage(from, offset);
     }
 
     public int deleteTour(Integer tourId){
@@ -58,5 +62,9 @@ public class TourOfferService {
             List<Integer> listOfHotelsId = new ArrayList<>();
             listOfHotelsId.add(1);
             return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
+    }
+
+    public int getAmountOfTours() {
+        return tourOfferDAO.getAmountOfTours();
     }
 }

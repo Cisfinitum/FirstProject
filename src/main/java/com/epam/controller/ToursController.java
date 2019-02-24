@@ -6,7 +6,9 @@ import com.epam.validator.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,6 +31,26 @@ public class ToursController {
         ModelAndView toursModel = new ModelAndView();
         toursModel.addObject("list", toursOfferService.getTours());
         toursModel.setViewName("tours");
+        return toursModel;
+    }
+
+    @GetMapping("/listoftours/{pageNum}")
+    public ModelAndView getToursListByPage(@PathVariable Integer pageNum, ModelMap modelMap) {
+        ModelAndView toursModel = new ModelAndView();
+        Integer from = 0;
+        Integer rowsPerPage = toursOfferService.rowsPerPage;
+        Integer totalRows = toursOfferService.getAmountOfTours();
+        Integer totalPages = (totalRows % rowsPerPage == 0) ? totalRows / rowsPerPage : totalRows / rowsPerPage + 1;
+        if(pageNum == 1) {
+            // do nothing
+        } else {
+            from = (pageNum - 1) * rowsPerPage + 1;
+        }
+        toursModel.addObject("list", toursOfferService.getToursByPage(from, rowsPerPage));
+        toursModel.setViewName("tours");
+        modelMap.addAttribute("rowsPerPage", rowsPerPage);
+        modelMap.addAttribute("totalRows", totalRows);
+        modelMap.addAttribute("totalPages", totalPages);
         return toursModel;
     }
 

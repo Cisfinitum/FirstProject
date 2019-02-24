@@ -20,7 +20,13 @@ public class TourOfferDAO {
     }
 
     public List<TourOffer> getTours(){
-        return JdbcTemplate.query("SELECT * FROM tourOffer", (rs, rowNum) -> buildTour(rs));
+        String sql = "SELECT * from tourOffer ";
+        return JdbcTemplate.query(sql, (rs, rowNum) -> buildTour(rs));
+    }
+
+    public List<TourOffer> getToursByPage(Integer from, Integer offset){
+        String sql = "SELECT * from tourOffer LIMIT " + (from - 1) + "," + offset;
+        return JdbcTemplate.query(sql, (rs, rowNum) -> buildTour(rs));
     }
 
     public int deleteTour(Integer tourId){
@@ -64,6 +70,12 @@ public class TourOfferDAO {
         else
             requestSQL = requestSQL.concat("IS NOT NULL");
         return JdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
+    }
+
+    public int getAmountOfTours() {
+        String sql = "SELECT COUNT(*) FROM tourOffer";
+        return JdbcTemplate.queryForObject(
+                sql, Integer.class);
     }
 
     @SneakyThrows(SQLException.class)

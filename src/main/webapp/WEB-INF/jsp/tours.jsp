@@ -27,12 +27,12 @@
 <body>
 <header>
     <nav>
-        <div class="nav-wrapper tab " >
+        <div class="nav-wrapper tab ">
             <a href="index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="listoftours">Tours</a></li>
-                <li><a href="addtour">Add Tour</a></li>
-                <li><a href="reservation">Reservations</a></li>
+                <li><a href="/listoftours">Tours</a></li>
+                <li><a href="/addtour">Add Tour</a></li>
+                <li><a href="/reservation">Reservations</a></li>
                 <li><a href="#">Clients</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
@@ -44,9 +44,10 @@
     </nav>
 </header>
 <main>
-        <div class="container">
-            <h2>Tours</h2>
-            <table>
+    <div class="container">
+        <h2>Tours</h2>
+        <table>
+            <c:if test="${list.size()>0}">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -63,52 +64,66 @@
                     <th>Delete</th>
                 </tr>
                 </thead>
-                <tbody>
-                <c:forEach var = "i" begin = "0" end="${list.size()-1}" >
-                    <tr>
-                        <td>${list.get(i).id}</td>
-                        <td>${list.get(i).tourType}</td>
-                        <td>FROM HOTEL ID</td>
-                        <td>FROM HOTEL ID</td>
-                        <td>${list.get(i).startDate}</td>
-                        <td>${list.get(i).endDate}</td>
-                        <td>${list.get(i).pricePerUnit}</td>
-                        <td>FROM HOTEL ID</td>
-                        <td>${list.get(i).description}</td>
-                        <td>FROM DISCOUNT ID</td>
-                        <td>
-                            <form method="get" action="#">
-                                <button class="btn waves-effect waves-light" type="submit" name="action"> Edit
-                                </button>
-                            </form>
-                        </td>
-                        <td>
-                            <form method="post" action="deletetour">
-                                <input name="idOfTour" type="hidden" value="${list.get(i).id}">
-                                <button class="btn waves-effect waves-light" type="submit" name="action"> Delete
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-            <div class="row">
-                <div class="col s2 offset-s10">
-                    <div class="input-field">
-                        <form method="get" action="addtour">
-                            <button class="btn waves-effect waves-light" type="submit" name="action"> Add Tour
+            </c:if>
+            <tbody>
+            <c:if test="${list.size() == 0}"><p>There are no active tours</p></c:if>
+            <c:forEach var="i" begin="0" end="${list.size()-1}">
+                <tr>
+                    <td>${list.get(i).id}</td>
+                    <td>${list.get(i).tourType}</td>
+                    <td>FROM HOTEL ID</td>
+                    <td>FROM HOTEL ID</td>
+                    <td>${list.get(i).startDate}</td>
+                    <td>${list.get(i).endDate}</td>
+                    <td>${list.get(i).pricePerUnit}</td>
+                    <td>FROM HOTEL ID</td>
+                    <td>${list.get(i).description}</td>
+                    <td>FROM DISCOUNT ID</td>
+                    <td>
+                        <form method="get" action="#">
+                            <button class="btn waves-effect waves-light" type="submit" name="action"> Edit
                             </button>
                         </form>
-                    </div>
+                    </td>
+                    <td>
+                        <form method="post" action="deletetour">
+                            <input name="idOfTour" type="hidden" value="${list.get(i).id}">
+                            <button class="btn waves-effect waves-light" type="submit" name="action"> Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col s2 offset-s10">
+                <div class="input-field">
+                    <form method="get" action="addtour">
+                        <button class="btn waves-effect waves-light" type="submit" name="action"> Add Tour
+                        </button>
+                    </form>
                 </div>
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
         </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col s6 offset-s5">
+                <ul class="pagination">
+                    <c:if test="${totalRows>4}">
+                        <c:forEach var="i" begin="1" end="${totalPages}">
+                            <li class="waves-effect"><a href="/listoftours/${i}">${i}</a></li>
+                        </c:forEach>
+                    </c:if>
+                </ul>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
 </main>
 <footer class="page-footer">
     <div class="container">

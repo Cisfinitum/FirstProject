@@ -78,7 +78,7 @@
                 <li><a href="registration"><spring:message code="signup" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
-                <li><a href="listoftours"><spring:message code="adminpage" /></a></li>
+                <li><a href="listoftours/1"><spring:message code="adminpage" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
                 <li><a href="logout"><spring:message code="logout" /></a></li>
