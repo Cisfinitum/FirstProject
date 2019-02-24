@@ -66,6 +66,9 @@
                         <div class="col s12 offset-s2">
                                 <a class="btn waves-effect waves-light modal-trigger" data-target="modal" href="#modal"> Change Password
                                 </a>
+                            <div id="idofthedivtohide" class = "hide">
+                                <span>Password has been changed</span>
+                            </div>
                         </div>
                         <!-- Modal Structure -->
                         <div id="modal" class="modal modal-fixed-footer">
