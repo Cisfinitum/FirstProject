@@ -101,7 +101,6 @@ public class ToursController {
         } catch (Exception e) {
             toursModel.addObject("error", e.getMessage());
             log.error(e.getMessage());
-            toursModel.addObject("result", e.getMessage());
             toursModel.addObject("tourType", tourType);
             toursModel.addObject("startDate", startDate);
             toursModel.addObject("endDate", endDate);
