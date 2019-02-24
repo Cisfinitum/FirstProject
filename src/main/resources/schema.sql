@@ -24,7 +24,7 @@ CREATE TABLE hotel
   country       VARCHAR(50) NOT NULL,
   number_of_stars INT
 );
-CREATE TABLE tour_offer
+CREATE TABLE tourOffer
 (
   id           NUMERIC IDENTITY PRIMARY KEY,
   tour_type     VARCHAR(300) NOT NULL,
@@ -46,6 +46,6 @@ CREATE TABLE reservation
   status          VARCHAR(100) NOT NULL,
   discount_id     INT,
   total_price      INT,
-  FOREIGN KEY (tour_offer_id) REFERENCES tour_offer (id),
+  FOREIGN KEY (tour_offer_id) REFERENCES tourOffer (id),
   FOREIGN KEY (client_id) REFERENCES person (id),
 );
