@@ -54,10 +54,17 @@ public class TourOfferServiceTest {
         when(tourOfferDAO.updateTour(expectedTourOffer)).thenReturn(1);
         assertEquals(tourOfferService.updateTour(expectedTourOffer),1);
     }
+
     @Test
     public void searchTourCheck(){
         when(tourOfferDAO.searchTours(new ArrayList<>(),LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
         assertEquals(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now()),tourOfferList);
+    }
+
+    @Test
+    public void getTourByIdCheck(){
+        when(tourOfferDAO.getTourById(1)).thenReturn(expectedTourOffer);
+        assertEquals(tourOfferService.getTourById(1),expectedTourOffer);
     }
 
     @Test(expected = NullPointerException.class)
@@ -78,6 +85,16 @@ public class TourOfferServiceTest {
     @Test(expected = NullPointerException.class)
     public void updateTourThrowException(){
         when(tourOfferService.updateTour(null)).thenThrow(NullPointerException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getTourByIdThrowExceptionNull(){
+        when(tourOfferService.getTourById(null)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getTourByIdThrowExceptionZero(){
+        when(tourOfferService.getTourById(0)).thenThrow(IllegalArgumentException.class);
     }
 }
 
