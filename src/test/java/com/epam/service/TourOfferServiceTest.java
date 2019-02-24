@@ -1,5 +1,6 @@
 package com.epam.service;
 
+import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
 import org.junit.Before;
@@ -19,6 +20,10 @@ public class TourOfferServiceTest {
     private TourOfferDAO tourOfferDAO;
     @Mock
     private TourOffer expectedTourOffer;
+    @Mock
+    private HotelService hotelService;
+    @Mock
+    private Hotel expectedHotel;
 
     private List<TourOffer> tourOfferList;
 
@@ -27,7 +32,7 @@ public class TourOfferServiceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tourOfferService = new TourOfferService(tourOfferDAO);
+        tourOfferService = new TourOfferService(tourOfferDAO,hotelService);
         tourOfferList = new ArrayList<>();
     }
 
@@ -56,8 +61,15 @@ public class TourOfferServiceTest {
     }
     @Test
     public void searchTourCheck(){
-        when(tourOfferDAO.searchTours(new ArrayList<>(),LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
-        assertEquals(tourOfferService.searchTours(new ArrayList<>(),LocalDate.now(),LocalDate.now()),tourOfferList);
+        List<Hotel> expectedHotels = new ArrayList<>();
+        expectedHotels.add(expectedHotel);
+        when(hotelService.getHotelsByCountry("test")).thenReturn(expectedHotels);
+        List<Integer> expectedHotelsId = new ArrayList<>();
+        for(Hotel hotel: expectedHotels){
+            expectedHotelsId.add(hotel.getId());
+        }
+        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
+        assertEquals(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now()),tourOfferList);
     }
 
     @Test(expected = NullPointerException.class)

@@ -1,5 +1,6 @@
 package com.epam.service;
 
+import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +16,12 @@ import java.util.List;
 public class TourOfferService {
 
     private final TourOfferDAO tourOfferDAO;
+    private final HotelService hotelService;
 
     @Autowired
-    public TourOfferService(TourOfferDAO tourOfferDAO){
+    public TourOfferService(TourOfferDAO tourOfferDAO, HotelService hotelService){
         this.tourOfferDAO = tourOfferDAO;
+        this.hotelService = hotelService;
     }
 
 
@@ -53,7 +56,16 @@ public class TourOfferService {
         }
     }
 
-    public List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
+    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate){
+        List<Hotel> myList = hotelService.getHotelsByCountry(country);
+        if(myList.size()==0&&!country.isEmpty()){
+            log.error("Wrong input country: "+country);
+            throw new IllegalArgumentException("Wrong input country: "+country);
+        }
+        List<Integer> listOfHotelsId = new ArrayList<>();
+        for(Hotel hotel: myList){
+            listOfHotelsId.add(hotel.getId());
+        }
             return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
     }
 }
