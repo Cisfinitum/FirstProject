@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Kseniia Maltseva
  */
-public interface ReservationDAOInterface {
+public interface SimpleReservationDAO {
     /**
      * Get the instance of reservation and insert it to database
      * Return a number of new rows

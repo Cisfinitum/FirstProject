@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Fedor Kevdin
  */
-public interface TourOfferDAOInterface {
+public interface SimpleTourOfferDAO {
 
     /**
      * Return the list of all tours from the database

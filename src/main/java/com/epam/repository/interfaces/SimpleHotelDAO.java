@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Ilia Grigorev
  */
-public interface HotelDAOInterface {
+public interface SimpleHotelDAO {
     /**
      * Return the list of all hotels from the database
      *

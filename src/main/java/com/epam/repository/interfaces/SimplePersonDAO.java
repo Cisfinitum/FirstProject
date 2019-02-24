@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Lev Kisilev
  */
-public interface PersonDAOInterface {
+public interface SimplePersonDAO {
     /**
      * Return the list of all people from the database
      *
