@@ -29,6 +29,8 @@ public class ReservationServiceTest {
     Principal principal;
     @Spy
     ModelAndView modelAndView;
+    @Mock
+    PersonService personService;
     private int testPage = 1;
     private int testTotal = 5;
     private List<Reservation> expectedReservationsList;
@@ -111,6 +113,9 @@ public class ReservationServiceTest {
     @Test
     public void reserveTour() {
         String expectedView = "homepage";
+        String testEmail = "user";
+        when(principal.getName()).thenReturn(testEmail);
+        when(personService.getIdByEmail(testEmail)).thenReturn(1);
         modelAndView = reservationService.reserveTour(modelAndView, principal, testId, testPricePerUnit, numberOfPeople, testDiscountId);
         assertEquals(expectedView , modelAndView.getViewName());
     }
