@@ -57,7 +57,7 @@ public class TourOfferServiceTest {
     @Test
     public void searchTourCheck(){
         when(tourOfferDAO.searchTours(new ArrayList<>(),LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
-        assertEquals(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now()),tourOfferList);
+        assertEquals(tourOfferService.searchTours(new ArrayList<>(),LocalDate.now(),LocalDate.now()),tourOfferList);
     }
 
     @Test(expected = NullPointerException.class)
