@@ -45,7 +45,7 @@ public class Validator {
         String numberFormatIssue = "Integer format exception. User current input Integer: ";
         Integer finalInteger;
        try {
-           if ((finalInteger=Integer.valueOf(inputInt)) < 0) {
+           if ((finalInteger=Integer.valueOf(inputInt)) <= 0) {
                log.error(negativeOrZeroIssue+inputInt);
                throw new Exception(negativeOrZeroIssue+inputInt);
            }

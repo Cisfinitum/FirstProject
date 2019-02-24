@@ -102,45 +102,30 @@ public class ToursController {
     }
 
     @PostMapping("/updatetour")
-    public ModelAndView updateTour(@RequestParam String tourId, @RequestParam String tourType, @RequestParam String startDate, @RequestParam String endDate,
-                                   @RequestParam Integer hotel, @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription) {
+    public ModelAndView updateTour(@RequestParam String tourId, @RequestParam String tourType,
+                                   @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
         try {
-            System.out.println(tourId+tourType+startDate+endDate+hotel+pricePerPerson+discount+tourDescription);
-            LocalDate addStartDate = Validator.getDate(startDate, false);
-            System.out.println(addStartDate.toString()+"startDate");
-            LocalDate addEndDate = Validator.getDate(endDate, false);
-            System.out.println(addStartDate.toString()+"endDate");
+            Integer addTourId = Validator.getInt(tourId);
+            TourOffer tourOffer = toursOfferService.getTourById(addTourId);
+            toursModel.addObject("tour",tourOffer);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
-            System.out.println(addPricePerPerson+"pricePerson");
+            Integer addDiscount = Validator.getInt(discount);
             Validator.checkEmpty(tourType);
-            System.out.println("checkTourType");
             Validator.checkEmpty(tourDescription);
-            System.out.println("checkDescription");
-            Validator.checkDateDifferent(addStartDate, addEndDate);
-            System.out.println("checkDifferent");
-            int result = toursOfferService.updateTour(TourOffer.builder()
-                    .id(Integer.valueOf(tourId))
-                    .tourType(tourType)
-                    .startDate(addStartDate)
-                    .endDate(addEndDate)
-                    .pricePerUnit(addPricePerPerson)
-                    .hotelId(hotel) //stub
-                    .description(tourDescription)
-                    .discountId(1) //stub
-                    .build());
-            System.out.println(toursOfferService.getTourById(Integer.valueOf(tourId)).toString());
-            System.out.println(result+"RESULT OF UPDATE");
+            tourOffer.setTourType(tourType);
+            tourOffer.setPricePerUnit(addPricePerPerson);
+            tourOffer.setDiscountId(addDiscount);
+            tourOffer.setDescription(tourDescription);
+            int result = toursOfferService.updateTour(tourOffer);
             if (result == 1) {
                 toursModel.addObject("result", "Success");
-                toursModel.setViewName("tours");
+                toursModel.setViewName("redirect:/listoftours");
             } else {
-                toursModel.setViewName("updatetour");
                 toursModel.addObject("error", "Failed to add");
             }
             return toursModel;
         } catch (Exception e) {
-            toursModel.setViewName("updatetour");
             toursModel.addObject("error", e.getMessage());
             return toursModel;
         }
@@ -155,11 +140,7 @@ public class ToursController {
     public ModelAndView getUpdateTour(@RequestParam String idOfTour) {
         ModelAndView toursModel = new ModelAndView();
         toursModel.setViewName("updatetour");
-        TourOffer tourOffer = toursOfferService.getTourById(Integer.valueOf(idOfTour));
-        Hotel hotel = hotelService.getHotelById(tourOffer.getHotelId());
-        toursModel.addObject("hotelList",hotelService.getHotels());
-        toursModel.addObject("tour",tourOffer);
-        toursModel.addObject("hotelCurrent",hotel);
+        toursModel.addObject("tour",toursOfferService.getTourById(Integer.valueOf(idOfTour)));
         return toursModel;
     }
 }

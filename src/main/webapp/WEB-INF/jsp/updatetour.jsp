@@ -49,10 +49,10 @@
         <form method="POST" action="updatetour">
             <div class="row">
                 <c:if test="${not empty result}">
-                    <span style="color: green; font-weight: bold">${result}</span>
+                    <h5 style="color: green; font-weight: bold">${result}</h5>
                 </c:if>
                 <c:if test="${not empty error}">
-                    <span style="color: red; font-weight: bold">${error}</span>
+                    <h5 style="color: red; font-weight: bold">${error}</h5>
                 </c:if>
             </div>
             <div class="row">
@@ -62,34 +62,6 @@
                         <label for="autocomplete-input">Tour type</label>
                     </div>
                 </div>
-                <div class="col s3">
-                    <div class="input-field">
-                        <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-date" class="datepicker" name="startDate" value="${tour.startDate}">
-                        <label for="autocomplete-date">Start Date</label>
-                    </div>
-                </div>
-                <div class="col s3">
-                    <div class="input-field">
-                        <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-date2" class="datepicker" name="endDate" value="${tour.endDate}">
-                        <label for="autocomplete-date2">End Date</label>
-                    </div>
-                </div>
-                <div class="col s4">
-                    <div class="input-field">
-                        <select class="pricePerPerson" name="hotel">
-                            <c:forEach var="hotel" items="${hotelList}">
-                                <option value="${hotelCurrent.id}" selected> ${hotelCurrent.name} ${hotelCurrent.numberOfStars}★
-                                </option>
-                                <option value="${hotel.id}"> ${hotel.name} ${hotel.numberOfStars}★
-                                </option>
-                            </c:forEach>
-                        </select>
-                        <label>Hotel</label>
-                    </div>
-                </div>
-
                 <div class="col s3">
                     <div class="input-field">
                         <input type="text" id="autocomplete-input2" class="pricePerPerson" name="pricePerPerson" value="${tour.pricePerUnit}">
@@ -103,7 +75,7 @@
                     </div>
                 </div>
                 <div class="input-field">
-                    <div class="input-field col s12">
+                    <div class="input-field col s9">
                         <input type="text" id="textarea1" class="materialize-textarea" name="tourDescription" value="${tour.description}">
                         <label for="textarea1">Tour Description</label>
                     </div>
