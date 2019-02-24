@@ -113,13 +113,8 @@ public class ToursController {
             Integer addDiscount = Validator.getInt(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
-            tourOffer.setTourType(tourType);
-            tourOffer.setPricePerUnit(addPricePerPerson);
-            tourOffer.setDiscountId(addDiscount);
-            tourOffer.setDescription(tourDescription);
-            int result = toursOfferService.updateTour(tourOffer);
+            int result = toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);
             if (result == 1) {
-                toursModel.addObject("result", "Success");
                 toursModel.setViewName("redirect:/listoftours");
             } else {
                 toursModel.addObject("error", "Failed to add");
@@ -132,12 +127,12 @@ public class ToursController {
     }
 
     @GetMapping("/addtour")
-    public String getAddTour() {
+    public String addTour() {
         return "addtour";
     }
 
     @GetMapping("/updatetour")
-    public ModelAndView getUpdateTour(@RequestParam String idOfTour) {
+    public ModelAndView updateTour(@RequestParam String idOfTour) {
         ModelAndView toursModel = new ModelAndView();
         toursModel.setViewName("updatetour");
         toursModel.addObject("tour",toursOfferService.getTourById(Integer.valueOf(idOfTour)));

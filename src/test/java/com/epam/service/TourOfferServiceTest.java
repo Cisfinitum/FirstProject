@@ -52,7 +52,7 @@ public class TourOfferServiceTest {
     @Test
     public void updateTourCheck(){
         when(tourOfferDAO.updateTour(expectedTourOffer)).thenReturn(1);
-        assertEquals(tourOfferService.updateTour(expectedTourOffer),1);
+        assertEquals(tourOfferService.updateTour(expectedTourOffer,"test",1,1,"test"),1);
     }
 
     @Test
@@ -82,9 +82,9 @@ public class TourOfferServiceTest {
         when(tourOfferService.addTour(null)).thenThrow(NullPointerException.class);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateTourThrowException(){
-        when(tourOfferService.updateTour(null)).thenThrow(NullPointerException.class);
+        when(tourOfferService.updateTour(null,"test",1,1,"test")).thenThrow(NullPointerException.class);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -95,6 +95,36 @@ public class TourOfferServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void getTourByIdThrowExceptionZero(){
         when(tourOfferService.getTourById(0)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionTourType(){
+        when(tourOfferService.updateTour(expectedTourOffer,null,1,1,"test")).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionPricePerPersonNull(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",null,1,"test")).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionPricePerPersonZero(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",0,1,"test")).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionDiscountNull(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",1,null,"test")).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionDiscountZero(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",1,0,"test")).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionTourDescriptiontNull(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",1,1,null)).thenThrow(IllegalArgumentException.class);
     }
 }
 
