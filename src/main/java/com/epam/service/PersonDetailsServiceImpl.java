@@ -65,4 +65,11 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
         if (result < 1) return false;
         return true;
     }
+
+    public boolean updatePasswordById(Integer id, String password) {
+        int result = personService.updatePasswordById(id, password);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
+    }
 }

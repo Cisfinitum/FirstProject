@@ -80,6 +80,9 @@
             <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <li><a href="listoftours"><spring:message code="adminpage" /></a></li>
             </sec:authorize>
+            <sec:authorize access="hasRole('ROLE_USER')">
+                <li><a href="/clientProfile"><spring:message code="profile" /></a></li>
+            </sec:authorize>
             <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
                 <li><a href="/logout"><spring:message code="logout" /></a></li>
             </sec:authorize>
