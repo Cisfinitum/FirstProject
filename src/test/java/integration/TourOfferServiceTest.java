@@ -11,8 +11,11 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.test.util.ReflectionTestUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,16 +28,20 @@ public class TourOfferServiceTest {
     private JdbcTemplate jdbcTemplate;
     @Mock
     private TourOffer tourOffer;
-
+    private TourOfferDAO tourOfferDAO;
     private List<TourOffer> tourOffers;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        tourOfferDAO = new TourOfferDAO(jdbcTemplate);
+        tourOfferDAO = Mockito.spy(tourOfferDAO);
+        ReflectionTestUtils.setField(tourOfferDAO, "tableName", "tour_offer");
 
-        tourOfferService = new TourOfferService(new TourOfferDAO(jdbcTemplate));
+        tourOfferService = new TourOfferService(tourOfferDAO);
         tourOffers = new ArrayList<>();
         tourOffers.add(tourOffer);
+
     }
 
     @Test
@@ -111,7 +118,7 @@ public class TourOfferServiceTest {
 
         tourOfferService.updateTour(tourOffer);
 
-        Mockito.verify(jdbcTemplate, Mockito.times(1)).update("UPDATE tour_ofer SET " +
+        Mockito.verify(jdbcTemplate, Mockito.times(1)).update("UPDATE tour_offer SET " +
                 "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
                 "WHERE id = ?",
             tourOffer.getTourType(), tourOffer.getStartDate(), tourOffer.getEndDate(), tourOffer.getPricePerUnit(), tourOffer.getHotelId(),
