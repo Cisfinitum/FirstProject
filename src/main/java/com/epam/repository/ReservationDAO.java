@@ -2,6 +2,7 @@ package com.epam.repository;
 
 import com.epam.model.Reservation;
 import com.epam.model.ReservationStatusEnum;
+import com.epam.repository.interfaces.SimpleReservationDAO;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @PropertySource("classpath:columns.properties")
 @Repository
-public class ReservationDAO {
+public class ReservationDAO implements SimpleReservationDAO {
     private final JdbcTemplate jdbcTemplate;
     @Value("${reservation.id}")
     private String id;

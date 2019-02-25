@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Admin Page</title>
+   <title>Admin Page</title>
     <spring:url value="/resources/css/materialize.css" var="css"/>
     <spring:url value="/resources/js/materialize.js" var="js"/>
     <spring:url value="/resources/css/main.css" var="main"/>
@@ -20,15 +20,13 @@
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="${css}" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="${main}" media="screen,projection"/>
-
-    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
 <header>
     <nav>
         <div class="nav-wrapper tab ">
-            <a href="/index" class="brand-logo">Tour De Team</a>
+            <a href="index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
                 <li><a href="/listoftours">Tours</a></li>
                 <li><a href="/addtour">Add Tour</a></li>
@@ -37,7 +35,7 @@
                 <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="/logout">Log Out</a>
+                        <a class="forButton" href="logout">Log Out</a>
                     </button>
                 </li>
             </ul>
@@ -46,53 +44,53 @@
 </header>
 <main>
     <div class="container">
-        <h2>Reservations</h2>
-        <form method="POST" action="#">
+        <h2>Add Hotel</h2>
+        <p>Please note that all fields are required.</p>
+        <p style="color:green;">${message}</p>
+        <p style="color:red;">${errormessage}</p>
+        <form method="POST" action="/hotels" name="hotel">
             <div class="row">
-                <table>
-                    <c:if test="${listReservation.size()>0}">
-                        <tr>
-                            <th>№</th>
-                            <th>Discount Id</th>
-                            <th>Client Id</th>
-                            <th>Offer Id</th>
-                            <th>Number Of People</th>
-                            <th>Status</th>
-                            <th>Total Price</th>
-                            <th></th>
-                        </tr>
-                    </c:if>
-                    <c:if test="${listReservation.size() == 0}"><p>There are no active reservations</p></c:if>
-                    <c:forEach var="reservation" items="${listReservation}">
-                    <tr>
-                        <td>${reservation.id}</td>
-                        <td>${reservation.discountId}</td>
-                        <td>${reservation.clientId}</td>
-                        <td> ${reservation.tourOfferId}</td>
-                        <td> ${reservation.numberOfPeople}</td>
-                        <td> ${reservation.status}</td>
-                        <td> ${reservation.totalPrice}</td>
-                        <td><a href="deleteReservation/${reservation.id}" class="secondary-content"> <i
-                                class="small material-icons">remove</i></a></td>
-                        </c:forEach>
-                    </tr>
-
-                </table>
-                <br>
-                <div class="row">
-                    <div class="col s6 offset-s5">
-                        <ul class="pagination">
-                            <c:if test="${generalAmount>4}">
-                                <c:forEach var="i" begin="1" end="${amount}">
-                                    <li class="waves-effect"><a href="/reservation/${i}">${i}</a></li>
-                                </c:forEach>
-                            </c:if>
-                        </ul>
+                <div class="col s3">
+                    <div class="input-field">
+                        <input type="text" id="name" name="name" class="autocomplete">
+                        <label for="name">Name</label>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="input-field">
+                        <input type="text" id="country" name="country" class="autocomplete">
+                        <label for="country">Country</label>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="input-field">
+                        <input type="text" id="city" name="city" class="autocomplete">
+                        <label for="city">City</label>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="input-field" >
+                        <select id="stars" name="stars">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <label for="stars">Number Of Stars</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s2 offset-s10">
+                    <div class="input-field">
+                        <button class="btn waves-effect waves-light" type="submit" name="action"> Add
+                            <i class="material-icons right">add</i>
+                        </button>
                     </div>
                 </div>
             </div>
         </form>
-
     </div>
 </main>
 <footer class="page-footer">
@@ -119,7 +117,6 @@
         </div>
     </div>
 </footer>
-
 <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" src="${js}"></script>
 <script type="text/javascript" src="${tours}"></script>

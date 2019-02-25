@@ -2,6 +2,7 @@ package com.epam.repository;
 
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
+import com.epam.repository.interfaces.SimplePersonDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class PersonDAO {
+public class PersonDAO implements SimplePersonDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -84,19 +85,11 @@ public class PersonDAO {
         String sql = "UPDATE person SET password = ? WHERE email = ?";
         return jdbcTemplate.update(sql, password, email);
     }
-
-    public int updatePasswordById(Integer id, String password) {
-        if (id == null || password.equals("")) return -1;
-        String sql = "UPDATE person SET password = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, password, id);
-    }
-
     public Integer getIdByEmail(String email) {
         if (!doesEmailExist(email)) {
             return -1;
         }
         String sql = "SELECT id FROM person WHERE email = " + "'"+email+ "'";
         return jdbcTemplate.queryForObject(sql, Integer.class);
-
     }
 }

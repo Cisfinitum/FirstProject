@@ -117,4 +117,16 @@ public class PersonServiceTest {
     public void giveAdminRightsEmailIsNull() {
         personService.giveAdminRights(null);
     }
+
+    @Test
+    public void getIdByEmail(){
+        Integer expectedId = 1;
+        when(personDAO.getIdByEmail(testEmail)).thenReturn(expectedId);
+        Integer actualId =personService.getIdByEmail(testEmail);
+        assertEquals(expectedId, actualId);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void getIdByEmailNullEmail(){
+        personService.getIdByEmail("");
+    }
 }

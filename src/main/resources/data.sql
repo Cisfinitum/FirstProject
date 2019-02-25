@@ -1,9 +1,5 @@
 INSERT INTO person(email,  password, role)
 VALUES ('user@gmail.com', '123','ADMIN');
-INSERT INTO person(email,  password, role)
-VALUES ('user2@gmail.com', '123','USER');
-INSERT INTO person(email,  password, role)
-VALUES ('user3@gmail.com', '123','USER');
 INSERT INTO discount(discount)
 VALUES ('50');
 INSERT INTO hotel(name, city, country, number_of_stars)
@@ -11,21 +7,21 @@ VALUES ('Luxury Hotel', 'Moscow', 'Russia', '5');
 INSERT INTO tour_offer(tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount_id)
 VALUES ('Shopping',CURRENT_DATE, CURRENT_DATE, '500000', '1', 'best tour ever', '1');
 INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
-VALUES ('2','1', '1', 'PAID', '1', '500000');
+VALUES ('1','1', '1', 'PAID', '1', '500000');
 INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
-VALUES ('2','1', '1', 'PAID', '1', '500000');
+VALUES ('1','1', '1', 'PAID', '1', '500000');
 INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
-VALUES ('2','1', '1', 'PAID', '1', '500000');
+VALUES ('1','1', '1', 'PAID', '1', '500000');
 INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
-VALUES ('2','1', '1', 'PAID', '1', '500000');
+VALUES ('1','1', '1', 'PAID', '1', '500000');
 INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
-VALUES ('2','1', '1', 'PAID', '1', '500000');
+VALUES ('1','1', '1', 'PAID', '1', '500000');
 INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
-VALUES ('2','1', '1', 'PAID', '1', '500000');
+VALUES ('1','1', '1', 'PAID', '1', '500000');
 INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
-VALUES ('2','1', '1', 'PAID', '1', '500000');
+VALUES ('1','1', '1', 'PAID', '1', '500000');
 INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount_id, total_price)
-VALUES ('2','1', '1', 'PAID', '1', '500000');
+VALUES ('1','1', '1', 'PAID', '1', '500000');
 INSERT INTO tour_offer(tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount_id)
 VALUES ('Aaaa',CURRENT_DATE, CURRENT_DATE, '100000', '1', 'Yyyy', '1');
 INSERT INTO tour_offer(tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount_id)
