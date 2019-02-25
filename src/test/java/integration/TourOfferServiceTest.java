@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -27,7 +28,6 @@ public class TourOfferServiceTest {
     private JdbcTemplate jdbcTemplate;
     @Mock
     private TourOffer tourOffer;
-
     private TourOfferDAO tourOfferDAO;
     private List<TourOffer> tourOffers;
 
@@ -38,11 +38,9 @@ public class TourOfferServiceTest {
         tourOfferDAO = Mockito.spy(tourOfferDAO);
         ReflectionTestUtils.setField(tourOfferDAO, "tableName", "tour_offer");
 
-        tourOfferService = new TourOfferService(new TourOfferDAO(jdbcTemplate));
         tourOfferService = new TourOfferService(tourOfferDAO);
         tourOffers = new ArrayList<>();
         tourOffers.add(tourOffer);
-
 
     }
 

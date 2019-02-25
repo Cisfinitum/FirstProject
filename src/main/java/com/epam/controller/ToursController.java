@@ -3,6 +3,8 @@ package com.epam.controller;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.service.HotelService;
+import com.epam.service.PersonService;
+import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
 import com.epam.validator.Validator;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,11 +26,15 @@ import java.util.List;
 public class ToursController {
     private final TourOfferService toursOfferService;
     private final HotelService hotelService;
+    private final ReservationService reservationService;
+    private final PersonService personService;
 
     @Autowired
-    public ToursController(TourOfferService toursOfferService, HotelService hotelService) {
+    public ToursController(TourOfferService toursOfferService, ReservationService reservationService, PersonService personService, HotelService hotelService) {
         this.toursOfferService = toursOfferService;
         this.hotelService = hotelService;
+        this.reservationService = reservationService;
+        this.personService = personService;
     }
 
     @GetMapping("/listoftours")
@@ -152,5 +159,14 @@ public class ToursController {
         List<Hotel> hotels = hotelService.getHotels();
         modelMap.addAttribute("hotelList", hotels);
         return "addtour";
+    }
+
+    @PostMapping("/reserveTour")
+    public ModelAndView addReservation(@RequestParam(name = "idOfTour") Integer idOfTour,
+                                       @RequestParam(name = "pricePerUnit") Integer pricePerUnit,
+                                       @RequestParam(name = "numberOfPeople") Integer numberOfPeople,
+                                       @RequestParam(name = "discountId") Integer discountId,
+                                       Principal principal, ModelAndView modelAndView) {
+        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discountId);
     }
 }
