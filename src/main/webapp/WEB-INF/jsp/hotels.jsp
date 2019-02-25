@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Admin Page</title>
+   <title>Admin Page</title>
     <spring:url value="/resources/css/materialize.css" var="css"/>
     <spring:url value="/resources/js/materialize.js" var="js"/>
     <spring:url value="/resources/css/main.css" var="main"/>
@@ -20,8 +20,6 @@
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="${css}" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="${main}" media="screen,projection"/>
-
-    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
@@ -37,7 +35,7 @@
                 <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="/logout">Log Out</a>
+                        <a class="forButton" href="logout">Log Out</a>
                     </button>
                 </li>
             </ul>
@@ -46,74 +44,44 @@
 </header>
 <main>
     <div class="container">
-        <h2>Add Tour</h2>
+        <h2>Add Hotel</h2>
         <p>Please note that all fields are required.</p>
-        <form method="POST" action="addtour">
+        <p style="color:green;">${message}</p>
+        <p style="color:red;">${errormessage}</p>
+        <form method="POST" action="/hotels" name="hotel">
             <div class="row">
-                <c:if test="${not empty result}">
-                    <span style="color: green; font-weight: bold">${result}</span>
-                </c:if>
-                <c:if test="${not empty error}">
-                    <span style="color: red; font-weight: bold">${error}</span>
-                </c:if>
-                </div>
-            <div class="row">
-                <div class="col s4">
+                <div class="col s3">
                     <div class="input-field">
-                        <input type="text" id="autocomplete-input" class="autocomplete" name="tourType"
-                               value="${tourType}">
-                        <label for="autocomplete-input">Tour type</label>
+                        <input type="text" id="name" name="name" class="autocomplete">
+                        <label for="name">Name</label>
                     </div>
                 </div>
-                <div class="col s4">
+                <div class="col s3">
                     <div class="input-field">
-                        <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-date" class="datepicker" name="startDate"
-                               value="${startDate}">
-                        <label for="autocomplete-date">Start Date</label>
+                        <input type="text" id="country" name="country" class="autocomplete">
+                        <label for="country">Country</label>
                     </div>
                 </div>
-                <div class="col s4">
+                <div class="col s3">
                     <div class="input-field">
-                        <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-date2" class="datepicker" name="endDate" value="${endDate}">
-                        <label for="autocomplete-date2">End Date</label>
+                        <input type="text" id="city" name="city" class="autocomplete">
+                        <label for="city">City</label>
                     </div>
                 </div>
-                <div class="col s4">
-                    <div class="input-field">
-                        <select class="pricePerPerson" name="hotel">
-                            <c:forEach var="hotel" items="${hotelList}">
-                                <option value="${hotel.name}"> ${hotel.name} ${hotel.numberOfStars}★
-                                </option>
-                            </c:forEach>
+                <div class="col s3">
+                    <div class="input-field" >
+                        <select id="stars" name="stars">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
                         </select>
-                        <label>Hotel</label>
+                        <label for="stars">Number Of Stars</label>
                     </div>
                 </div>
-                <div class="col s4">
-                    <div class="input-field">
-                        <i class="material-icons prefix">local_offer</i>
-                        <input type="text" id="autocomplete-input2" class="pricePerPerson" name="pricePerPerson"
-                               value="${price}">
-                        <label for="autocomplete-input2">Price Per Person</label>
-                    </div>
-                </div>
-                <div class="col s4">
-                    <div class="input-field">
-                        <i class="material-icons prefix">loyalty</i>
-                        <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount"
-                               value="${discount}">
-                        <label for="autocomplete-input3">Discount</label>
-                    </div>
-                </div>
-                <div class="input-field">
-                    <div class="input-field col s12">
-                        <input type="text" id="textarea1" class="materialize-textarea" name="tourDescription"
-                               value="${description}">
-                        <label for="textarea1">Tour Description</label>
-                    </div>
-                </div>
+            </div>
+            <div class="row">
                 <div class="col s2 offset-s10">
                     <div class="input-field">
                         <button class="btn waves-effect waves-light" type="submit" name="action"> Add
@@ -149,7 +117,6 @@
         </div>
     </div>
 </footer>
-
 <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" src="${js}"></script>
 <script type="text/javascript" src="${tours}"></script>
