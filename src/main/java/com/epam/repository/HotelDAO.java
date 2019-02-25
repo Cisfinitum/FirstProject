@@ -1,8 +1,8 @@
 package com.epam.repository;
 
 import com.epam.model.Hotel;
+import com.epam.repository.interfaces.SimpleHotelDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import lombok.SneakyThrows;
 
 @Repository
-public class HotelDAO {
+public class HotelDAO implements SimpleHotelDAO {
 
     private final JdbcTemplate jdbcTemplate;
 

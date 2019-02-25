@@ -37,7 +37,7 @@
                 <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="logout">Log Out</a>
+                        <a class="forButton" href="/logout">Log Out</a>
                     </button>
                 </li>
             </ul>
