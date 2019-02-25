@@ -90,4 +90,13 @@ public class PersonDAO {
         String sql = "UPDATE person SET password = ? WHERE id = ?";
         return jdbcTemplate.update(sql, password, id);
     }
+
+    public Integer getIdByEmail(String email) {
+        if (!doesEmailExist(email)) {
+            return -1;
+        }
+        String sql = "SELECT id FROM person WHERE email = " + "'"+email+ "'";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+
+    }
 }

@@ -11,30 +11,30 @@ import java.util.List;
 public class PersonService {
 
     private final PersonDAO personDAO;
+
     @Autowired
     public PersonService(PersonDAO personDAO) {
         this.personDAO = personDAO;
     }
 
-    public Person getPerson(String email){
-        if (email == null) throw  new IllegalArgumentException("Email must be not null");
+    public Person getPerson(String email) {
+        if (email == null) throw new IllegalArgumentException("Email must be not null");
         List<Person> persons = personDAO.getPersons();
-        for (Person person: persons) {
+        for (Person person : persons) {
             if (person.getEmail().equals(email)) return person;
         }
         return null;
     }
 
-    public Person getPersonById (Integer id) {
+    public Person getPersonById(Integer id) {
         if (id != null) {
             return personDAO.getPersonById(id);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Id must be specified");
         }
     }
 
-    public int addPerson(Person person){
+    public int addPerson(Person person) {
         if (person == null) throw new IllegalArgumentException("Person must be not null");
         return personDAO.addPerson(person);
     }
@@ -66,5 +66,15 @@ public class PersonService {
     public int giveAdminRights(String email) {
         if (email == null) throw new IllegalArgumentException("Email must be not null");
         return personDAO.giveAdminRights(email);
+    }
+
+    public Integer getIdByEmail(String email) {
+        if (email.isEmpty()) {
+            throw new IllegalArgumentException("Email is an empty string");
+        }
+        if (email == null) {
+            throw new IllegalArgumentException("Email must be not null");
+        }
+        return personDAO.getIdByEmail(email);
     }
 }
