@@ -92,4 +92,10 @@ public class PersonDAO implements SimplePersonDAO {
         String sql = "SELECT id FROM person WHERE email = " + "'"+email+ "'";
         return jdbcTemplate.queryForObject(sql, Integer.class);
     }
+
+    public int updatePasswordById(Integer id, String password) {
+        if (id == null || password.equals("")) return -1;
+        String sql = "UPDATE person SET password = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, password, id);
+    }
 }
