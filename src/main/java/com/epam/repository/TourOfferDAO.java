@@ -5,13 +5,14 @@ import com.epam.repository.interfaces.SimpleTourOfferDAO;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-
+@PropertySource("classpath:columns.properties")
 @Repository
 public class TourOfferDAO implements SimpleTourOfferDAO {
     private final JdbcTemplate JdbcTemplate;
