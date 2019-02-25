@@ -46,7 +46,7 @@
 <main>
     <div class="container">
         <h2>Edit Tour</h2>
-        <form method="POST" action="updatetour">
+        <form method="POST" action="/updatetour">
             <div class="row">
                 <c:if test="${not empty result}">
                     <h5 style="color: green; font-weight: bold">${result}</h5>

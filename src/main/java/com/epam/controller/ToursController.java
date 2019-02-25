@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -131,11 +132,11 @@ public class ToursController {
         return "addtour";
     }
 
-    @GetMapping("/updatetour")
-    public ModelAndView updateTour(@RequestParam String idOfTour) {
+    @GetMapping("/updatetour/{id}")
+    public ModelAndView updateTour(@PathVariable Integer id) {
         ModelAndView toursModel = new ModelAndView();
         toursModel.setViewName("updatetour");
-        toursModel.addObject("tour",toursOfferService.getTourById(Integer.valueOf(idOfTour)));
+        toursModel.addObject("tour",toursOfferService.getTourById(id));
         return toursModel;
     }
 }
