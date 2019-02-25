@@ -9,6 +9,8 @@ VALUES ('user_3@gmail.com', '123','BLOCKED');
 INSERT INTO person(email,  password, role)
 VALUES ('user_4@gmail.com', '123','USER');
 INSERT INTO person(email,  password, role)
+VALUES ('user@gmail.com', '123','USER');
+INSERT INTO person(email,  password, role)
 VALUES ('user_5@gmail.com', '123','USER');
 INSERT INTO person(email,  password, role)
 VALUES ('user_6@gmail.com', '123','USER');
