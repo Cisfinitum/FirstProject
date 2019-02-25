@@ -3,6 +3,7 @@ package com.epam.controller;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.service.HotelService;
+import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
 import com.epam.validator.Validator;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @Controller
@@ -23,17 +22,20 @@ import java.util.Map;
 public class ToursController {
     private final TourOfferService toursOfferService;
     private final HotelService hotelService;
+    private final ReservationService reservationService;
 
     @Autowired
-    ToursController(TourOfferService toursOfferService, HotelService hotelService) {
+    ToursController(TourOfferService toursOfferService, HotelService hotelService, ReservationService reservationService) {
         this.toursOfferService = toursOfferService;
         this.hotelService = hotelService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping("/listoftours")
     public ModelAndView getToursList() {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("list", toursOfferService.getTours());
+        toursModel.addObject("listOfTours", toursOfferService.getTours());
+        toursModel.addObject("hotels", hotelService.getMapOfHotels());
         toursModel.setViewName("tours");
         return toursModel;
     }
@@ -46,12 +48,7 @@ public class ToursController {
         try {
             LocalDate addStartDate = Validator.getDate(startDate, true);
             LocalDate addEndDate = Validator.getDate(endDate, true);
-            Map<Integer,Hotel> hotelsMap = new HashMap<>();
-            for(Hotel hotel: hotelService.getHotels()){
-                hotelsMap.put(hotel.getId(),hotel);
-            }
-            toursModel.addObject("listOfHotels",hotelsMap);
-            toursModel.addObject("listOfTours", toursOfferService.searchTours(country, addStartDate, addEndDate));
+            toursModel.addObject("list", toursOfferService.searchTours(null, addStartDate, addEndDate));
             return toursModel;
         } catch (Exception e) {
             toursModel.addObject("error", e.getMessage());

@@ -10,7 +10,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -21,6 +23,7 @@ public class HotelServiceTest {
     @Mock
     private Hotel expectedHotel;
     private List<Hotel> hotelList;
+    Map<Integer,Hotel> expectedHotelsMap;
     @InjectMocks
     private HotelService hotelService;
     private int expectedResultPositive = 1;
@@ -31,6 +34,9 @@ public class HotelServiceTest {
 
         hotelList = new ArrayList<>();
         hotelList.add(expectedHotel);
+        expectedHotelsMap = new HashMap<>();
+        expectedHotelsMap.put(expectedHotel.getId(),expectedHotel);
+        when(expectedHotel.getId()).thenReturn(0);
         when(expectedHotel.getName()).thenReturn("Luxury Hotel");
         when(expectedHotel.getCountry()).thenReturn("Russia");
     }
@@ -77,6 +83,12 @@ public class HotelServiceTest {
         when(hotelDAO.deleteHotel(1)).thenReturn(1);
         int actualResult = hotelService.deleteHotel(1);
         assertEquals(actualResult,expectedResultPositive);
+    }
+
+    @Test
+    public void getMapOfHotels(){
+        when(hotelService.getHotels()).thenReturn(hotelList);
+        assertEquals(expectedHotelsMap,hotelService.getMapOfHotels());
     }
 
 }
