@@ -3,6 +3,7 @@ package com.epam.repository;
 import com.epam.model.TourOffer;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
@@ -14,39 +15,41 @@ import java.util.List;
 public class TourOfferDAO {
     private final JdbcTemplate JdbcTemplate;
 
+    @Value("${tourOffer.tableName}")
+    private String tableName;
     @Autowired
     public TourOfferDAO(JdbcTemplate JdbcTemplate) {
         this.JdbcTemplate = JdbcTemplate;
     }
 
     public List<TourOffer> getTours(){
-        return JdbcTemplate.query("SELECT * FROM tourOffer", (rs, rowNum) -> buildTour(rs));
+        return JdbcTemplate.query("SELECT * FROM " +  tableName, (rs, rowNum) -> buildTour(rs));
     }
 
     public int deleteTour(Integer tourId){
-         return JdbcTemplate.update("DELETE FROM tour_offer WHERE id = ?", tourId);
+         return JdbcTemplate.update("DELETE FROM " + tableName+" WHERE id = ?", tourId);
     }
 
     public int addTour(TourOffer touroffer){
-        return JdbcTemplate.update("INSERT INTO tour_offer(tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount_id) " +
+        return JdbcTemplate.update("INSERT INTO "+tableName+" (tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount_id) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),
                 touroffer.getPricePerUnit(),touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId());
     }
 
     public int updateTour(TourOffer touroffer){
-       return JdbcTemplate.update("UPDATE tour_ofer SET " +
+       return JdbcTemplate.update("UPDATE "+tableName+" SET " +
                "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
                "WHERE id = ?",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),touroffer.getPricePerUnit(),
                touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId(),touroffer.getId());
     }
 
     public List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
-        String requestSQL = "SELECT * FROM tour_offer WHERE start_date ";
+        String requestSQL = "SELECT * FROM " + tableName+" WHERE start_date ";
         if(startDate!=null)
             requestSQL = requestSQL.concat("= '"+startDate+"'");
         else
             requestSQL = requestSQL.concat("IS NOT NULL ");
-        requestSQL = requestSQL.concat(" AND endDate ");
+        requestSQL = requestSQL.concat(" AND end_date ");
         if(endDate!=null)
             requestSQL = requestSQL.concat("='"+endDate+"'");
         else
