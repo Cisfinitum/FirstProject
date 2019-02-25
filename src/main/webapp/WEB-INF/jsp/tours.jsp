@@ -47,6 +47,12 @@
 <main>
         <div class="container">
             <h2>Tours</h2>
+            <c:if test="${not empty result}">
+                <span style="color: green; font-weight: bold">${result}</span>
+            </c:if>
+            <c:if test="${not empty error}">
+                <span style="color: red; font-weight: bold">${error}</span>
+            </c:if>
             <table>
                 <thead>
                 <tr>
@@ -82,26 +88,13 @@
                                 Edit </a>
                         </td>
                         <td>
-                            <form method="post" action="deletetour">
-                                <input name="idOfTour" type="hidden" value="${listOfTours.get(i).id}">
-                                <button class="btn waves-effect waves-light" type="submit" name="action"> Delete
-                                </button>
-                            </form>
+                            <a href="deletetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
+                                Delete </a>
                         </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
-            <div class="row">
-                <div class="col s2 offset-s10">
-                    <div class="input-field">
-                        <form method="get" action="addtour">
-                            <button class="btn waves-effect waves-light" type="submit" name="action"> Add Tour
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
             <br>
             <br>
             <br>

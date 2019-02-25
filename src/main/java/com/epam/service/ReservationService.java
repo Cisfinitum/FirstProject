@@ -83,8 +83,7 @@ public class ReservationService {
             throw new NoSuchElementException("Reservation with such id does not exist.");
         }
     }
-
-    int getTourOfferById(Integer tourOfferId) {
+    public int getTourOfferById(Integer tourOfferId) {
         if (tourOfferId != null) {
             if (tourOfferId > 0) {
                 return reservationDAO.getTourOfferById(tourOfferId);

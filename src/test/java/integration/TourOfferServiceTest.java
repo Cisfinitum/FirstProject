@@ -2,17 +2,16 @@ package integration;
 
 import com.epam.exception.NotFoundException;
 import com.epam.model.TourOffer;
+import com.epam.repository.ReservationDAO;
 import com.epam.repository.TourOfferDAO;
 import com.epam.service.HotelService;
+import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
 import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -32,6 +31,8 @@ public class TourOfferServiceTest {
     private TourOfferDAO tourOfferDAO;
     private List<TourOffer> tourOffers;
     private HotelService hotelService;
+    @Mock
+    private ReservationService reservationService;
 
     @Before
     public void setUp() {
@@ -39,8 +40,7 @@ public class TourOfferServiceTest {
         tourOfferDAO = new TourOfferDAO(jdbcTemplate);
         tourOfferDAO = Mockito.spy(tourOfferDAO);
         ReflectionTestUtils.setField(tourOfferDAO, "tableName", "tour_offer");
-
-        tourOfferService = new TourOfferService(tourOfferDAO,hotelService);
+        tourOfferService = new TourOfferService(tourOfferDAO,hotelService,reservationService);
         tourOffers = new ArrayList<>();
         tourOffers.add(tourOffer);
 
@@ -72,9 +72,9 @@ public class TourOfferServiceTest {
 
     @Test
     public void deleteTour() {
-        int tourOfferId = 10;
+        int tourOfferId = 2;
         Mockito.when(jdbcTemplate.update(Mockito.anyString(), (Integer) Mockito.any())).thenReturn(1);
-
+        Mockito.when(reservationService.getTourOfferById(tourOfferId)).thenReturn(0);
         int actualReturnCode = tourOfferService.deleteTour(tourOfferId);
         Assert.assertEquals(1, actualReturnCode);
     }

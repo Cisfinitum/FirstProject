@@ -17,11 +17,13 @@ public class TourOfferService {
 
     private final TourOfferDAO tourOfferDAO;
     private final HotelService hotelService;
+    private final ReservationService reservationService;
 
     @Autowired
-    public TourOfferService(TourOfferDAO tourOfferDAO, HotelService hotelService){
+    public TourOfferService(TourOfferDAO tourOfferDAO, HotelService hotelService, ReservationService reservationService){
         this.tourOfferDAO = tourOfferDAO;
         this.hotelService = hotelService;
+        this.reservationService = reservationService;
     }
 
 
@@ -33,7 +35,12 @@ public class TourOfferService {
         if (tourId == null || tourId == 0) {
             log.error("tourId is null or 0");
             throw new IllegalArgumentException("tourId is null or 0");
-        } else {
+        }
+        else if (reservationService.getTourOfferById(tourId) == 1){
+            log.error("Reservation with this TourId is already exist");
+            throw new IllegalArgumentException("Reservation with this TourId is already exist");
+        }
+        else {
             return tourOfferDAO.deleteTour(tourId);
         }
     }

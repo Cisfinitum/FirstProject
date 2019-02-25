@@ -24,6 +24,8 @@ public class TourOfferServiceTest {
     @Mock
     private HotelService hotelService;
     @Mock
+    private ReservationService reservationService;
+    @Mock
     private Hotel expectedHotel;
 
     private List<TourOffer> tourOfferList;
@@ -33,7 +35,7 @@ public class TourOfferServiceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tourOfferService = new TourOfferService(tourOfferDAO,hotelService);
+        tourOfferService = new TourOfferService(tourOfferDAO,hotelService,reservationService);
         tourOfferList = new ArrayList<>();
     }
 

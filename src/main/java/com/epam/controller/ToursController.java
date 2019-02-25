@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -64,16 +65,21 @@ public class ToursController {
         }
     }
 
-    @PostMapping("/deletetour")
-    public ModelAndView deleteTour(@RequestParam String idOfTour) {
+    @GetMapping("/deletetour/{id}")
+    public ModelAndView deleteTour(@PathVariable Integer id, RedirectAttributes redir) {
         ModelAndView toursModel = new ModelAndView();
-        if (toursOfferService.deleteTour(Integer.valueOf(idOfTour)) == 1) {
-            toursModel.addObject("result", "Success");
-        } else {
-            toursModel.addObject("error", "Failed to delete");
-        }
         toursModel.setViewName("redirect:/listoftours");
-        return toursModel;
+        try {
+            if (toursOfferService.deleteTour(id) == 1) {
+                redir.addFlashAttribute("result","Success");
+            } else {
+                redir.addFlashAttribute("error","Failed to delete");
+            }
+            return toursModel;
+        } catch (Exception e){
+            redir.addFlashAttribute("error",e.getMessage());
+            return toursModel;
+        }
     }
 
     @PostMapping("/addtour")
@@ -148,7 +154,7 @@ public class ToursController {
     }
 
     @GetMapping("/addtour")
-    public String getAddTour(ModelMap modelMap) {
+    public String addTour(ModelMap modelMap) {
         List<Hotel> hotels = hotelService.getHotels();
         modelMap.addAttribute("hotelList", hotels);
         return "addtour";
