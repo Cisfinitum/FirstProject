@@ -118,8 +118,8 @@
         <table>
             <c:if test="${reservations.size()>0}">
                 <tr>
-                    <th>Discount Id</th>
-                    <th>Offer Id</th>
+                    <th>Reservation Number</th>
+                    <th>Discount</th>
                     <th>Number Of People</th>
                     <th>Status</th>
                     <th>Total Price</th>
@@ -129,8 +129,8 @@
             <c:if test="${reservations.size() == 0}"><p>There are no active reservations for this client</p></c:if>
             <c:forEach var="reservation" items="${reservations}">
             <tr>
-                <td>${reservation.discountId}</td>
-                <td> ${reservation.tourOfferId}</td>
+                <td>${reservation.id}</td>
+                <td> 0%</td>
                 <td> ${reservation.numberOfPeople}</td>
                 <td> ${reservation.status}</td>
                 <td> ${reservation.totalPrice}</td>
