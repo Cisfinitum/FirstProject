@@ -169,14 +169,14 @@
                 <c:forEach var="i" begin="0" end="${list.size()-1}">
                     <tr>
                         <td>${list.get(i).tourType}</td>
-                        <td>FROM HOTEL ID</td>
-                        <td>FROM HOTEL ID</td>
+                        <td>${hotels.get(list.get(i).hotelId).country}</td>
+                        <td>${hotels.get(list.get(i).hotelId).city}</td>
                         <td>${list.get(i).startDate}</td>
                         <td>${list.get(i).endDate}</td>
                         <td>${list.get(i).pricePerUnit}</td>
-                        <td>FROM HOTEL ID</td>
+                        <td>${hotels.get(list.get(i).hotelId).name}</td>
                         <td>${list.get(i).description}</td>
-                        <td>FROM DISCOUNT ID</td>
+                        <td>${list.get(i).discountId}</td>
                         <sec:authorize access="hasRole('ROLE_ADMIN')">
                             <td>
                                 <form method="post" action="/updatetour">

@@ -74,7 +74,7 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
 
     public TourOffer getTourById(Integer tourId){
         Object[] parameters = new Object[] { tourId };
-        return JdbcTemplate.queryForObject ("SELECT * FROM tourOffer WHERE id = ?", parameters, (rs, rowNum) -> buildTour(rs));
+        return JdbcTemplate.queryForObject ("SELECT * FROM "+tableName+" WHERE id = ?", parameters, (rs, rowNum) -> buildTour(rs));
     }
 
     @SneakyThrows(SQLException.class)

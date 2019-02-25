@@ -55,7 +55,8 @@ public class ToursController {
         try {
             LocalDate addStartDate = Validator.getDate(startDate, true);
             LocalDate addEndDate = Validator.getDate(endDate, true);
-            toursModel.addObject("list", toursOfferService.searchTours(null, addStartDate, addEndDate));
+            toursModel.addObject("hotels", hotelService.getMapOfHotels());
+            toursModel.addObject("list", toursOfferService.searchTours(country, addStartDate, addEndDate));
             return toursModel;
         } catch (Exception e) {
             toursModel.addObject("error", e.getMessage());

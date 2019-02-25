@@ -78,7 +78,7 @@
                         <td>${listOfTours.get(i).description}</td>
                         <td>${listOfTours.get(i).discountId}</td>
                         <td>
-                            <a href="updatetour/${list.get(i).id}" style="background-color:#90caf9" class="btn-small">
+                            <a href="updatetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
                                 Edit </a>
                         </td>
                         <td>

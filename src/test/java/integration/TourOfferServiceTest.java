@@ -3,6 +3,7 @@ package integration;
 import com.epam.exception.NotFoundException;
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
+import com.epam.service.HotelService;
 import com.epam.service.TourOfferService;
 import java.time.LocalDate;
 import org.junit.Assert;
@@ -30,6 +31,7 @@ public class TourOfferServiceTest {
     private TourOffer tourOffer;
     private TourOfferDAO tourOfferDAO;
     private List<TourOffer> tourOffers;
+    private HotelService hotelService;
 
     @Before
     public void setUp() {
@@ -38,7 +40,7 @@ public class TourOfferServiceTest {
         tourOfferDAO = Mockito.spy(tourOfferDAO);
         ReflectionTestUtils.setField(tourOfferDAO, "tableName", "tour_offer");
 
-        tourOfferService = new TourOfferService(tourOfferDAO);
+        tourOfferService = new TourOfferService(tourOfferDAO,hotelService);
         tourOffers = new ArrayList<>();
         tourOffers.add(tourOffer);
 
@@ -116,7 +118,7 @@ public class TourOfferServiceTest {
         Mockito.when(tourOffer.getDiscountId()).thenReturn(1);
         Mockito.when(tourOffer.getEndDate()).thenReturn(LocalDate.of(2019, 10, 11));
 
-        tourOfferService.updateTour(tourOffer);
+        tourOfferService.updateTour(tourOffer,"test",1,1,"test");
 
         Mockito.verify(jdbcTemplate, Mockito.times(1)).update("UPDATE tour_offer SET " +
                 "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
