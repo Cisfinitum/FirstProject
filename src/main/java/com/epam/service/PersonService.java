@@ -60,4 +60,13 @@ public class PersonService {
 
     public int amountOfUsers() { return personDAO.amountOfUsers();}
 
+    public Integer getIdByEmail(String email) {
+        if(email.isEmpty()){
+            throw new IllegalArgumentException("Email is an empty string");
+        }
+        if (email == null) {
+            throw new IllegalArgumentException("Email must be not null");
+        }
+        return personDAO.getIdByEmail(email);
+    }
 }

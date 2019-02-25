@@ -99,4 +99,12 @@ public class PersonDAO implements SimplePersonDAO {
         String sql = "SELECT COUNT(*) FROM person WHERE role != 'ADMIN'";
         return jdbcTemplate.queryForObject(sql, new Object[]{}, Integer.class);
     }
+
+    public Integer getIdByEmail(String email) {
+        if (!doesEmailExist(email)) {
+            return -1;
+        }
+        String sql = "SELECT id FROM person WHERE email = " + "'"+email+ "'";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
 }
