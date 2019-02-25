@@ -5,8 +5,9 @@ import com.epam.repository.HotelDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 
 @Service
@@ -66,6 +67,15 @@ public class HotelService {
         else {
             throw new IllegalArgumentException("Id must be specified");
         }
+    }
+
+    public Map<Integer,Hotel> getMapOfHotels(){
+        List<Hotel> listOfHotels = getHotels();
+        Map<Integer, Hotel> hotels = new HashMap<>();
+        for(Hotel hotel: listOfHotels){
+            hotels.put(hotel.getId(),hotel);
+        }
+        return hotels;
     }
 
 }

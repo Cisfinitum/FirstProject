@@ -2,6 +2,7 @@ package com.epam.service;
 
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

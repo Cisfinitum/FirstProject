@@ -37,13 +37,8 @@ public class ToursController {
     @GetMapping("/listoftours")
     public ModelAndView getToursList() {
         ModelAndView toursModel = new ModelAndView();
-        List<Hotel> listOfHotels = hotelService.getHotels();
-        Map<Integer, Hotel> hotels = new HashMap<>();
-        for(Hotel hotel: listOfHotels){
-            hotels.put(hotel.getId(),hotel);
-        }
         toursModel.addObject("listOfTours", toursOfferService.getTours());
-        toursModel.addObject("hotels", hotels);
+        toursModel.addObject("hotels", hotelService.getMapOfHotels());
         toursModel.setViewName("tours");
         return toursModel;
     }
