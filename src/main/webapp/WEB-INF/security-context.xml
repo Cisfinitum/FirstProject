@@ -16,6 +16,7 @@
         <intercept-url pattern="/searchtours" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/testpage" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/testuser" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+        <intercept-url pattern="/clientProfile/**" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/testadmin" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/hotels" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/reservation/**" access="hasRole('ROLE_ADMIN')" />

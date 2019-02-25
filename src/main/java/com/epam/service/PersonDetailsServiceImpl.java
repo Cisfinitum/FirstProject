@@ -74,4 +74,11 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
     public int amountOfUsers() {
         return personService.amountOfUsers();
     }
+
+    public boolean updatePasswordById(Integer id, String password) {
+        int result = personService.updatePasswordById(id, password);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
+    }
 }
