@@ -28,7 +28,7 @@
 <header>
     <nav>
         <div class="nav-wrapper tab ">
-            <a href="index" class="brand-logo">Tour De Team</a>
+            <a href="/index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
                 <li><a href="listoftours">Tours</a></li>
                 <li><a href="addtour">Add Tour</a></li>
@@ -57,6 +57,7 @@
                         <tr>
                             <th>№</th>
                             <th>Discount Id</th>
+                            <th>Client Id</th>
                             <th>Offer Id</th>
                             <th>Number Of People</th>
                             <th>Status</th>
@@ -69,6 +70,7 @@
                     <tr>
                         <td>${reservation.id}</td>
                         <td>${reservation.discountId}</td>
+                        <td>${reservation.clientId}</td>
                         <td> ${reservation.tourOfferId}</td>
                         <td> ${reservation.numberOfPeople}</td>
                         <td> ${reservation.status}</td>

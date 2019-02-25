@@ -143,4 +143,13 @@ public class PersonDAOTest {
         when(jdbcTemplate.update(sql, testPassword, EMPTY_EMAIL)).thenReturn(UNEXPECTED_RESULT);
         assertEquals(UNEXPECTED_RESULT, personDAO.updatePassword(EMPTY_EMAIL, testPassword));
     }
+    @Test
+    public void getIdByEmailGetsNonExistEmail(){
+        Integer expectedResult = -1;
+        String nonExistEmail = "admin@mail.com";
+        String sql = "SELECT id FROM person WHERE email = " + "'"+nonExistEmail+ "'";
+        when(jdbcTemplate.queryForObject(sql, Integer.class)).thenReturn(-1);
+        Integer actualResult = personDAO.getIdByEmail(nonExistEmail);
+        assertEquals(expectedResult, actualResult);
+    }
 }
