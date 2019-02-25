@@ -23,6 +23,7 @@ public class HotelServiceTest {
     @Mock
     private Hotel expectedHotel;
     private List<Hotel> hotelList;
+    Map<Integer,Hotel> expectedHotelsMap;
     @InjectMocks
     private HotelService hotelService;
     private int expectedResultPositive = 1;
@@ -33,9 +34,11 @@ public class HotelServiceTest {
 
         hotelList = new ArrayList<>();
         hotelList.add(expectedHotel);
+        expectedHotelsMap = new HashMap<>();
+        expectedHotelsMap.put(expectedHotel.getId(),expectedHotel);
+        when(expectedHotel.getId()).thenReturn(0);
         when(expectedHotel.getName()).thenReturn("Luxury Hotel");
         when(expectedHotel.getCountry()).thenReturn("Russia");
-        when(expectedHotel.getId()).thenReturn(1);
     }
 
     @Test
@@ -85,13 +88,7 @@ public class HotelServiceTest {
     @Test
     public void getMapOfHotels(){
         when(hotelService.getHotels()).thenReturn(hotelList);
-        Map<Integer,Hotel> actualHotelsMap = new HashMap<>();
-        when(expectedHotel.getId()).thenReturn(1);
-        for(Hotel hotel: hotelService.getHotels()){
-            actualHotelsMap.put(hotel.getId(),hotel);
-        }
-        when(hotelService.getMapOfHotels()).thenReturn(actualHotelsMap);
-        assertEquals(hotelService.getMapOfHotels(), actualHotelsMap);
+        assertEquals(expectedHotelsMap,hotelService.getMapOfHotels());
     }
 
 }
