@@ -38,29 +38,29 @@ public interface SimplePersonDAO {
     /**
      * Get person's email and change person'a role to BLOCKED
      *
-     * @param email person's email
+     * @param id person's email
      * @return 1 if person's role was changed successfully
      * -1 if the passed email was an empty string
      */
-    int addToBlackList(String email);
+    int addToBlackList(Integer id);
 
     /**
      * Get person's email and change his role to USER
      *
-     * @param email person's email
+     * @param id person's email
      * @return 1 if person's role was changed successfully
      * -1 if the passed email was an empty string
      */
-    int removeFromBlackList(String email);
+    int removeFromBlackList(Integer id);
 
     /**
      * Get person's email and change his role to ADMIN
      *
-     * @param email person's email
+     * @param id person's email
      * @return 1 if person's role was changed successfully
      * -1 if the passed email was an empty string
      */
-    int giveAdminRights(String email);
+    int giveAdminRights(Integer id);
 
     /**
      * Get person's email and password
