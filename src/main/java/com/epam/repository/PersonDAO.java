@@ -12,14 +12,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class PersonDAO {
+public class PersonDAO implements SimplePersonDAO {
     @Value("${clients.id}")
     private String id;
     @Value("${clients.email}")
     private String email;
     @Value(("${clients.role}"))
     private String role;
-public class PersonDAO implements SimplePersonDAO {
+
 
     private final JdbcTemplate jdbcTemplate;
 
