@@ -71,7 +71,7 @@ public class HotelService {
     }
 
     public ModelAndView addHotel(ModelAndView modelAndView, String name, String country, String city, Integer stars ){
-        Pattern pattern = Pattern.compile("^[a-zA-Z ]*$");
+        Pattern pattern = Pattern.compile("^[a-zA-Z\\-\\s]*$");
         Matcher countryMatcher = pattern.matcher(country);
         Matcher cityMatcher = pattern.matcher(city);
         if (name.equals("")) {
