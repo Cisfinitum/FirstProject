@@ -2,6 +2,7 @@ package com.epam.repository;
 
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
+import com.epam.repository.interfaces.SimplePersonDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,6 +19,7 @@ public class PersonDAO {
     private String email;
     @Value(("${clients.role}"))
     private String role;
+public class PersonDAO implements SimplePersonDAO {
 
     private final JdbcTemplate jdbcTemplate;
 

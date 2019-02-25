@@ -49,7 +49,10 @@
             <form method="POST" action="addtour">
                 <div class="row">
                     <c:if test="${not empty result}">
-                    <span style="color: red; font-weight: bold">${result}</span>
+                        <span style="color: green; font-weight: bold">${result}</span>
+                    </c:if>
+                    <c:if test="${not empty error}">
+                        <span style="color: red; font-weight: bold">${error}</span>
                     </c:if>
                 </div>
                 <div class="row">
