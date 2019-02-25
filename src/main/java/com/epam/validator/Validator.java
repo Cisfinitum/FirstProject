@@ -25,7 +25,7 @@ public class Validator {
             } else {
                 if(!nullResult) {
                     log.error(nullPointerDate + inputDate);
-                    throw new NullPointerException(nullPointerDate + inputDate);
+                    throw new IllegalArgumentException(nullPointerDate + inputDate);
                 }
                 else
                     finalDate = null;
@@ -33,7 +33,7 @@ public class Validator {
         } catch (NumberFormatException | DateTimeException e) {
             log.error(numberOrDateFormatIssue + splitedDate[0] + " " +
                     splitedDate[1] + " " + splitedDate[2] + ".");
-            throw new Exception(numberOrDateFormatIssue + splitedDate[0] + " " +
+            throw new NumberFormatException(numberOrDateFormatIssue + splitedDate[0] + " " +
                     splitedDate[1] + " " + splitedDate[2] + ".");
         }
         return finalDate;
@@ -47,7 +47,7 @@ public class Validator {
        try {
            if ((finalInteger=Integer.valueOf(inputInt)) <= 0) {
                log.error(negativeOrZeroIssue+inputInt);
-               throw new Exception(negativeOrZeroIssue+inputInt);
+               throw new IllegalArgumentException(negativeOrZeroIssue+inputInt);
            }
        } catch (NumberFormatException e) {
            log.error(numberFormatIssue+inputInt);
@@ -61,16 +61,16 @@ public class Validator {
        String nullPointerString = "String is empty. User current input String: ";
         if(inputString.isEmpty()){
             log.error(nullPointerString+inputString);
-            throw new NullPointerException(nullPointerString+inputString);
+            throw new IllegalArgumentException(nullPointerString+inputString);
         }
    }
 
    @SneakyThrows
-    public static void checkDateDifferent(LocalDate firstDate, LocalDate secondDate){
+    public static void dateDifference(LocalDate firstDate, LocalDate secondDate){
        String differenceIssue = "Negative or zero difference between dates. User current input Dates difference: ";
        if(!(DAYS.between(firstDate,secondDate)>=1)) {
            log.error(differenceIssue + DAYS.between(firstDate,secondDate));
-           throw new Exception(differenceIssue + DAYS.between(firstDate,secondDate));
+           throw new IllegalArgumentException(differenceIssue + DAYS.between(firstDate,secondDate));
        }
    }
 }

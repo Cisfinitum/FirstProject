@@ -74,14 +74,14 @@
         </ul>
         <ul  class="right hide-on-med-and-down">
             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
-                <li><a href="login"><spring:message code="signin" /></a></li>
+                <li><a href="/login"><spring:message code="signin" /></a></li>
                 <li><a href="registration"><spring:message code="signup" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <li><a href="listoftours"><spring:message code="adminpage" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
-                <li><a href="logout"><spring:message code="logout" /></a></li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
             </sec:authorize>
             <li><a href="homepage?lang=en"><img src="${imgen}" width="48" height="32"></a>
             <a href="homepage?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
@@ -147,7 +147,8 @@
             </div>
         </form>
     </div>
-    <c:if test="${not empty listOfTours}">
+    <h3 style="text-align:center; color: green">${message}</h3>
+    <c:if test="${not empty list}">
     <div class="container">
         <table>
             <thead>
@@ -165,24 +166,37 @@
             </tr>
             </thead>
             <tbody>
-                <c:forEach var="i" begin="0" end="${listOfTours.size()-1}">
+                <c:forEach var="i" begin="0" end="${list.size()-1}">
                     <tr>
-                        <td>${listOfTours.get(i).tourType}</td>
-                        <td>${listOfHotels.get(listOfTours.get(i).hotelId).country}</td>
+                        <td>${list.get(i).tourType}</td>
                         <td>FROM HOTEL ID</td>
-                        <td>${listOfTours.get(i).startDate}</td>
-                        <td>${listOfTours.get(i).endDate}</td>
-                        <td>${listOfTours.get(i).pricePerUnit}</td>
                         <td>FROM HOTEL ID</td>
-                        <td>${listOfTours.get(i).description}</td>
+                        <td>${list.get(i).startDate}</td>
+                        <td>${list.get(i).endDate}</td>
+                        <td>${list.get(i).pricePerUnit}</td>
+                        <td>FROM HOTEL ID</td>
+                        <td>${list.get(i).description}</td>
                         <td>FROM DISCOUNT ID</td>
-                        <td>
-                            <form method="post" action="#">
-                                <input name="idOfTour" type="hidden" value="${listOfTours.get(i).id}">
-                                <button class="btn waves-effect waves-light" type="submit" name="action"> Reserve
-                                </button>
-                            </form>
-                        </td>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <td>
+                                <form method="post" action="/updatetour">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action"> Update
+                                    </button>
+                                </form>
+                            </td>
+                        </sec:authorize>
+                        <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ANONYMOUS')">
+                            <td>
+                                <form method="post" action="/reserveTour">
+                                    <input name="idOfTour" type="hidden" value="${list.get(i).id}">
+                                    <input name="pricePerUnit" type="hidden" value="${list.get(i).pricePerUnit}">
+                                    <input name="numberOfPeople" type="hidden" value="${param.get("numberOfPeople")}">
+                                    <input name="discountId" type="hidden" value="1">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action"> Reserve
+                                    </button>
+                                </form>
+                            </td>
+                        </sec:authorize>
                     </tr>
                 </c:forEach>
             </tbody>

@@ -30,20 +30,20 @@ public class TourOfferService {
     }
 
     public int deleteTour(Integer tourId){
-        if(tourId!=null&&tourId!=0)
-            return tourOfferDAO.deleteTour(tourId);
-        else {
+        if (tourId == null || tourId == 0) {
             log.error("tourId is null or 0");
-            throw new NullPointerException("tourId is null or 0");
+            throw new IllegalArgumentException("tourId is null or 0");
+        } else {
+            return tourOfferDAO.deleteTour(tourId);
         }
     }
 
     public int addTour(TourOffer tourOffer){
-        if(tourOffer!=null)
-            return tourOfferDAO.addTour(tourOffer);
-        else {
+        if (tourOffer == null) {
             log.error("tourOffer is null");
-            throw new NullPointerException("tourOffer is null");
+            throw new IllegalArgumentException("tourOffer is null");
+        } else {
+            return tourOfferDAO.addTour(tourOffer);
         }
     }
 
