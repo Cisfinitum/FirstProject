@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 @Service
 public class ReservationService {
     private final ReservationDAO reservationDAO;
-
+    public int totalAmountOfRows = 4;
 
     @Autowired
     public ReservationService(ReservationDAO reservationDAO) {
@@ -43,8 +43,16 @@ public class ReservationService {
         }
     }
 
-    public List<Reservation> listReservations() {
-        return reservationDAO.listReservations();
+    public List<Reservation> listReservations(Integer page, Integer total) {
+
+        if (page > 0 && total > 0) {
+            if (page > 1) {
+                page = (page - 1) * total + 1;
+            }
+            return reservationDAO.listReservations(page, total);
+        } else {
+            throw new IllegalArgumentException("Numbers must be integer and > 0");
+        }
     }
 
     public int removeReservation(Integer id) {
@@ -81,5 +89,9 @@ public class ReservationService {
         } else {
             throw new NoSuchElementException("There is no such reservation.");
         }
+    }
+
+    public int amountOfReservation() {
+        return reservationDAO.amountOfReservations();
     }
 }

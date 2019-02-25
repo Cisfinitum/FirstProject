@@ -74,14 +74,14 @@
         </ul>
         <ul  class="right hide-on-med-and-down">
             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
-                <li><a href="login"><spring:message code="signin" /></a></li>
+                <li><a href="/login"><spring:message code="signin" /></a></li>
                 <li><a href="registration"><spring:message code="signup" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <li><a href="listoftours"><spring:message code="adminpage" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
-                <li><a href="logout"><spring:message code="logout" /></a></li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
             </sec:authorize>
             <li><a href="homepage?lang=en"><img src="${imgen}" width="48" height="32"></a>
             <a href="homepage?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
@@ -95,6 +95,11 @@
 <main>
     <div class="container">
         <form method="POST" action="searchtours">
+            <div class="row">
+                <c:if test="${not empty error}">
+                    <span style="color: red; font-weight: bold">${error}</span>
+                </c:if>
+            </div>
             <div class="row">
                 <div class="col s3">
                     <div class="input-field">

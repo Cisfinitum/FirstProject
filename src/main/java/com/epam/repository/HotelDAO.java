@@ -1,8 +1,8 @@
 package com.epam.repository;
 
 import com.epam.model.Hotel;
+import com.epam.repository.interfaces.SimpleHotelDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import lombok.SneakyThrows;
 
 @Repository
-public class HotelDAO {
+public class HotelDAO implements SimpleHotelDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -36,12 +36,12 @@ public class HotelDAO {
     }
 
     public Integer createHotel (Hotel hotel) {
-        String sql = "INSERT INTO hotel (name, city, country, numberOfStars) values (?, ?, ?, ?)";
+        String sql = "INSERT INTO hotel (name, city, country, number_of_stars) values (?, ?, ?, ?)";
         return jdbcTemplate.update(sql, hotel.getName(), hotel.getCity(), hotel.getCountry(), hotel.getNumberOfStars() );
     }
 
     public Integer updateHotel (Hotel hotel) {
-        String sql = "UPDATE hotel SET name = ?, city = ?, country = ?, numberOfStars = ? WHERE id = ?";
+        String sql = "UPDATE hotel SET name = ?, city = ?, country = ?, number_of_stars = ? WHERE id = ?";
         return jdbcTemplate.update(sql, hotel.getName(), hotel.getCity(), hotel.getCountry(), hotel.getNumberOfStars(), hotel.getId());
     }
 
@@ -57,7 +57,7 @@ public class HotelDAO {
                 .name(rs.getString("name"))
                 .city(rs.getString("city"))
                 .country(rs.getString("country"))
-                .numberOfStars(rs.getInt("numberOfStars"))
+                .numberOfStars(rs.getInt("number_of_stars"))
                 .build();
     }
 

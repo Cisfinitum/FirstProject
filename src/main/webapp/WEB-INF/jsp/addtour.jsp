@@ -27,99 +27,103 @@
 <body>
 <header>
     <nav>
-        <div class="nav-wrapper tab " >
+        <div class="nav-wrapper tab ">
             <a href="index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="listoftours">Tours</a></li>
-                <li><a href="addtour">Add Tour</a></li>
-                <li><a href="#">Reservations</a></li>
-                <li><a href="#">Clients</a></li>
+                <li><a href="/listoftours">Tours</a></li>
+                <li><a href="/addtour">Add Tour</a></li>
+                <li><a href="/reservation">Reservations</a></li>
+                <li><a href="clients.jsp">Clients</a></li>
+                <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
                 <li>
-                        <button class="btn waves-effect waves-light" type="submit" name="action">
-                            <a class="forButton" href="logout">Log Out</a>
-                        </button>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">
+                        <a class="forButton" href="/logout">Log Out</a>
+                    </button>
                 </li>
             </ul>
         </div>
     </nav>
 </header>
 <main>
-        <div class="container">
-            <h2>Add Tour</h2>
-            <form method="POST" action="addtour">
-                <div class="row">
-                    <c:if test="${not empty result}">
-                    <span style="color: red; font-weight: bold">${result}</span>
-                    </c:if>
+    <div class="container">
+        <h2>Add Tour</h2>
+        <p>Please note that all fields are required.</p>
+        <form method="POST" action="addtour">
+            <div class="row">
+                <c:if test="${not empty result}">
+                    <span style="color: green; font-weight: bold">${result}</span>
+                </c:if>
+                <c:if test="${not empty error}">
+                    <span style="color: red; font-weight: bold">${error}</span>
+                </c:if>
                 </div>
-                <div class="row">
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input" class="autocomplete" name="tourType" value="">
-                            <label for="autocomplete-input">Tour type</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <i class="material-icons prefix">event_available</i>
-                            <input type="text" id="autocomplete-date" class="datepicker" name="startDate" value="">
-                            <label for="autocomplete-date">Start Date</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <i class="material-icons prefix">event_available</i>
-                            <input type="text" id="autocomplete-date2" class="datepicker" name="endDate" value="">
-                            <label for="autocomplete-date2">End Date</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input4" class="pricePerPerson" name="country" value="">
-                            <label for="autocomplete-input4">Country</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input5" class="pricePerPerson" name="city" value="">
-                            <label for="autocomplete-input5">City</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input6" class="pricePerPerson" name="hotel" value="">
-                            <label for="autocomplete-input6">Hotel</label>
-                        </div>
-                    </div>
-
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input2" class="pricePerPerson" name="pricePerPerson" value="">
-                            <label for="autocomplete-input2">Price Per Person</label>
-                        </div>
-                    </div>
-                    <div class="col s3">
-                        <div class="input-field">
-                            <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount" value="">
-                            <label for="autocomplete-input3">Discount</label>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col s4">
                     <div class="input-field">
-                        <div class="input-field col s12">
-                            <input type="text" id="textarea1" class="materialize-textarea" name="tourDescription" value="">
-                            <label for="textarea1">Tour Description</label>
-                        </div>
-                    </div>
-                    <div class="col s2 offset-s10">
-                        <div class="input-field">
-                            <button class="btn waves-effect waves-light" type="submit" name="action"> Add
-                                <i class="material-icons right">add</i>
-                            </button>
-                        </div>
+                        <input type="text" id="autocomplete-input" class="autocomplete" name="tourType"
+                               value="${tourType}">
+                        <label for="autocomplete-input">Tour type</label>
                     </div>
                 </div>
-            </form>
-        </div>
+                <div class="col s4">
+                    <div class="input-field">
+                        <i class="material-icons prefix">event_available</i>
+                        <input type="text" id="autocomplete-date" class="datepicker" name="startDate"
+                               value="${startDate}">
+                        <label for="autocomplete-date">Start Date</label>
+                    </div>
+                </div>
+                <div class="col s4">
+                    <div class="input-field">
+                        <i class="material-icons prefix">event_available</i>
+                        <input type="text" id="autocomplete-date2" class="datepicker" name="endDate" value="${endDate}">
+                        <label for="autocomplete-date2">End Date</label>
+                    </div>
+                </div>
+                <div class="col s4">
+                    <div class="input-field">
+                        <select class="pricePerPerson" name="hotel">
+                            <c:forEach var="hotel" items="${hotelList}">
+                                <option value="${hotel.name}"> ${hotel.name} ${hotel.numberOfStars}★
+                                </option>
+                            </c:forEach>
+                        </select>
+                        <label>Hotel</label>
+                    </div>
+                </div>
+                <div class="col s4">
+                    <div class="input-field">
+                        <i class="material-icons prefix">local_offer</i>
+                        <input type="text" id="autocomplete-input2" class="pricePerPerson" name="pricePerPerson"
+                               value="${price}">
+                        <label for="autocomplete-input2">Price Per Person</label>
+                    </div>
+                </div>
+                <div class="col s4">
+                    <div class="input-field">
+                        <i class="material-icons prefix">loyalty</i>
+                        <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount"
+                               value="${discount}">
+                        <label for="autocomplete-input3">Discount</label>
+                    </div>
+                </div>
+                <div class="input-field">
+                    <div class="input-field col s12">
+                        <input type="text" id="textarea1" class="materialize-textarea" name="tourDescription"
+                               value="${description}">
+                        <label for="textarea1">Tour Description</label>
+                    </div>
+                </div>
+                <div class="col s2 offset-s10">
+                    <div class="input-field">
+                        <button class="btn waves-effect waves-light" type="submit" name="action"> Add
+                            <i class="material-icons right">add</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </main>
 <footer class="page-footer">
     <div class="container">
