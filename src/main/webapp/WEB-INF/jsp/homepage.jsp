@@ -182,15 +182,6 @@
                         <td>${hotels.get(list.get(i).hotelId).name}</td>
                         <td>${list.get(i).description}</td>
                         <td>${list.get(i).discountId}</td>
-                        <sec:authorize access="hasRole('ROLE_ADMIN')">
-                            <td>
-                                <form method="post" action="/updatetour">
-                                    <button class="btn waves-effect waves-light" type="submit" name="action"> Update
-                                    </button>
-                                </form>
-                            </td>
-                        </sec:authorize>
-                        <td>FROM DISCOUNT ID</td>
                         <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ANONYMOUS')">
                             <td>
                                 <form method="post" action="/reserveTour">
