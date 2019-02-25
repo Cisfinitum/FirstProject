@@ -32,7 +32,7 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
                 <li><a href="listoftours">Tours</a></li>
                 <li><a href="addtour">Add Tour</a></li>
-                <li><a href="reservation">Reservations</a></li>
+                <li><a href="#">Reservations</a></li>
                 <li><a href="#">Clients</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
@@ -44,69 +44,53 @@
     </nav>
 </header>
 <main>
-        <div class="container">
-            <h2>Tours</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Tour Type</th>
-                    <th>Country</th>
-                    <th>City</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Price</th>
-                    <th>Hotel</th>
-                    <th>Description</th>
-                    <th>Discount</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var = "i" begin = "0" end="${listOfTours.size()-1}" >
-                    <tr>
-                        <td>${listOfTours.get(i).id}</td>
-                        <td>${listOfTours.get(i).tourType}</td>
-                        <td>${hotels.get(listOfTours.get(i).hotelId).country}</td>
-                        <td>${hotels.get(listOfTours.get(i).hotelId).city}</td>
-                        <td>${listOfTours.get(i).startDate}</td>
-                        <td>${listOfTours.get(i).endDate}</td>
-                        <td>${listOfTours.get(i).pricePerUnit}</td>
-                        <td>${hotels.get(listOfTours.get(i).hotelId).name}</td>
-                        <td>${listOfTours.get(i).description}</td>
-                        <td>${listOfTours.get(i).discountId}</td>
-                        <td>
-                            <a href="updatetour/${list.get(i).id}" style="background-color:#90caf9" class="btn-small">
-                                Edit </a>
-                        </td>
-                        <td>
-                            <form method="post" action="deletetour">
-                                <input name="idOfTour" type="hidden" value="${listOfTours.get(i).id}">
-                                <button class="btn waves-effect waves-light" type="submit" name="action"> Delete
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+    <div class="container">
+        <h2>Edit Tour</h2>
+        <form method="POST" action="/updatetour">
             <div class="row">
+                <c:if test="${not empty result}">
+                    <h5 style="color: green; font-weight: bold">${result}</h5>
+                </c:if>
+                <c:if test="${not empty error}">
+                    <h5 style="color: red; font-weight: bold">${error}</h5>
+                </c:if>
+            </div>
+            <div class="row">
+                <div class="col s3">
+                    <div class="input-field">
+                        <input type="text" id="autocomplete-input" class="autocomplete" name="tourType" value="${tour.tourType}">
+                        <label for="autocomplete-input">Tour type</label>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="input-field">
+                        <input type="text" id="autocomplete-input2" class="pricePerPerson" name="pricePerPerson" value="${tour.pricePerUnit}">
+                        <label for="autocomplete-input2">Price Per Person</label>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="input-field">
+                        <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount" value="${tour.discountId}">
+                        <label for="autocomplete-input3">Discount</label>
+                    </div>
+                </div>
+                <div class="input-field">
+                    <div class="input-field col s9">
+                        <input type="text" id="textarea1" class="materialize-textarea" name="tourDescription" value="${tour.description}">
+                        <label for="textarea1">Tour Description</label>
+                    </div>
+                </div>
+                <input name="tourId" type="hidden" value="${tour.id}">
                 <div class="col s2 offset-s10">
                     <div class="input-field">
-                        <form method="get" action="addtour">
-                            <button class="btn waves-effect waves-light" type="submit" name="action"> Add Tour
-                            </button>
-                        </form>
+                        <button class="btn waves-effect waves-light" type="submit"> Update
+                            <i class="material-icons right">add</i>
+                        </button>
                     </div>
                 </div>
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-        </div>
+        </form>
+    </div>
 </main>
 <footer class="page-footer">
     <div class="container">

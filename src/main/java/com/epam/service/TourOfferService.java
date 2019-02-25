@@ -47,12 +47,33 @@ public class TourOfferService {
         }
     }
 
-    public int updateTour(TourOffer tourOffer){
-        if(tourOffer!=null)
-            return tourOfferDAO.updateTour(tourOffer);
-        else {
+    public int updateTour(TourOffer tourOffer, String tourType, Integer addPricePerPerson, Integer addDiscount, String tourDescription){
+        if(tourOffer == null) {
             log.error("tourOffer is null");
-            throw new NullPointerException("tourOffer is null");
+            throw new IllegalArgumentException("tourOffer is null");
+        }
+        else if(tourType == null){
+            log.error("tourType is null");
+            throw new IllegalArgumentException("tourType is null");
+        }
+        else if(addPricePerPerson == null || addPricePerPerson <= 0){
+            log.error("addPricePerPerson is null or 0");
+            throw new IllegalArgumentException("addPricePerPerson is null or 0");
+        }
+        else if(addDiscount == null || addDiscount <= 0){
+            log.error("addDiscount is null or 0");
+            throw new IllegalArgumentException("addDiscount is null or 0");
+        }
+        else if(tourDescription == null){
+            log.error("tourDescription is null");
+            throw new IllegalArgumentException("tourDescription is null");
+        }
+        else {
+            tourOffer.setTourType(tourType);
+            tourOffer.setPricePerUnit(addPricePerPerson);
+            tourOffer.setDiscountId(addDiscount);
+            tourOffer.setDescription(tourDescription);
+            return tourOfferDAO.updateTour(tourOffer);
         }
     }
 
@@ -67,5 +88,14 @@ public class TourOfferService {
             listOfHotelsId.add(hotel.getId());
         }
             return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
+    }
+
+    public TourOffer getTourById(Integer tourId){
+        if( tourId == null || tourId == 0) {
+            log.error("toursId is null or 0");
+            throw new IllegalArgumentException("toursId is null or 0");
+        } else {
+            return tourOfferDAO.getTourById(tourId);
+        }
     }
 }
