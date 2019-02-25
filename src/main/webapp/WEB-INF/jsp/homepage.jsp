@@ -78,7 +78,7 @@
                 <li><a href="registration"><spring:message code="signup" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
-                <li><a href="listoftours"><spring:message code="adminpage" /></a></li>
+                <li><a href="/listoftours"><spring:message code="adminpage" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_USER')">
                 <li><a href="/clientProfile"><spring:message code="profile" /></a></li>
@@ -165,7 +165,9 @@
                 <th>Hotel</th>
                 <th>Description</th>
                 <th>Discount</th>
+                <sec:authorize access="hasAnyRole('ROLE_ANONYMOUS', 'ROLE_USER')">
                 <th>Reserve</th>
+                </sec:authorize>
             </tr>
             </thead>
             <tbody>
@@ -180,14 +182,6 @@
                         <td>FROM HOTEL ID</td>
                         <td>${list.get(i).description}</td>
                         <td>FROM DISCOUNT ID</td>
-                        <sec:authorize access="hasRole('ROLE_ADMIN')">
-                            <td>
-                                <form method="post" action="/updatetour">
-                                    <button class="btn waves-effect waves-light" type="submit" name="action"> Update
-                                    </button>
-                                </form>
-                            </td>
-                        </sec:authorize>
                         <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ANONYMOUS')">
                             <td>
                                 <form method="post" action="/reserveTour">

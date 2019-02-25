@@ -18,6 +18,11 @@ public class MainController {
         return "homepage";
     }
 
+    @GetMapping("/homepage")
+    public String homePage (Principal user, ModelMap modelMap) {
+        return "/homepage";
+    }
+
     @GetMapping("/testuser")
     public String testUser(Principal user, ModelMap modelMap) {
         return "testuser";
@@ -47,8 +52,8 @@ public class MainController {
         return "/login";
     }
 
-    @GetMapping("/homepage")
-    public String homePage (Principal user, ModelMap modelMap) {
-        return "/homepage";
+    @GetMapping("/access-denied")
+    public String accessDeniedPage (Principal user, ModelMap modelMap) {
+        return "/access-denied";
     }
 }

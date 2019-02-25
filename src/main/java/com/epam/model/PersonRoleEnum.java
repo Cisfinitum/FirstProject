@@ -8,8 +8,9 @@ import lombok.Getter;
 public enum PersonRoleEnum {
     USER("ROLE_USER"),
     ADMIN("ROLE_ADMIN"),
-    ANONYMOUS("ROLE_ANONYMOUS");
+    ANONYMOUS("ROLE_ANONYMOUS"),
+    BLOCKED("ROLE_BLOCKED");
 
-    private String Enumrole;
+    private String enumRole;
 }
 

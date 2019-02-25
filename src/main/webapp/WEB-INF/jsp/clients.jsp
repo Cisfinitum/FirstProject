@@ -5,6 +5,7 @@
 <head>
     <title>Admin Page</title>
     <spring:url value="/resources/css/materialize.css" var="css"/>
+    <spring:url value="/resources/css/clients.css" var="button"/>
     <spring:url value="/resources/js/materialize.js" var="js"/>
     <spring:url value="/resources/css/main.css" var="main"/>
     <spring:url value="/resources/js/tours.js" var="tours"/>
@@ -20,6 +21,7 @@
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="${css}" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="${main}" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="${button}" media="screen,projection"/>
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -33,7 +35,7 @@
                 <li><a href="/listoftours">Tours</a></li>
                 <li><a href="/addtour">Add Tour</a></li>
                 <li><a href="/reservation">Reservations</a></li>
-                <li><a href="clients.jsp">Clients</a></li>
+                <li><a href="/clients">Clients</a></li>
                 <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
@@ -45,56 +47,51 @@
     </nav>
 </header>
 <main>
-        <div class="container">
-            <h2>Clients</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th></th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <td>Alvin</td>
-                    <td>Eclair@gmail.com</td>
-                    <td>8988888</td>
-                    <td><a href="#!" class="secondary-content">
-                        <i class="small material-icons">block</i>
-                    </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Alan</td>
-                    <td>Jellybean@gmail.com</td>
-                    <td>8988888</td>
-                    <td><a href="#!" class="secondary-content">
-                        <i class="small material-icons">block</i>
-                    </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Jonathan</td>
-                    <td>Lollipop@gmail.com</td>
-                    <td>8988888</td>
-                    <td><a href="#!" class="secondary-content">
-                        <i class="small material-icons">block</i>
-                    </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-        </div>
+    <div class="container">
+        <h2>Clients</h2>
+        <form method="POST" action="#">
+            <div class="row">
+                <table>
+                    <c:if test="${listOfUsers.size()>0}">
+                        <tr>
+                            <th>Id</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </c:if>
+                    <c:if test="${listOfUsers.size() == 0}"><p>There are no active users</p></c:if>
+                    <c:forEach var="clients" items="${listOfUsers}">
+                        <tr>
+                            <td>${clients.id}</td>
+                            <td>${clients.email}</td>
+                            <td>${clients.role}</td>
+                            <c:choose>
+                                <c:when test="${clients.role.toString().equals('USER')}">
+                                    <td><a href="addToBlackList/${clients.id}" style="background-color:#DC143C" class="btn-small">
+                                         block </a></td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td><a href="removeFromBlackList/${clients.id}" class="btn-small">unblock</a></td>
+                                </c:otherwise>
+                            </c:choose>
+                            </c:forEach>
+                        </tr>
+                </table>
+                <div class="row">
+                    <div class="col s6 offset-s5">
+                        <ul class="pagination">
+                            <c:if test="${generalAmount>4}">
+                                <c:forEach var="i" begin="1" end="${amount}">
+                                    <li class="waves-effect"><a href="/clients/${i}">${i}</a></li>
+                                </c:forEach>
+                            </c:if>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </main>
 <footer class="page-footer">
     <div class="container">

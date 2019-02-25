@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -27,7 +28,7 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Person person = personService.getPerson(email);
         Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority(person.getRole().getEnumrole()));
+        roles.add(new SimpleGrantedAuthority(person.getRole().getEnumRole()));
         return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), roles);
     }
 
@@ -38,22 +39,22 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
         return true;
     }
 
-    public boolean addToBlackList(String email) {
-        int result = personService.addToBlackList(email);
+    public boolean addToBlackList(Integer id) {
+        int result = personService.addToBlackList(id);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
     }
 
-    public boolean removeFromBlackList(String email) {
-        int result = personService.removeFromBlackList(email);
+    public boolean removeFromBlackList(Integer id) {
+        int result = personService.removeFromBlackList(id);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
     }
 
-    public boolean giveAdminRights(String email) {
-        int result = personService.giveAdminRights(email);
+    public boolean giveAdminRights(Integer id) {
+        int result = personService.giveAdminRights(id);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
@@ -64,6 +65,14 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
+    }
+
+    public List<Person> listOfUsers(Integer page, Integer rowNum) {
+        return personService.listOfUsers(page, rowNum);
+    }
+
+    public int amountOfUsers() {
+        return personService.amountOfUsers();
     }
 
     public boolean updatePasswordById(Integer id, String password) {
