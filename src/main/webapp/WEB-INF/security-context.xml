@@ -22,6 +22,7 @@
         <intercept-url pattern="/reservation/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/deleteReservation/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/testadmin" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/clients/**" access="hasRole('ROLE_ADMIN')" />
 
         <form-login login-page="/login" login-processing-url="/j_spring_security_check"  default-target-url="/homepage"
                     authentication-failure-url="/login?error=true" password-parameter="j_password" username-parameter="j_username" />

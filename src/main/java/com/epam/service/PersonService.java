@@ -54,16 +54,12 @@ public class PersonService {
     public int removeFromBlackList(Integer id) {
         if (id == null) throw new IllegalArgumentException("Email must be not null");
         return personDAO.removeFromBlackList(id);
+    }
     public int updatePasswordById(Integer id, String password) {
         if (id == null || password == null) {
             throw new IllegalArgumentException("Email and password must be not null");
         }
         return personDAO.updatePasswordById(id, password);
-    }
-
-    public int addToBlackList(String email) {
-        if (email == null) throw new IllegalArgumentException("Email must be not null");
-        return personDAO.addToBlackList(email);
     }
 
     public int giveAdminRights(Integer id) {
