@@ -1,5 +1,23 @@
 INSERT INTO person(email,  password, role)
-VALUES ('user@gmail.com', '123','ADMIN');
+VALUES ('admin@gmail.com', '123','ADMIN');
+INSERT INTO person(email,  password, role)
+VALUES ('user_1@gmail.com', '123','BLOCKED');
+INSERT INTO person(email,  password, role)
+VALUES ('user_2@gmail.com', '123','USER');
+INSERT INTO person(email,  password, role)
+VALUES ('user_3@gmail.com', '123','BLOCKED');
+INSERT INTO person(email,  password, role)
+VALUES ('user_4@gmail.com', '123','USER');
+INSERT INTO person(email,  password, role)
+VALUES ('user_5@gmail.com', '123','USER');
+INSERT INTO person(email,  password, role)
+VALUES ('user_6@gmail.com', '123','USER');
+INSERT INTO person(email,  password, role)
+VALUES ('user_7@gmail.com', '123','USER');
+INSERT INTO person(email,  password, role)
+VALUES ('user_8@gmail.com', '123','USER');
+INSERT INTO person(email,  password, role)
+VALUES ('user_9@gmail.com', '123','USER');
 INSERT INTO discount(discount)
 VALUES ('50');
 INSERT INTO hotel(name, city, country, number_of_stars)

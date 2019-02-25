@@ -3,6 +3,7 @@ package com.epam.repository;
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
@@ -11,6 +12,12 @@ import java.util.List;
 
 @Repository
 public class PersonDAO {
+    @Value("${clients.id}")
+    private String id;
+    @Value("${clients.email}")
+    private String email;
+    @Value(("${clients.role}"))
+    private String role;
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -56,27 +63,38 @@ public class PersonDAO {
         return jdbcTemplate.update(sql, email, password, role);
     }
 
-    public int addToBlackList(String email) {
-        if (email.equals("")) return -1;
-        String sql = "UPDATE person SET role = BLOCKED WHERE email = ?";
-        return jdbcTemplate.update(sql, email);
+    public int addToBlackList(Integer id) {
+        if (id < 1) return -1;
+        String sql = "UPDATE person SET role = 'BLOCKED' WHERE id = ?";
+        return jdbcTemplate.update(sql, id);
     }
 
-    public int removeFromBlackList(String email) {
-        if (email.equals("")) return -1;
-        String sql = "UPDATE person SET role = USER WHERE email = ?";
-        return jdbcTemplate.update(sql, email);
+    public int removeFromBlackList(Integer id) {
+        if (id < 1) return -1;
+        String sql = "UPDATE person SET role = 'USER' WHERE id = ?";
+        return jdbcTemplate.update(sql, id);
     }
 
-    public int giveAdminRights(String email) {
-        if (email.equals("")) return -1;
-        String sql = "UPDATE person SET role = ADMIN WHERE email = ?";
-        return jdbcTemplate.update(sql, email);
+    public int giveAdminRights(Integer id) {
+        if (id < 1) return -1;
+        String sql = "UPDATE person SET role = 'ADMIN' WHERE id = ?";
+        return jdbcTemplate.update(sql, id);
     }
 
     public int updatePassword(String email, String password) {
         if (email.equals("") || password.equals("")) return -1;
         String sql = "UPDATE person SET password = ? WHERE email = ?";
         return jdbcTemplate.update(sql, password, email);
+    }
+
+    public List<Person> listOfUsers(Integer page, Integer numOfRows) {
+        page = (page - 1) * numOfRows + 1;
+        String sql = "SELECT * FROM person WHERE role != 'ADMIN' ORDER BY id LIMIT " + (page - 1) + "," + numOfRows;
+        return jdbcTemplate.query(sql, (rs, rowNum) -> buildPerson(rs));
+    }
+
+    public int amountOfUsers() {
+        String sql = "SELECT COUNT(*) FROM person WHERE role != 'ADMIN'";
+        return jdbcTemplate.queryForObject(sql, new Object[]{}, Integer.class);
     }
 }

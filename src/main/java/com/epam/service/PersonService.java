@@ -37,18 +37,27 @@ public class PersonService {
         return personDAO.updatePassword(email, password);
     }
 
-    public int addToBlackList(String email) {
-        if (email == null) throw new IllegalArgumentException("Email must be not null");
-        return personDAO.addToBlackList(email);
+    public int addToBlackList(Integer id) {
+        if (id == null) throw new IllegalArgumentException("Email must be not null");
+        return personDAO.addToBlackList(id);
     }
 
-    public int removeFromBlackList(String email) {
-        if (email == null) throw new IllegalArgumentException("Email must be not null");
-        return personDAO.removeFromBlackList(email);
+    public int removeFromBlackList(Integer id) {
+        if (id == null) throw new IllegalArgumentException("Email must be not null");
+        return personDAO.removeFromBlackList(id);
     }
 
-    public int giveAdminRights(String email) {
-        if (email == null) throw new IllegalArgumentException("Email must be not null");
-        return personDAO.giveAdminRights(email);
+    public int giveAdminRights(Integer id) {
+        if (id == null) throw new IllegalArgumentException("Email must be not null");
+        return personDAO.giveAdminRights(id);
     }
+
+    public List<Person> listOfUsers(Integer page, Integer rowNum) {
+        if (page == null || !(page > 0) || rowNum == null || !(rowNum > 0)) throw new IllegalArgumentException("Page must be integer and > 0");
+        System.out.println(personDAO.listOfUsers(page, rowNum).toString());
+        return personDAO.listOfUsers(page, rowNum);
+    }
+
+    public int amountOfUsers() { return personDAO.amountOfUsers();}
+
 }

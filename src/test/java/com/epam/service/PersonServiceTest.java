@@ -25,20 +25,22 @@ public class PersonServiceTest {
     private Person expectedPerson;
     private String testEmail;
     private String testPassword;
+    private Integer testId;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        testId = 1;
         testEmail = "user";
         testPassword = "1111";
-        expectedPerson = new Person(1, testEmail, testPassword, PersonRoleEnum.valueOf("ADMIN"));
+        expectedPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf("ADMIN"));
         personService = new PersonService(personDAO);
         personList = new ArrayList<>();
         personList.add(expectedPerson);
     }
 
     @Test
-   public void getPersonPositiveResult() {
+    public void getPersonPositiveResult() {
         String email = "user";
         when(personDAO.getPersons()).thenReturn(personList);
         Person actualPerson = personService.getPerson(email);
@@ -85,8 +87,8 @@ public class PersonServiceTest {
     @Test
     public void addToBlackListPositiveResult() {
         int expectedResult = 1;
-        when(personDAO.addToBlackList(testEmail)).thenReturn(1);
-        assertEquals(expectedResult, personService.addToBlackList(testEmail));
+        when(personDAO.addToBlackList(testId)).thenReturn(1);
+        assertEquals(expectedResult, personService.addToBlackList(testId));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -97,8 +99,8 @@ public class PersonServiceTest {
     @Test
     public void removeFromBlackList() {
         int expectedResult = 1;
-        when(personDAO.removeFromBlackList(testEmail)).thenReturn(1);
-        assertEquals(expectedResult, personService.removeFromBlackList(testEmail));
+        when(personDAO.removeFromBlackList(testId)).thenReturn(1);
+        assertEquals(expectedResult, personService.removeFromBlackList(testId));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -109,8 +111,8 @@ public class PersonServiceTest {
     @Test
     public void giveAdminRightsPositiveResult() {
         int expectedResult = 1;
-        when(personDAO.giveAdminRights(testEmail)).thenReturn(1);
-        assertEquals(expectedResult, personService.giveAdminRights(testEmail));
+        when(personDAO.giveAdminRights(testId)).thenReturn(1);
+        assertEquals(expectedResult, personService.giveAdminRights(testId));
     }
 
     @Test(expected = IllegalArgumentException.class)
