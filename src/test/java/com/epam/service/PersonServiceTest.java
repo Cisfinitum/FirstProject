@@ -127,6 +127,6 @@ public class PersonServiceTest {
     }
     @Test(expected = IllegalArgumentException.class)
     public void getIdByEmailNullEmail(){
-        personService.getIdByEmail(null);
+        personService.getIdByEmail("");
     }
 }
