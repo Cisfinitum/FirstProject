@@ -111,23 +111,28 @@ public class TourOfferServiceTest {
         tourOfferService.updateTour(tourOffer,"test",1,1,"test");
     }
 
-//    @Test
-//    public void updateTour() {
-//        Mockito.when(tourOffer.getId()).thenReturn(1);
-//        Mockito.when(tourOffer.getHotelId()).thenReturn(1);
-//        Mockito.when(tourOffer.getTourType()).thenReturn("dd");
-//        Mockito.when(tourOffer.getDiscountId()).thenReturn(1);
-//        Mockito.when(tourOffer.getStartDate()).thenReturn(LocalDate.of(2019, 10, 6));
-//        Mockito.when(tourOffer.getEndDate()).thenReturn(LocalDate.of(2019, 10, 11));
-//        Mockito.when(tourOffer.getPricePerUnit()).thenReturn(1);
-//        Mockito.when(tourOffer.getDescription()).thenReturn("dd");
-//
-//        tourOfferService.updateTour(tourOffer,"test",1,1,"test");
-//
-//        Mockito.verify(jdbcTemplate, Mockito.times(1)).update("UPDATE tour_offer SET " +
-//                "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
-//                "WHERE id = ?",
-//            tourOffer.getTourType(), tourOffer.getStartDate(), tourOffer.getEndDate(), tourOffer.getPricePerUnit(), tourOffer.getHotelId(),
-//            tourOffer.getDescription(), tourOffer.getDiscountId(), tourOffer.getId());
-//    }
+    @Test
+    public void updateTour() {
+        Mockito.when(tourOffer.getId()).thenReturn(1);
+        Mockito.when(tourOffer.getHotelId()).thenReturn(1);
+        Mockito.when(tourOffer.getTourType()).thenReturn("dd");
+        Mockito.when(tourOffer.getDiscountId()).thenReturn(1);
+        Mockito.when(tourOffer.getStartDate()).thenReturn(LocalDate.of(2019, 10, 6));
+        Mockito.when(tourOffer.getEndDate()).thenReturn(LocalDate.of(2019, 10, 11));
+        Mockito.when(tourOffer.getPricePerUnit()).thenReturn(1);
+        Mockito.when(tourOffer.getDescription()).thenReturn("dd");
+        Mockito.when(jdbcTemplate.update("UPDATE tour_offer SET " +
+                        "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
+                        "WHERE id = ?",
+                tourOffer.getTourType(), tourOffer.getStartDate(), tourOffer.getEndDate(), tourOffer.getPricePerUnit(), tourOffer.getHotelId(),
+                tourOffer.getDescription(), tourOffer.getDiscountId(), tourOffer.getId())).thenReturn(1);
+
+        tourOfferService.updateTour(tourOffer,"test",1,1,"test");
+
+        Mockito.verify(jdbcTemplate, Mockito.times(1)).update("UPDATE tour_offer SET " +
+                "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
+                "WHERE id = ?",
+            tourOffer.getTourType(), tourOffer.getStartDate(), tourOffer.getEndDate(), tourOffer.getPricePerUnit(), tourOffer.getHotelId(),
+            tourOffer.getDescription(), tourOffer.getDiscountId(), tourOffer.getId());
+    }
 }
