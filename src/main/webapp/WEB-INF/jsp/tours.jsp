@@ -81,7 +81,8 @@
                         <td>${listOfTours.get(i).endDate}</td>
                         <td>${listOfTours.get(i).pricePerUnit}</td>
                         <td>${hotels.get(listOfTours.get(i).hotelId).name}</td>
-                        <td>${listOfTours.get(i).description}</td>
+                        <td class="description" title="${listOfTours.get(i).description}">
+                                ${listOfTours.get(i).description}</td>
                         <td>${listOfTours.get(i).discountId}</td>
                         <td>
                             <a href="updatetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
