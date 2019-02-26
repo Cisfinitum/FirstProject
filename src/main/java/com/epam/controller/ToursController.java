@@ -44,6 +44,7 @@ public class ToursController {
         ModelAndView toursModel = new ModelAndView();
         toursModel.addObject("listOfTours", toursOfferService.getTours());
         toursModel.addObject("hotels", hotelService.getMapOfHotels());
+        toursModel.addObject("isReservedMap", toursOfferService.getToursStatusMap());
         toursModel.setViewName("tours");
         return toursModel;
     }
