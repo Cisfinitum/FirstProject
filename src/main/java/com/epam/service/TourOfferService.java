@@ -1,5 +1,6 @@
 package com.epam.service;
 
+import com.epam.exception.NotFoundException;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
@@ -80,7 +81,12 @@ public class TourOfferService {
             tourOffer.setPricePerUnit(addPricePerPerson);
             tourOffer.setDiscountId(addDiscount);
             tourOffer.setDescription(tourDescription);
-            return tourOfferDAO.updateTour(tourOffer);
+            int result = tourOfferDAO.updateTour(tourOffer);
+            if(result == 0) {
+                log.error("Update was failed");
+                throw new NotFoundException("Update was failed");
+            }
+            return result;
         }
     }
 

@@ -139,12 +139,8 @@ public class ToursController {
             Integer addDiscount = Validator.getInt(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
-            int result = toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);
-            if (result == 1) {
-                toursModel.setViewName("redirect:/listoftours");
-            } else {
-                toursModel.addObject("error", "Failed to add");
-            }
+            toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);
+            toursModel.setViewName("redirect:/listoftours");
             return toursModel;
         } catch (Exception e) {
             log.error(e.getMessage());
