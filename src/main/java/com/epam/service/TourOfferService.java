@@ -1,5 +1,6 @@
 package com.epam.service;
 
+import com.epam.exception.NotFoundException;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
@@ -94,7 +95,12 @@ public class TourOfferService {
         for(Hotel hotel: myList){
             listOfHotelsId.add(hotel.getId());
         }
-            return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
+         List<TourOffer> listOfTours = tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
+        if(listOfTours.size() == 0){
+            log.error("No tours available");
+            throw new NotFoundException("No tours available");
+        }
+        return listOfTours;
     }
 
     public TourOffer getTourById(Integer tourId){
