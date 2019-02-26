@@ -97,7 +97,7 @@ public class TourOfferService {
         }
          List<TourOffer> listOfTours = tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
         if(listOfTours.size() == 0){
-            log.error("No tours available");
+            log.warn("No tours available");
             throw new NotFoundException("No tours available");
         }
         return listOfTours;
