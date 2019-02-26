@@ -93,6 +93,7 @@ public class ToursController {
             LocalDate addStartDate = Validator.getDate(startDate, false);
             LocalDate addEndDate = Validator.getDate(endDate, false);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
+            Integer addDiscount = Validator.getDiscount(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
             Validator.dateDifference(addStartDate,addEndDate);
@@ -104,7 +105,7 @@ public class ToursController {
                     .pricePerUnit(addPricePerPerson)
                     .hotelId(1) //stub
                     .description(tourDescription)
-                    .discountId(1) //stub
+                    .discountId(addDiscount)
                     .build());
 
             if (result == 1) {
@@ -136,7 +137,7 @@ public class ToursController {
             TourOffer tourOffer = toursOfferService.getTourById(addTourId);
             toursModel.addObject("tour",tourOffer);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
-            Integer addDiscount = Validator.getInt(discount);
+            Integer addDiscount = Validator.getDiscount(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
             int result = toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);

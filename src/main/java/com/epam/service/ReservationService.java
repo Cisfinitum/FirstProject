@@ -113,7 +113,7 @@ public class ReservationService {
 
     public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discountId) {
         if (numberOfPeople > 0 && pricePerUnit > 0 && discountId > 0) {
-            return pricePerUnit * numberOfPeople * discountId;
+            return pricePerUnit * numberOfPeople * discountId/100;
         } else {
             throw new IllegalArgumentException("All arguments must be strictly more than zero");
         }
@@ -133,4 +133,5 @@ public class ReservationService {
             return modelAndView.addObject("message", "Tour was reserved successfully.");
         }
     }
+
 }

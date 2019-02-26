@@ -181,14 +181,14 @@
                         <td>${list.get(i).pricePerUnit}</td>
                         <td>${hotels.get(list.get(i).hotelId).name}</td>
                         <td>${list.get(i).description}</td>
-                        <td>${list.get(i).discountId}</td>
+                        <td>${list.get(i).discountId}%</td>
                         <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ANONYMOUS')">
                             <td>
                                 <form method="post" action="/reserveTour">
                                     <input name="idOfTour" type="hidden" value="${list.get(i).id}">
                                     <input name="pricePerUnit" type="hidden" value="${list.get(i).pricePerUnit}">
                                     <input name="numberOfPeople" type="hidden" value="${param.get("numberOfPeople")}">
-                                    <input name="discountId" type="hidden" value="1">
+                                    <input name="discountId" type="hidden" value="${list.get(i).discountId}">
                                     <button class="btn waves-effect waves-light" type="submit" name="action"> Reserve
                                     </button>
                                 </form>
