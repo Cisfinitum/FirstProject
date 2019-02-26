@@ -81,6 +81,9 @@ public class TourOfferService {
         } else if (tourDescription == null) {
             log.error("tourDescription is null");
             throw new IllegalArgumentException("tourDescription is null");
+        } else if (reservationService.getTourOfferById(tourOffer.getId()) == 1) {
+            log.error("Reservation with this TourId is already exist");
+            throw new IllegalArgumentException("Reservation with this TourId is already exist");
         } else {
             tourOffer.setTourType(tourType);
             tourOffer.setPricePerUnit(addPricePerPerson);
