@@ -12,7 +12,9 @@ import org.mockito.Spy;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -25,6 +27,7 @@ public class HotelServiceTest {
     @Spy
     ModelAndView modelAndView;
     private List<Hotel> hotelList;
+    Map<Integer,Hotel> expectedHotelsMap;
     @InjectMocks
     private HotelService hotelService;
     private int expectedResultPositive = 1;
@@ -37,6 +40,9 @@ public class HotelServiceTest {
         MockitoAnnotations.initMocks(this);
         hotelList = new ArrayList<>();
         hotelList.add(expectedHotel);
+        expectedHotelsMap = new HashMap<>();
+        expectedHotelsMap.put(expectedHotel.getId(),expectedHotel);
+        when(expectedHotel.getId()).thenReturn(0);
         when(expectedHotel.getName()).thenReturn("Luxury Hotel");
         when(expectedHotel.getCountry()).thenReturn("Russia");
     }
@@ -101,6 +107,12 @@ public class HotelServiceTest {
         modelAndView = hotelService.addHotel(modelAndView, testName, testCountry, wrongCityName, testStars);
         String expectedMessage = "Invalid name for city";
         assertEquals(expectedMessage, modelAndView.getModelMap().get("errormessage"));
+    }
+
+    @Test
+    public void getMapOfHotels(){
+        when(hotelService.getHotels()).thenReturn(hotelList);
+        assertEquals(expectedHotelsMap,hotelService.getMapOfHotels());
     }
 
 }

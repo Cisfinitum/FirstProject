@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -40,7 +42,8 @@ public class ToursController {
     @GetMapping("/listoftours")
     public ModelAndView getToursList() {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("list", toursOfferService.getTours());
+        toursModel.addObject("listOfTours", toursOfferService.getTours());
+        toursModel.addObject("hotels", hotelService.getMapOfHotels());
         toursModel.setViewName("tours");
         return toursModel;
     }
@@ -53,7 +56,8 @@ public class ToursController {
         try {
             LocalDate addStartDate = Validator.getDate(startDate, true);
             LocalDate addEndDate = Validator.getDate(endDate, true);
-            toursModel.addObject("list", toursOfferService.searchTours(null, addStartDate, addEndDate));
+            toursModel.addObject("hotels", hotelService.getMapOfHotels());
+            toursModel.addObject("list", toursOfferService.searchTours(country, addStartDate, addEndDate));
             return toursModel;
         } catch (Exception e) {
             toursModel.addObject("error", e.getMessage());
@@ -61,16 +65,21 @@ public class ToursController {
         }
     }
 
-    @PostMapping("/deletetour")
-    public ModelAndView deleteTour(@RequestParam String idOfTour) {
+    @GetMapping("/deletetour/{id}")
+    public ModelAndView deleteTour(@PathVariable Integer id, RedirectAttributes redir) {
         ModelAndView toursModel = new ModelAndView();
-        if (toursOfferService.deleteTour(Integer.valueOf(idOfTour)) == 1) {
-            toursModel.addObject("result", "Success");
-        } else {
-            toursModel.addObject("error", "Failed to delete");
-        }
         toursModel.setViewName("redirect:/listoftours");
-        return toursModel;
+        try {
+            if (toursOfferService.deleteTour(id) == 1) {
+                redir.addFlashAttribute("result","Success");
+            } else {
+                redir.addFlashAttribute("error","Failed to delete");
+            }
+            return toursModel;
+        } catch (Exception e){
+            redir.addFlashAttribute("error",e.getMessage());
+            return toursModel;
+        }
     }
 
     @PostMapping("/addtour")
@@ -119,30 +128,20 @@ public class ToursController {
     }
 
     @PostMapping("/updatetour")
-    public ModelAndView updateTour(@RequestParam String tourId, @RequestParam String tourType, @RequestParam String startDate, @RequestParam String endDate,
-                                   @RequestParam String country, @RequestParam String city, @RequestParam String hotel,
+    public ModelAndView updateTour(@RequestParam String tourId, @RequestParam String tourType,
                                    @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.setViewName("updatetour");
         try {
-            LocalDate addStartDate = Validator.getDate(startDate, false);
-            LocalDate addEndDate = Validator.getDate(endDate, false);
+            Integer addTourId = Validator.getInt(tourId);
+            TourOffer tourOffer = toursOfferService.getTourById(addTourId);
+            toursModel.addObject("tour",tourOffer);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
+            Integer addDiscount = Validator.getInt(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
-            Validator.dateDifference(addStartDate,addEndDate);
-            int result = toursOfferService.updateTour(TourOffer.builder()
-                    .id(Integer.valueOf(tourId))
-                    .tourType(tourType)
-                    .startDate(addStartDate)
-                    .endDate(addEndDate)
-                    .pricePerUnit(addPricePerPerson)
-                    .hotelId(1) //stub
-                    .description(tourDescription)
-                    .discountId(1) //stub
-                    .build());
+            int result = toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);
             if (result == 1) {
-                toursModel.addObject("result", "Success");
+                toursModel.setViewName("redirect:/listoftours");
             } else {
                 toursModel.addObject("error", "Failed to add");
             }
@@ -155,10 +154,18 @@ public class ToursController {
     }
 
     @GetMapping("/addtour")
-    public String getAddTour(ModelMap modelMap) {
+    public String addTour(ModelMap modelMap) {
         List<Hotel> hotels = hotelService.getHotels();
         modelMap.addAttribute("hotelList", hotels);
         return "addtour";
+    }
+
+    @GetMapping("/updatetour/{id}")
+    public ModelAndView updateTour(@PathVariable Integer id) {
+        ModelAndView toursModel = new ModelAndView();
+        toursModel.setViewName("updatetour");
+        toursModel.addObject("tour",toursOfferService.getTourById(id));
+        return toursModel;
     }
 
     @PostMapping("/reserveTour")

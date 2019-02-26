@@ -17,24 +17,24 @@ import java.util.List;
 @Repository
 public class TourOfferDAO implements SimpleTourOfferDAO {
     private final JdbcTemplate JdbcTemplate;
-
     @Value("${tourOffer.tableName}")
     private String tableName;
+
     @Autowired
     public TourOfferDAO(JdbcTemplate JdbcTemplate) {
         this.JdbcTemplate = JdbcTemplate;
     }
 
     public List<TourOffer> getTours(){
-        return JdbcTemplate.query("SELECT * FROM " +  tableName, (rs, rowNum) -> buildTour(rs));
+        return JdbcTemplate.query("SELECT * FROM "+tableName, (rs, rowNum) -> buildTour(rs));
     }
 
     public int deleteTour(Integer tourId){
-         return JdbcTemplate.update("DELETE FROM " + tableName+" WHERE id = ?", tourId);
+         return JdbcTemplate.update("DELETE FROM "+tableName+" WHERE id = ?", tourId);
     }
 
     public int addTour(TourOffer touroffer){
-        return JdbcTemplate.update("INSERT INTO "+tableName+" (tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount_id) " +
+        return JdbcTemplate.update("INSERT INTO "+tableName+"(tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount_id) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),
                 touroffer.getPricePerUnit(),touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId());
     }
@@ -47,18 +47,18 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     }
 
     public List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
-        String requestSQL = "SELECT * FROM " + tableName+" WHERE start_date ";
+        String requestSQL = "SELECT * FROM "+tableName+" WHERE start_date ";
         if(startDate!=null)
             requestSQL = requestSQL.concat("= '"+startDate+"'");
         else
             requestSQL = requestSQL.concat("IS NOT NULL ");
-        requestSQL = requestSQL.concat(" AND end_date ");
+        requestSQL = requestSQL.concat(" AND end_Date ");
         if(endDate!=null)
             requestSQL = requestSQL.concat("='"+endDate+"'");
         else
             requestSQL = requestSQL.concat("IS NOT NULL ");
         requestSQL = requestSQL.concat(" AND hotel_id ");
-        if(listOfHotelsId!=null) {
+        if(listOfHotelsId.size()!=0) {
             requestSQL = requestSQL.concat("IN (");
             for(Integer hotel_id: listOfHotelsId){
                 requestSQL = requestSQL.concat(hotel_id.toString());
@@ -70,6 +70,11 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
         else
             requestSQL = requestSQL.concat("IS NOT NULL");
         return JdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
+    }
+
+    public TourOffer getTourById(Integer tourId){
+        Object[] parameters = new Object[] { tourId };
+        return JdbcTemplate.queryForObject ("SELECT * FROM "+tableName+" WHERE id = ?", parameters, (rs, rowNum) -> buildTour(rs));
     }
 
     @SneakyThrows(SQLException.class)

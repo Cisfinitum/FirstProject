@@ -1,7 +1,9 @@
 package com.epam.service;
 
+import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -19,6 +21,12 @@ public class TourOfferServiceTest {
     private TourOfferDAO tourOfferDAO;
     @Mock
     private TourOffer expectedTourOffer;
+    @Mock
+    private HotelService hotelService;
+    @Mock
+    private ReservationService reservationService;
+    @Mock
+    private Hotel expectedHotel;
 
     private List<TourOffer> tourOfferList;
 
@@ -27,7 +35,7 @@ public class TourOfferServiceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tourOfferService = new TourOfferService(tourOfferDAO);
+        tourOfferService = new TourOfferService(tourOfferDAO,hotelService,reservationService);
         tourOfferList = new ArrayList<>();
     }
 
@@ -52,32 +60,86 @@ public class TourOfferServiceTest {
     @Test
     public void updateTourCheck(){
         when(tourOfferDAO.updateTour(expectedTourOffer)).thenReturn(1);
-        assertEquals(tourOfferService.updateTour(expectedTourOffer),1);
+        assertEquals(tourOfferService.updateTour(expectedTourOffer,"test",1,1,"test"),1);
     }
+
     @Test
     public void searchTourCheck(){
-        when(tourOfferDAO.searchTours(new ArrayList<>(),LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
+        List<Hotel> expectedHotels = new ArrayList<>();
+        expectedHotels.add(expectedHotel);
+        when(hotelService.getHotelsByCountry("test")).thenReturn(expectedHotels);
+        List<Integer> expectedHotelsId = new ArrayList<>();
+        for(Hotel hotel: expectedHotels){
+            expectedHotelsId.add(hotel.getId());
+        }
+        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
         assertEquals(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now()),tourOfferList);
+    }
+
+    @Test
+    public void getTourByIdCheck(){
+        when(tourOfferDAO.getTourById(1)).thenReturn(expectedTourOffer);
+        assertEquals(tourOfferService.getTourById(1),expectedTourOffer);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deleteTourThrowExceptionNull(){
-        when(tourOfferService.deleteTour(null)).thenThrow(NullPointerException.class);
+        when(tourOfferService.deleteTour(null)).thenThrow(IllegalArgumentException.class);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void deleteTourThrowExceptionZero(){
-        when(tourOfferService.deleteTour(0)).thenThrow(NullPointerException.class);
+        when(tourOfferService.deleteTour(0)).thenThrow(IllegalArgumentException.class);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void addTourThrowException(){
-        when(tourOfferService.addTour(null)).thenThrow(NullPointerException.class);
+        when(tourOfferService.addTour(null)).thenThrow(IllegalArgumentException.class);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void updateTourThrowException(){
-        when(tourOfferService.updateTour(null)).thenThrow(NullPointerException.class);
+        when(tourOfferService.updateTour(null,"test",1,1,"test")).thenThrow(NullPointerException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getTourByIdThrowExceptionNull(){
+        when(tourOfferService.getTourById(null)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getTourByIdThrowExceptionZero(){
+        when(tourOfferService.getTourById(0)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionTourType(){
+        when(tourOfferService.updateTour(expectedTourOffer,null,1,1,"test")).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionPricePerPersonNull(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",null,1,"test")).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionPricePerPersonZero(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",0,1,"test")).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionDiscountNull(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",1,null,"test")).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionDiscountZero(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",1,0,"test")).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionTourDescriptiontNull(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",1,1,null)).thenThrow(IllegalArgumentException.class);
     }
 }
 

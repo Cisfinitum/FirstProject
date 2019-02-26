@@ -2,16 +2,16 @@ package integration;
 
 import com.epam.exception.NotFoundException;
 import com.epam.model.TourOffer;
+import com.epam.repository.ReservationDAO;
 import com.epam.repository.TourOfferDAO;
+import com.epam.service.HotelService;
+import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
 import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -30,6 +30,9 @@ public class TourOfferServiceTest {
     private TourOffer tourOffer;
     private TourOfferDAO tourOfferDAO;
     private List<TourOffer> tourOffers;
+    private HotelService hotelService;
+    @Mock
+    private ReservationService reservationService;
 
     @Before
     public void setUp() {
@@ -37,8 +40,7 @@ public class TourOfferServiceTest {
         tourOfferDAO = new TourOfferDAO(jdbcTemplate);
         tourOfferDAO = Mockito.spy(tourOfferDAO);
         ReflectionTestUtils.setField(tourOfferDAO, "tableName", "tour_offer");
-
-        tourOfferService = new TourOfferService(tourOfferDAO);
+        tourOfferService = new TourOfferService(tourOfferDAO,hotelService,reservationService);
         tourOffers = new ArrayList<>();
         tourOffers.add(tourOffer);
 
@@ -70,9 +72,9 @@ public class TourOfferServiceTest {
 
     @Test
     public void deleteTour() {
-        int tourOfferId = 10;
+        int tourOfferId = 2;
         Mockito.when(jdbcTemplate.update(Mockito.anyString(), (Integer) Mockito.any())).thenReturn(1);
-
+        Mockito.when(reservationService.getTourOfferById(tourOfferId)).thenReturn(0);
         int actualReturnCode = tourOfferService.deleteTour(tourOfferId);
         Assert.assertEquals(1, actualReturnCode);
     }
@@ -116,7 +118,7 @@ public class TourOfferServiceTest {
         Mockito.when(tourOffer.getDiscountId()).thenReturn(1);
         Mockito.when(tourOffer.getEndDate()).thenReturn(LocalDate.of(2019, 10, 11));
 
-        tourOfferService.updateTour(tourOffer);
+        tourOfferService.updateTour(tourOffer,"test",1,1,"test");
 
         Mockito.verify(jdbcTemplate, Mockito.times(1)).update("UPDATE tour_offer SET " +
                 "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +

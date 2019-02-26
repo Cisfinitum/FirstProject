@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Map;
 
 
 @Service
@@ -68,6 +70,15 @@ public class HotelService {
         else {
             throw new IllegalArgumentException("Id must be specified");
         }
+    }
+
+    public Map<Integer,Hotel> getMapOfHotels(){
+        List<Hotel> listOfHotels = getHotels();
+        Map<Integer, Hotel> hotels = new HashMap<>();
+        for(Hotel hotel: listOfHotels){
+            hotels.put(hotel.getId(),hotel);
+        }
+        return hotels;
     }
 
     public ModelAndView addHotel(ModelAndView modelAndView, String name, String country, String city, Integer stars ){
