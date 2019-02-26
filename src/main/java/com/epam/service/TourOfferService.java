@@ -50,6 +50,10 @@ public class TourOfferService {
         if (tourOffer == null) {
             log.error("tourOffer is null");
             throw new IllegalArgumentException("tourOffer is null");
+        } else if(tourOffer.getTourType() == null || tourOffer.getPricePerUnit() == null || tourOffer.getHotelId() == null || tourOffer.getId() == null ||
+                tourOffer.getDescription() == null || tourOffer.getDiscountId() == null || tourOffer.getStartDate() == null || tourOffer.getEndDate() == null) {
+            log.error("Some fields of tourOffer is empty");
+            throw new IllegalArgumentException("Some fields of tourOffer is empty");
         } else {
             return tourOfferDAO.addTour(tourOffer);
         }

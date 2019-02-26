@@ -88,6 +88,13 @@ public class TourOfferServiceTest {
     @Test(expected = NoInteractionsWanted.class)
     public void addTourOfferWrongHotelId() {
         Mockito.when(tourOffer.getHotelId()).thenReturn(0);
+        Mockito.when(tourOffer.getTourType()).thenReturn("");
+        Mockito.when(tourOffer.getDescription()).thenReturn("test");
+        Mockito.when(tourOffer.getPricePerUnit()).thenReturn(1);
+        Mockito.when(tourOffer.getDiscountId()).thenReturn(1);
+        Mockito.when(tourOffer.getEndDate()).thenReturn(LocalDate.now());
+        Mockito.when(tourOffer.getStartDate()).thenReturn(LocalDate.now());
+        Mockito.when(tourOffer.getId()).thenReturn(1);
 
         tourOfferService.addTour(tourOffer);
 
@@ -96,6 +103,13 @@ public class TourOfferServiceTest {
     @Test(expected = NoInteractionsWanted.class)
     public void addTourOfferWrongTourType() {
         Mockito.when(tourOffer.getTourType()).thenReturn("");
+        Mockito.when(tourOffer.getDescription()).thenReturn("test");
+        Mockito.when(tourOffer.getPricePerUnit()).thenReturn(1);
+        Mockito.when(tourOffer.getHotelId()).thenReturn(1);
+        Mockito.when(tourOffer.getDiscountId()).thenReturn(1);
+        Mockito.when(tourOffer.getEndDate()).thenReturn(LocalDate.now());
+        Mockito.when(tourOffer.getStartDate()).thenReturn(LocalDate.now());
+        Mockito.when(tourOffer.getId()).thenReturn(1);
 
         tourOfferService.addTour(tourOffer);
 
