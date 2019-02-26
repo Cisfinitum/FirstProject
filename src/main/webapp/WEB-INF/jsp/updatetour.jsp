@@ -30,22 +30,19 @@
         <div class="nav-wrapper tab " >
             <a href="index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="listoftours">Tours</a></li>
-                <li><a href="addtour">Add Tour</a></li>
-                <li><a href="#">Reservations</a></li>
-                <li><a href="#">Clients</a></li>
-                <li>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="logout">Log Out</a>
-                    </button>
-                </li>
+                <li><a href="/listoftours"><spring:message code="tours" /></a></li>
+                <li><a href="/addtour"><spring:message code="addtour" /></a></li>
+                <li><a href="/reservation"><spring:message code="reservations" /></a></li>
+                <li><a href="/clients"><spring:message code="clients" /></a></li>
+                <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
             </ul>
         </div>
     </nav>
 </header>
 <main>
     <div class="container">
-        <h2>Edit Tour</h2>
+        <h2><spring:message code="touredit" /></h2>
         <form method="POST" action="/updatetour">
             <div class="row">
                 <c:if test="${not empty result}">
@@ -59,31 +56,31 @@
                 <div class="col s3">
                     <div class="input-field">
                         <input type="text" id="autocomplete-input" class="autocomplete" name="tourType" value="${tour.tourType}">
-                        <label for="autocomplete-input">Tour type</label>
+                        <label for="autocomplete-input"><spring:message code="tourtype" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <input type="text" id="autocomplete-input2" class="pricePerPerson" name="pricePerPerson" value="${tour.pricePerUnit}">
-                        <label for="autocomplete-input2">Price Per Person</label>
+                        <label for="autocomplete-input2"><spring:message code="tourprice" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount" value="${tour.discountId}">
-                        <label for="autocomplete-input3">Discount</label>
+                        <label for="autocomplete-input3"><spring:message code="tourdiscount" /></label>
                     </div>
                 </div>
                 <div class="input-field">
                     <div class="input-field col s9">
                         <input type="text" id="textarea1" class="materialize-textarea" name="tourDescription" value="${tour.description}">
-                        <label for="textarea1">Tour Description</label>
+                        <label for="textarea1"><spring:message code="tourdescription" /></label>
                     </div>
                 </div>
                 <input name="tourId" type="hidden" value="${tour.id}">
                 <div class="col s2 offset-s10">
                     <div class="input-field">
-                        <button class="btn waves-effect waves-light" type="submit"> Update
+                        <button class="btn waves-effect waves-light" type="submit"> <spring:message code="updatesimple" />
                             <i class="material-icons right">add</i>
                         </button>
                     </div>
