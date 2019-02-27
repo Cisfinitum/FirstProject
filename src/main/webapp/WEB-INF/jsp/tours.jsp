@@ -84,7 +84,7 @@
                             <c:if test="${isReservedMap.get(listOfTours.get(i).id)}">
                             <a href="updatetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
                                 <spring:message code="edit" /> </a>
-                        </c:if>
+                            </c:if>
                         </td>
                         <td>
                             <c:if test="${isReservedMap.get(listOfTours.get(i).id)}">
