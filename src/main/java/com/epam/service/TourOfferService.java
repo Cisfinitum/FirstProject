@@ -62,7 +62,7 @@ public class TourOfferService {
             log.error("tourOffer is null");
             throw new IllegalArgumentException("tourOffer is null");
         } else if(tourOffer.getTourType() == null || tourOffer.getPricePerUnit() == null || tourOffer.getHotelId() == null || tourOffer.getId() == null ||
-                tourOffer.getDescription() == null || tourOffer.getDiscountId() == null || tourOffer.getStartDate() == null || tourOffer.getEndDate() == null) {
+                tourOffer.getDescription() == null || tourOffer.getDiscount() == null || tourOffer.getStartDate() == null || tourOffer.getEndDate() == null) {
             log.error("Some fields of tourOffer is empty");
             throw new IllegalArgumentException("Some fields of tourOffer is empty");
         } else {
@@ -80,7 +80,7 @@ public class TourOfferService {
         } else if (addPricePerPerson == null || addPricePerPerson <= 0) {
             log.error("addPricePerPerson is null or 0");
             throw new IllegalArgumentException("addPricePerPerson is null or 0");
-        } else if (addDiscount == null || addDiscount <= 0) {
+        } else if (addDiscount == null || addDiscount < 0) {
             log.error("addDiscount is null or 0");
             throw new IllegalArgumentException("addDiscount is null or 0");
         } else if (tourDescription == null) {
@@ -92,7 +92,7 @@ public class TourOfferService {
         } else {
             tourOffer.setTourType(tourType);
             tourOffer.setPricePerUnit(addPricePerPerson);
-            tourOffer.setDiscountId(addDiscount);
+            tourOffer.setDiscount(addDiscount);
             tourOffer.setDescription(tourDescription);
             int result = tourOfferDAO.updateTour(tourOffer);
             if(result == 0) {

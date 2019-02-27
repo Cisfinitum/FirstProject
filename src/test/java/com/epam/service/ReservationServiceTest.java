@@ -99,7 +99,7 @@ public class ReservationServiceTest {
 
     @Test
     public void getTotalPrice() {
-        Integer expectedTotalPrice = 500;
+        Integer expectedTotalPrice = 5;
         Integer actualTotalPrice = reservationService.getTotalPrice(numberOfPeople, testPricePerUnit, testDiscountId);
         assertEquals(expectedTotalPrice, actualTotalPrice);
     }
