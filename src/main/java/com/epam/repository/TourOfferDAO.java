@@ -20,8 +20,7 @@ public class TourOfferDAO {
     }
 
     public List<TourOffer> getTours(){
-        String sql = "SELECT * from tourOffer ";
-        return JdbcTemplate.query(sql, (rs, rowNum) -> buildTour(rs));
+        return JdbcTemplate.query("SELECT * FROM tourOffer", (rs, rowNum) -> buildTour(rs));
     }
 
     public List<TourOffer> getToursByPage(Integer from, Integer offset){

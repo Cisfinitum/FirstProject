@@ -41,9 +41,7 @@ public class ToursController {
         Integer rowsPerPage = toursOfferService.rowsPerPage;
         Integer totalRows = toursOfferService.getAmountOfTours();
         Integer totalPages = (totalRows % rowsPerPage == 0) ? totalRows / rowsPerPage : totalRows / rowsPerPage + 1;
-        if(pageNum == 1) {
-            // do nothing
-        } else {
+        if(pageNum != 1) {
             from = (pageNum - 1) * rowsPerPage + 1;
         }
         toursModel.addObject("list", toursOfferService.getToursByPage(from, rowsPerPage));
