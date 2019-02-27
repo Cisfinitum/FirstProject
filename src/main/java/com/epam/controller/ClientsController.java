@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -33,8 +30,9 @@ public class ClientsController {
     }
 
     @GetMapping("/clientProfile")
-    public ModelAndView clientPage (Principal principal, ModelMap modelMap) {
+    public ModelAndView clientPage (@ModelAttribute(name = "paymentMessage") String paymentMessage, Principal principal, ModelMap modelMap) {
         ModelAndView clientModel = new ModelAndView();
+        clientModel.addObject("paymentMessage", paymentMessage);
         Integer clientId = personService.getIdByEmail(principal.getName());
         clientModel.addObject("person", personService.getPersonById(clientId));
         clientModel.addObject("reservations", reservationService.getReservationsByPersonId(clientId));

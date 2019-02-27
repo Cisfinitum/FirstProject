@@ -6,6 +6,7 @@ import com.epam.repository.ReservationDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -119,7 +120,7 @@ public class ReservationService {
         }
     }
 
-    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discountId){
+    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discountId, RedirectAttributes redirectAttributes){
         if (principal == null) {
             modelAndView.setViewName("login");
             modelAndView.addObject("message", "Please, sign in.");
@@ -129,8 +130,20 @@ public class ReservationService {
             modelAndView.setViewName("homepage");
             Integer clientId = personService.getIdByEmail(email);
             Integer totalPrice = getTotalPrice(numberOfPeople, pricePerUnit, discountId);
-            addReservation(new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discountId, totalPrice));
-            return modelAndView.addObject("message", "Tour was reserved successfully.");
+            Reservation reservation = new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discountId, totalPrice);
+            addReservation(reservation);
+            Integer reservationId = amountOfReservation();
+            modelAndView.setViewName("redirect:/payment");
+            redirectAttributes.addFlashAttribute("reservationId", reservationId);
+            redirectAttributes.addFlashAttribute("pricePerUnit", pricePerUnit);
+            redirectAttributes.addFlashAttribute("discountId", discountId);
+            redirectAttributes.addFlashAttribute("totalPrice", totalPrice);
+            redirectAttributes.addFlashAttribute("numberOfPeople", numberOfPeople);
+            return modelAndView;
         }
+    }
+
+    public int changeReservationStatusById(Integer id){
+        return reservationDAO.changeReservationStatusById(id);
     }
 }
