@@ -7,6 +7,8 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
 
 @AllArgsConstructor
 @Builder
@@ -37,6 +39,7 @@ public class TourOffer {
 
     @Override
     public String toString() {
-        return tourType+ " tour "+ " from "+ startDate+ " till "+ endDate;
+        Period period = Period.between(startDate, endDate);
+        return tourType+ " tour, \n"+ period.getDays()+" days, \n";
     }
 }

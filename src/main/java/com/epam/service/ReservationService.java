@@ -1,5 +1,6 @@
 package com.epam.service;
 
+import com.epam.model.Hotel;
 import com.epam.model.Reservation;
 import com.epam.model.ReservationStatusEnum;
 import com.epam.model.TourOffer;
@@ -141,7 +142,9 @@ public class ReservationService {
         for (Reservation reservation : reservations) {
             Integer tourId = reservation.getTourOfferId();
             TourOffer tourOffer = tourOfferService.getTourById(tourId);
-            description.put(reservation.getId(), tourOffer.toString());
+            Integer hotelId = tourOffer.getHotelId();
+            Hotel hotel = hotelService.getHotelById(hotelId);
+            description.put(reservation.getId(), tourOffer.toString() + hotel.toString());
         }
         return description;
     }
