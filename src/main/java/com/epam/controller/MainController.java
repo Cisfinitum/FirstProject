@@ -56,4 +56,9 @@ public class MainController {
     public String accessDeniedPage (Principal user, ModelMap modelMap) {
         return "/access-denied";
     }
+
+    @GetMapping("/404")
+    public String notFoundPage() {
+        return "404";
+    }
 }
