@@ -1,5 +1,6 @@
 package com.epam.service;
 
+import com.epam.exception.NotFoundException;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
@@ -49,6 +50,10 @@ public class TourOfferService {
         if (tourOffer == null) {
             log.error("tourOffer is null");
             throw new IllegalArgumentException("tourOffer is null");
+        } else if(tourOffer.getTourType() == null || tourOffer.getPricePerUnit() == null || tourOffer.getHotelId() == null || tourOffer.getId() == null ||
+                tourOffer.getDescription() == null || tourOffer.getDiscountId() == null || tourOffer.getStartDate() == null || tourOffer.getEndDate() == null) {
+            log.error("Some fields of tourOffer is empty");
+            throw new IllegalArgumentException("Some fields of tourOffer is empty");
         } else {
             return tourOfferDAO.addTour(tourOffer);
         }
@@ -80,7 +85,12 @@ public class TourOfferService {
             tourOffer.setPricePerUnit(addPricePerPerson);
             tourOffer.setDiscountId(addDiscount);
             tourOffer.setDescription(tourDescription);
-            return tourOfferDAO.updateTour(tourOffer);
+            int result = tourOfferDAO.updateTour(tourOffer);
+            if(result == 0) {
+                log.error("Update was failed");
+                throw new NotFoundException("Update was failed");
+            }
+            return result;
         }
     }
 
