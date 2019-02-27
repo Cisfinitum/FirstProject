@@ -19,6 +19,7 @@ public class TourOfferService {
     private final TourOfferDAO tourOfferDAO;
     private final HotelService hotelService;
     private final ReservationService reservationService;
+    public int totalAmountOfRows = 5;
 
     @Autowired
     public TourOfferService(TourOfferDAO tourOfferDAO, HotelService hotelService, ReservationService reservationService){
@@ -94,17 +95,25 @@ public class TourOfferService {
         }
     }
 
-    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate){
+    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate, Integer page, Integer total){
         List<Hotel> myList = hotelService.getHotelsByCountry(country);
         if(myList.size()==0&&!country.isEmpty()){
             log.error("Wrong input country: "+country);
             throw new IllegalArgumentException("Wrong input country: "+country);
         }
-        List<Integer> listOfHotelsId = new ArrayList<>();
-        for(Hotel hotel: myList){
-            listOfHotelsId.add(hotel.getId());
+        if (page > 0 && total > 0) {
+            if (page > 1) {
+                page = (page - 1) * total + 1;
+            }
+            List<Integer> listOfHotelsId = new ArrayList<>();
+            for(Hotel hotel: myList){
+                listOfHotelsId.add(hotel.getId());
+            }
+            return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate, page, total);
+
+        } else {
+            throw new IllegalArgumentException("Numbers must be integer and > 0");
         }
-            return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
     }
 
     public TourOffer getTourById(Integer tourId){
@@ -114,5 +123,19 @@ public class TourOfferService {
         } else {
             return tourOfferDAO.getTourById(tourId);
         }
+    }
+
+    public int amountOfToursSearched(String country, LocalDate startDate, LocalDate endDate) {
+        List<Hotel> myList = hotelService.getHotelsByCountry(country);
+        if(myList.size()==0&&!country.isEmpty()){
+            log.error("Wrong input country: "+country);
+            throw new IllegalArgumentException("Wrong input country: "+country);
+        }
+            List<Integer> listOfHotelsId = new ArrayList<>();
+            for(Hotel hotel: myList){
+                listOfHotelsId.add(hotel.getId());
+            }
+            return tourOfferDAO.amountOfToursSearched(listOfHotelsId, startDate, endDate);
+
     }
 }

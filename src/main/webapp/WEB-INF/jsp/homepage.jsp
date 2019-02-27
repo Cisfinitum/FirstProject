@@ -97,7 +97,7 @@
 
 <main>
     <div class="container">
-        <form method="POST" action="searchtours">
+        <form method="POST" action="/searchtours/1">
             <div class="row">
                 <c:if test="${not empty error}">
                     <span style="color: red; font-weight: bold">${error}</span>
@@ -151,7 +151,7 @@
         </form>
     </div>
     <h3 style="text-align:center; color: green">${message}</h3>
-    <c:if test="${not empty list}">
+    <c:if test="${list.size()>0}">
     <div class="container">
         <table>
             <thead>
@@ -168,22 +168,22 @@
             </tr>
             </thead>
             <tbody>
-                <c:forEach var="i" begin="0" end="${list.size()-1}">
+            <c:forEach var="tour" items="${list}">
                     <tr>
-                        <td>${list.get(i).tourType}</td>
-                        <td>${hotels.get(list.get(i).hotelId).country}</td>
-                        <td>${hotels.get(list.get(i).hotelId).city}</td>
-                        <td>${list.get(i).startDate}</td>
-                        <td>${list.get(i).endDate}</td>
-                        <td>${list.get(i).pricePerUnit}</td>
-                        <td>${hotels.get(list.get(i).hotelId).name}</td>
-                        <td>${list.get(i).description}</td>
-                        <td>${list.get(i).discountId}</td>
+                        <td>${tour.tourType}</td>
+                        <td>${hotels.get(tour.hotelId).country}</td>
+                        <td>${hotels.get(tour.hotelId).city}</td>
+                        <td>${tour.startDate}</td>
+                        <td>${tour.endDate}</td>
+                        <td>${tour.pricePerUnit}</td>
+                        <td>${hotels.get(tour.hotelId).name}</td>
+                        <td>${tour.description}</td>
+                        <td>${tour.discountId}</td>
                         <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ANONYMOUS')">
                             <td>
                                 <form method="post" action="/reserveTour">
-                                    <input name="idOfTour" type="hidden" value="${list.get(i).id}">
-                                    <input name="pricePerUnit" type="hidden" value="${list.get(i).pricePerUnit}">
+                                    <input name="idOfTour" type="hidden" value="${tour.id}">
+                                    <input name="pricePerUnit" type="hidden" value="${tour.pricePerUnit}">
                                     <input name="numberOfPeople" type="hidden" value="${param.get("numberOfPeople")}">
                                     <input name="discountId" type="hidden" value="1">
                                     <button class="btn waves-effect waves-light" type="submit" name="action"><spring:message code="reserve" />
@@ -197,6 +197,25 @@
         </table>
     </div>
     </c:if>
+        <br>
+        <div class="row">
+            <div class="col s6 offset-s5">
+                <ul class="pagination">
+                    <c:if test="${generalAmount>5}">
+                        <c:forEach var="i" begin="1" end="${amount}">
+                            <form method="post" action="/searchtours/${i}">
+                                <input name="country" type="hidden" value="${country}">
+                                <input name="startDate" type="hidden" value="${addStartDate}">
+                                <input name="endDate" type="hidden" value="${addEndDate}">
+                                <input name="numberOfPeople" type="hidden" value="${numberOfPeople}">
+                                <button class="btn waves-effect waves-light" type="submit" name="action">${i}
+                                </button>
+                            </form>
+                        </c:forEach>
+                    </c:if>
+                </ul>
+            </div>
+        </div>
 <div class="container">
     <div class="row">
         <div class="col s4">

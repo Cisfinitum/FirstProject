@@ -46,7 +46,7 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
                touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId(),touroffer.getId());
     }
 
-    public List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
+    public List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate, Integer page, Integer total){
         String requestSQL = "SELECT * FROM "+tableName+" WHERE start_date ";
         if(startDate!=null)
             requestSQL = requestSQL.concat("= '"+startDate+"'");
@@ -69,12 +69,39 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
         }
         else
             requestSQL = requestSQL.concat("IS NOT NULL");
+        requestSQL = requestSQL +  " LIMIT " + (page - 1) + "," + total;
         return JdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
     }
 
     public TourOffer getTourById(Integer tourId){
         Object[] parameters = new Object[] { tourId };
         return JdbcTemplate.queryForObject ("SELECT * FROM "+tableName+" WHERE id = ?", parameters, (rs, rowNum) -> buildTour(rs));
+    }
+
+    public int amountOfToursSearched(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
+        String requestSQL = "SELECT COUNT(*) FROM "+tableName+" WHERE start_date ";
+        if(startDate!=null)
+            requestSQL = requestSQL.concat("= '"+startDate+"'");
+        else
+            requestSQL = requestSQL.concat("IS NOT NULL ");
+        requestSQL = requestSQL.concat(" AND end_Date ");
+        if(endDate!=null)
+            requestSQL = requestSQL.concat("='"+endDate+"'");
+        else
+            requestSQL = requestSQL.concat("IS NOT NULL ");
+        requestSQL = requestSQL.concat(" AND hotel_id ");
+        if(listOfHotelsId.size()!=0) {
+            requestSQL = requestSQL.concat("IN (");
+            for(Integer hotel_id: listOfHotelsId){
+                requestSQL = requestSQL.concat(hotel_id.toString());
+                if(listOfHotelsId.get(listOfHotelsId.size()-1)!=hotel_id)
+                    requestSQL = requestSQL.concat(",");
+            }
+            requestSQL = requestSQL.concat(")");
+        }
+        else
+            requestSQL = requestSQL.concat("IS NOT NULL");
+        return JdbcTemplate.queryForObject(requestSQL, new Object[]{}, Integer.class);
     }
 
     @SneakyThrows(SQLException.class)
