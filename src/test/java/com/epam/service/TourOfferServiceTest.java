@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 public class TourOfferServiceTest {
@@ -160,6 +161,18 @@ public class TourOfferServiceTest {
     public void searchTourThrowNotFoundException(){
         when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
         when(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now())).thenThrow(NotFoundException.class);
+    }
+
+    @Test
+    public void checkIfHotelUsed(){
+        Integer expectedResult = 1;
+        when(tourOfferDAO.checkIfHotelsIsUsed(anyInt())).thenReturn(1);
+        Integer actualResult = tourOfferService.checkIfHotelUsed(1);
+        assertEquals(expectedResult, actualResult);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void checkIfHotelUsedThrowsExc(){
+        tourOfferService.checkIfHotelUsed(-90);
     }
 }
 

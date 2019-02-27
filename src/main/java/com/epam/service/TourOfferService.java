@@ -131,9 +131,13 @@ public class TourOfferService {
     }
 
     public int checkIfHotelUsed(Integer hotelId){
-        return tourOfferDAO.checkIfHotelsIsUsed(hotelId);
+        if (hotelId == null || hotelId <= 0) {
+            log.error("toursId is null, negative or 0");
+            throw new IllegalArgumentException("toursId is null, negative or 0");
+        }else {
+            return tourOfferDAO.checkIfHotelsIsUsed(hotelId);
+            }
     }
-
 
     public Map<Integer, Boolean> getMapOfHotelUse(List <Hotel> hotels){
         Map<Integer, Boolean> map = new HashMap<>();
