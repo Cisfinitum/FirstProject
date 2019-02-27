@@ -39,15 +39,6 @@ public class ToursController {
         this.personService = personService;
     }
 
-//    @GetMapping("/listoftours")
-//    public ModelAndView getToursList() {
-//        ModelAndView toursModel = new ModelAndView();
-//        toursModel.addObject("listOfTours", toursOfferService.getTours());
-//        toursModel.addObject("hotels", hotelService.getMapOfHotels());
-//        toursModel.setViewName("tours");
-//        return toursModel;
-//    }
-
     @GetMapping("/listoftours")
     public String testadmin() {
         return "redirect:/listoftours/1";
