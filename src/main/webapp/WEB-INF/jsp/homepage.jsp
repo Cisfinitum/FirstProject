@@ -156,18 +156,15 @@
         <table>
             <thead>
             <tr>
-                <th>Tour Type</th>
-                <th>Country</th>
-                <th>City</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Price</th>
-                <th>Hotel</th>
-                <th>Description</th>
-                <th>Discount</th>
-                <sec:authorize access="hasAnyRole('ROLE_ANONYMOUS', 'ROLE_USER')">
-                <th>Reserve</th>
-                </sec:authorize>
+                <th><spring:message code="tourtype" /></th>
+                <th><spring:message code="hotelcountry" /></th>
+                <th><spring:message code="hotelcity" /></th>
+                <th><spring:message code="dod" /></th>
+                <th><spring:message code="ad" /></th>
+                <th><spring:message code="tourprice" /></th>
+                <th><spring:message code="hotel" /></th>
+                <th><spring:message code="tourdescription" /></th>
+                <th><spring:message code="tourdiscount" /></th>
             </tr>
             </thead>
             <tbody>
@@ -189,7 +186,7 @@
                                     <input name="pricePerUnit" type="hidden" value="${list.get(i).pricePerUnit}">
                                     <input name="numberOfPeople" type="hidden" value="${param.get("numberOfPeople")}">
                                     <input name="discountId" type="hidden" value="1">
-                                    <button class="btn waves-effect waves-light" type="submit" name="action"> Reserve
+                                    <button class="btn waves-effect waves-light" type="submit" name="action"><spring:message code="reserve" />
                                     </button>
                                 </form>
                             </td>

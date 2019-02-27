@@ -30,23 +30,21 @@
         <div class="nav-wrapper tab " >
             <a href="index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/listoftours">Tours</a></li>
-                <li><a href="/addtour">Add Tour</a></li>
-                <li><a href="/reservation">Reservations</a></li>
-                <li><a href="/clients">Clients</a></li>
-                <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
-                <li>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="/logout">Log Out</a>
-                    </button>
-                </li>
+                <li><a href="/listoftours"><spring:message code="tours" /></a></li>
+                <li><a href="/addtour"><spring:message code="addtour" /></a></li>
+                <li><a href="/reservation"><spring:message code="reservations" /></a></li>
+                <li><a href="/clients"><spring:message code="clients" /></a></li>
+                <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
+                <li><a href="listoftours?lang=en"><img src="${imgen}" width="48" height="32"></a>
+                    <a href="listoftours?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
             </ul>
         </div>
     </nav>
 </header>
 <main>
         <div class="container">
-            <h2>Tours</h2>
+            <h2><spring:message code="tours" /></h2>
             <c:if test="${not empty result}">
                 <span style="color: green; font-weight: bold">${result}</span>
             </c:if>
@@ -56,18 +54,16 @@
             <table>
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Tour Type</th>
-                    <th>Country</th>
-                    <th>City</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Price</th>
-                    <th>Hotel</th>
-                    <th>Description</th>
-                    <th>Discount</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th><spring:message code="id" /></th>
+                    <th><spring:message code="tourtype" /></th>
+                    <th><spring:message code="hotelcountry" /></th>
+                    <th><spring:message code="hotelcity" /></th>
+                    <th><spring:message code="dod" /></th>
+                    <th><spring:message code="ad" /></th>
+                    <th><spring:message code="tourprice" /></th>
+                    <th><spring:message code="hotel" /></th>
+                    <th><spring:message code="tourdescription" /></th>
+                    <th><spring:message code="tourdiscount" /></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -81,21 +77,21 @@
                         <td>${listOfTours.get(i).endDate}</td>
                         <td>${listOfTours.get(i).pricePerUnit}</td>
                         <td>${hotels.get(listOfTours.get(i).hotelId).name}</td>
-                        <td>${listOfTours.get(i).description}</td>
+                        <td class="description" title="${listOfTours.get(i).description}">
+                                ${listOfTours.get(i).description}</td>
                         <td>${listOfTours.get(i).discountId}</td>
                         <td>
                             <c:if test="${isReservedMap.get(listOfTours.get(i).id)}">
                             <a href="updatetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
-                                Edit </a>
+                                <spring:message code="edit" /> </a>
                         </c:if>
                         </td>
                         <td>
                             <c:if test="${isReservedMap.get(listOfTours.get(i).id)}">
                             <a href="deletetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
-                                Delete </a>
+                                <spring:message code="delete" /> </a>
                             </c:if>
                         </td>
-
                     </tr>
                 </c:forEach>
                 </tbody>
