@@ -121,6 +121,7 @@
                     <th>Reservation Number</th>
                     <th>Number Of People</th>
                     <th>Status</th>
+                    <th>Discount</th>
                     <th>Total Price</th>
                     <th></th>
                 </tr>
@@ -131,6 +132,7 @@
                 <td>${reservation.id}</td>
                 <td> ${reservation.numberOfPeople}</td>
                 <td> ${reservation.status}</td>
+                <td> ${reservation.discount}%</td>
                 <td> ${reservation.totalPrice}</td>
                 </c:forEach>
             </tr>

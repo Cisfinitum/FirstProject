@@ -115,15 +115,15 @@ public class TourOfferServiceTest {
         Mockito.when(tourOffer.getId()).thenReturn(1);
         Mockito.when(tourOffer.getHotelId()).thenReturn(1);
         Mockito.when(tourOffer.getTourType()).thenReturn("dd");
-        Mockito.when(tourOffer.getDiscountId()).thenReturn(1);
+        Mockito.when(tourOffer.getDiscount()).thenReturn(1);
         Mockito.when(tourOffer.getEndDate()).thenReturn(LocalDate.of(2019, 10, 11));
 
         tourOfferService.updateTour(tourOffer,"test",1,1,"test");
 
         Mockito.verify(jdbcTemplate, Mockito.times(1)).update("UPDATE tour_offer SET " +
-                "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
+                "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount = ? " +
                 "WHERE id = ?",
             tourOffer.getTourType(), tourOffer.getStartDate(), tourOffer.getEndDate(), tourOffer.getPricePerUnit(), tourOffer.getHotelId(),
-            tourOffer.getDescription(), tourOffer.getDiscountId(), tourOffer.getId());
+            tourOffer.getDescription(), tourOffer.getDiscount(), tourOffer.getId());
     }
 }

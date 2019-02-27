@@ -31,7 +31,7 @@ public class TourOfferDAOTest {
     private Integer testpricePerUnit = 1500;
     private Integer testhotel_id = 1;
     private String testdescription = "Best tour";
-    private Integer testdiscount_id = 1;
+    private Integer testdiscount = 1;
 
 
     @Before
@@ -52,7 +52,7 @@ public class TourOfferDAOTest {
         when(resultSet.getInt("price_per_unit")).thenReturn(testpricePerUnit);
         when(resultSet.getInt("hotel_id")).thenReturn(testhotel_id);
         when(resultSet.getString("description")).thenReturn(testdescription);
-        when(resultSet.getInt("discount_id")).thenReturn(testdiscount_id);
+        when(resultSet.getInt("discount")).thenReturn(testdiscount);
         TourOffer actualTourOffer = tourofferDAO.buildTour(resultSet);
         assertEquals(expectedTour, actualTourOffer);
     }
@@ -67,7 +67,7 @@ public class TourOfferDAOTest {
         when(resultSet.getInt("price_per_unit")).thenReturn(testpricePerUnit);
         when(resultSet.getInt("hotel_id")).thenReturn(testhotel_id);
         when(resultSet.getString("description")).thenReturn(testdescription);
-        when(resultSet.getInt("discount_id")).thenReturn(testdiscount_id);
+        when(resultSet.getInt("discount")).thenReturn(testdiscount);
         tourofferDAO.buildTour(resultSet);
     }
 }

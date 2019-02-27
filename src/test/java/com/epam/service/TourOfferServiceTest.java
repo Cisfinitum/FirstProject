@@ -133,8 +133,8 @@ public class TourOfferServiceTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void updateTourThrowExceptionDiscountZero(){
-        when(tourOfferService.updateTour(expectedTourOffer,"test",1,0,"test")).thenThrow(IllegalArgumentException.class);
+    public void updateTourThrowExceptionDiscountNegative(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",1,-100,"test")).thenThrow(IllegalArgumentException.class);
     }
 
     @Test(expected = IllegalArgumentException.class)

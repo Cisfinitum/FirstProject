@@ -82,7 +82,7 @@
                         <td>${listOfTours.get(i).pricePerUnit}</td>
                         <td>${hotels.get(listOfTours.get(i).hotelId).name}</td>
                         <td>${listOfTours.get(i).description}</td>
-                        <td>${listOfTours.get(i).discountId}%</td>
+                        <td>${listOfTours.get(i).discount}%</td>
                         <td>
                             <a href="updatetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
                                 Edit </a>

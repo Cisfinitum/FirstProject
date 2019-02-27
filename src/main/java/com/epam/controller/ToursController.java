@@ -105,7 +105,7 @@ public class ToursController {
                     .pricePerUnit(addPricePerPerson)
                     .hotelId(1) //stub
                     .description(tourDescription)
-                    .discountId(addDiscount)
+                    .discount(addDiscount)
                     .build());
 
             if (result == 1) {
@@ -173,8 +173,8 @@ public class ToursController {
     public ModelAndView addReservation(@RequestParam(name = "idOfTour") Integer idOfTour,
                                        @RequestParam(name = "pricePerUnit") Integer pricePerUnit,
                                        @RequestParam(name = "numberOfPeople") Integer numberOfPeople,
-                                       @RequestParam(name = "discountId") Integer discountId,
+                                       @RequestParam(name = "discount") Integer discount,
                                        Principal principal, ModelAndView modelAndView) {
-        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discountId);
+        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discount);
     }
 }

@@ -16,5 +16,5 @@ public class TourOffer {
     private Integer pricePerUnit;
     private Integer hotelId;
     private String description;
-    private Integer discountId;
+    private Integer discount;
 }

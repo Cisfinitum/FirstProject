@@ -111,15 +111,15 @@ public class ReservationService {
         return reservationDAO.amountOfReservations();
     }
 
-    public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discountId) {
-        if (numberOfPeople > 0 && pricePerUnit > 0 && discountId > 0) {
-            return pricePerUnit * numberOfPeople * discountId/100;
+    public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discount) {
+        if (numberOfPeople > 0 && pricePerUnit > 0 && discount > 0) {
+            return pricePerUnit * numberOfPeople * discount/100;
         } else {
             throw new IllegalArgumentException("All arguments must be strictly more than zero");
         }
     }
 
-    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discountId){
+    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discount){
         if (principal == null) {
             modelAndView.setViewName("login");
             modelAndView.addObject("message", "Please, sign in.");
@@ -128,8 +128,8 @@ public class ReservationService {
             String email = principal.getName();
             modelAndView.setViewName("homepage");
             Integer clientId = personService.getIdByEmail(email);
-            Integer totalPrice = getTotalPrice(numberOfPeople, pricePerUnit, discountId);
-            addReservation(new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discountId, totalPrice));
+            Integer totalPrice = getTotalPrice(numberOfPeople, pricePerUnit, discount);
+            addReservation(new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discount, totalPrice));
             return modelAndView.addObject("message", "Tour was reserved successfully.");
         }
     }

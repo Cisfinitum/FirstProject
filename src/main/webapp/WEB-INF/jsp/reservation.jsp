@@ -53,7 +53,7 @@
                     <c:if test="${listReservation.size()>0}">
                         <tr>
                             <th>№</th>
-                            <th>Discount Id</th>
+                            <th>Discount</th>
                             <th>Client Id</th>
                             <th>Offer Id</th>
                             <th>Number Of People</th>
@@ -66,7 +66,7 @@
                     <c:forEach var="reservation" items="${listReservation}">
                     <tr>
                         <td>${reservation.id}</td>
-                        <td>${reservation.discountId}</td>
+                        <td>${reservation.discount}</td>
                         <td>${reservation.clientId}</td>
                         <td> ${reservation.tourOfferId}</td>
                         <td> ${reservation.numberOfPeople}</td>

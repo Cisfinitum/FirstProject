@@ -70,7 +70,7 @@
                 </div>
                 <div class="col s3">
                     <div class="input-field">
-                        <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount" value="${tour.discountId}">
+                        <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount" value="${tour.discount}">
                         <label for="autocomplete-input3">Discount</label>
                     </div>
                 </div>
