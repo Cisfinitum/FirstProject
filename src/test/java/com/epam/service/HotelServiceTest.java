@@ -8,9 +8,13 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -20,17 +24,25 @@ public class HotelServiceTest {
     private HotelDAO hotelDAO;
     @Mock
     private Hotel expectedHotel;
+    @Spy
+    ModelAndView modelAndView;
     private List<Hotel> hotelList;
+    Map<Integer,Hotel> expectedHotelsMap;
     @InjectMocks
     private HotelService hotelService;
     private int expectedResultPositive = 1;
+    private String testName = "hotel";
+    private String testCountry = "Indonesia";
+    private Integer testStars = 5;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-
         hotelList = new ArrayList<>();
         hotelList.add(expectedHotel);
+        expectedHotelsMap = new HashMap<>();
+        expectedHotelsMap.put(expectedHotel.getId(),expectedHotel);
+        when(expectedHotel.getId()).thenReturn(0);
         when(expectedHotel.getName()).thenReturn("Luxury Hotel");
         when(expectedHotel.getCountry()).thenReturn("Russia");
     }
@@ -76,7 +88,31 @@ public class HotelServiceTest {
     public void deleteHotel() {
         when(hotelDAO.deleteHotel(1)).thenReturn(1);
         int actualResult = hotelService.deleteHotel(1);
-        assertEquals(actualResult,expectedResultPositive);
+        assertEquals(actualResult, expectedResultPositive);
+    }
+
+    @Test
+    public void addHotel() {
+        String testCity = "Bali";
+        when(hotelDAO.createHotel(new Hotel(testName, testCountry, testCity, testStars))).thenReturn(1);
+        modelAndView = hotelService.addHotel(modelAndView, testName, testCountry, testCity, testStars);
+        String expectedMessage = "Hotel was created successfully";
+        assertEquals(expectedMessage, modelAndView.getModelMap().get("message"));
+    }
+
+    @Test
+    public void addHotelErrorMessage() {
+        String wrongCityName = "777";
+        when(hotelDAO.createHotel(new Hotel(testName, testCountry, wrongCityName, testStars))).thenReturn(1);
+        modelAndView = hotelService.addHotel(modelAndView, testName, testCountry, wrongCityName, testStars);
+        String expectedMessage = "Invalid name for city";
+        assertEquals(expectedMessage, modelAndView.getModelMap().get("errormessage"));
+    }
+
+    @Test
+    public void getMapOfHotels(){
+        when(hotelService.getHotels()).thenReturn(hotelList);
+        assertEquals(expectedHotelsMap,hotelService.getMapOfHotels());
     }
 
 }

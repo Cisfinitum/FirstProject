@@ -2,6 +2,7 @@ package com.epam.repository;
 
 import com.epam.model.Reservation;
 import com.epam.model.ReservationStatusEnum;
+import com.epam.repository.interfaces.SimpleReservationDAO;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @PropertySource("classpath:columns.properties")
 @Repository
-public class ReservationDAO {
+public class ReservationDAO implements SimpleReservationDAO {
     private final JdbcTemplate jdbcTemplate;
     @Value("${reservation.id}")
     private String id;
@@ -67,11 +68,17 @@ public class ReservationDAO {
                 new Object[]{reservationId}, (rs, rowNum) -> buildReservation(rs));
     }
 
+    public List<Reservation> getReservationsByPersonId(Integer personId) {
+        String sql = "SELECT * FROM " + tableName + " WHERE " + clientId + " = ?";
+        Object[] parameters = new Object[] { personId };
+        return jdbcTemplate.query(sql, parameters, reservationMapper);
+    }
+
     public int getTourOfferById(Integer offerId) {
-        String sql = "SELECT " + tourOfferId + " FROM " + tableName + " WHERE " + tourOfferId + " = ?";
-        Object tourOffer = jdbcTemplate.queryForObject(sql, new Object[]{offerId}, (rs, rowNub) ->
+        String sql = "SELECT * FROM " + tableName + " WHERE " + tourOfferId + " = "+offerId;
+        List<Reservation> reservations = jdbcTemplate.query(sql,  (rs, rowNub) ->
                 buildReservation(rs));
-        if (tourOffer != null) return 1;
+        if (reservations.size() != 0) return 1;
         return 0;
     }
 

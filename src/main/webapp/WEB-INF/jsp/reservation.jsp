@@ -28,19 +28,16 @@
 <header>
     <nav>
         <div class="nav-wrapper tab ">
-            <a href="index" class="brand-logo">Tour De Team</a>
+            <a href="/index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="listoftours">Tours</a></li>
-                <li><a href="addtour">Add Tour</a></li>
-                <li><a href="/reservation/1" id="Reservation">
-                    <span class="badge" style="background-color: #ab4160; color: #ffffff"
-                          id="myBadge">${generalAmount}</span>
-                    Reservations
-                </a></li>
-                <li><a href="#">Clients</a></li>
+                <li><a href="/listoftours">Tours</a></li>
+                <li><a href="/addtour">Add Tour</a></li>
+                <li><a href="/reservation">Reservations</a></li>
+                <li><a href="/clients">Clients</a></li>
+                <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="logout">Log Out</a>
+                        <a class="forButton" href="/logout">Log Out</a>
                     </button>
                 </li>
             </ul>
@@ -57,6 +54,7 @@
                         <tr>
                             <th>№</th>
                             <th>Discount Id</th>
+                            <th>Client Id</th>
                             <th>Offer Id</th>
                             <th>Number Of People</th>
                             <th>Status</th>
@@ -69,6 +67,7 @@
                     <tr>
                         <td>${reservation.id}</td>
                         <td>${reservation.discountId}</td>
+                        <td>${reservation.clientId}</td>
                         <td> ${reservation.tourOfferId}</td>
                         <td> ${reservation.numberOfPeople}</td>
                         <td> ${reservation.status}</td>

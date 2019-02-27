@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Admin Page</title>
+   <title>Admin Page</title>
     <spring:url value="/resources/css/materialize.css" var="css"/>
     <spring:url value="/resources/js/materialize.js" var="js"/>
     <spring:url value="/resources/css/main.css" var="main"/>
@@ -20,14 +20,12 @@
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="${css}" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="${main}" media="screen,projection"/>
-
-    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
 <header>
     <nav>
-        <div class="nav-wrapper tab " >
+        <div class="nav-wrapper tab ">
             <a href="index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
                 <li><a href="/listoftours">Tours</a></li>
@@ -37,7 +35,7 @@
                 <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
                 <li>
                     <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="/logout">Log Out</a>
+                        <a class="forButton" href="logout">Log Out</a>
                     </button>
                 </li>
             </ul>
@@ -45,62 +43,55 @@
     </nav>
 </header>
 <main>
-        <div class="container">
-            <h2>Tours</h2>
-            <c:if test="${not empty result}">
-                <span style="color: green; font-weight: bold">${result}</span>
-            </c:if>
-            <c:if test="${not empty error}">
-                <span style="color: red; font-weight: bold">${error}</span>
-            </c:if>
-            <table>
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Tour Type</th>
-                    <th>Country</th>
-                    <th>City</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Price</th>
-                    <th>Hotel</th>
-                    <th>Description</th>
-                    <th>Discount</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var = "i" begin = "0" end="${listOfTours.size()-1}" >
-                    <tr>
-                        <td>${listOfTours.get(i).id}</td>
-                        <td>${listOfTours.get(i).tourType}</td>
-                        <td>${hotels.get(listOfTours.get(i).hotelId).country}</td>
-                        <td>${hotels.get(listOfTours.get(i).hotelId).city}</td>
-                        <td>${listOfTours.get(i).startDate}</td>
-                        <td>${listOfTours.get(i).endDate}</td>
-                        <td>${listOfTours.get(i).pricePerUnit}</td>
-                        <td>${hotels.get(listOfTours.get(i).hotelId).name}</td>
-                        <td>${listOfTours.get(i).description}</td>
-                        <td>${listOfTours.get(i).discountId}</td>
-                        <td>
-                            <a href="updatetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
-                                Edit </a>
-                        </td>
-                        <td>
-                            <a href="deletetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
-                                Delete </a>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-        </div>
+    <div class="container">
+        <h2>Add Hotel</h2>
+        <p>Please note that all fields are required.</p>
+        <p style="color:green;">${message}</p>
+        <p style="color:red;">${errormessage}</p>
+        <form method="POST" action="/hotels" name="hotel">
+            <div class="row">
+                <div class="col s3">
+                    <div class="input-field">
+                        <input type="text" id="name" name="name" class="autocomplete">
+                        <label for="name">Name</label>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="input-field">
+                        <input type="text" id="country" name="country" class="autocomplete">
+                        <label for="country">Country</label>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="input-field">
+                        <input type="text" id="city" name="city" class="autocomplete">
+                        <label for="city">City</label>
+                    </div>
+                </div>
+                <div class="col s3">
+                    <div class="input-field" >
+                        <select id="stars" name="stars">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <label for="stars">Number Of Stars</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s2 offset-s10">
+                    <div class="input-field">
+                        <button class="btn waves-effect waves-light" type="submit" name="action"> Add
+                            <i class="material-icons right">add</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </main>
 <footer class="page-footer">
     <div class="container">
@@ -126,7 +117,6 @@
         </div>
     </div>
 </footer>
-
 <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" src="${js}"></script>
 <script type="text/javascript" src="${tours}"></script>

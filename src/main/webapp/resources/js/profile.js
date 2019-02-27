@@ -1,8 +1,29 @@
-function validatePageData() {
-    if (!validateEmail()) {
-        document.getElementById('email').focus();
-        return false;
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+});
+
+window.onload = function () {
+    checkPwdChanged();
+};
+
+function checkPwdChanged () {
+    var url = window.location.href;
+    // Get DIV
+    var msg = document.getElementById('idofthedivtohide');
+    // Check if URL contains the keyword
+    if( url.search( 'changed' ) > 0 ) {
+        // Display the message
+        msg.classList.add("show");
+        msg.classList.remove("hide");
     }
+    else {
+        msg.classList.add("hide");
+        msg.classList.remove("show");
+    }
+}
+
+function validatePageData() {
     if (!validatePassword()) {
         document.getElementById('password').focus();
         return false;
@@ -13,33 +34,9 @@ function validatePageData() {
     }
 }
 
-function checkEmailPattern(email) {
-    const $re = new RegExp('^[\\w][\\w\.\\\\-]{2,}[\\w]@[a-zA-Z]{2,}\\.[a-zA-Z]{2,}$');
-    return $re.test(email);
-}
-
 function checkPasswordPattern(password) {
     const $re = new RegExp('((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[\\w.\-\]{6,15})');
-    return $re.test(password)
-}
-
-function validateEmail() {
-    if (!checkEmailPattern(document.getElementById('email').value)) {
-        if (document.getElementById('email').classList.contains('valid')) {
-            document.getElementById('email').classList.remove('valid');
-        }
-        document.getElementById('email').classList.add('invalid');
-        document.getElementById('forpass').innerText = 'email should match the pattern \n for example: example@email.com';
-        return false;
-    }
-    else {
-        if (document.getElementById('email').classList.contains('invalid')) {
-            document.getElementById('email').classList.remove('invalid');
-        }
-        document.getElementById('email').classList.add('valid');
-        document.getElementById('forpass').innerText = '';
-        return true;
-    }
+    return $re.test(password);
 }
 
 function validatePassword() {
@@ -74,8 +71,7 @@ function checkIfPasswordsAreEqual() {
                 document.getElementById('forpass').innerText = 'passwords must be equal';
             }
             return false;
-        }
-        else {
+        } else {
             if (document.getElementById('password').classList.contains('invalid')) {
                 document.getElementById('password').classList.remove('invalid');
             }
@@ -87,8 +83,7 @@ function checkIfPasswordsAreEqual() {
             document.getElementById('forpass').innerText = '';
             return true;
         }
-    }
-    else {
+    } else {
         if (document.getElementById('password2').classList.contains('valid')) {
             document.getElementById('password2').classList.remove('valid');
         }

@@ -4,9 +4,13 @@ import com.epam.model.Hotel;
 import com.epam.repository.HotelDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.Map;
 
 
 @Service
@@ -66,6 +70,34 @@ public class HotelService {
         else {
             throw new IllegalArgumentException("Id must be specified");
         }
+    }
+
+    public Map<Integer,Hotel> getMapOfHotels(){
+        List<Hotel> listOfHotels = getHotels();
+        Map<Integer, Hotel> hotels = new HashMap<>();
+        for(Hotel hotel: listOfHotels){
+            hotels.put(hotel.getId(),hotel);
+        }
+        return hotels;
+    }
+
+    public ModelAndView addHotel(ModelAndView modelAndView, String name, String country, String city, Integer stars ){
+        Pattern pattern = Pattern.compile("^[a-zA-Z\\-\\s]*$");
+        Matcher countryMatcher = pattern.matcher(country);
+        Matcher cityMatcher = pattern.matcher(city);
+        if (name.equals("")) {
+            return modelAndView.addObject("errormessage", "Name is empty");
+        }
+        if (!cityMatcher.matches() || city.equals("")) {
+            return modelAndView.addObject("errormessage", "Invalid name for city");
+        }
+        if (!countryMatcher.matches() || country.equals("")) {
+            return modelAndView.addObject("errormessage", "Invalid name for country");
+        }
+        if (createHotel(new Hotel(name.trim(), country.trim(), city.trim(), stars)) != 1) {
+            return modelAndView.addObject("errormessage", "Some field are empty");
+        }
+        return modelAndView.addObject("message", "Hotel was created successfully");
     }
 
 }
