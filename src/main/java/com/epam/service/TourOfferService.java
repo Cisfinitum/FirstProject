@@ -80,7 +80,7 @@ public class TourOfferService {
         } else if (addPricePerPerson == null || addPricePerPerson <= 0) {
             log.error("addPricePerPerson is null or 0");
             throw new IllegalArgumentException("addPricePerPerson is null or 0");
-        } else if (addDiscount == null || addDiscount <= 0) {
+        } else if (addDiscount == null || addDiscount < 0) {
             log.error("addDiscount is null or 0");
             throw new IllegalArgumentException("addDiscount is null or 0");
         } else if (tourDescription == null) {

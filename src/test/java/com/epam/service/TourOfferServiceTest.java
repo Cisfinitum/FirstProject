@@ -57,7 +57,7 @@ public class TourOfferServiceTest {
         when(expectedTourOffer.getPricePerUnit()).thenReturn(1);
         when(expectedTourOffer.getTourType()).thenReturn("test");
         when(expectedTourOffer.getHotelId()).thenReturn(1);
-        when(expectedTourOffer.getDiscountId()).thenReturn(1);
+        when(expectedTourOffer.getDiscount()).thenReturn(1);
         when(expectedTourOffer.getEndDate()).thenReturn(LocalDate.now());
         when(expectedTourOffer.getStartDate()).thenReturn(LocalDate.now());
         when(expectedTourOffer.getId()).thenReturn(1);

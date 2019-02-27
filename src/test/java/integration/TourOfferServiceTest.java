@@ -137,7 +137,7 @@ public class TourOfferServiceTest {
         Mockito.when(tourOffer.getPricePerUnit()).thenReturn(1);
         Mockito.when(tourOffer.getDescription()).thenReturn("dd");
         Mockito.when(jdbcTemplate.update("UPDATE tour_offer SET " +
-                        "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
+                        "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount = ? " +
                         "WHERE id = ?",
                 tourOffer.getTourType(), tourOffer.getStartDate(), tourOffer.getEndDate(), tourOffer.getPricePerUnit(), tourOffer.getHotelId(),
                 tourOffer.getDescription(), tourOffer.getDiscount(), tourOffer.getId())).thenReturn(1);
