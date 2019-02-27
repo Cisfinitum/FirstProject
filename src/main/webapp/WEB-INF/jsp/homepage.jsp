@@ -67,10 +67,10 @@
     <div class="nav-wrapper">
         <a href="index" class="brand-logo center">Tour de Team</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li class="active"><a href="index"><spring:message code="homepage" /></a></li>
-            <li><a href="#"><spring:message code="information" /></a></li>
-            <li><a href="#"><spring:message code="feedback" /></a></li>
-            <li><a href="#"><spring:message code="contacts" /></a></li>
+            <li class="active"><a href="/index"><spring:message code="homepage" /></a></li>
+            <li><a href="/#"><spring:message code="information" /></a></li>
+            <li><a href="/#"><spring:message code="feedback" /></a></li>
+            <li><a href="/#"><spring:message code="contacts" /></a></li>
         </ul>
         <ul  class="right hide-on-med-and-down">
             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
@@ -86,8 +86,8 @@
             <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
                 <li><a href="/logout"><spring:message code="logout" /></a></li>
             </sec:authorize>
-            <li><a href="homepage?lang=en"><img src="${imgen}" width="48" height="32"></a>
-            <a href="homepage?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
+            <li><a href="/homepage?lang=en"><img src="${imgen}" width="48" height="32"></a>
+            <a href="/homepage?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
         </ul>
     </div>
 </nav>
@@ -259,10 +259,10 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text"><spring:message code="footerlinks" /></h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="index"><spring:message code="homepage" /></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="information" /></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="feedback" /></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="contacts" /></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/index"><spring:message code="homepage" /></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/#"><spring:message code="information" /></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/#"><spring:message code="feedback" /></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/#"><spring:message code="contacts" /></a></li>
                 </ul>
             </div>
         </div>
