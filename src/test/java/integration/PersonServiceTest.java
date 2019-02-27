@@ -17,6 +17,10 @@ import java.util.List;
 @ContextConfiguration(classes = TestConfig.class)
 public class PersonServiceTest {
 
+    private String testPhoneNumber = "8999999999";
+    private String testFirstName = "Example";
+    private String testLastName = "Example";
+
     @Autowired
     private PersonService personService;
 
@@ -32,7 +36,7 @@ public class PersonServiceTest {
 
     @Test
     public void addPerson() {
-        Person expectedPerson = new Person("email", "password", PersonRoleEnum.USER);
+        Person expectedPerson = new Person("email", "password", PersonRoleEnum.USER, testPhoneNumber, testFirstName, testLastName);
 
         personService.addPerson(expectedPerson);
 
@@ -42,7 +46,7 @@ public class PersonServiceTest {
 
     @Test
     public void updatePassword() {
-        Person expectedPerson = new Person("email2", "password2", PersonRoleEnum.USER);
+        Person expectedPerson = new Person("email2", "password2", PersonRoleEnum.USER, testPhoneNumber, testFirstName, testLastName);
         personDAO.addPerson(expectedPerson);
 
         personService.updatePassword("email2", "password3");

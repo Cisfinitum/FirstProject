@@ -9,7 +9,10 @@ CREATE TABLE person
   id       NUMERIC IDENTITY PRIMARY KEY,
   email    VARCHAR(200) NOT NULL,
   password VARCHAR(512) NOT NULL,
-  role     VARCHAR(200) NOT NULL
+  role     VARCHAR(200) NOT NULL,
+  phoneNumber VARCHAR(200) NOT NULL,
+  firstName VARCHAR(200) NOT NULL,
+  lastName VARCHAR(200) NOT NULL
 );
 CREATE TABLE discount
 (
