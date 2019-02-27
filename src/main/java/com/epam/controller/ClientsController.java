@@ -1,7 +1,6 @@
 package com.epam.controller;
 
 import com.epam.model.Reservation;
-import com.epam.model.TourOffer;
 import com.epam.service.PersonDetailsServiceImpl;
 import com.epam.service.PersonService;
 import com.epam.service.ReservationService;
@@ -42,7 +41,7 @@ public class ClientsController {
         List<Reservation> reservations = reservationService.getReservationsByPersonId(clientId);
         clientModel.addObject("person", personService.getPersonById(clientId));
         clientModel.addObject("reservations", reservations);
-        clientModel.addObject("description", reservationService.getDescription(reservations, tourOfferService ));
+        clientModel.addObject("description", tourOfferService.getDescription(reservations ));
         clientModel.setViewName("client");
         return clientModel;
     }

@@ -1,11 +1,8 @@
 package com.epam.service;
 
-import com.epam.model.Hotel;
 import com.epam.model.Reservation;
 import com.epam.model.ReservationStatusEnum;
-import com.epam.model.TourOffer;
 import com.epam.repository.ReservationDAO;
-import com.epam.repository.TourOfferDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,14 +14,12 @@ import java.util.*;
 public class ReservationService {
     private final ReservationDAO reservationDAO;
     private final PersonService personService;
-    private final HotelService hotelService;
     public int totalAmountOfRows = 4;
 
     @Autowired
-    public ReservationService(ReservationDAO reservationDAO, PersonService personService, HotelService hotelService) {
+    public ReservationService(ReservationDAO reservationDAO, PersonService personService) {
         this.reservationDAO = reservationDAO;
         this.personService = personService;
-        this.hotelService = hotelService;
     }
 
     public int addReservation(Reservation reservation) {
@@ -137,15 +132,4 @@ public class ReservationService {
         }
     }
 
-    public Map<Integer,String> getDescription(List<Reservation> reservations, TourOfferService tourOfferService){
-        Map<Integer, String> description = new HashMap<>();
-        for (Reservation reservation : reservations) {
-            Integer tourId = reservation.getTourOfferId();
-            TourOffer tourOffer = tourOfferService.getTourById(tourId);
-            Integer hotelId = tourOffer.getHotelId();
-            Hotel hotel = hotelService.getHotelById(hotelId);
-            description.put(reservation.getId(), tourOffer.toString() + hotel.toString());
-        }
-        return description;
-    }
 }
