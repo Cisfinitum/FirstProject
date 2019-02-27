@@ -5,7 +5,6 @@
 <head>
     <title>Admin Page</title>
     <spring:url value="/resources/css/materialize.css" var="css"/>
-    <spring:url value="/resources/css/clients.css" var="button"/>
     <spring:url value="/resources/js/materialize.js" var="js"/>
     <spring:url value="/resources/css/main.css" var="main"/>
     <spring:url value="/resources/js/tours.js" var="tours"/>
@@ -21,7 +20,6 @@
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="${css}" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="${main}" media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="${button}" media="screen,projection"/>
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -32,31 +30,29 @@
         <div class="nav-wrapper tab " >
             <a href="index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/listoftours">Tours</a></li>
-                <li><a href="/addtour">Add Tour</a></li>
-                <li><a href="/reservation">Reservations</a></li>
-                <li><a href="/clients">Clients</a></li>
-                <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
-                <li>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="/logout">Log Out</a>
-                    </button>
-                </li>
+                <li><a href="/listoftours"><spring:message code="tours" /></a></li>
+                <li><a href="/addtour"><spring:message code="addtour" /></a></li>
+                <li><a href="/reservation"><spring:message code="reservations" /></a></li>
+                <li><a href="/clients"><spring:message code="clients" /></a></li>
+                <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
+                <li><a href="/clients?lang=en"><img src="${imgen}" width="48" height="32"></a>
+                    <a href="/clients?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
             </ul>
         </div>
     </nav>
 </header>
 <main>
     <div class="container">
-        <h2>Clients</h2>
+        <h2><spring:message code="clients" /></h2>
         <form method="POST" action="#">
             <div class="row">
                 <table>
                     <c:if test="${listOfUsers.size()>0}">
                         <tr>
                             <th>Id</th>
-                            <th>Email</th>
-                            <th>Status</th>
+                            <th><spring:message code="emailname" /></th>
+                            <th><spring:message code="status" /></th>
                             <th></th>
                         </tr>
                     </c:if>
@@ -69,10 +65,10 @@
                             <c:choose>
                                 <c:when test="${clients.role.toString().equals('USER')}">
                                     <td><a href="addToBlackList/${clients.id}" style="background-color:#DC143C" class="btn-small">
-                                         block </a></td>
+                                        <spring:message code="block" /> </a></td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><a href="removeFromBlackList/${clients.id}" class="btn-small">unblock</a></td>
+                                    <td><a href="removeFromBlackList/${clients.id}" class="btn-small"><spring:message code="unblock" /></a></td>
                                 </c:otherwise>
                             </c:choose>
                             </c:forEach>

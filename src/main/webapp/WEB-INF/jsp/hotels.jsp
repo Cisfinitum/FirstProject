@@ -28,24 +28,22 @@
         <div class="nav-wrapper tab ">
             <a href="index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/listoftours">Tours</a></li>
-                <li><a href="/addtour">Add Tour</a></li>
-                <li><a href="/reservation">Reservations</a></li>
-                <li><a href="/clients">Clients</a></li>
-                <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
-                <li>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="logout">Log Out</a>
-                    </button>
-                </li>
+                <li><a href="/listoftours"><spring:message code="tours" /></a></li>
+                <li><a href="/addtour"><spring:message code="addtour" /></a></li>
+                <li><a href="/reservation"><spring:message code="reservations" /></a></li>
+                <li><a href="/clients"><spring:message code="clients" /></a></li>
+                <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
+                <li><a href="hotels?lang=en"><img src="${imgen}" width="48" height="32"></a>
+                    <a href="hotels?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
             </ul>
         </div>
     </nav>
 </header>
 <main>
     <div class="container">
-        <h2>Add Hotel</h2>
-        <p>Please note that all fields are required.</p>
+        <h2><spring:message code="addhotel" /></h2>
+        <p><spring:message code="addtourinfo" /></p>
         <p style="color:green;">${message}</p>
         <p style="color:red;">${errormessage}</p>
         <form method="POST" action="/hotels" name="hotel">
@@ -53,19 +51,19 @@
                 <div class="col s3">
                     <div class="input-field">
                         <input type="text" id="name" name="name" class="autocomplete">
-                        <label for="name">Name</label>
+                        <label for="name"><spring:message code="namesimple" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <input type="text" id="country" name="country" class="autocomplete">
-                        <label for="country">Country</label>
+                        <label for="country"><spring:message code="hotelcountry" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <input type="text" id="city" name="city" class="autocomplete">
-                        <label for="city">City</label>
+                        <label for="city"><spring:message code="hotelcity" /></label>
                     </div>
                 </div>
                 <div class="col s3">
@@ -77,14 +75,14 @@
                             <option value="4">4</option>
                             <option value="5">5</option>
                         </select>
-                        <label for="stars">Number Of Stars</label>
+                        <label for="stars"><spring:message code="numberofstars" /></label>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col s2 offset-s10">
                     <div class="input-field">
-                        <button class="btn waves-effect waves-light" type="submit" name="action"> Add
+                        <button class="btn waves-effect waves-light" type="submit" name="action"> <spring:message code="add" />
                             <i class="material-icons right">add</i>
                         </button>
                     </div>
