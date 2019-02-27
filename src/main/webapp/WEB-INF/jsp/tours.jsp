@@ -81,12 +81,16 @@
                                 ${listOfTours.get(i).description}</td>
                         <td>${listOfTours.get(i).discountId}</td>
                         <td>
+                            <c:if test="${isReservedMap.get(listOfTours.get(i).id)}">
                             <a href="updatetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
                                 <spring:message code="edit" /> </a>
+                            </c:if>
                         </td>
                         <td>
+                            <c:if test="${isReservedMap.get(listOfTours.get(i).id)}">
                             <a href="deletetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
                                 <spring:message code="delete" /> </a>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>
