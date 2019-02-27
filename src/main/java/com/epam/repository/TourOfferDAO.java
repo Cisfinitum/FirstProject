@@ -1,5 +1,7 @@
 package com.epam.repository;
 
+import com.epam.model.Hotel;
+import com.epam.model.Reservation;
 import com.epam.model.TourOffer;
 import com.epam.repository.interfaces.SimpleTourOfferDAO;
 import lombok.SneakyThrows;
@@ -89,5 +91,12 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
                 .description(rs.getString("description"))
                 .discount(rs.getInt("discount"))
                 .build();
+    }
+
+    public int checkIfHotelsIsUsed(Integer hotelId){
+        String sql = "SELECT * FROM " + tableName + " WHERE hotel_id" + " = "+hotelId;
+        List<TourOffer> tourOffers = JdbcTemplate.query(sql, (rs, rowNum) -> buildTour(rs));
+        if (tourOffers.size() != 0) return 1;
+        return 0;
     }
 }

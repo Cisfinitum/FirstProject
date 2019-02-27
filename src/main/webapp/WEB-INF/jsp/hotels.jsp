@@ -50,19 +50,19 @@
             <div class="row">
                 <div class="col s3">
                     <div class="input-field">
-                        <input type="text" id="name" name="name" class="autocomplete">
+                        <input type="text" id="name" name="name" class="autocomplete" value="${name}">
                         <label for="name"><spring:message code="namesimple" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
-                        <input type="text" id="country" name="country" class="autocomplete">
+                        <input type="text" id="country" name="country" class="autocomplete" value="${country}">
                         <label for="country"><spring:message code="hotelcountry" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
-                        <input type="text" id="city" name="city" class="autocomplete">
+                        <input type="text" id="city" name="city" class="autocomplete" value="${city}">
                         <label for="city"><spring:message code="hotelcity" /></label>
                     </div>
                 </div>
@@ -86,10 +86,51 @@
                             <i class="material-icons right">add</i>
                         </button>
                     </div>
+                    <br>
+                        <div class="col s6">
+                            <div class="input-field">
+                                <a class="waves-effect waves-button-input btn modal-trigger" href="#modal1"> <spring:message code="showhotels" /> </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
         </form>
     </div>
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Hotels</h4>
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder= "Start typing the hotel name">
+            <table id="myTable">
+                <c:if test="${hotels.size()>0}">
+                    <tr>
+                        <th><spring:message code="namesimple"/></th>
+                        <th><spring:message code="country" /></th>
+                        <th><spring:message code="hotelcity" /></th>
+                        <th><spring:message code="numberofstars" /></th>
+                        <th></th>
+                    </tr>
+                </c:if>
+                <c:if test="${hotels.size() == 0}"><p> No hotel exist</p></c:if>
+                <c:forEach var="hotel" items="${hotels}">
+                <tr>
+                    <td>${hotel.name}</td>
+                    <td>${hotel.country}</td>
+                    <td>${hotel.city}</td>
+                    <td> ${hotel.numberOfStars} ★</td>
+                    <td><c:if test="${!map.get(hotel.id)}">
+                        <a href="deleteHotel/${hotel.id}" class="secondary-content"> <i
+                                class="small material-icons">remove</i></a></c:if></td>
+                    </c:forEach>
+                </tr>
+
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+
 </main>
 <footer class="page-footer">
     <div class="container">

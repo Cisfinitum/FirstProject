@@ -129,4 +129,19 @@ public class TourOfferService {
             return tourOfferDAO.getTourById(tourId);
         }
     }
+
+    public int checkIfHotelUsed(Integer hotelId){
+        return tourOfferDAO.checkIfHotelsIsUsed(hotelId);
+    }
+
+
+    public Map<Integer, Boolean> getMapOfHotelUse(List <Hotel> hotels){
+        Map<Integer, Boolean> map = new HashMap<>();
+        for (Hotel hotel : hotels) {
+            Integer hotelId = hotel.getId();
+            Boolean isHotelUsed = checkIfHotelUsed(hotelId) == 1;
+            map.put(hotelId, isHotelUsed);
+        }
+        return map;
+    }
 }
