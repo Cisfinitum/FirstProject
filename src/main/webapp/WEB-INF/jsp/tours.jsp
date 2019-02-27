@@ -99,6 +99,19 @@
             <br>
             <br>
             <br>
+            <div class="row">
+                <div class="col s6 offset-s5">
+                    <ul class="pagination">
+                        <c:if test="${totalRows>4}">
+                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                <li class="waves-effect"><a href="/listoftours/${i}">${i}</a></li>
+                            </c:forEach>
+                        </c:if>
+                    </ul>
+                </div>
+            </div>
+            <br>
+            <br>
             <br>
         </div>
 </main>

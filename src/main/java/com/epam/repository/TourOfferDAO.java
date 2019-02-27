@@ -30,7 +30,7 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     }
 
     public List<TourOffer> getToursByPage(Integer from, Integer offset){
-        String sql = "SELECT * from tourOffer LIMIT " + (from - 1) + "," + offset;
+        String sql = "SELECT * from " +tableName+ " LIMIT " + (from-1) + "," + offset;
         return JdbcTemplate.query(sql, (rs, rowNum) -> buildTour(rs));
     }
 
@@ -83,7 +83,7 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     }
 
     public int getAmountOfTours() {
-        String sql = "SELECT COUNT(*) FROM tourOffer";
+        String sql = "SELECT COUNT(*) FROM " +tableName;
         return JdbcTemplate.queryForObject(
                 sql, Integer.class);
     }

@@ -39,26 +39,28 @@ public class ToursController {
         this.personService = personService;
     }
 
+//    @GetMapping("/listoftours")
+//    public ModelAndView getToursList() {
+//        ModelAndView toursModel = new ModelAndView();
+//        toursModel.addObject("listOfTours", toursOfferService.getTours());
+//        toursModel.addObject("hotels", hotelService.getMapOfHotels());
+//        toursModel.setViewName("tours");
+//        return toursModel;
+//    }
+
     @GetMapping("/listoftours")
-    public ModelAndView getToursList() {
-        ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("listOfTours", toursOfferService.getTours());
-        toursModel.addObject("hotels", hotelService.getMapOfHotels());
-        toursModel.setViewName("tours");
-        return toursModel;
+    public String testadmin() {
+        return "redirect:/listoftours/1";
     }
 
     @GetMapping("/listoftours/{pageNum}")
     public ModelAndView getToursListByPage(@PathVariable Integer pageNum, ModelMap modelMap) {
         ModelAndView toursModel = new ModelAndView();
-        Integer from = 0;
         Integer rowsPerPage = toursOfferService.rowsPerPage;
         Integer totalRows = toursOfferService.getAmountOfTours();
         Integer totalPages = (totalRows % rowsPerPage == 0) ? totalRows / rowsPerPage : totalRows / rowsPerPage + 1;
-        if(pageNum != 1) {
-            from = (pageNum - 1) * rowsPerPage + 1;
-        }
-        toursModel.addObject("list", toursOfferService.getToursByPage(from, rowsPerPage));
+        toursModel.addObject("listOfTours", toursOfferService.getToursByPage(pageNum, rowsPerPage));
+        toursModel.addObject("hotels", hotelService.getMapOfHotels());
         toursModel.setViewName("tours");
         modelMap.addAttribute("rowsPerPage", rowsPerPage);
         modelMap.addAttribute("totalRows", totalRows);

@@ -32,7 +32,11 @@ public class TourOfferService {
             return tourOfferDAO.getTours();
     }
 
-    public List<TourOffer> getToursByPage(Integer from, Integer offset){
+    public List<TourOffer> getToursByPage(Integer pageNum, Integer offset){
+        Integer from = 1;
+        if(pageNum != 1) {
+            from = (pageNum - 1) * rowsPerPage + 1;
+        }
             return tourOfferDAO.getToursByPage(from, offset);
     }
 
