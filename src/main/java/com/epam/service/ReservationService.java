@@ -2,27 +2,29 @@ package com.epam.service;
 
 import com.epam.model.Reservation;
 import com.epam.model.ReservationStatusEnum;
+import com.epam.model.TourOffer;
 import com.epam.repository.ReservationDAO;
+import com.epam.repository.TourOfferDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Service
 public class ReservationService {
     private final ReservationDAO reservationDAO;
     private final PersonService personService;
+    private final HotelService hotelService;
     public int totalAmountOfRows = 4;
 
     @Autowired
-    public ReservationService(ReservationDAO reservationDAO, PersonService personService) {
+    public ReservationService(ReservationDAO reservationDAO, PersonService personService, HotelService hotelService) {
         this.reservationDAO = reservationDAO;
         this.personService = personService;
+        this.hotelService = hotelService;
     }
-
 
     public int addReservation(Reservation reservation) {
         if (reservation != null) {
@@ -132,5 +134,15 @@ public class ReservationService {
             addReservation(new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discountId, totalPrice));
             return modelAndView.addObject("message", "Tour was reserved successfully.");
         }
+    }
+
+    public Map<Integer,String> getDescription(List<Reservation> reservations, TourOfferService tourOfferService){
+        Map<Integer, String> description = new HashMap<>();
+        for (Reservation reservation : reservations) {
+            Integer tourId = reservation.getTourOfferId();
+            TourOffer tourOffer = tourOfferService.getTourById(tourId);
+            description.put(reservation.getId(), tourOffer.toString());
+        }
+        return description;
     }
 }

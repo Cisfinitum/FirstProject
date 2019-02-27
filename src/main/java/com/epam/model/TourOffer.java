@@ -34,4 +34,9 @@ public class TourOffer {
     @NotNull
     @Size(min=1)
     private Integer discountId;
+
+    @Override
+    public String toString() {
+        return tourType+ " tour "+ " from "+ startDate+ " till "+ endDate;
+    }
 }
