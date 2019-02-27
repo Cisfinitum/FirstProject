@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -21,37 +23,46 @@ public class TourOfferService {
     private final ReservationService reservationService;
 
     @Autowired
-    public TourOfferService(TourOfferDAO tourOfferDAO, HotelService hotelService, ReservationService reservationService){
+    public TourOfferService(TourOfferDAO tourOfferDAO, HotelService hotelService, ReservationService reservationService) {
         this.tourOfferDAO = tourOfferDAO;
         this.hotelService = hotelService;
         this.reservationService = reservationService;
     }
 
 
-    public List<TourOffer> getTours(){
-            return tourOfferDAO.getTours();
+    public List<TourOffer> getTours() {
+        return tourOfferDAO.getTours();
     }
 
-    public int deleteTour(Integer tourId){
+    public Map<Integer, Boolean> getToursStatusMap() {
+        List<TourOffer> listOfTours = getTours();
+        Map<Integer, Boolean> toursStatusMap = new HashMap<>();
+        for (TourOffer tourOffer : listOfTours) {
+            Integer id = tourOffer.getId();
+            Boolean tourStatus = reservationService.getTourOfferById(id) == 1 ? false : true;
+            toursStatusMap.put(id, tourStatus);
+        }
+        return toursStatusMap;
+    }
+
+    public int deleteTour(Integer tourId) {
         if (tourId == null || tourId == 0) {
             log.error("tourId is null or 0");
             throw new IllegalArgumentException("tourId is null or 0");
-        }
-        else if (reservationService.getTourOfferById(tourId) == 1){
+        } else if (reservationService.getTourOfferById(tourId) == 1) {
             log.error("Reservation with this TourId is already exist");
             throw new IllegalArgumentException("Reservation with this TourId is already exist");
-        }
-        else {
+        } else {
             return tourOfferDAO.deleteTour(tourId);
         }
     }
 
-    public int addTour(TourOffer tourOffer){
+    public int addTour(TourOffer tourOffer) {
         if (tourOffer == null) {
             log.error("tourOffer is null");
             throw new IllegalArgumentException("tourOffer is null");
         } else if(tourOffer.getTourType() == null || tourOffer.getPricePerUnit() == null || tourOffer.getHotelId() == null || tourOffer.getId() == null ||
-                tourOffer.getDescription() == null || tourOffer.getDiscountId() == null || tourOffer.getStartDate() == null || tourOffer.getEndDate() == null) {
+                tourOffer.getDescription() == null || tourOffer.getDiscount() == null || tourOffer.getStartDate() == null || tourOffer.getEndDate() == null) {
             log.error("Some fields of tourOffer is empty");
             throw new IllegalArgumentException("Some fields of tourOffer is empty");
         } else {
@@ -59,31 +70,29 @@ public class TourOfferService {
         }
     }
 
-    public int updateTour(TourOffer tourOffer, String tourType, Integer addPricePerPerson, Integer addDiscount, String tourDescription){
-        if(tourOffer == null) {
+    public int updateTour(TourOffer tourOffer, String tourType, Integer addPricePerPerson, Integer addDiscount, String tourDescription) {
+        if (tourOffer == null) {
             log.error("tourOffer is null");
             throw new IllegalArgumentException("tourOffer is null");
-        }
-        else if(tourType == null){
+        } else if (tourType == null) {
             log.error("tourType is null");
             throw new IllegalArgumentException("tourType is null");
-        }
-        else if(addPricePerPerson == null || addPricePerPerson <= 0){
+        } else if (addPricePerPerson == null || addPricePerPerson <= 0) {
             log.error("addPricePerPerson is null or 0");
             throw new IllegalArgumentException("addPricePerPerson is null or 0");
-        }
-        else if(addDiscount == null || addDiscount <= 0){
+        } else if (addDiscount == null || addDiscount < 0) {
             log.error("addDiscount is null or 0");
             throw new IllegalArgumentException("addDiscount is null or 0");
-        }
-        else if(tourDescription == null){
+        } else if (tourDescription == null) {
             log.error("tourDescription is null");
             throw new IllegalArgumentException("tourDescription is null");
-        }
-        else {
+        } else if (reservationService.getTourOfferById(tourOffer.getId()) == 1) {
+            log.error("Reservation with this TourId is already exist");
+            throw new IllegalArgumentException("Reservation with this TourId is already exist");
+        } else {
             tourOffer.setTourType(tourType);
             tourOffer.setPricePerUnit(addPricePerPerson);
-            tourOffer.setDiscountId(addDiscount);
+            tourOffer.setDiscount(addDiscount);
             tourOffer.setDescription(tourDescription);
             int result = tourOfferDAO.updateTour(tourOffer);
             if(result == 0) {
@@ -94,14 +103,14 @@ public class TourOfferService {
         }
     }
 
-    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate){
+    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate) {
         List<Hotel> myList = hotelService.getHotelsByCountry(country);
-        if(myList.size()==0&&!country.isEmpty()){
-            log.error("Wrong input country: "+country);
-            throw new IllegalArgumentException("Wrong input country: "+country);
+        if (myList.size() == 0 && !country.isEmpty()) {
+            log.error("Wrong input country: " + country);
+            throw new IllegalArgumentException("Wrong input country: " + country);
         }
         List<Integer> listOfHotelsId = new ArrayList<>();
-        for(Hotel hotel: myList){
+        for (Hotel hotel : myList) {
             listOfHotelsId.add(hotel.getId());
         }
          List<TourOffer> listOfTours = tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
@@ -112,8 +121,8 @@ public class TourOfferService {
         return listOfTours;
     }
 
-    public TourOffer getTourById(Integer tourId){
-        if( tourId == null || tourId == 0) {
+    public TourOffer getTourById(Integer tourId) {
+        if (tourId == null || tourId == 0) {
             log.error("toursId is null or 0");
             throw new IllegalArgumentException("toursId is null or 0");
         } else {

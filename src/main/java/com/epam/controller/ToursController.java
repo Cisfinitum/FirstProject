@@ -40,10 +40,15 @@ public class ToursController {
     }
 
     @GetMapping("/listoftours")
-    public ModelAndView getToursList() {
+    public ModelAndView getToursList(RedirectAttributes redirectAttributes) {
         ModelAndView toursModel = new ModelAndView();
         toursModel.addObject("listOfTours", toursOfferService.getTours());
         toursModel.addObject("hotels", hotelService.getMapOfHotels());
+        toursModel.addObject("isReservedMap", toursOfferService.getToursStatusMap());
+        if (redirectAttributes != null) {
+            for (String string: redirectAttributes.getFlashAttributes().keySet())
+                toursModel.addObject(string, redirectAttributes.getFlashAttributes().get(string));
+        }
         toursModel.setViewName("tours");
         return toursModel;
     }
@@ -93,6 +98,7 @@ public class ToursController {
             LocalDate addStartDate = Validator.getDate(startDate, false);
             LocalDate addEndDate = Validator.getDate(endDate, false);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
+            Integer addDiscount = Validator.getDiscount(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
             Validator.dateDifference(addStartDate,addEndDate);
@@ -104,7 +110,7 @@ public class ToursController {
                     .pricePerUnit(addPricePerPerson)
                     .hotelId(1) //stub
                     .description(tourDescription)
-                    .discountId(1) //stub
+                    .discount(addDiscount)
                     .build());
 
             if (result == 1) {
@@ -136,7 +142,7 @@ public class ToursController {
             TourOffer tourOffer = toursOfferService.getTourById(addTourId);
             toursModel.addObject("tour",tourOffer);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
-            Integer addDiscount = Validator.getInt(discount);
+            Integer addDiscount = Validator.getDiscount(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
             toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);
@@ -157,10 +163,15 @@ public class ToursController {
     }
 
     @GetMapping("/updatetour/{id}")
-    public ModelAndView updateTour(@PathVariable Integer id) {
+    public ModelAndView updateTour(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.setViewName("updatetour");
-        toursModel.addObject("tour",toursOfferService.getTourById(id));
+        redirectAttributes.addFlashAttribute("error", "You cannot update this tour, it's already reserved!");
+        if (reservationService.getTourOfferById(id) == 1) {
+            toursModel.setViewName("redirect:/listoftours");
+        } else {
+            toursModel.setViewName("updatetour");
+            toursModel.addObject("tour",toursOfferService.getTourById(id));
+        }
         return toursModel;
     }
 
@@ -168,8 +179,8 @@ public class ToursController {
     public ModelAndView addReservation(@RequestParam(name = "idOfTour") Integer idOfTour,
                                        @RequestParam(name = "pricePerUnit") Integer pricePerUnit,
                                        @RequestParam(name = "numberOfPeople") Integer numberOfPeople,
-                                       @RequestParam(name = "discountId") Integer discountId,
+                                       @RequestParam(name = "discount") Integer discount,
                                        Principal principal, ModelAndView modelAndView) {
-        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discountId);
+        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discount);
     }
 }

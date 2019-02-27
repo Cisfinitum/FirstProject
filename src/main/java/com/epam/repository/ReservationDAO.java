@@ -28,8 +28,8 @@ public class ReservationDAO implements SimpleReservationDAO {
     private String numberOfPeople;
     @Value("${reservation.status}")
     private String status;
-    @Value("${reservation.discountId}")
-    private String discountId;
+    @Value("${reservation.discount}")
+    private String discount;
     @Value("${reservation.totalPrice}")
     private String totalPrice;
     @Value("${reservation.tableName}")
@@ -51,15 +51,15 @@ public class ReservationDAO implements SimpleReservationDAO {
                 .tourOfferId(rs.getInt(tourOfferId))
                 .numberOfPeople(rs.getInt(numberOfPeople))
                 .status(ReservationStatusEnum.valueOf(rs.getString(status)))
-                .discountId(rs.getInt(discountId))
+                .discount(rs.getInt(discount))
                 .totalPrice(rs.getInt(totalPrice))
                 .build();
     }
 
     public int addReservation(Reservation reservation) {
-        String sql = "INSERT INTO " + tableName + " (" + clientId + ", " + tourOfferId + ", " + numberOfPeople + ", " + status + ", " + discountId + ", " + totalPrice + ") VALUES ( ?,?,?,?,?,?)";
+        String sql = "INSERT INTO " + tableName + " (" + clientId + ", " + tourOfferId + ", " + numberOfPeople + ", " + status + ", " + discount + ", " + totalPrice + ") VALUES ( ?,?,?,?,?,?)";
         return jdbcTemplate.update(sql, reservation.getClientId(), reservation.getTourOfferId(), reservation.getNumberOfPeople(),
-                reservation.getStatus().getEnumStatus(), reservation.getDiscountId(), reservation.getTotalPrice());
+                reservation.getStatus().getEnumStatus(), reservation.getDiscount(), reservation.getTotalPrice());
     }
 
     public Reservation getReservationById(Integer reservationId) {
@@ -94,19 +94,19 @@ public class ReservationDAO implements SimpleReservationDAO {
 
     public int updateReservation(Reservation reservation) {
         String sql = "UPDATE " +
-                tableName + " SET" + clientId + " = ?, " +
+                tableName + " SET " + clientId + " = ?, " +
                 " " + tourOfferId + "= ? ," +
                 " " + numberOfPeople + "= ?," +
                 " " + status + " = ?," +
-                " " + discountId + "= ?," +
+                " " + discount + "= ?," +
                 " " + tourOfferId + " = ?," +
                 " " + totalPrice + " = ? " +
-                "WHERE" + id + "= ?";
+                "WHERE " + id + "= ?";
         return jdbcTemplate.update(sql, reservation.getClientId(),
                 reservation.getTourOfferId(),
                 reservation.getNumberOfPeople(),
                 reservation.getStatus().getEnumStatus(),
-                reservation.getDiscountId(),
+                reservation.getDiscount(),
                 reservation.getTotalPrice(),
                 reservation.getId());
     }
