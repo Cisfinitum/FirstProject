@@ -53,6 +53,14 @@ public class TourOfferServiceTest {
 
     @Test
     public void addTourCheck(){
+        when(expectedTourOffer.getDescription()).thenReturn("test");
+        when(expectedTourOffer.getPricePerUnit()).thenReturn(1);
+        when(expectedTourOffer.getTourType()).thenReturn("test");
+        when(expectedTourOffer.getHotelId()).thenReturn(1);
+        when(expectedTourOffer.getDiscountId()).thenReturn(1);
+        when(expectedTourOffer.getEndDate()).thenReturn(LocalDate.now());
+        when(expectedTourOffer.getStartDate()).thenReturn(LocalDate.now());
+        when(expectedTourOffer.getId()).thenReturn(1);
         when(tourOfferDAO.addTour(expectedTourOffer)).thenReturn(1);
         assertEquals(tourOfferService.addTour(expectedTourOffer),1);
     }

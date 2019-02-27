@@ -40,10 +40,15 @@ public class ToursController {
     }
 
     @GetMapping("/listoftours")
-    public ModelAndView getToursList() {
+    public ModelAndView getToursList(RedirectAttributes redirectAttributes) {
         ModelAndView toursModel = new ModelAndView();
         toursModel.addObject("listOfTours", toursOfferService.getTours());
         toursModel.addObject("hotels", hotelService.getMapOfHotels());
+        toursModel.addObject("isReservedMap", toursOfferService.getToursStatusMap());
+        if (redirectAttributes != null) {
+            for (String string: redirectAttributes.getFlashAttributes().keySet())
+                toursModel.addObject(string, redirectAttributes.getFlashAttributes().get(string));
+        }
         toursModel.setViewName("tours");
         return toursModel;
     }
@@ -140,12 +145,8 @@ public class ToursController {
             Integer addDiscount = Validator.getDiscount(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
-            int result = toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);
-            if (result == 1) {
-                toursModel.setViewName("redirect:/listoftours");
-            } else {
-                toursModel.addObject("error", "Failed to add");
-            }
+            toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);
+            toursModel.setViewName("redirect:/listoftours");
             return toursModel;
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -162,10 +163,15 @@ public class ToursController {
     }
 
     @GetMapping("/updatetour/{id}")
-    public ModelAndView updateTour(@PathVariable Integer id) {
+    public ModelAndView updateTour(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.setViewName("updatetour");
-        toursModel.addObject("tour",toursOfferService.getTourById(id));
+        redirectAttributes.addFlashAttribute("error", "You cannot update this tour, it's already reserved!");
+        if (reservationService.getTourOfferById(id) == 1) {
+            toursModel.setViewName("redirect:/listoftours");
+        } else {
+            toursModel.setViewName("updatetour");
+            toursModel.addObject("tour",toursOfferService.getTourById(id));
+        }
         return toursModel;
     }
 

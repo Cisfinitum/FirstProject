@@ -30,35 +30,32 @@
         <div class="nav-wrapper tab ">
             <a href="/index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/listoftours">Tours</a></li>
-                <li><a href="/addtour">Add Tour</a></li>
-                <li><a href="/reservation">Reservations</a></li>
-                <li><a href="/clients">Clients</a></li>
-                <li style="margin-right: 20px"><a href="/hotels">Add Hotel</a></li>
-                <li>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="/logout">Log Out</a>
-                    </button>
-                </li>
+                <li><a href="/listoftours"><spring:message code="tours" /></a></li>
+                <li><a href="/addtour"><spring:message code="addtour" /></a></li>
+                <li><a href="/reservation"><spring:message code="reservations" /></a></li>
+                <li><a href="/clients"><spring:message code="clients" /></a></li>
+                <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
+                <li><a href="/reservation?lang=en"><img src="${imgen}" width="48" height="32"></a>
+                    <a href="/reservation?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
             </ul>
         </div>
     </nav>
 </header>
 <main>
     <div class="container">
-        <h2>Reservations</h2>
+        <h2><spring:message code="reservations" /></h2>
         <form method="POST" action="#">
             <div class="row">
                 <table>
                     <c:if test="${listReservation.size()>0}">
                         <tr>
-                            <th>№</th>
-                            <th>Discount</th>
-                            <th>Client Id</th>
-                            <th>Offer Id</th>
-                            <th>Number Of People</th>
-                            <th>Status</th>
-                            <th>Total Price</th>
+                            <th><spring:message code="discountid" /></th>
+                            <th><spring:message code="clientid" /></th>
+                            <th><spring:message code="tourid" /></th>
+                            <th><spring:message code="nop" /></th>
+                            <th><spring:message code="status" /></th>
+                            <th><spring:message code="totalprice" /></th>
                             <th></th>
                         </tr>
                     </c:if>
