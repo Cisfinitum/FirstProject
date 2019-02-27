@@ -80,8 +80,8 @@ public class TourOfferServiceTest {
         for(Hotel hotel: expectedHotels){
             expectedHotelsId.add(hotel.getId());
         }
-        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
-        assertEquals(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now()),tourOfferList);
+        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now(),1,5)).thenReturn(tourOfferList);
+        assertEquals(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now(),1,5),tourOfferList);
     }
 
     @Test

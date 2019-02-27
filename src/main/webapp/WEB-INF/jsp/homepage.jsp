@@ -203,19 +203,26 @@
                 <ul class="pagination">
                     <c:if test="${generalAmount>5}">
                         <c:forEach var="i" begin="1" end="${amount}">
+                            <li class="waves-effect">
                             <form method="post" action="/searchtours/${i}">
                                 <input name="country" type="hidden" value="${country}">
                                 <input name="startDate" type="hidden" value="${addStartDate}">
                                 <input name="endDate" type="hidden" value="${addEndDate}">
                                 <input name="numberOfPeople" type="hidden" value="${numberOfPeople}">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">${i}
+                                <button class="btn waves-light" type="submit" name="action">${i}
                                 </button>
                             </form>
+                            </li>
                         </c:forEach>
                     </c:if>
                 </ul>
             </div>
         </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 <div class="container">
     <div class="row">
         <div class="col s4">
