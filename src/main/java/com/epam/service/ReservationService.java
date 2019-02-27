@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ReservationService {
@@ -21,6 +22,7 @@ public class ReservationService {
         this.reservationDAO = reservationDAO;
         this.personService = personService;
     }
+
 
     public int addReservation(Reservation reservation) {
         if (reservation != null) {
@@ -131,5 +133,4 @@ public class ReservationService {
             return modelAndView.addObject("message", "Tour was reserved successfully.");
         }
     }
-
 }
