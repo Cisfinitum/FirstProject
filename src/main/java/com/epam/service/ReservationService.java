@@ -120,7 +120,7 @@ public class ReservationService {
         }
     }
 
-    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discountId, RedirectAttributes redirectAttributes){
+    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discountId, RedirectAttributes redirectAttributes) {
         if (principal == null) {
             modelAndView.setViewName("login");
             modelAndView.addObject("message", "Please, sign in.");
@@ -143,7 +143,15 @@ public class ReservationService {
         }
     }
 
-    public int changeReservationStatusById(Integer id){
-        return reservationDAO.changeReservationStatusById(id);
+    public int changeReservationStatusById(Integer id) {
+        if(id != null){
+            if (id > 0){
+                return reservationDAO.changeReservationStatusById(id);
+            } else {
+                throw new IllegalArgumentException("id must be positive");
+            }
+        } else {
+            throw new NoSuchElementException("id must be specified");
+        }
     }
 }
