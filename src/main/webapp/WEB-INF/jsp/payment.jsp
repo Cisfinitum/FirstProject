@@ -18,8 +18,8 @@
     <div class="registration">
         <div class="row">
             <P style="font-size: large; color: green"><b>Tour was reserved successfully</b></P>
-            <p style="font-size: large">Number Of People: ${numberOfPeople} $</p>
-            <p style="font-size: large">Price per Person ${pricePerUnit} </p>
+            <p style="font-size: large">Number Of People: ${numberOfPeople} </p>
+            <p style="font-size: large">Price per Person ${pricePerUnit} $ </p>
             <p style="font-size: large">Discount ${discountId} %</p>
             <div class="divider"></div>
             <p style="font-size: large">Total price is ${totalPrice} $</p>
