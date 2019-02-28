@@ -55,6 +55,23 @@ public class Validator {
        }
        return finalInteger;
    }
+   @SneakyThrows
+    public static Integer getDiscount(String inputInt){
+        String wrongDiscountNumber = "Discount value is negative or bigger than 100. User current input Integer: ";
+        String numberFormatIssue = "Integer format exception. User current input Integer: ";
+        Integer finalInteger;
+       try {
+           finalInteger=Integer.valueOf(inputInt);
+           if (finalInteger < 0 || finalInteger > 100) {
+               log.error(wrongDiscountNumber+inputInt);
+               throw new IllegalArgumentException(wrongDiscountNumber+inputInt);
+           }
+       } catch (NumberFormatException e) {
+           log.error(numberFormatIssue+inputInt);
+           throw new NumberFormatException(numberFormatIssue+inputInt);
+       }
+       return finalInteger;
+   }
 
    @SneakyThrows
     public static void checkEmpty(String inputString){
