@@ -51,7 +51,7 @@ function validateFirstName() {
             document.getElementById('firstName').classList.remove('valid');
         }
         document.getElementById('firstName').classList.add('invalid');
-        document.getElementById('forpass').innerText = 'first name';
+        document.getElementById('forpass').innerText = 'First name should contain at least one letter \n and no digits';
         return false;
     }
     else {
@@ -70,7 +70,7 @@ function validateLastName() {
             document.getElementById('lastName').classList.remove('valid');
         }
         document.getElementById('lastName').classList.add('invalid');
-        document.getElementById('forpass').innerText = 'last name';
+        document.getElementById('forpass').innerText = 'Last name should contain at least one letter \n and no digits';
         return false;
     }
     else {
