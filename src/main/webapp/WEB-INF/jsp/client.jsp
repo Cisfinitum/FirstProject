@@ -127,8 +127,8 @@
             <c:forEach var="reservation" items="${reservations}">
             <tr>
                 <td>${reservation.id}</td>
-                <td>${description.get(reservation.id)} </td>
-                <td> 0%</td>
+                <td>${description.get(reservation.id)} </td
+                <td> ${reservation.discount}%</td>
                 <td> ${reservation.numberOfPeople}</td>
                 <td> ${reservation.status}</td>
                 <td> ${reservation.totalPrice}</td>

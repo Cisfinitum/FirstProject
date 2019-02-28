@@ -15,15 +15,15 @@ public class Reservation {
     private Integer tourOfferId;
     private Integer numberOfPeople;
     private ReservationStatusEnum status;
-    private Integer discountId;
+    private Integer discount;
     private Integer totalPrice;
 
-    public Reservation(Integer clientId, Integer tourOfferId, Integer numberOfPeople, ReservationStatusEnum status, Integer discountId, Integer totalPrice) {
+    public Reservation(Integer clientId, Integer tourOfferId, Integer numberOfPeople, ReservationStatusEnum status, Integer discount, Integer totalPrice) {
         this.clientId = clientId;
         this.tourOfferId = tourOfferId;
         this.numberOfPeople = numberOfPeople;
         this.status = status;
-        this.discountId = discountId;
+        this.discount = discount;
         this.totalPrice = totalPrice;
     }
 }

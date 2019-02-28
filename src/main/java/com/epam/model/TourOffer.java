@@ -33,8 +33,8 @@ public class TourOffer {
     @Size(min=1, max=100)
     private String description;
     @NotNull
-    @Size(min=1)
-    private Integer discountId;
+    @Size(max = 100)
+    private Integer discount;
 
     @Override
     public String toString() {
