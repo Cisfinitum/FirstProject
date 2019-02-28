@@ -1,7 +1,5 @@
 package com.epam.repository;
 
-import com.epam.model.Hotel;
-import com.epam.model.Reservation;
 import com.epam.model.TourOffer;
 import com.epam.repository.interfaces.SimpleTourOfferDAO;
 import lombok.SneakyThrows;
