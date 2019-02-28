@@ -178,7 +178,7 @@
                         <td>${list.get(i).pricePerUnit}</td>
                         <td>${hotels.get(list.get(i).hotelId).name}</td>
                         <td>${list.get(i).description}</td>
-                        <td>${list.get(i).discountId}</td>
+                        <td>${list.get(i).discount}</td>
                         <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ANONYMOUS')">
                             <td>
                                 <form method="post" action="/reserveTour">
