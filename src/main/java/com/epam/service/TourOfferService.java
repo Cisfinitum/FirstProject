@@ -106,7 +106,7 @@ public class TourOfferService {
 
     public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate, Integer page, Integer total){
         List<Hotel> myList = hotelService.getHotelsByCountry(country);
-        if (myList.size() == 0 && !country.isEmpty()) {
+        if ( myList.size() == 0 && !country.isEmpty() ) {
             log.error("Wrong input country: " + country);
             throw new IllegalArgumentException("Wrong input country: " + country);
         }
@@ -136,7 +136,7 @@ public class TourOfferService {
 
     public int amountOfToursSearched(String country, LocalDate startDate, LocalDate endDate) {
         List<Hotel> myList = hotelService.getHotelsByCountry(country);
-        if(myList.size()==0&&!country.isEmpty()){
+        if( myList.size() == 0 && !country.isEmpty() ){
             log.error("Wrong input country: "+country);
             throw new IllegalArgumentException("Wrong input country: "+country);
         }
