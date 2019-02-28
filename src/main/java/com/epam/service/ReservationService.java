@@ -6,6 +6,7 @@ import com.epam.repository.ReservationDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -112,14 +113,14 @@ public class ReservationService {
     }
 
     public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discount) {
-        if (numberOfPeople > 0 && pricePerUnit > 0 && discount > 0) {
-            return pricePerUnit * numberOfPeople * discount/100;
+        if (numberOfPeople > 0 && pricePerUnit > 0 && discount >= 0) {
+            return pricePerUnit * numberOfPeople  - (pricePerUnit * numberOfPeople * discount / 100);
         } else {
-            throw new IllegalArgumentException("All arguments must be strictly more than zero");
+            throw new IllegalArgumentException("All arguments must be more than zero");
         }
     }
 
-    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discount){
+    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discount, RedirectAttributes redirectAttributes){
         if (principal == null) {
             modelAndView.setViewName("login");
             modelAndView.addObject("message", "Please, sign in.");
@@ -129,8 +130,28 @@ public class ReservationService {
             modelAndView.setViewName("homepage");
             Integer clientId = personService.getIdByEmail(email);
             Integer totalPrice = getTotalPrice(numberOfPeople, pricePerUnit, discount);
-            addReservation(new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discount, totalPrice));
-            return modelAndView.addObject("message", "Tour was reserved successfully.");
+            Reservation reservation = new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discount, totalPrice);
+            addReservation(reservation);
+            Integer reservationId = amountOfReservation();
+            modelAndView.setViewName("redirect:/payment");
+            redirectAttributes.addFlashAttribute("reservationId", reservationId);
+            redirectAttributes.addFlashAttribute("pricePerUnit", pricePerUnit);
+            redirectAttributes.addFlashAttribute("discount", discount);
+            redirectAttributes.addFlashAttribute("totalPrice", totalPrice);
+            redirectAttributes.addFlashAttribute("numberOfPeople", numberOfPeople);
+            return modelAndView;
+        }
+    }
+
+    public int changeReservationStatusById(Integer id) {
+        if(id != null){
+            if (id > 0){
+                return reservationDAO.changeReservationStatusById(id);
+            } else {
+                throw new IllegalArgumentException("id must be positive");
+            }
+        } else {
+            throw new NoSuchElementException("id must be specified");
         }
     }
 
