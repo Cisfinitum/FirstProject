@@ -26,7 +26,7 @@ function validatePageData() {
 }
 
 function checkNamePattern(name) {
-    const $re = new RegExp('^[\\w\\s]*$');
+    const $re = new RegExp('^((?=.*[a-zA-Z])[a-zA-Z\\s\'-]+)$');
     return $re.test(name);
 }
 
@@ -77,7 +77,7 @@ function validateLastName() {
         if (document.getElementById('lastName').classList.contains('invalid')) {
             document.getElementById('lastName').classList.remove('invalid');
         }
-        document.getElementById('lastName').classList.add('valid');
+        document.getElementById('lastName ').classList.add('valid');
         document.getElementById('forpass').innerText = '';
         return true;
     }
