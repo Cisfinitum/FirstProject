@@ -116,6 +116,7 @@
             <c:if test="${reservations.size()>0}">
                 <tr>
                     <th><spring:message code="reservationnumber" /></th>
+                    <th><spring:message code="abouttour" /></th>
                     <th><spring:message code="tourdiscount" /></th>
                     <th><spring:message code="nop" /></th>
                     <th><spring:message code="status" /></th>
@@ -127,6 +128,7 @@
             <c:forEach var="reservation" items="${reservations}">
             <tr>
                 <td>${reservation.id}</td>
+                <td>${description.get(reservation.id)} </td>
                 <td> ${reservation.discount}%</td>
                 <td> ${reservation.numberOfPeople}</td>
                 <td> ${reservation.status}</td>
