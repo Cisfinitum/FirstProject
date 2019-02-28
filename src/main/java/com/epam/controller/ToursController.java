@@ -11,10 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -180,7 +177,7 @@ public class ToursController {
                                        @RequestParam(name = "pricePerUnit") Integer pricePerUnit,
                                        @RequestParam(name = "numberOfPeople") Integer numberOfPeople,
                                        @RequestParam(name = "discount") Integer discount,
-                                       Principal principal, ModelAndView modelAndView) {
-        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discount);
+                                       Principal principal, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discount, redirectAttributes);
     }
 }
