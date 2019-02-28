@@ -74,10 +74,10 @@ function validateLastName() {
         return false;
     }
     else {
-        if (document.getElementById('email').classList.contains('invalid')) {
-            document.getElementById('email').classList.remove('invalid');
+        if (document.getElementById('lastName').classList.contains('invalid')) {
+            document.getElementById('lastName').classList.remove('invalid');
         }
-        document.getElementById('email').classList.add('valid');
+        document.getElementById('lastName').classList.add('valid');
         document.getElementById('forpass').innerText = '';
         return true;
     }
