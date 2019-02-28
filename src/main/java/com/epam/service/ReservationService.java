@@ -113,10 +113,10 @@ public class ReservationService {
     }
 
     public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discount) {
-        if (numberOfPeople > 0 && pricePerUnit > 0 && discount > 0) {
-            return pricePerUnit * numberOfPeople * discount/100;
+        if (numberOfPeople > 0 && pricePerUnit > 0 && discount >= 0) {
+            return pricePerUnit * numberOfPeople  - (pricePerUnit * numberOfPeople * discount / 100);
         } else {
-            throw new IllegalArgumentException("All arguments must be strictly more than zero");
+            throw new IllegalArgumentException("All arguments must be more than zero");
         }
     }
 

@@ -38,13 +38,13 @@ public class PaymentController {
                                    @ModelAttribute("totalPrice") Integer totalPrice,
                                    @ModelAttribute("pricePerUnit") Integer pricePerUnit,
                                    @ModelAttribute("numberOfPeople") Integer numberOfPeople,
-                                   @ModelAttribute("discountId") Integer discountId,
+                                   @ModelAttribute("discount") Integer discount,
                                    ModelAndView modelAndView){
         modelAndView.addObject("reservationId", reservationId);
         modelAndView.addObject("totalPrice", totalPrice);
         modelAndView.addObject("pricePerUnit", pricePerUnit);
         modelAndView.addObject("numberOfPeople", numberOfPeople);
-        modelAndView.addObject("discountId", discountId);
+        modelAndView.addObject("discount", discount);
         modelAndView.setViewName("payment");
         return modelAndView;
     }

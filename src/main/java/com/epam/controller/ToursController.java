@@ -176,7 +176,7 @@ public class ToursController {
     public ModelAndView addReservation(@RequestParam(name = "idOfTour") Integer idOfTour,
                                        @RequestParam(name = "pricePerUnit") Integer pricePerUnit,
                                        @RequestParam(name = "numberOfPeople") Integer numberOfPeople,
-                                       @RequestParam(name = "discount") Integer discountId,
+                                       @RequestParam(name = "discount") Integer discount,
                                        Principal principal, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discount, redirectAttributes);
     }
