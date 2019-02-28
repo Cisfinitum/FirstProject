@@ -20,8 +20,6 @@ INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
 VALUES ('user_8@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
 VALUES ('user_9@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
-INSERT INTO discount(discount)
-VALUES ('50');
 INSERT INTO hotel(name, city, country, number_of_stars)
 VALUES ('Luxury Hotel', 'Moscow', 'Russia', '5');
 INSERT INTO hotel(name, city, country, number_of_stars)
