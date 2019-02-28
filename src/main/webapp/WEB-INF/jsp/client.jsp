@@ -44,8 +44,8 @@
         <div class="profile">
             <div class="avatar card-profile-image">
                 <div class="card-content">
-                    <div class="row s6">
-                        <div class="col s3 card-profile-image">
+                    <div class="row">
+                        <div class="col s2 card-profile-image">
                             <img src="${imuser}" alt="profile image" class="circle">
                         </div>
                         <div class="col s3">
@@ -53,17 +53,15 @@
                             <p class="medium-small grey-text"><spring:message code="firstname" />: ${person.firstName}</p>
                             <p class="medium-small grey-text"><spring:message code="lastname" />: ${person.lastName}</p>
                             <p class="medium-small grey-text"><spring:message code="phoneNumber" />: ${person.phoneNumber}</p>
+                            <p class="medium-small grey-text"><spring:message code="clientrole" />: ${person.role}</p>
                         </div>
-                        <div class="col s3 offset-s2">
+                        <div class="col s12 offset-s2">
                             <a class="btn waves-effect waves-light modal-trigger" data-target="modal" href="#modal">
-                                <spring:message code="changeUserData" />
+                                <spring:message code="changepassword" />
                             </a>
                             <div id="idofthedivtohide" class="hide">
-                                <span><spring:message code="dataChanged" /></span>
+                                <span><spring:message code="passwordchanged" /></span>
                             </div>
-                        </div>
-                        <div class="col s3">
-                            <p class="medium-small grey-text"><spring:message code="clientrole" />: ${person.role}</p>
                         </div>
                         <!-- Modal Structure -->
                         <div id="modal" class="modal modal-fixed-footer">
@@ -72,7 +70,7 @@
                                     <div class="row">
                                         <form name="user" id="change-pwd" class="col s12" autocomplete="off"
                                               onsubmit="return validatePageData()" action="" method="POST">
-                                            <h4><spring:message code="changeUserData" /></h4>
+                                            <h4><spring:message code="changepassword" /></h4>
                                             <c:set var="val"><spring:message code="wrongpass"/></c:set>
                                             <input id="wrongpass" type="hidden" value="${val}"/>
                                             <span id="forpass" style="color: red; font-weight: bold"></span>

@@ -124,22 +124,4 @@ public class PersonDAO implements SimplePersonDAO {
         String sql = "UPDATE person SET password = ? WHERE id = ?";
         return jdbcTemplate.update(sql, password, id);
     }
-
-    public int updatePhoneNumberById(Integer id, String phoneNumber) {
-        if (id < 1 || phoneNumber.equals("")) return -1;
-        String sql = "UPDATE person SET phoneNumber = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, phoneNumber, id);
-    }
-
-    public int updateFirstNameById(Integer id, String firstName) {
-        if (id < 1 || firstName.equals("")) return -1;
-        String sql = "UPDATE person SET firstName = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, firstName, id);
-    }
-
-    public int updateLastNameById(Integer id, String lastName) {
-        if (id < 1 || lastName.equals("")) return -1;
-        String sql = "UPDATE person SET lastName = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, lastName, id);
-    }
 }
