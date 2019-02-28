@@ -127,7 +127,7 @@
             <c:forEach var="reservation" items="${reservations}">
             <tr>
                 <td>${reservation.id}</td>
-                <td> ${reservation.discountId}%</td>
+                <td> ${reservation.discount}%</td>
                 <td> ${reservation.numberOfPeople}</td>
                 <td> ${reservation.status}</td>
                 <td> ${reservation.totalPrice}</td>
@@ -151,6 +151,7 @@
                     </form>
                     </c:forEach>
             </tr>
+
         </table>
     </div>
 </main>

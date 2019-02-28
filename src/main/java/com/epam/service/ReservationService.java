@@ -112,15 +112,15 @@ public class ReservationService {
         return reservationDAO.amountOfReservations();
     }
 
-    public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discountId) {
-        if (numberOfPeople > 0 && pricePerUnit > 0 && discountId > 0) {
-            return pricePerUnit * numberOfPeople * discountId;
+    public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discount) {
+        if (numberOfPeople > 0 && pricePerUnit > 0 && discount > 0) {
+            return pricePerUnit * numberOfPeople * discount/100;
         } else {
             throw new IllegalArgumentException("All arguments must be strictly more than zero");
         }
     }
 
-    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discountId, RedirectAttributes redirectAttributes) {
+    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discount, RedirectAttributes redirectAttributes){
         if (principal == null) {
             modelAndView.setViewName("login");
             modelAndView.addObject("message", "Please, sign in.");
@@ -129,14 +129,14 @@ public class ReservationService {
             String email = principal.getName();
             modelAndView.setViewName("homepage");
             Integer clientId = personService.getIdByEmail(email);
-            Integer totalPrice = getTotalPrice(numberOfPeople, pricePerUnit, discountId);
-            Reservation reservation = new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discountId, totalPrice);
+            Integer totalPrice = getTotalPrice(numberOfPeople, pricePerUnit, discount);
+            Reservation reservation = new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discount, totalPrice);
             addReservation(reservation);
             Integer reservationId = amountOfReservation();
             modelAndView.setViewName("redirect:/payment");
             redirectAttributes.addFlashAttribute("reservationId", reservationId);
             redirectAttributes.addFlashAttribute("pricePerUnit", pricePerUnit);
-            redirectAttributes.addFlashAttribute("discountId", discountId);
+            redirectAttributes.addFlashAttribute("discount", discount);
             redirectAttributes.addFlashAttribute("totalPrice", totalPrice);
             redirectAttributes.addFlashAttribute("numberOfPeople", numberOfPeople);
             return modelAndView;
@@ -154,4 +154,5 @@ public class ReservationService {
             throw new NoSuchElementException("id must be specified");
         }
     }
+
 }

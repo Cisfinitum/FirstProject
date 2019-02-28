@@ -95,6 +95,7 @@ public class ToursController {
             LocalDate addStartDate = Validator.getDate(startDate, false);
             LocalDate addEndDate = Validator.getDate(endDate, false);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
+            Integer addDiscount = Validator.getDiscount(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
             Validator.dateDifference(addStartDate,addEndDate);
@@ -106,7 +107,7 @@ public class ToursController {
                     .pricePerUnit(addPricePerPerson)
                     .hotelId(1) //stub
                     .description(tourDescription)
-                    .discountId(1) //stub
+                    .discount(addDiscount)
                     .build());
 
             if (result == 1) {
@@ -138,7 +139,7 @@ public class ToursController {
             TourOffer tourOffer = toursOfferService.getTourById(addTourId);
             toursModel.addObject("tour",tourOffer);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
-            Integer addDiscount = Validator.getInt(discount);
+            Integer addDiscount = Validator.getDiscount(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
             toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);
@@ -175,8 +176,8 @@ public class ToursController {
     public ModelAndView addReservation(@RequestParam(name = "idOfTour") Integer idOfTour,
                                        @RequestParam(name = "pricePerUnit") Integer pricePerUnit,
                                        @RequestParam(name = "numberOfPeople") Integer numberOfPeople,
-                                       @RequestParam(name = "discountId") Integer discountId,
+                                       @RequestParam(name = "discount") Integer discountId,
                                        Principal principal, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
-        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discountId, redirectAttributes);
+        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discount, redirectAttributes);
     }
 }
