@@ -19,6 +19,22 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     private final JdbcTemplate JdbcTemplate;
     @Value("${tourOffer.tableName}")
     private String tableName;
+    @Value("${tourOffer.startDate}")
+    private String startDateName;
+    @Value("${tourOffer.endDate}")
+    private String endDateName;
+    @Value("${tourOffer.pricePerUnit}")
+    private String pricePerUnitName;
+    @Value("${tourOffer.hotelId}")
+    private String hotelIdName;
+    @Value("${tourOffer.description}")
+    private String descriptionName;
+    @Value("${tourOffer.discountId}")
+    private String discountIdName;
+    @Value("${tourOffer.id}")
+    private String idName;
+    @Value("${tourOffer.tourType}")
+    private String tourTypeName;
 
     @Autowired
     public TourOfferDAO(JdbcTemplate JdbcTemplate) {
@@ -26,51 +42,53 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     }
 
     public List<TourOffer> getTours(){
-        return JdbcTemplate.query("SELECT * FROM "+tableName, (rs, rowNum) -> buildTour(rs));
+        return JdbcTemplate.query("SELECT * FROM " + tableName, (rs, rowNum) -> buildTour(rs));
     }
 
     public int deleteTour(Integer tourId){
-         return JdbcTemplate.update("DELETE FROM "+tableName+" WHERE id = ?", tourId);
+         return JdbcTemplate.update("DELETE FROM " + tableName + " WHERE " + idName + " = ?", tourId);
     }
 
     public int addTour(TourOffer touroffer){
-        return JdbcTemplate.update("INSERT INTO "+tableName+"(tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount_id) " +
+        return JdbcTemplate.update("INSERT INTO " + tableName + "(" + tourTypeName + ", " + startDateName +
+                        ", " + endDateName + ", " + pricePerUnitName + ", " + hotelIdName + ", " + descriptionName + ", " + discountIdName + ") " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),
                 touroffer.getPricePerUnit(),touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId());
     }
 
     public int updateTour(TourOffer touroffer){
-       return JdbcTemplate.update("UPDATE "+tableName+" SET " +
-               "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
-               "WHERE id = ?",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),touroffer.getPricePerUnit(),
+       return JdbcTemplate.update("UPDATE "+tableName+" SET " + tourTypeName +
+               " = ?, " +  startDateName + " = ?, " + endDateName + " = ?, " + pricePerUnitName + " = ?, " + hotelIdName +
+                       " = ?, " + descriptionName + " = ?, " + discountIdName + " = ? " +
+               "WHERE " + idName + " = ?",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),touroffer.getPricePerUnit(),
                touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId(),touroffer.getId());
     }
 
     public List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate, Integer page, Integer total){
-        String requestSQL = "SELECT * FROM "+tableName+" WHERE start_date ";
-        if( startDate != null ) {
-            requestSQL = requestSQL.concat("= '" + startDate + "'");
+        String requestSQL = "SELECT * FROM " + tableName + " WHERE " + startDateName;
+        if(startDate != null) {
+            requestSQL = requestSQL.concat(" = '" + startDate + "'");
         } else {
-            requestSQL = requestSQL.concat("IS NOT NULL ");
+            requestSQL = requestSQL.concat(" IS NOT NULL ");
         }
-        requestSQL = requestSQL.concat(" AND end_Date ");
-        if( endDate != null ) {
-            requestSQL = requestSQL.concat("='" + endDate + "'");
+        requestSQL = requestSQL.concat(" AND " + endDateName);
+        if(endDate != null) {
+            requestSQL = requestSQL.concat(" ='" + endDate + "'");
         } else {
-            requestSQL = requestSQL.concat("IS NOT NULL ");
+            requestSQL = requestSQL.concat(" IS NOT NULL");
         }
-        requestSQL = requestSQL.concat(" AND hotel_id ");
-        if( listOfHotelsId.size() != 0 ) {
-            requestSQL = requestSQL.concat("IN (");
+        requestSQL = requestSQL.concat(" AND " + hotelIdName);
+        if(listOfHotelsId.size() != 0) {
+            requestSQL = requestSQL.concat(" IN (");
             for(Integer hotel_id : listOfHotelsId) {
                 requestSQL = requestSQL.concat(hotel_id.toString());
-                if( listOfHotelsId.get(listOfHotelsId.size()-1) != hotel_id ) {
+                if(listOfHotelsId.get(listOfHotelsId.size()-1) != hotel_id) {
                     requestSQL = requestSQL.concat(",");
                 }
             }
             requestSQL = requestSQL.concat(")");
         } else {
-            requestSQL = requestSQL.concat("IS NOT NULL");
+            requestSQL = requestSQL.concat(" IS NOT NULL");
         }
         requestSQL = requestSQL +  " LIMIT " + (page - 1) + "," + total;
         return JdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
@@ -82,30 +100,30 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     }
 
     public int amountOfToursSearched(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
-        String requestSQL = "SELECT COUNT(*) FROM "+tableName+" WHERE start_date ";
-        if( startDate != null ) {
-            requestSQL = requestSQL.concat("= '" + startDate + "'");
+        String requestSQL = "SELECT * FROM " + tableName + " WHERE " + startDateName;
+        if(startDate != null) {
+            requestSQL = requestSQL.concat(" = '" + startDate + "'");
         } else {
-            requestSQL = requestSQL.concat("IS NOT NULL ");
+            requestSQL = requestSQL.concat(" IS NOT NULL ");
         }
-        requestSQL = requestSQL.concat(" AND end_Date ");
-        if( endDate != null ) {
-            requestSQL = requestSQL.concat("='" + endDate + "'");
+        requestSQL = requestSQL.concat(" AND " + endDateName);
+        if(endDate != null) {
+            requestSQL = requestSQL.concat(" ='" + endDate + "'");
         } else {
-            requestSQL = requestSQL.concat("IS NOT NULL ");
+            requestSQL = requestSQL.concat(" IS NOT NULL");
         }
-        requestSQL = requestSQL.concat(" AND hotel_id ");
-        if( listOfHotelsId.size() != 0 ) {
-            requestSQL = requestSQL.concat("IN (");
-            for(Integer hotel_id : listOfHotelsId){
+        requestSQL = requestSQL.concat(" AND " + hotelIdName);
+        if(listOfHotelsId.size() != 0) {
+            requestSQL = requestSQL.concat(" IN (");
+            for(Integer hotel_id : listOfHotelsId) {
                 requestSQL = requestSQL.concat(hotel_id.toString());
-                if( listOfHotelsId.get(listOfHotelsId.size()-1) != hotel_id ) {
+                if(listOfHotelsId.get(listOfHotelsId.size()-1) != hotel_id) {
                     requestSQL = requestSQL.concat(",");
                 }
             }
             requestSQL = requestSQL.concat(")");
         } else {
-            requestSQL = requestSQL.concat("IS NOT NULL");
+            requestSQL = requestSQL.concat(" IS NOT NULL");
         }
         return JdbcTemplate.queryForObject(requestSQL, new Object[]{}, Integer.class);
     }
@@ -113,14 +131,14 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     @SneakyThrows(SQLException.class)
     TourOffer buildTour(ResultSet rs){
         return TourOffer.builder()
-                .id(rs.getInt("id"))
-                .tourType(rs.getString("tour_type"))
-                .startDate(rs.getDate("start_date").toLocalDate())
-                .endDate(rs.getDate("end_date").toLocalDate())
-                .pricePerUnit(rs.getInt("price_per_unit"))
-                .hotelId(rs.getInt("hotel_id"))
-                .description(rs.getString("description"))
-                .discountId(rs.getInt("discount_id"))
+                .id(rs.getInt(idName))
+                .tourType(rs.getString(tourTypeName))
+                .startDate(rs.getDate(startDateName).toLocalDate())
+                .endDate(rs.getDate(endDateName).toLocalDate())
+                .pricePerUnit(rs.getInt(pricePerUnitName))
+                .hotelId(rs.getInt(hotelIdName))
+                .description(rs.getString(descriptionName))
+                .discountId(rs.getInt(discountIdName))
                 .build();
     }
 }
