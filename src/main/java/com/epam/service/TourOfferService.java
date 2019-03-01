@@ -22,7 +22,7 @@ public class TourOfferService {
     private final TourOfferDAO tourOfferDAO;
     private final HotelService hotelService;
     private final ReservationService reservationService;
-    public int rowsPerPage = 4;
+    public static final int ROWS_PER_PAGE = 4;
 
     @Autowired
     public TourOfferService(TourOfferDAO tourOfferDAO, HotelService hotelService, ReservationService reservationService) {
@@ -53,9 +53,9 @@ public class TourOfferService {
         }
         Integer from = 1;
         if(pageNum > 1) {
-            from = (pageNum - 1) * rowsPerPage + 1;
+            from = (pageNum - 1) * ROWS_PER_PAGE + 1;
         }
-            return tourOfferDAO.getToursByPage(from, rowsPerPage);
+            return tourOfferDAO.getToursByPage(from, ROWS_PER_PAGE);
     }
 
     public int deleteTour(Integer tourId){
@@ -160,6 +160,6 @@ public class TourOfferService {
 
     public int getNumberOfPages () {
         Integer amountOfTours = tourOfferDAO.getAmountOfTours();
-        return (amountOfTours % rowsPerPage == 0) ? amountOfTours / rowsPerPage : amountOfTours / rowsPerPage + 1;
+        return (amountOfTours % ROWS_PER_PAGE == 0) ? amountOfTours / ROWS_PER_PAGE : amountOfTours / ROWS_PER_PAGE + 1;
     }
 }
