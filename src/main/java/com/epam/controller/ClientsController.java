@@ -1,19 +1,23 @@
 package com.epam.controller;
 
+import com.epam.model.Reservation;
 import com.epam.service.PersonDetailsServiceImpl;
 import com.epam.service.PersonService;
 import com.epam.service.ReservationService;
+import com.epam.service.TourOfferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -21,20 +25,25 @@ public class ClientsController {
     private final PersonDetailsServiceImpl personDetailsServiceImpl;
     private final PersonService personService;
     private final ReservationService reservationService;
+    private final TourOfferService tourOfferService;
 
     @Autowired
-    ClientsController(PersonService personService, ReservationService reservationService, PersonDetailsServiceImpl personDetailsServiceImpl) {
+    public ClientsController(PersonDetailsServiceImpl personDetailsServiceImpl, PersonService personService, ReservationService reservationService, TourOfferService tourOfferService) {
+        this.personDetailsServiceImpl = personDetailsServiceImpl;
         this.personService = personService;
         this.reservationService = reservationService;
-        this.personDetailsServiceImpl = personDetailsServiceImpl;
+        this.tourOfferService = tourOfferService;
     }
 
     @GetMapping("/clientProfile")
-    public ModelAndView clientPage (Principal principal, ModelMap modelMap) {
+    public ModelAndView clientPage (@ModelAttribute(name = "paymentMessage") String paymentMessage, Principal principal, ModelMap modelMap) {
         ModelAndView clientModel = new ModelAndView();
+        clientModel.addObject("paymentMessage", paymentMessage);
         Integer clientId = personService.getIdByEmail(principal.getName());
+        List<Reservation> reservations = reservationService.getReservationsByPersonId(clientId);
         clientModel.addObject("person", personService.getPersonById(clientId));
-        clientModel.addObject("reservations", reservationService.getReservationsByPersonId(clientId));
+        clientModel.addObject("reservations", reservations);
+        clientModel.addObject("description", tourOfferService.getDescription(reservations ));
         clientModel.setViewName("client");
         return clientModel;
     }

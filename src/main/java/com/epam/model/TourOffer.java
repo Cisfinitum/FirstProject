@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.Period;
 
 @AllArgsConstructor
 @Builder
@@ -34,4 +35,10 @@ public class TourOffer {
     @NotNull
     @Size(max = 100)
     private Integer discount;
+
+    @Override
+    public String toString() {
+        Period period = Period.between(startDate, endDate);
+        return tourType+ " tour, \n"+ period.getDays()+" days, \n";
+    }
 }

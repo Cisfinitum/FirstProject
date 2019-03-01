@@ -2,6 +2,7 @@ package com.epam.service;
 
 import com.epam.exception.NotFoundException;
 import com.epam.model.Hotel;
+import com.epam.model.Reservation;
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
 import lombok.extern.slf4j.Slf4j;
@@ -128,5 +129,16 @@ public class TourOfferService {
         } else {
             return tourOfferDAO.getTourById(tourId);
         }
+    }
+    public Map<Integer,String> getDescription(List<Reservation> reservations){
+        Map<Integer, String> description = new HashMap<>();
+        for (Reservation reservation : reservations) {
+            Integer tourId = reservation.getTourOfferId();
+            TourOffer tourOffer = getTourById(tourId);
+            Integer hotelId = tourOffer.getHotelId();
+            Hotel hotel = hotelService.getHotelById(hotelId);
+            description.put(reservation.getId(), tourOffer.toString() + hotel.toString());
+        }
+        return description;
     }
 }

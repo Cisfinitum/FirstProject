@@ -54,6 +54,7 @@
                             <p class="medium-small grey-text"><spring:message code="lastname" />: ${person.lastName}</p>
                             <p class="medium-small grey-text"><spring:message code="phoneNumber" />: ${person.phoneNumber}</p>
                             <p class="medium-small grey-text"><spring:message code="clientrole" />: ${person.role}</p>
+                            <p class="medium-small green-text">${paymentMessage}</p>
                         </div>
                         <div class="col s12 offset-s2">
                             <a class="btn waves-effect waves-light modal-trigger" data-target="modal" href="#modal">
@@ -118,6 +119,7 @@
             <c:if test="${reservations.size()>0}">
                 <tr>
                     <th><spring:message code="reservationnumber" /></th>
+                    <th><spring:message code="abouttour" /></th>
                     <th><spring:message code="tourdiscount" /></th>
                     <th><spring:message code="nop" /></th>
                     <th><spring:message code="status" /></th>
@@ -129,39 +131,40 @@
             <c:forEach var="reservation" items="${reservations}">
             <tr>
                 <td>${reservation.id}</td>
+                <td>${description.get(reservation.id)} </td>
                 <td> ${reservation.discount}%</td>
                 <td> ${reservation.numberOfPeople}</td>
                 <td> ${reservation.status}</td>
                 <td> ${reservation.totalPrice}</td>
-                </c:forEach>
+                <td>
+                    <form method="post" action="/pay" id="pay">
+                        <c:if test="${reservation.status == 'UNPAID'}">
+                            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">PAY</a>
+                            <div id="modal1" class="modal">
+                                <div class="modal-content">
+                                    <h4>You are going to pay ${reservation.totalPrice} $</h4>
+                                    <p style="font-size: large">Are you sure?</p>
+                                    <input name="reservationId" type="hidden" value="${reservation.id}">
+                                    <div class="modal-footer">
+                                        <button type="submit" class="waves-effect waves-light btn">PAY
+                                        </button>
+                                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </form>
+                    </c:forEach>
             </tr>
 
         </table>
     </div>
 </main>
-<footer class="page-footer">
+<div class="footer-copyright">
     <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Tour de Team</h5>
-                <p class="grey-text text-lighten-4"><spring:message code="footerinf"/></p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-                <h5 class="white-text"><spring:message code="footerlinks"/></h5>
-                <ul>
-                    <li><a class="grey-text text-lighten-3" href="index"><spring:message code="homepage"/></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="information"/></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="feedback"/></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="contacts"/></a></li>
-                </ul>
-            </div>
-        </div>
+        © 2019 Tour de Team
     </div>
-    <div class="footer-copyright">
-        <div class="container">
-            © 2019 Tour de Team
-        </div>
-    </div>
+</div>
 </footer>
 
 <!--JavaScript at end of body for optimized loading-->

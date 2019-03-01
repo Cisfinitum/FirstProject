@@ -69,7 +69,7 @@ public class ReservationDAO implements SimpleReservationDAO {
     }
 
     public List<Reservation> getReservationsByPersonId(Integer personId) {
-        String sql = "SELECT * FROM " + tableName + " WHERE " + clientId + " = ?";
+        String sql = "SELECT * FROM " + tableName + " WHERE " + clientId + " = ? ORDER BY id ";
         Object[] parameters = new Object[] { personId };
         return jdbcTemplate.query(sql, parameters, reservationMapper);
     }
@@ -115,5 +115,12 @@ public class ReservationDAO implements SimpleReservationDAO {
         String sql = "SELECT COUNT(*) FROM " + tableName;
         return jdbcTemplate.queryForObject(
                 sql, new Object[]{}, Integer.class);
+    }
+
+    public int changeReservationStatusById(Integer reservationId){
+        String sql = "UPDATE " +
+                tableName + " SET " + status + " = 'PAID'" +
+                " WHERE " + id + "= "+ reservationId;
+        return jdbcTemplate.update(sql);
     }
 }
