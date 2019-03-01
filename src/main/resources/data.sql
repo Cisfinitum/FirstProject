@@ -36,19 +36,16 @@ INSERT INTO tour_offer(tour_type, start_date, end_date, price_per_unit, hotel_id
 VALUES ('Entertaiment','2019-03-08', '2019-03-15', '400000', '2', 'text', '50');
 INSERT INTO tour_offer(tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount)
 VALUES ('Shopping','2019-03-09', '2019-03-14', '500000', '1', 'text', '50');
-INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount, total_price)
-VALUES ('1','1', '1', 'PAID', '1', '500000');
-INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount, total_price)
-VALUES ('1','1', '1', 'PAID', '1', '500000');
-INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount, total_price)
-VALUES ('1','1', '1', 'PAID', '1', '500000');
-INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount, total_price)
-VALUES ('1','1', '1', 'PAID', '1', '500000');
-INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount, total_price)
-VALUES ('1','1', '1', 'PAID', '1', '500000');
-INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount, total_price)
-VALUES ('1','1', '1', 'PAID', '1', '500000');
-INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount, total_price)
-VALUES ('1','1', '1', 'PAID', '1', '500000');
-INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount, total_price)
-VALUES ('1','1', '1', 'PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, archive_status,status, discount, total_price)
+VALUES ('1','1', '1', 'NEW','PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('1','1', '1', 'NEW','PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('1','1', '1', 'ARCHIVED','PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('1','1', '1', 'NEW','PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('1','1', '1', 'NEW','PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('1','1', '1', 'ARCHIVED','PAID', '1', '500000');
+

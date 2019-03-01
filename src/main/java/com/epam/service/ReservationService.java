@@ -1,13 +1,17 @@
 package com.epam.service;
 
 import com.epam.model.Reservation;
+import com.epam.model.ReservationArchiveStatusEnum;
 import com.epam.model.ReservationStatusEnum;
+import com.epam.model.TourOffer;
 import com.epam.repository.ReservationDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.xml.crypto.Data;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -60,13 +64,13 @@ public class ReservationService {
         }
     }
 
-    public List<Reservation> listReservations(Integer page, Integer total) {
+    public List<Reservation> listReservations(Integer page, Integer total, String status) {
 
         if (page > 0 && total > 0) {
             if (page > 1) {
                 page = (page - 1) * total + 1;
             }
-            return reservationDAO.listReservations(page, total);
+            return reservationDAO.listReservations(page, total, status);
         } else {
             throw new IllegalArgumentException("Numbers must be integer and > 0");
         }
@@ -107,8 +111,8 @@ public class ReservationService {
         }
     }
 
-    public int amountOfReservation() {
-        return reservationDAO.amountOfReservations();
+    public int amountOfReservation(String status) {
+        return reservationDAO.amountOfReservations(status);
     }
 
     public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discount) {
@@ -129,9 +133,20 @@ public class ReservationService {
             modelAndView.setViewName("homepage");
             Integer clientId = personService.getIdByEmail(email);
             Integer totalPrice = getTotalPrice(numberOfPeople, pricePerUnit, discount);
-            addReservation(new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discount, totalPrice));
+            addReservation(new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discount, totalPrice, ReservationArchiveStatusEnum.NEW));
             return modelAndView.addObject("message", "Tour was reserved successfully.");
         }
     }
 
+    public Boolean isAvailable(Reservation reservation){
+        if(reservation.getArchiveStatus().equals("ARCHIVED")){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public int changeArchiveStatus(Reservation reservation){
+
+    }
 }

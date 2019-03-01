@@ -41,6 +41,7 @@ public class ReservationServiceTest {
     private Integer testDiscountId = 1;
     private Integer numberOfPeople = 5;
     private Integer testPricePerUnit = 100;
+    private String testStatus = "NEW";
 
     @Before
     public void setUp() {
@@ -67,15 +68,15 @@ public class ReservationServiceTest {
 
     @Test
     public void listReservations() {
-        when(reservationDAO.listReservations(testPage, testTotal)).thenReturn(expectedReservationsList);
-        actualReservationList = reservationService.listReservations(testPage, testTotal);
+        when(reservationDAO.listReservations(testPage, testTotal, testStatus)).thenReturn(expectedReservationsList);
+        actualReservationList = reservationService.listReservations(testPage, testTotal, testStatus);
         assertEquals(expectedReservationsList, actualReservationList);
     }
 
     @Test
     public void listReservationsReturnsNull() {
-        when(reservationDAO.listReservations(testPage, testTotal)).thenReturn(null);
-        actualReservationList = reservationService.listReservations(testPage, testTotal);
+        when(reservationDAO.listReservations(testPage, testTotal, testStatus)).thenReturn(null);
+        actualReservationList = reservationService.listReservations(testPage, testTotal, testStatus);
         assertNull(actualReservationList);
     }
 

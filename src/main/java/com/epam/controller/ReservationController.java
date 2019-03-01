@@ -27,8 +27,8 @@ public class ReservationController {
 
     @GetMapping("/{id}")
     public String listReservations(@PathVariable Integer id, ModelMap modelMap) {
-        List<Reservation> reservations = reservationService.listReservations(id, reservationService.totalAmountOfRows);
-        int generalAmount = reservationService.amountOfReservation();
+        List<Reservation> reservations = reservationService.listReservations(id, reservationService.totalAmountOfRows, "NEW");
+        int generalAmount = reservationService.amountOfReservation("NEW");
         int amount = reservationService.totalAmountOfRows;
         modelMap.addAttribute("listReservation", reservations);
         modelMap.addAttribute("generalAmount", generalAmount);
