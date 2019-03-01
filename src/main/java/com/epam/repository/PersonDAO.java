@@ -43,6 +43,9 @@ public class PersonDAO implements SimplePersonDAO {
                 .email(rs.getString("email"))
                 .password(rs.getString("password"))
                 .role(PersonRoleEnum.valueOf(rs.getString("role")))
+                .phoneNumber(rs.getString("phoneNumber"))
+                .firstName(rs.getString("firstName"))
+                .lastName(rs.getString("lastName"))
                 .build();
     }
 
@@ -66,8 +69,11 @@ public class PersonDAO implements SimplePersonDAO {
         if (doesEmailExist(email)) return -1;
         String password = person.getPassword();
         String role = person.getRole().toString();
-        String sql = "INSERT INTO person (email, password, role) VALUES (?, ?, ?)";
-        return jdbcTemplate.update(sql, email, password, role);
+        String phoneNumber = person.getPhoneNumber();
+        String firstName = person.getFirstName();
+        String lastName = person.getLastName();
+        String sql = "INSERT INTO person (email, password, role, phoneNumber, firstName, lastName) VALUES (?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, email, password, role, phoneNumber, firstName, lastName);
     }
 
     public int addToBlackList(Integer id) {
@@ -114,7 +120,7 @@ public class PersonDAO implements SimplePersonDAO {
     }
 
     public int updatePasswordById(Integer id, String password) {
-        if (id == null || password.equals("")) return -1;
+        if (id < 1 || password.equals("")) return -1;
         String sql = "UPDATE person SET password = ? WHERE id = ?";
         return jdbcTemplate.update(sql, password, id);
     }

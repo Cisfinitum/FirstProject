@@ -50,6 +50,9 @@
                         </div>
                         <div class="col s3">
                             <p class="medium-small grey-text"><spring:message code="emailname" />: ${person.email}</p>
+                            <p class="medium-small grey-text"><spring:message code="firstname" />: ${person.firstName}</p>
+                            <p class="medium-small grey-text"><spring:message code="lastname" />: ${person.lastName}</p>
+                            <p class="medium-small grey-text"><spring:message code="phoneNumber" />: ${person.phoneNumber}</p>
                             <p class="medium-small grey-text"><spring:message code="clientrole" />: ${person.role}</p>
                             <p class="medium-small green-text">${paymentMessage}</p>
                         </div>
