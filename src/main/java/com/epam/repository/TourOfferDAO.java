@@ -69,6 +69,7 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
         }
         else
             requestSQL = requestSQL.concat("IS NOT NULL");
+        requestSQL = requestSQL + " ORDER BY id";
         return JdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
     }
 

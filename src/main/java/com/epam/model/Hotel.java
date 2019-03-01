@@ -20,4 +20,9 @@ public class Hotel {
                 this.country = country;
                 this.numberOfStars = numberOfStars;
         }
+
+        @Override
+        public String toString() {
+                return name + ",\n " +  country + ", " + city + " ";
+        }
 }

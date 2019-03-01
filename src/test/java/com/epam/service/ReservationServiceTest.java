@@ -9,10 +9,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -31,6 +33,8 @@ public class ReservationServiceTest {
     ModelAndView modelAndView;
     @Mock
     PersonService personService;
+    @Mock
+    RedirectAttributes redirectAttributes;
     private int testPage = 1;
     private int testTotal = 5;
     private List<Reservation> expectedReservationsList;
@@ -100,7 +104,7 @@ public class ReservationServiceTest {
 
     @Test
     public void getTotalPrice() {
-        Integer expectedTotalPrice = 5;
+        Integer expectedTotalPrice = 495;
         Integer actualTotalPrice = reservationService.getTotalPrice(numberOfPeople, testPricePerUnit, testDiscountId);
         assertEquals(expectedTotalPrice, actualTotalPrice);
     }
@@ -113,11 +117,11 @@ public class ReservationServiceTest {
 
     @Test
     public void reserveTour() {
-        String expectedView = "homepage";
+        String expectedView = "redirect:/payment";
         String testEmail = "user";
         when(principal.getName()).thenReturn(testEmail);
         when(personService.getIdByEmail(testEmail)).thenReturn(1);
-        modelAndView = reservationService.reserveTour(modelAndView, principal, testId, testPricePerUnit, numberOfPeople, testDiscountId);
+        modelAndView = reservationService.reserveTour(modelAndView, principal, testId, testPricePerUnit, numberOfPeople, testDiscountId, redirectAttributes);
         assertEquals(expectedView , modelAndView.getViewName());
     }
 
@@ -125,7 +129,25 @@ public class ReservationServiceTest {
     public void reserveTourUserDidNotLogIn(){
         principal = null;
         String expectedView = "login";
-        modelAndView = reservationService.reserveTour(modelAndView, principal, testId, testPricePerUnit, numberOfPeople, testDiscountId);
+        modelAndView = reservationService.reserveTour(modelAndView, principal, testId, testPricePerUnit, numberOfPeople, testDiscountId, redirectAttributes);
         assertEquals(expectedView , modelAndView.getViewName());
+    }
+
+    @Test
+    public void changeReservationStatusById(){
+        when(reservationDAO.changeReservationStatusById(testId)).thenReturn(1);
+        Integer actualResult = reservationService.changeReservationStatusById(testId);
+        Integer expectedResult = 1;
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void changeStatusThrowsIllegalArgumentExc(){
+        reservationService.changeReservationStatusById(-1);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void changeStatusThrowsNoSuchElementExc(){
+        reservationService.changeReservationStatusById(null);
     }
 }
