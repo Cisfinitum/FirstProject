@@ -8,13 +8,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.junit.Assert.*;
 
@@ -24,7 +28,7 @@ public class TourOfferDAOTest {
     @Mock
     private TourOffer expectedTour;
     @Mock
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     @InjectMocks
     private TourOfferDAO tourofferDAO;
@@ -73,5 +77,13 @@ public class TourOfferDAOTest {
         when(resultSet.getString("description")).thenReturn(testdescription);
         when(resultSet.getInt("discount")).thenReturn(testdiscount);
         tourofferDAO.buildTour(resultSet);
+    }
+
+    @Test
+    public void getToursByPagePositiveResult() {
+        List<TourOffer> listOfTours = new ArrayList<TourOffer>();
+        listOfTours.add(expectedTour);
+        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(listOfTours);
+        assertEquals(1, tourofferDAO.getToursByPage(0, 1).size());
     }
 }

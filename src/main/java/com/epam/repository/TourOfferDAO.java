@@ -30,8 +30,9 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     }
 
     public List<TourOffer> getToursByPage(Integer from, Integer offset){
-        String sql = "SELECT * from " +tableName+ " LIMIT " + (from-1) + "," + offset;
-        return JdbcTemplate.query(sql, (rs, rowNum) -> buildTour(rs));
+        String sql = "SELECT * from " +tableName+ " LIMIT ? , ?";
+        Object[] parameters = new Object[] { from-1, offset };
+        return JdbcTemplate.query(sql, parameters, (rs, rowNum) -> buildTour(rs));
     }
 
     public int deleteTour(Integer tourId){
