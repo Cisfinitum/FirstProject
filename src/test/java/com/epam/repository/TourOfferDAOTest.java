@@ -7,11 +7,13 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.mockito.Mockito.when;
 import static org.junit.Assert.*;
@@ -21,6 +23,8 @@ public class TourOfferDAOTest {
     private ResultSet resultSet;
     @Mock
     private TourOffer expectedTour;
+    @Mock
+    JdbcTemplate jdbcTemplate;
 
     @InjectMocks
     private TourOfferDAO tourofferDAO;

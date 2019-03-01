@@ -46,10 +46,10 @@ public class ToursController {
         ModelAndView toursModel = new ModelAndView();
         Integer rowsPerPage = toursOfferService.rowsPerPage;
         Integer totalRows = toursOfferService.getAmountOfTours();
-        Integer totalPages = (totalRows % rowsPerPage == 0) ? totalRows / rowsPerPage : totalRows / rowsPerPage + 1;
+        Integer totalPages = toursOfferService.getNumberOfPages();
         modelMap.addAttribute("rowsPerPage", rowsPerPage);
         modelMap.addAttribute("totalPages", totalPages);
-        toursModel.addObject("listOfTours", toursOfferService.getToursByPage(pageNum, rowsPerPage));
+        toursModel.addObject("listOfTours", toursOfferService.getToursByPage(pageNum));
         toursModel.addObject("hotels", hotelService.getMapOfHotels());
         toursModel.addObject("isReservedMap", toursOfferService.getToursStatusMap());
         if (redirectAttributes != null) {

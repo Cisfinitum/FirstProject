@@ -47,15 +47,15 @@ public class TourOfferService {
         return toursStatusMap;
     }
 
-    public List<TourOffer> getToursByPage(Integer pageNum, Integer offset){
-        if (pageNum < 1 || pageNum == null) {
+    public List<TourOffer> getToursByPage(Integer pageNum){
+        if ((pageNum == null) || (pageNum < 1)) {
             throw new IllegalArgumentException("Page number must be integer and > 0");
         }
         Integer from = 1;
         if(pageNum > 1) {
             from = (pageNum - 1) * rowsPerPage + 1;
         }
-            return tourOfferDAO.getToursByPage(from, offset);
+            return tourOfferDAO.getToursByPage(from, rowsPerPage);
     }
 
     public int deleteTour(Integer tourId){
@@ -156,5 +156,10 @@ public class TourOfferService {
 
     public int getAmountOfTours() {
         return tourOfferDAO.getAmountOfTours();
+    }
+
+    public int getNumberOfPages () {
+        Integer amountOfTours = tourOfferDAO.getAmountOfTours();
+        return (amountOfTours % rowsPerPage == 0) ? amountOfTours / rowsPerPage : amountOfTours / rowsPerPage + 1;
     }
 }
