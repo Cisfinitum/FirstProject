@@ -26,7 +26,7 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     }
 
     public List<TourOffer> getTours(){
-        return JdbcTemplate.query("SELECT * FROM "+tableName+" ORDER BY id", (rs, rowNum) -> buildTour(rs));
+        return JdbcTemplate.query("SELECT * FROM "+tableName +" ORDER BY id", (rs, rowNum) -> buildTour(rs));
     }
 
     public int deleteTour(Integer tourId){
@@ -34,16 +34,16 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     }
 
     public int addTour(TourOffer touroffer){
-        return JdbcTemplate.update("INSERT INTO "+tableName+"(tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount_id) " +
+        return JdbcTemplate.update("INSERT INTO "+tableName+"(tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),
-                touroffer.getPricePerUnit(),touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId());
+                touroffer.getPricePerUnit(),touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscount());
     }
 
     public int updateTour(TourOffer touroffer){
        return JdbcTemplate.update("UPDATE "+tableName+" SET " +
-               "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount_id = ? " +
+               "tour_type = ?, start_date = ?, end_date = ?, price_per_unit = ?, hotel_id = ?, description = ?, discount = ? " +
                "WHERE id = ?",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),touroffer.getPricePerUnit(),
-               touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId(),touroffer.getId());
+               touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscount(),touroffer.getId());
     }
 
     public List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
@@ -88,7 +88,7 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
                 .pricePerUnit(rs.getInt("price_per_unit"))
                 .hotelId(rs.getInt("hotel_id"))
                 .description(rs.getString("description"))
-                .discountId(rs.getInt("discount_id"))
+                .discount(rs.getInt("discount"))
                 .build();
     }
 }

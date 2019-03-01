@@ -33,6 +33,9 @@ public class PersonDetailsServiceImplTest {
     private String testEmail = "user";
     private String testPassword = "123";
     private String nonExistEmail = "nonExistingEmail";
+    private String testPhoneNumber = "8999999999";
+    private String testFirstName = "Example";
+    private String testLastName = "Example";
     private Person testPerson;
     private Integer testId;
 
@@ -45,13 +48,13 @@ public class PersonDetailsServiceImplTest {
         testEmail = "user";
         testPassword = "123";
         nonExistEmail = "nonExistingEmail";
-        testPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf("USER"));
+        testPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName);
     }
 
     @Test
     public void loadUserPositiveResult() {
 
-        when(personService.getPerson(testEmail)).thenReturn(new Person(1, testEmail, testPassword, PersonRoleEnum.ADMIN));
+        when(personService.getPerson(testEmail)).thenReturn(new Person(1, testEmail, testPassword, PersonRoleEnum.ADMIN, testPhoneNumber, testFirstName, testLastName));
         when(person.getRole()).thenReturn(PersonRoleEnum.ADMIN);
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumRole()));
         UserDetails expectedPerson = new User(testEmail, testPassword, roles);
