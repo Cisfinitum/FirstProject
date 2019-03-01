@@ -100,7 +100,7 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     }
 
     public int amountOfToursSearched(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
-        String requestSQL = "SELECT * FROM " + tableName + " WHERE " + startDateName;
+        String requestSQL = "SELECT COUNT(*) FROM " + tableName + " WHERE " + startDateName;
         if(startDate != null) {
             requestSQL = requestSQL.concat(" = '" + startDate + "'");
         } else {

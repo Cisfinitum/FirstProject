@@ -7,6 +7,7 @@ import com.epam.repository.TourOfferDAO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -104,7 +105,7 @@ public class TourOfferService {
         }
     }
 
-    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate, Integer page, Integer total){
+    public List<TourOffer> searchTours(ModelAndView modelAndView, String country, LocalDate startDate, LocalDate endDate, Integer page, Integer total){
         List<Hotel> myList = hotelService.getHotelsByCountry(country);
         if ( myList.size() == 0 && !country.isEmpty() ) {
             log.error("Wrong input country: " + country);

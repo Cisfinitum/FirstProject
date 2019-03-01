@@ -61,7 +61,7 @@ public class ToursController {
             toursModel.addObject("hotels", hotelService.getMapOfHotels());
             int generalAmount = toursOfferService.amountOfToursSearched(country,addStartDate,addEndDate);
             int amount = toursOfferService.totalAmountOfRows;
-            List<TourOffer> tours = toursOfferService.searchTours(country, addStartDate, addEndDate,id,amount);
+            List<TourOffer> tours = toursOfferService.searchTours(toursModel, country, addStartDate, addEndDate,id,amount);
             toursModel.addObject("list", tours);
             toursModel.addObject("generalAmount", generalAmount);
             toursModel.addObject("amount", (generalAmount % amount == 0) ? generalAmount / amount : generalAmount / amount + 1);
