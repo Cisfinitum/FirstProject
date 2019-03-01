@@ -121,10 +121,21 @@ public class ReservationDAO implements SimpleReservationDAO {
         return jdbcTemplate.queryForObject(
                 sql, new Object[]{}, Integer.class);
     }
+    public int amountOfAllReservations() {
+        String sql = "SELECT COUNT(*) FROM " + tableName;
+        return jdbcTemplate.queryForObject(
+                sql, new Object[]{}, Integer.class);
+    }
 
     public int changeReservationStatusById(Integer reservationId){
         String sql = "UPDATE " +
                 tableName + " SET " + status + " = 'PAID'" +
+                " WHERE " + id + "= "+ reservationId;
+        return jdbcTemplate.update(sql);
+    }
+    public int changeArchiveStatusById(Integer reservationId, String status){
+        String sql = "UPDATE " +
+                tableName + " SET " + archiveStatus + " = '" + status + "'" +
                 " WHERE " + id + "= "+ reservationId;
         return jdbcTemplate.update(sql);
     }

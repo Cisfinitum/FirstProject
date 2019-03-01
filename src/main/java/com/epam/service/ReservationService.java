@@ -67,13 +67,13 @@ public class ReservationService {
 
     public List<Reservation> listReservations(Integer page, Integer total, String status) {
 
-        if (page > 0 && total > 0) {
+        if (page >= 0 && total >= 0) {
             if (page > 1) {
                 page = (page - 1) * total + 1;
             }
             return reservationDAO.listReservations(page, total, status);
         } else {
-            throw new IllegalArgumentException("Numbers must be integer and > 0");
+            throw new IllegalArgumentException("Numbers must be integer and >= 0");
         }
     }
 
@@ -115,6 +115,9 @@ public class ReservationService {
     public int amountOfReservation(String status) {
         return reservationDAO.amountOfReservations(status);
     }
+    public int amountOfAllReservations() {
+        return reservationDAO.amountOfAllReservations();
+    }
 
     public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discount) {
         if (numberOfPeople > 0 && pricePerUnit > 0 && discount >= 0) {
@@ -136,7 +139,7 @@ public class ReservationService {
             Integer totalPrice = getTotalPrice(numberOfPeople, pricePerUnit, discount);
             Reservation reservation = new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discount, totalPrice, ReservationArchiveStatusEnum.NEW);
             addReservation(reservation);
-            Integer reservationId = amountOfReservation();
+            Integer reservationId = amountOfAllReservations();
             modelAndView.setViewName("redirect:/payment");
             redirectAttributes.addFlashAttribute("reservationId", reservationId);
             redirectAttributes.addFlashAttribute("pricePerUnit", pricePerUnit);
@@ -167,7 +170,15 @@ public class ReservationService {
         }
     }
 
-    public int changeArchiveStatus(Reservation reservation){
-
+    public int changeArchiveStatusById(Integer id, String status) {
+        if(id != null && status != null){
+            if (id > 0){
+                return reservationDAO.changeArchiveStatusById(id, status);
+            } else {
+                throw new IllegalArgumentException("id must be positive");
+            }
+        } else {
+            throw new NoSuchElementException("all values must be specified");
+        }
     }
 }

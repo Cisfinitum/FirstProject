@@ -45,6 +45,8 @@
 <main>
     <div class="container">
         <h2><spring:message code="reservations"/></h2>
+        <p style="color: green">${message}</p>
+        <p style="color: red">${errormessage}</p>
         <form method="POST" action="#">
             <div class="row">
                 <table>
@@ -57,7 +59,7 @@
                             <th><spring:message code="nop"/></th>
                             <th><spring:message code="status"/></th>
                             <th><spring:message code="totalprice"/></th>
-                            <th></th>
+                            <th style="text-align: right"><spring:message code="addtoarchive"/></th>
                         </tr>
                     </c:if>
                     <c:if test="${listReservation.size() == 0}"><p><spring:message code="noactivereservationsatall"/></p></c:if>
@@ -70,7 +72,7 @@
                         <td> ${reservation.numberOfPeople}</td>
                         <td> ${reservation.status}</td>
                         <td> ${reservation.totalPrice}</td>
-                        <td><a href="deleteReservation/${reservation.id}" class="secondary-content"> <i
+                        <td><a href="archiveReservation/${reservation.id} "class="secondary-content"> <i
                                 class="small material-icons">remove</i></a></td>
                         </c:forEach>
                     </tr>
@@ -91,10 +93,10 @@
                 <div class="row">
                     <div class="col s12">
                             <input class="hide" id="hd-1" type="checkbox">
-                        <label for="hd-1" style="color: white; text-align: center " class="btn-small"> <th><spring:message code="archive"/>  </th></label>
+                        <label for="hd-1" style="color: white; text-align: center " class="waves-effect waves-light btn"> <th><spring:message code="archive"/>  </th></label>
                         <div >
                             <table>
-                                <c:if test="${listReservation.size()>0}">
+                                <c:if test="${listArchiveReservation.size()>0}">
                                     <tr>
                                         <th>№</th>
                                         <th><spring:message code="discountid"/></th>
@@ -103,11 +105,12 @@
                                         <th><spring:message code="nop"/></th>
                                         <th><spring:message code="status"/></th>
                                         <th><spring:message code="totalprice"/></th>
-                                        <th></th>
+                                        <th style="text-align: right"><spring:message code="restore"/></th>
+                                        <th style="text-align: right"><spring:message code="delete"/></th>
                                     </tr>
                                 </c:if>
-                                <c:if test="${listReservation.size() == 0}"><p>There are no active reservations</p></c:if>
-                                <c:forEach var="reservation" items="${listReservation}">
+                                <c:if test="${listArchiveReservation.size() == 0}"><p>There are no archived reservations</p></c:if>
+                                <c:forEach var="reservation" items="${listArchiveReservation}">
                                 <tr>
                                     <td>${reservation.id}</td>
                                     <td>${reservation.discount}</td>
@@ -116,11 +119,14 @@
                                     <td> ${reservation.numberOfPeople}</td>
                                     <td> ${reservation.status}</td>
                                     <td> ${reservation.totalPrice}</td>
+                                    <td><a href="restoreReservation/${reservation.id}" class="secondary-content"> <i
+                                            class="small material-icons">restore</i></a></td>
                                     <td><a href="deleteReservation/${reservation.id}" class="secondary-content"> <i
-                                            class="small material-icons">remove</i></a></td>
-                                    </c:forEach>
+                                            class="small material-icons"> <i class="material-icons">delete</i>
+                                    </i></a></td>
+                                </c:forEach>
                                 </tr>
-
+                                <br>
                             </table>
                         </div>
                     </div>
