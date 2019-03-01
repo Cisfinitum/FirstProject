@@ -60,11 +60,10 @@ public class ToursController {
             LocalDate addEndDate = Validator.getDate(endDate, true);
             toursModel.addObject("hotels", hotelService.getMapOfHotels());
             int generalAmount = toursOfferService.amountOfToursSearched(country,addStartDate,addEndDate);
-            int amount = toursOfferService.totalAmountOfRows;
-            List<TourOffer> tours = toursOfferService.searchTours(toursModel, country, addStartDate, addEndDate,id,amount);
+            List<TourOffer> tours = toursOfferService.searchTours(toursModel, country, addStartDate, addEndDate,id);
             toursModel.addObject("list", tours);
             toursModel.addObject("generalAmount", generalAmount);
-            toursModel.addObject("amount", (generalAmount % amount == 0) ? generalAmount / amount : generalAmount / amount + 1);
+            toursModel.addObject("amount", toursOfferService.getNumberOfPagesSearch(generalAmount));
             toursModel.addObject("country", country);
             toursModel.addObject("addStartDate", addStartDate);
             toursModel.addObject("addEndDate", addEndDate);

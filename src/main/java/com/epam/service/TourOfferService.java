@@ -22,7 +22,7 @@ public class TourOfferService {
     private final TourOfferDAO tourOfferDAO;
     private final HotelService hotelService;
     private final ReservationService reservationService;
-    public int totalAmountOfRows = 5;
+    public static final int totalAmountOfRows = 5;
 
     @Autowired
     public TourOfferService(TourOfferDAO tourOfferDAO, HotelService hotelService, ReservationService reservationService) {
@@ -105,21 +105,21 @@ public class TourOfferService {
         }
     }
 
-    public List<TourOffer> searchTours(ModelAndView modelAndView, String country, LocalDate startDate, LocalDate endDate, Integer page, Integer total){
+    public List<TourOffer> searchTours(ModelAndView modelAndView, String country, LocalDate startDate, LocalDate endDate, Integer page){
         List<Hotel> myList = hotelService.getHotelsByCountry(country);
         if ( myList.size() == 0 && !country.isEmpty() ) {
             log.error("Wrong input country: " + country);
             throw new IllegalArgumentException("Wrong input country: " + country);
         }
-        if (page > 0 && total > 0) {
+        if (page > 0 && totalAmountOfRows > 0) {
             if (page > 1) {
-                page = (page - 1) * total + 1;
+                page = (page - 1) * totalAmountOfRows + 1;
             }
             List<Integer> listOfHotelsId = new ArrayList<>();
             for(Hotel hotel: myList){
                 listOfHotelsId.add(hotel.getId());
             }
-            return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate, page, total);
+            return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate, page, totalAmountOfRows);
 
         } else {
             throw new IllegalArgumentException("Numbers must be integer and > 0");
@@ -147,5 +147,9 @@ public class TourOfferService {
             }
             return tourOfferDAO.amountOfToursSearched(listOfHotelsId, startDate, endDate);
 
+    }
+
+    public int getNumberOfPagesSearch (Integer generalAmount) {
+        return (generalAmount % totalAmountOfRows == 0) ? generalAmount / totalAmountOfRows : generalAmount / totalAmountOfRows + 1;
     }
 }
