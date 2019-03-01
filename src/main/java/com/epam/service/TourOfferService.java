@@ -48,8 +48,11 @@ public class TourOfferService {
     }
 
     public List<TourOffer> getToursByPage(Integer pageNum, Integer offset){
+        if (pageNum < 1 || pageNum == null) {
+            throw new IllegalArgumentException("Page number must be integer and > 0");
+        }
         Integer from = 1;
-        if(pageNum != 1) {
+        if(pageNum > 1) {
             from = (pageNum - 1) * rowsPerPage + 1;
         }
             return tourOfferDAO.getToursByPage(from, offset);

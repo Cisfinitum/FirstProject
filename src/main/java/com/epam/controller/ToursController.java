@@ -37,17 +37,18 @@ public class ToursController {
     }
 
     @GetMapping("/listoftours")
-    public ModelAndView getToursList(RedirectAttributes redirectAttributes) {
-    public String testadmin() {
+    public String testadmin(RedirectAttributes redirectAttributes) {
         return "redirect:/listoftours/1";
     }
 
     @GetMapping("/listoftours/{pageNum}")
-    public ModelAndView getToursListByPage(@PathVariable Integer pageNum, ModelMap modelMap) {
+    public ModelAndView getToursListByPage(@PathVariable Integer pageNum, ModelMap modelMap, RedirectAttributes redirectAttributes) {
         ModelAndView toursModel = new ModelAndView();
         Integer rowsPerPage = toursOfferService.rowsPerPage;
         Integer totalRows = toursOfferService.getAmountOfTours();
         Integer totalPages = (totalRows % rowsPerPage == 0) ? totalRows / rowsPerPage : totalRows / rowsPerPage + 1;
+        modelMap.addAttribute("rowsPerPage", rowsPerPage);
+        modelMap.addAttribute("totalPages", totalPages);
         toursModel.addObject("listOfTours", toursOfferService.getToursByPage(pageNum, rowsPerPage));
         toursModel.addObject("hotels", hotelService.getMapOfHotels());
         toursModel.addObject("isReservedMap", toursOfferService.getToursStatusMap());
@@ -56,9 +57,6 @@ public class ToursController {
                 toursModel.addObject(string, redirectAttributes.getFlashAttributes().get(string));
         }
         toursModel.setViewName("tours");
-        modelMap.addAttribute("rowsPerPage", rowsPerPage);
-        modelMap.addAttribute("totalRows", totalRows);
-        modelMap.addAttribute("totalPages", totalPages);
         return toursModel;
     }
 
