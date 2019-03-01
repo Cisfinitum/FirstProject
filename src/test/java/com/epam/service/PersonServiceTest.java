@@ -26,6 +26,9 @@ public class PersonServiceTest {
     private String testEmail;
     private String testPassword;
     private Integer testId;
+    private String testPhoneNumber = "8999999999";
+    private String testFirstName = "Example";
+    private String testLastName = "Example";
 
     @Before
     public void setUp() {
@@ -33,7 +36,7 @@ public class PersonServiceTest {
         testId = 1;
         testEmail = "user";
         testPassword = "1111";
-        expectedPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf("ADMIN"));
+        expectedPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf("ADMIN"), testPhoneNumber, testFirstName, testLastName);
         personService = new PersonService(personDAO);
         personList = new ArrayList<>();
         personList.add(expectedPerson);

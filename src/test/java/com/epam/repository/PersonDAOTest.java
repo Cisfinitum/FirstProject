@@ -25,6 +25,9 @@ public class PersonDAOTest {
     private String testEmail = "user@email.com";
     private String testPassword = "Goodpassword1";
     private String testPersonRoleEnum = "USER";
+    private String testPhoneNumber = "8999999999";
+    private String testFirstName = "Example";
+    private String testLastName = "Example";
     private Person testPerson;
 
     @Mock
@@ -42,7 +45,7 @@ public class PersonDAOTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        testPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf(testPersonRoleEnum));
+        testPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf(testPersonRoleEnum), testPhoneNumber, testFirstName, testLastName);
     }
 
     @Test
@@ -52,6 +55,9 @@ public class PersonDAOTest {
         when(resultSet.getString("email")).thenReturn(testEmail);
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
+        when(resultSet.getString("phoneNumber")).thenReturn(testPhoneNumber);
+        when(resultSet.getString("firstName")).thenReturn(testFirstName);
+        when(resultSet.getString("lastName")).thenReturn(testLastName);
         when(expectedPerson.getEmail()).thenReturn(testEmail);
         Person actualPerson = personDAO.buildPerson(resultSet);
         assertEquals(expectedPerson.getEmail(), actualPerson.getEmail());
@@ -63,6 +69,9 @@ public class PersonDAOTest {
         when(resultSet.getString("email")).thenReturn(testEmail);
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
+        when(resultSet.getString("phoneNumber")).thenReturn(testPhoneNumber);
+        when(resultSet.getString("firstName")).thenReturn(testFirstName);
+        when(resultSet.getString("lastName")).thenReturn(testLastName);
         personDAO.buildPerson(resultSet);
     }
 

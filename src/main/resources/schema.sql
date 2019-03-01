@@ -1,20 +1,16 @@
 DROP TABLE IF EXISTS person;
-DROP TABLE IF EXISTS discount;
 DROP TABLE IF EXISTS hotel;
 DROP TABLE IF EXISTS tourOffer;
 DROP TABLE IF EXISTS reservation;
-
 CREATE TABLE person
 (
   id       NUMERIC IDENTITY PRIMARY KEY,
   email    VARCHAR(200) NOT NULL,
   password VARCHAR(512) NOT NULL,
-  role     VARCHAR(200) NOT NULL
-);
-CREATE TABLE discount
-(
-  id       NUMERIC IDENTITY PRIMARY KEY,
-  discount INT
+  role     VARCHAR(200) NOT NULL,
+  phoneNumber VARCHAR(200) NOT NULL,
+  firstName VARCHAR(200) NOT NULL,
+  lastName VARCHAR(200) NOT NULL
 );
 CREATE TABLE hotel
 (
@@ -33,9 +29,8 @@ CREATE TABLE tour_offer
   price_per_unit INT          NOT NULL,
   hotel_id     INT          NOT NULL,
   description  VARCHAR(512),
-  discount_id  INT,
-  FOREIGN KEY (hotel_id) REFERENCES hotel (id),
-  FOREIGN KEY (discount_id) references discount (id)
+  discount  INT,
+  FOREIGN KEY (hotel_id) REFERENCES hotel (id)
 );
 CREATE TABLE reservation
 (
@@ -44,7 +39,7 @@ CREATE TABLE reservation
   tour_offer_id    INT          NOT NULL,
   number_of_people INT          NOT NULL,
   status          VARCHAR(100) NOT NULL,
-  discount_id     INT,
+  discount     INT,
   total_price      INT,
   FOREIGN KEY (tour_offer_id) REFERENCES tour_offer (id),
   FOREIGN KEY (client_id) REFERENCES person (id),
