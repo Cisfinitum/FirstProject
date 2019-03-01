@@ -33,18 +33,14 @@
         <div class="nav-wrapper tab ">
             <a href="/index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li>
-                    <button class="btn waves-effect waves-light" type="submit" name="action">
-                        <a class="forButton" href="/logout">Log Out</a>
-                    </button>
-                </li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
             </ul>
         </div>
     </nav>
 </header>
 <main>
     <div class="container">
-        <h2>Client profile</h2>
+        <h2><spring:message code="clientprofile" /></h2>
         <div class="profile">
             <div class="avatar card-profile-image">
                 <div class="card-content">
@@ -53,15 +49,16 @@
                             <img src="${imuser}" alt="profile image" class="circle">
                         </div>
                         <div class="col s3">
-                            <p class="medium-small grey-text">Email: ${person.email}</p>
-                            <p class="medium-small grey-text">Role: ${person.role}</p>
+                            <p class="medium-small grey-text"><spring:message code="emailname" />: ${person.email}</p>
+                            <p class="medium-small grey-text"><spring:message code="clientrole" />: ${person.role}</p>
+                            <p class="medium-small green-text">${paymentMessage}</p>
                         </div>
                         <div class="col s12 offset-s2">
                             <a class="btn waves-effect waves-light modal-trigger" data-target="modal" href="#modal">
-                                Change Password
+                                <spring:message code="changepassword" />
                             </a>
                             <div id="idofthedivtohide" class="hide">
-                                <span>Password has been changed</span>
+                                <span><spring:message code="passwordchanged" /></span>
                             </div>
                         </div>
                         <!-- Modal Structure -->
@@ -71,7 +68,7 @@
                                     <div class="row">
                                         <form name="user" id="change-pwd" class="col s12" autocomplete="off"
                                               onsubmit="return validatePageData()" action="" method="POST">
-                                            <h4>Change Password</h4>
+                                            <h4><spring:message code="changepassword" /></h4>
                                             <c:set var="val"><spring:message code="wrongpass"/></c:set>
                                             <input id="wrongpass" type="hidden" value="${val}"/>
                                             <span id="forpass" style="color: red; font-weight: bold"></span>
@@ -99,9 +96,9 @@
                             </div>
                             <div class="modal-footer">
                                 <div>
-                                    <a href="" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                                    <a href="" class="modal-close waves-effect waves-green btn-flat"><spring:message code="cancelsimple" /></a>
                                     <button type="submit" form="change-pwd" class="waves-effect waves-light btn">
-                                        Сhange
+                                        <spring:message code="edit" />
                                     </button>
                                 </div>
                             </div>
@@ -114,55 +111,57 @@
     </div>
     </div>
     <div class="container">
-        <h4>Reservations</h4>
+        <h4><spring:message code="reservations" /></h4>
         <table>
             <c:if test="${reservations.size()>0}">
                 <tr>
-                    <th>Reservation Number</th>
-                    <th>Discount</th>
-                    <th>Number Of People</th>
-                    <th>Status</th>
-                    <th>Total Price</th>
+                    <th><spring:message code="reservationnumber" /></th>
+                    <th><spring:message code="abouttour" /></th>
+                    <th><spring:message code="tourdiscount" /></th>
+                    <th><spring:message code="nop" /></th>
+                    <th><spring:message code="status" /></th>
+                    <th><spring:message code="totalprice" /></th>
                     <th></th>
                 </tr>
             </c:if>
-            <c:if test="${reservations.size() == 0}"><p>There are no active reservations for this client</p></c:if>
+            <c:if test="${reservations.size() == 0}"><p><spring:message code="noactivereservations" /></p></c:if>
             <c:forEach var="reservation" items="${reservations}">
             <tr>
                 <td>${reservation.id}</td>
-                <td> 0%</td>
+                <td>${description.get(reservation.id)} </td>
+                <td> ${reservation.discount}%</td>
                 <td> ${reservation.numberOfPeople}</td>
                 <td> ${reservation.status}</td>
                 <td> ${reservation.totalPrice}</td>
-                </c:forEach>
+                <td>
+                    <form method="post" action="/pay" id="pay">
+                        <c:if test="${reservation.status == 'UNPAID'}">
+                            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">PAY</a>
+                            <div id="modal1" class="modal">
+                                <div class="modal-content">
+                                    <h4>You are going to pay ${reservation.totalPrice} $</h4>
+                                    <p style="font-size: large">Are you sure?</p>
+                                    <input name="reservationId" type="hidden" value="${reservation.id}">
+                                    <div class="modal-footer">
+                                        <button type="submit" class="waves-effect waves-light btn">PAY
+                                        </button>
+                                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                    </form>
+                    </c:forEach>
             </tr>
 
         </table>
     </div>
 </main>
-<footer class="page-footer">
+<div class="footer-copyright">
     <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Tour de Team</h5>
-                <p class="grey-text text-lighten-4"><spring:message code="footerinf"/></p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-                <h5 class="white-text"><spring:message code="footerlinks"/></h5>
-                <ul>
-                    <li><a class="grey-text text-lighten-3" href="index"><spring:message code="homepage"/></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="information"/></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="feedback"/></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="contacts"/></a></li>
-                </ul>
-            </div>
-        </div>
+        © 2019 Tour de Team
     </div>
-    <div class="footer-copyright">
-        <div class="container">
-            © 2019 Tour de Team
-        </div>
-    </div>
+</div>
 </footer>
 
 <!--JavaScript at end of body for optimized loading-->
