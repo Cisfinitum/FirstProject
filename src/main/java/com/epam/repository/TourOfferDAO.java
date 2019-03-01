@@ -19,6 +19,8 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     private final JdbcTemplate JdbcTemplate;
     @Value("${tourOffer.tableName}")
     private String tableName;
+    @Value("${tourOffer.hotelId}")
+    private String hotelId;
 
     @Autowired
     public TourOfferDAO(JdbcTemplate JdbcTemplate) {
@@ -91,8 +93,8 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
                 .build();
     }
 
-    public int checkIfHotelsIsUsed(Integer hotelId){
-        String sql = "SELECT * FROM " + tableName + " WHERE hotel_id" + " = "+hotelId;
+    public int checkIfHotelsIsUsed(Integer id){
+        String sql = "SELECT * FROM " + tableName + " WHERE " + hotelId + " = " + id;
         List<TourOffer> tourOffers = JdbcTemplate.query(sql, (rs, rowNum) -> buildTour(rs));
         if (tourOffers.size() != 0) return 1;
         return 0;
