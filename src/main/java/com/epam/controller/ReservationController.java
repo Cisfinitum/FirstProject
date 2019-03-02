@@ -65,7 +65,7 @@ public class ReservationController {
     }
 
     @GetMapping("/restoreReservation/{id}")
-    public String Reservation(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+    public String restoreReservation(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         if(reservationService.changeArchiveStatusById(id, "NEW") == 1) {
             redirectAttributes.addFlashAttribute("message", "Reservation was restored successfully");
         } else {
@@ -74,4 +74,13 @@ public class ReservationController {
         return "redirect:/reservation";
     }
 
+    @GetMapping("/cleanArchive")
+    public String cleanArchive(RedirectAttributes redirectAttributes){
+        if(reservationService.cleanArchive() > 0){
+            redirectAttributes.addFlashAttribute("message", "Archive was cleaned");
+        } else {
+            redirectAttributes.addFlashAttribute("errormessage", "Nothing to clean");
+        }
+        return "redirect:/reservation";
+    }
 }

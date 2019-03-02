@@ -150,23 +150,15 @@ public class ReservationService {
         }
     }
 
-    public int changeReservationStatusById(Integer id) {
+    public int changeReservationStatusById(Integer id, String status) {
         if(id != null){
             if (id > 0){
-                return reservationDAO.changeReservationStatusById(id);
+                return reservationDAO.changeReservationStatusById(id, status);
             } else {
                 throw new IllegalArgumentException("id must be positive");
             }
         } else {
             throw new NoSuchElementException("id must be specified");
-        }
-    }
-
-    public Boolean isAvailable(Reservation reservation){
-        if(reservation.getArchiveStatus().equals("ARCHIVED")){
-            return false;
-        } else {
-            return true;
         }
     }
 
@@ -180,5 +172,9 @@ public class ReservationService {
         } else {
             throw new NoSuchElementException("all values must be specified");
         }
+    }
+
+    public int cleanArchive(){
+        return reservationDAO.cleanArchive();
     }
 }

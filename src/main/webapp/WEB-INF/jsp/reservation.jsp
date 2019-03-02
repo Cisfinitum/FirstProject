@@ -62,7 +62,8 @@
                             <th style="text-align: right"><spring:message code="addtoarchive"/></th>
                         </tr>
                     </c:if>
-                    <c:if test="${listReservation.size() == 0}"><p><spring:message code="noactivereservationsatall"/></p></c:if>
+                    <c:if test="${listReservation.size() == 0}"><p><spring:message
+                            code="noactivereservationsatall"/></p></c:if>
                     <c:forEach var="reservation" items="${listReservation}">
                     <tr>
                         <td>${reservation.id}</td>
@@ -72,7 +73,7 @@
                         <td> ${reservation.numberOfPeople}</td>
                         <td> ${reservation.status}</td>
                         <td> ${reservation.totalPrice}</td>
-                        <td><a href="archiveReservation/${reservation.id} "class="secondary-content"> <i
+                        <td><a href="archiveReservation/${reservation.id} " class="secondary-content"> <i
                                 class="small material-icons">remove</i></a></td>
                         </c:forEach>
                     </tr>
@@ -92,24 +93,29 @@
                 </div>
                 <div class="row">
                     <div class="col s12">
-                            <input class="hide" id="hd-1" type="checkbox">
-                        <label for="hd-1" style="color: white; text-align: center " class="waves-effect waves-light btn"> <th><spring:message code="archive"/>  </th></label>
-                        <div >
+                        <input class="hide" id="hd-1" type="checkbox">
+                        <label for="hd-1" style="color: white; text-align: center "
+                               class="waves-effect waves-light btn">
+                            <th><spring:message code="archive"/></th>
+                        </label>
+                        <div>
+                            <c:if test="${listArchiveReservation.size() == 0}"><p> <spring:message code="archiveempty"/> </p></c:if>
+                            <c:if test="${listArchiveReservation.size()>0}">
                             <table>
-                                <c:if test="${listArchiveReservation.size()>0}">
-                                    <tr>
-                                        <th>№</th>
-                                        <th><spring:message code="discountid"/></th>
-                                        <th><spring:message code="clientid"/></th>
-                                        <th><spring:message code="tourid"/></th>
-                                        <th><spring:message code="nop"/></th>
-                                        <th><spring:message code="status"/></th>
-                                        <th><spring:message code="totalprice"/></th>
-                                        <th style="text-align: right"><spring:message code="restore"/></th>
-                                        <th style="text-align: right"><spring:message code="delete"/></th>
-                                    </tr>
-                                </c:if>
-                                <c:if test="${listArchiveReservation.size() == 0}"><p>There are no archived reservations</p></c:if>
+
+                                <tr>
+                                    <th>№</th>
+                                    <th><spring:message code="discountid"/></th>
+                                    <th><spring:message code="clientid"/></th>
+                                    <th><spring:message code="tourid"/></th>
+                                    <th><spring:message code="nop"/></th>
+                                    <th><spring:message code="status"/></th>
+                                    <th><spring:message code="totalprice"/></th>
+                                    <th style="text-align: right"><spring:message code="restore"/></th>
+                                    <th style="text-align: right"><spring:message code="delete"/></th>
+                                </tr>
+
+
                                 <c:forEach var="reservation" items="${listArchiveReservation}">
                                 <tr>
                                     <td>${reservation.id}</td>
@@ -124,10 +130,13 @@
                                     <td><a href="deleteReservation/${reservation.id}" class="secondary-content"> <i
                                             class="small material-icons"> <i class="material-icons">delete</i>
                                     </i></a></td>
-                                </c:forEach>
+                                    </c:forEach>
                                 </tr>
                                 <br>
                             </table>
+                            <a href="/reservation/cleanArchive" style="background-color:#90caf9" class="btn-small">
+                               <spring:message code="cleanarchive"/> </a>
+                            </c:if>
                         </div>
                     </div>
                 </div>

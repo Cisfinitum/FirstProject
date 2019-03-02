@@ -36,9 +36,11 @@ public class ClientsController {
     }
 
     @GetMapping("/clientProfile")
-    public ModelAndView clientPage (@ModelAttribute(name = "paymentMessage") String paymentMessage, Principal principal, ModelMap modelMap) {
+    public ModelAndView clientPage (@ModelAttribute(name = "paymentMessage") String paymentMessage,
+                                    @ModelAttribute (name = "cancelMessage") String cancelMessage, Principal principal, ModelMap modelMap) {
         ModelAndView clientModel = new ModelAndView();
         clientModel.addObject("paymentMessage", paymentMessage);
+        clientModel.addObject("cancelMessage", cancelMessage);
         Integer clientId = personService.getIdByEmail(principal.getName());
         List<Reservation> reservations = reservationService.getReservationsByPersonId(clientId);
         clientModel.addObject("person", personService.getPersonById(clientId));

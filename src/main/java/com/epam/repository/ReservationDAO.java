@@ -73,7 +73,7 @@ public class ReservationDAO implements SimpleReservationDAO {
     }
 
     public List<Reservation> getReservationsByPersonId(Integer personId) {
-        String sql = "SELECT * FROM " + tableName + " WHERE " + clientId + " = ? ORDER BY id";
+        String sql = "SELECT * FROM " + tableName + " WHERE " + clientId + " = ? AND (STATUS = 'PAID' OR STATUS = 'UNPAID') ORDER BY id";
         Object[] parameters = new Object[] { personId };
         return jdbcTemplate.query(sql, parameters, reservationMapper);
     }
@@ -127,16 +127,21 @@ public class ReservationDAO implements SimpleReservationDAO {
                 sql, new Object[]{}, Integer.class);
     }
 
-    public int changeReservationStatusById(Integer reservationId){
+    public int changeReservationStatusById(Integer reservationId, String reservationStatus){
         String sql = "UPDATE " +
-                tableName + " SET " + status + " = 'PAID'" +
+                tableName + " SET " + status + " = '"+ reservationStatus +"'" +
                 " WHERE " + id + "= "+ reservationId;
         return jdbcTemplate.update(sql);
     }
-    public int changeArchiveStatusById(Integer reservationId, String status){
+    public int changeArchiveStatusById(Integer reservationId, String reservationStatus){
         String sql = "UPDATE " +
-                tableName + " SET " + archiveStatus + " = '" + status + "'" +
+                tableName + " SET " + archiveStatus + " = '" + reservationStatus + "'" +
                 " WHERE " + id + "= "+ reservationId;
+        return jdbcTemplate.update(sql);
+    }
+
+    public int cleanArchive(){
+        String sql = "DELETE FROM " + tableName + " WHERE " + archiveStatus + " = " + "'ARCHIVED'";
         return jdbcTemplate.update(sql);
     }
 }
