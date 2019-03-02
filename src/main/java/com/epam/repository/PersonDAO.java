@@ -5,21 +5,31 @@ import com.epam.model.PersonRoleEnum;
 import com.epam.repository.interfaces.SimplePersonDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@PropertySource("classpath:columns.properties")
 @Repository
 public class PersonDAO implements SimplePersonDAO {
-    @Value("${clients.id}")
-    private String id;
-    @Value("${clients.email}")
-    private String email;
-    @Value(("${clients.role}"))
-    private String role;
 
+    @Value("${person.tableName}")
+    private String tableName;
+    @Value("${person.id}")
+    private String id;
+    @Value("${person.email}")
+    private String email;
+    @Value("${person.role}")
+    private String role;
+    @Value("${person.phoneNumber}")
+    private String phoneNumber;
+    @Value("${person.firstName}")
+    private String firstName;
+    @Value("${person.lastName}")
+    private String lastName;
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -124,28 +134,28 @@ public class PersonDAO implements SimplePersonDAO {
         return jdbcTemplate.update(sql, password, id);
     }
 
-    public int updatePhoneNumberById(Integer id, String phoneNumber) {
-        if (id < 1 || phoneNumber.equals("")) return -1;
-        String sql = "UPDATE person SET phoneNumber = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, phoneNumber, id);
+    public int updatePhoneNumberById(Integer personId, String personPhoneNumber) {
+        if (personId < 1 || personPhoneNumber.equals("")) return -1;
+        String sql = "UPDATE " + tableName + " SET " + phoneNumber  + " = ? WHERE "+ id + " = ?";
+        return jdbcTemplate.update(sql, personPhoneNumber, personId);
     }
 
-    public int updateFirstNameById(Integer id, String firstName) {
-        if (id < 1 || firstName.equals("")) return -1;
-        String sql = "UPDATE person SET firstName = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, firstName, id);
+    public int updateFirstNameById(Integer personId, String personFirstName) {
+        if (personId < 1 || personFirstName.equals("")) return -1;
+        String sql = "UPDATE " + tableName + " SET " + firstName + " = ? WHERE "+ id + " = ?";
+        return jdbcTemplate.update(sql, personFirstName, personId);
     }
 
-    public int updateLastNameById(Integer id, String lastName) {
-        if (id < 1 || lastName.equals("")) return -1;
-        String sql = "UPDATE person SET lastName = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, lastName, id);
+    public int updateLastNameById(Integer personId, String personLastName) {
+        if (personId < 1 || personLastName.equals("")) return -1;
+        String sql = "UPDATE " + tableName + " SET " + lastName  + " = ? WHERE "+ id + " = ?";
+        return jdbcTemplate.update(sql, personLastName, personId);
     }
 
-    public int updateEmailById(Integer id, String email) {
-        if (id < 1 || email.equals("") || doesEmailExist(email)) return -1;
-        String sql = "UPDATE person SET email = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, email, id);
+    public int updateEmailById(Integer personId, String personEmail) {
+        if (personId < 1 || personEmail.equals("") || doesEmailExist(personEmail)) return -1;
+        String sql = "UPDATE " + tableName + " SET " + email + " = ? WHERE " + id + " = ?";
+        return jdbcTemplate.update(sql, personEmail, personId);
     }
 
 }
