@@ -8,7 +8,6 @@ import com.epam.service.TourOfferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +36,7 @@ public class ClientsController {
 
     @GetMapping("/clientProfile")
     public ModelAndView clientPage (@ModelAttribute(name = "paymentMessage") String paymentMessage,
-                                    @ModelAttribute (name = "cancelMessage") String cancelMessage, Principal principal, ModelMap modelMap) {
+                                    @ModelAttribute (name = "cancelMessage") String cancelMessage, Principal principal) {
         ModelAndView clientModel = new ModelAndView();
         clientModel.addObject("paymentMessage", paymentMessage);
         clientModel.addObject("cancelMessage", cancelMessage);
