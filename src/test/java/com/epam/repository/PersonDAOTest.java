@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.util.ReflectionTestUtils;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -46,6 +48,14 @@ public class PersonDAOTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         testPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf(testPersonRoleEnum), testPhoneNumber, testFirstName, testLastName);
+        ReflectionTestUtils.setField(personDAO, "tableName", "person");
+        ReflectionTestUtils.setField(personDAO, "id", "id");
+        ReflectionTestUtils.setField(personDAO, "role", "role");
+        ReflectionTestUtils.setField(personDAO, "password", "password");
+        ReflectionTestUtils.setField(personDAO, "email", "email");
+        ReflectionTestUtils.setField(personDAO, "phoneNumber", "phoneNumber");
+        ReflectionTestUtils.setField(personDAO, "lastName", "last_name");
+        ReflectionTestUtils.setField(personDAO, "firstName", "first_name");
     }
 
     @Test
@@ -143,11 +153,12 @@ public class PersonDAOTest {
         when(jdbcTemplate.update(sql, testPassword, EMPTY_EMAIL)).thenReturn(UNEXPECTED_RESULT);
         assertEquals(UNEXPECTED_RESULT, personDAO.updatePassword(EMPTY_EMAIL, testPassword));
     }
+
     @Test
-    public void getIdByEmailGetsNonExistEmail(){
+    public void getIdByEmailGetsNonExistEmail() {
         Integer expectedResult = -1;
         String nonExistEmail = "admin@mail.com";
-        String sql = "SELECT id FROM person WHERE email = " + "'"+nonExistEmail+ "'";
+        String sql = "SELECT id FROM person WHERE email = " + "'" + nonExistEmail + "'";
         when(jdbcTemplate.queryForObject(sql, Integer.class)).thenReturn(-1);
         Integer actualResult = personDAO.getIdByEmail(nonExistEmail);
         assertEquals(expectedResult, actualResult);

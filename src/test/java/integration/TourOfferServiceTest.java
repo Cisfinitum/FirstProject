@@ -41,6 +41,14 @@ public class TourOfferServiceTest {
         tourOfferDAO = new TourOfferDAO(jdbcTemplate);
         tourOfferDAO = Mockito.spy(tourOfferDAO);
         ReflectionTestUtils.setField(tourOfferDAO, "tableName", "tour_offer");
+        ReflectionTestUtils.setField(tourOfferDAO, "tourType", "tour_type");
+        ReflectionTestUtils.setField(tourOfferDAO, "startDate", "start_date");
+        ReflectionTestUtils.setField(tourOfferDAO, "endDate", "end_date");
+        ReflectionTestUtils.setField(tourOfferDAO, "hotelId", "hotel_id");
+        ReflectionTestUtils.setField(tourOfferDAO, "pricePerUnit", "price_per_unit");
+        ReflectionTestUtils.setField(tourOfferDAO, "description", "description");
+        ReflectionTestUtils.setField(tourOfferDAO, "discount", "discount");
+        ReflectionTestUtils.setField(tourOfferDAO, "id", "id");
         tourOfferService = new TourOfferService(tourOfferDAO,hotelService,reservationService);
         tourOffers = new ArrayList<>();
         tourOffers.add(tourOffer);
