@@ -22,6 +22,8 @@ public class PersonDAO implements SimplePersonDAO {
     private String id;
     @Value("${person.email}")
     private String email;
+    @Value("${person.password}")
+    private String password;
     @Value("${person.role}")
     private String role;
     @Value("${person.phoneNumber}")

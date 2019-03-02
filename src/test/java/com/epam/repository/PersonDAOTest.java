@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.springframework.test.util.ReflectionTestUtils;
 
 
 import static org.junit.Assert.*;
@@ -48,6 +49,14 @@ public class PersonDAOTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         testPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf(testPersonRoleEnum), testPhoneNumber, testFirstName, testLastName);
+        ReflectionTestUtils.setField(personDAO, "tableName", "person");
+        ReflectionTestUtils.setField(personDAO, "id", "id");
+        ReflectionTestUtils.setField(personDAO, "role", "role");
+        ReflectionTestUtils.setField(personDAO, "password", "password");
+        ReflectionTestUtils.setField(personDAO, "email", "email");
+        ReflectionTestUtils.setField(personDAO, "phoneNumber", "phoneNumber");
+        ReflectionTestUtils.setField(personDAO, "lastName", "lastName");
+        ReflectionTestUtils.setField(personDAO, "firstName", "firstName");
     }
 
     @Test
