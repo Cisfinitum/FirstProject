@@ -62,12 +62,12 @@ public class PersonDAO implements SimplePersonDAO {
                 .build();
     }
 
-    public boolean doesEmailExist(String email) {
-        if (email == null) throw new IllegalArgumentException("Illegal email argument");
-        if (email.equals("")) return false;
-        List<String> emailsList = jdbcTemplate.query("SELECT email FROM " + tableName, (rs, rowNum) -> getEmail(rs));
+    public boolean doesEmailExist(String personEmail) {
+        if (personEmail == null) throw new IllegalArgumentException("Illegal email argument");
+        if (personEmail.equals("")) return false;
+        List<String> emailsList = jdbcTemplate.query("SELECT " + email + " FROM " + tableName, (rs, rowNum) -> getEmail(rs));
         for (String stringEmail : emailsList) {
-            if (stringEmail.equals(email)) return true;
+            if (stringEmail.equals(personEmail)) return true;
         }
         return false;
     }
