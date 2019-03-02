@@ -54,7 +54,6 @@ public class PersonDAO implements SimplePersonDAO {
         if (email.equals("")) return false;
         List<String> emailsList = jdbcTemplate.query("SELECT email FROM person", (rs, rowNum) -> getEmail(rs));
         for(String stringEmail:  emailsList){
-            System.out.println("Im here");
             if (stringEmail.equals(email)) return true;
         }
         return false;
@@ -124,4 +123,29 @@ public class PersonDAO implements SimplePersonDAO {
         String sql = "UPDATE person SET password = ? WHERE id = ?";
         return jdbcTemplate.update(sql, password, id);
     }
+
+    public int updatePhoneNumberById(Integer id, String phoneNumber) {
+        if (id < 1 || phoneNumber.equals("")) return -1;
+        String sql = "UPDATE person SET phoneNumber = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, phoneNumber, id);
+    }
+
+    public int updateFirstNameById(Integer id, String firstName) {
+        if (id < 1 || firstName.equals("")) return -1;
+        String sql = "UPDATE person SET firstName = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, firstName, id);
+    }
+
+    public int updateLastNameById(Integer id, String lastName) {
+        if (id < 1 || lastName.equals("")) return -1;
+        String sql = "UPDATE person SET lastName = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, lastName, id);
+    }
+
+    public int updateEmailById(Integer id, String email) {
+        if (id < 1 || email.equals("") || doesEmailExist(email)) return -1;
+        String sql = "UPDATE person SET email = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, email, id);
+    }
+
 }
