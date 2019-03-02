@@ -73,4 +73,4 @@ See it up and running on http://localhost:8080
 >ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
 }
 >
-iii. Use tomcatRun task
+ii. Use tomcatRun task
