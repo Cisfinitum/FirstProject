@@ -53,18 +53,24 @@ See it up and running on http://localhost:8080
     
      1. Add to build.gradle
 >
- >apply plugin: 'com.bmuschko.tomcat'
+ >apply plugin: 'com.bmuschko.tomcat' 
+>
 >
 >dependencies {
-    def tomcatVersion = '9.0.1'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-           "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
-           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
-}
-tomcat {
-    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+>
+> def tomcatVersion = '9.0.1'
+>
+>tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+>           
+>"org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+>
+> "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"}
+>
+>tomcat {
+>
+>httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+>    
+>ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
 }
 >
-     ii. Edit configuration 
-     iii. Use tomcatRun task
+iii. Use tomcatRun task
