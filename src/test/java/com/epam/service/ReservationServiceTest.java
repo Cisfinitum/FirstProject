@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.omg.CORBA.INTERNAL;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -122,32 +123,58 @@ public class ReservationServiceTest {
         when(principal.getName()).thenReturn(testEmail);
         when(personService.getIdByEmail(testEmail)).thenReturn(1);
         modelAndView = reservationService.reserveTour(modelAndView, principal, testId, testPricePerUnit, numberOfPeople, testDiscountId, redirectAttributes);
-        assertEquals(expectedView , modelAndView.getViewName());
+        assertEquals(expectedView, modelAndView.getViewName());
     }
 
     @Test
-    public void reserveTourUserDidNotLogIn(){
+    public void reserveTourUserDidNotLogIn() {
         principal = null;
         String expectedView = "login";
         modelAndView = reservationService.reserveTour(modelAndView, principal, testId, testPricePerUnit, numberOfPeople, testDiscountId, redirectAttributes);
-        assertEquals(expectedView , modelAndView.getViewName());
+        assertEquals(expectedView, modelAndView.getViewName());
     }
 
     @Test
-    public void changeReservationStatusById(){
-        when(reservationDAO.changeReservationStatusById(testId)).thenReturn(1);
-        Integer actualResult = reservationService.changeReservationStatusById(testId);
+    public void changeReservationStatusById() {
+        when(reservationDAO.changeReservationStatusById(testId, testStatus)).thenReturn(1);
+        Integer actualResult = reservationService.changeReservationStatusById(testId, testStatus);
         Integer expectedResult = 1;
         assertEquals(expectedResult, actualResult);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void changeStatusThrowsIllegalArgumentExc(){
-        reservationService.changeReservationStatusById(-1);
+    public void changeStatusThrowsIllegalArgumentExc() {
+        reservationService.changeReservationStatusById(-1, "NEW");
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void changeStatusThrowsNoSuchElementExc(){
-        reservationService.changeReservationStatusById(null);
+    public void changeStatusThrowsNoSuchElementExc() {
+        reservationService.changeReservationStatusById(null, null);
+    }
+
+    @Test
+    public void cleanArchive() {
+        Integer expectedAmount = 1;
+        when(reservationDAO.cleanArchive()).thenReturn(expectedAmount);
+        Integer actualAmount = reservationService.cleanArchive();
+        assertEquals(expectedAmount, actualAmount);
+    }
+
+    @Test
+    public void changeStatusById(){
+        Integer expectedAmount = 1;
+        when(reservationDAO.changeArchiveStatusById(testId, testStatus)).thenReturn(expectedAmount);
+        Integer actualAmount = reservationService.changeArchiveStatusById(testId, testStatus);
+        assertEquals(expectedAmount, actualAmount);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void changeStatusByIdThrowsIllegalArgumentExcp(){
+        Integer wrongId = -1;
+        reservationService.changeArchiveStatusById(wrongId, testStatus);
+    }
+    @Test(expected = NoSuchElementException.class)
+    public void changeStatusByIdThrowsNoSuchElementExcp(){
+        reservationService.changeArchiveStatusById(null, null);
     }
 }

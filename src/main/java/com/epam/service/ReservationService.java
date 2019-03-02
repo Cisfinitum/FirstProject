@@ -3,16 +3,13 @@ package com.epam.service;
 import com.epam.model.Reservation;
 import com.epam.model.ReservationArchiveStatusEnum;
 import com.epam.model.ReservationStatusEnum;
-import com.epam.model.TourOffer;
 import com.epam.repository.ReservationDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.xml.crypto.Data;
 import java.security.Principal;
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 

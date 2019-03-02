@@ -3,14 +3,12 @@ package com.epam.controller;
 import com.epam.model.Reservation;
 import com.epam.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/reservation")
@@ -33,10 +31,10 @@ public class ReservationController {
                                    @ModelAttribute(name = "errormessage") String errormessage, ModelMap modelMap) {
         int amount = reservationService.totalAmountOfRows;
         List<Reservation> reservations = reservationService.listReservations(id, amount, "NEW");
-        List<Reservation> reservations2 = reservationService.listReservations(1, reservationService.amountOfReservation("ARCHIVED"), "ARCHIVED");
+        List<Reservation> archiveReservations = reservationService.listReservations(1, reservationService.amountOfReservation("ARCHIVED"), "ARCHIVED");
         int generalAmount = reservationService.amountOfReservation("NEW");
         modelMap.addAttribute("listReservation", reservations);
-        modelMap.addAttribute("listArchiveReservation", reservations2);
+        modelMap.addAttribute("listArchiveReservation", archiveReservations);
         modelMap.addAttribute("generalAmount", generalAmount);
         modelMap.addAttribute("amount", (generalAmount % amount == 0) ? generalAmount / amount : generalAmount / amount + 1);
         modelMap.addAttribute("message", message);
