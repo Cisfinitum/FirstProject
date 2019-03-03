@@ -6,7 +6,6 @@ import com.epam.service.HotelService;
 import com.epam.service.PersonService;
 import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
-import com.epam.validator.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +19,8 @@ import java.sql.Date;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.epam.service.TourOfferService.ROWS_PER_PAGE;
 
@@ -113,41 +114,57 @@ public class ToursController {
         ModelAndView toursModel = new ModelAndView();
         List<Hotel> hotels = hotelService.getHotels();
         toursModel.addObject("hotelList", hotels );
+        toursModel.addObject("tourType", tourType);
+        toursModel.addObject("startDate", startDate);
+        toursModel.addObject("endDate", endDate);
+        toursModel.addObject("price", pricePerPerson);
+        toursModel.addObject("discount", discount);
+        toursModel.addObject("description", tourDescription);
+        toursModel.setViewName("addtour");
+        LocalDate addStartDate;
+        LocalDate addEndDate;
         try {
-            LocalDate addStartDate = Validator.getDate(startDate, false);
-            LocalDate addEndDate = Validator.getDate(endDate, false);
-            Integer addPricePerPerson = Validator.getInt(pricePerPerson);
-            Integer addDiscount = Validator.getDiscount(discount);
-            Validator.checkEmpty(tourType);
-            Validator.checkEmpty(tourDescription);
-            Validator.dateDifference(addStartDate,addEndDate);
+            if(!startDate.isEmpty()) {
+                addStartDate = Date.valueOf(startDate).toLocalDate();
+            } else {
+                return toursModel.addObject("error","Empty Date");
+            }
+            if(!endDate.isEmpty()) {
+                addEndDate = Date.valueOf(endDate).toLocalDate();
+            } else {
+                return toursModel.addObject("error","Empty Date");
+            }
+        } catch (NumberFormatException | DateTimeException e) {
+            return toursModel.addObject("error","Wrong format of Date");
+        }
+        Pattern pricePattern = Pattern.compile("[0-9]+");
+        Matcher priceMatcher = pricePattern.matcher(pricePerPerson);
+        Pattern discountPatten = Pattern.compile("[0-9]{1,3}");
+        Matcher discountMatcher = discountPatten.matcher(discount);
+        if (!priceMatcher.matches()) {
+            return toursModel.addObject("error", "Invalid price");
+        } else if (!discountMatcher.matches()||Integer.valueOf(discount)>100) {
+            return toursModel.addObject("error", "Discount may be from 0 to 100");
+        } else if(tourType.isEmpty()){
+            return toursModel.addObject("error", "TourType empty");
+        } else if(tourDescription.isEmpty()){
+            return toursModel.addObject("error", "TourDescription empty");
+        } else {
             int result = toursOfferService.addTour(TourOffer.builder()
                     .id(1)
                     .tourType(tourType)
                     .startDate(addStartDate)
                     .endDate(addEndDate)
-                    .pricePerUnit(addPricePerPerson)
+                    .pricePerUnit(Integer.valueOf(pricePerPerson))
                     .hotelId(1) //stub
                     .description(tourDescription)
-                    .discount(addDiscount)
+                    .discount(Integer.valueOf(discount))
                     .build());
-
             if (result == 1) {
                 toursModel.addObject("result", "Success");
             } else {
                 toursModel.addObject("error", "Failed to add");
             }
-            return toursModel;
-
-        } catch (Exception e) {
-            toursModel.addObject("error", e.getMessage());
-            log.error(e.getMessage());
-            toursModel.addObject("tourType", tourType);
-            toursModel.addObject("startDate", startDate);
-            toursModel.addObject("endDate", endDate);
-            toursModel.addObject("price", pricePerPerson);
-            toursModel.addObject("discount", discount);
-            toursModel.addObject("description", tourDescription);
             return toursModel;
         }
     }
@@ -156,20 +173,23 @@ public class ToursController {
     public ModelAndView updateTour(@RequestParam String tourId, @RequestParam String tourType,
                                    @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
-        try {
-            Integer addTourId = Validator.getInt(tourId);
-            TourOffer tourOffer = toursOfferService.getTourById(addTourId);
-            toursModel.addObject("tour",tourOffer);
-            Integer addPricePerPerson = Validator.getInt(pricePerPerson);
-            Integer addDiscount = Validator.getDiscount(discount);
-            Validator.checkEmpty(tourType);
-            Validator.checkEmpty(tourDescription);
-            toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);
+        TourOffer tourOffer = toursOfferService.getTourById(Integer.valueOf(tourId));
+        toursModel.addObject("tour",tourOffer);
+        Pattern pricePattern = Pattern.compile("[0-9]+");
+        Matcher priceMatcher = pricePattern.matcher(pricePerPerson);
+        Pattern discountPatten = Pattern.compile("[0-9]{1,3}");
+        Matcher discountMatcher = discountPatten.matcher(discount);
+        if (!priceMatcher.matches()) {
+            return toursModel.addObject("error", "Invalid price");
+        } else if (!discountMatcher.matches()||Integer.valueOf(discount)>100) {
+            return toursModel.addObject("error", "Discount may be from 0 to 100");
+        } else if(tourType.isEmpty()){
+            return toursModel.addObject("error", "TourType empty");
+        } else if(tourDescription.isEmpty()){
+            return toursModel.addObject("error", "TourDescription empty");
+        } else {
+            toursOfferService.updateTour(tourOffer, tourType, Integer.valueOf(pricePerPerson), Integer.valueOf(tourDescription), tourDescription);
             toursModel.setViewName("redirect:/listoftours");
-            return toursModel;
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            toursModel.addObject("error", e.getMessage());
             return toursModel;
         }
     }

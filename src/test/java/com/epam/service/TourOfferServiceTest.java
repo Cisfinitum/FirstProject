@@ -161,12 +161,6 @@ public class TourOfferServiceTest {
         when(tourOfferService.updateTour(expectedTourOffer,"test",1,1,null)).thenThrow(IllegalArgumentException.class);
     }
 
-    @Test(expected = NotFoundException.class)
-    public void searchTourThrowNotFoundException(){
-        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
-        when(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now())).thenThrow(NotFoundException.class);
-    }
-
     @Test
     public void getToursByPageCheck() {
         when(tourOfferDAO.getToursByPage(1, 4)).thenReturn(tourOfferList);
