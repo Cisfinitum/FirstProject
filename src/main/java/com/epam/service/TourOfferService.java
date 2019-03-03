@@ -149,7 +149,7 @@ public class TourOfferService {
             TourOffer tourOffer = getTourById(tourId);
             Integer hotelId = tourOffer.getHotelId();
             Hotel hotel = hotelService.getHotelById(hotelId);
-            description.put(reservation.getId(), tourOffer.toString() + hotel.toString());
+            description.put(tourId, tourOffer.toString() + hotel.toString());
         }
         return description;
     }
