@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -37,6 +38,15 @@ public class TourOfferDAOTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        ReflectionTestUtils.setField(tourofferDAO, "tableName", "tour_offer");
+        ReflectionTestUtils.setField(tourofferDAO, "tourTypeName", "tour_type");
+        ReflectionTestUtils.setField(tourofferDAO, "startDateName", "start_date");
+        ReflectionTestUtils.setField(tourofferDAO, "endDateName", "end_date");
+        ReflectionTestUtils.setField(tourofferDAO, "hotelIdName", "hotel_id");
+        ReflectionTestUtils.setField(tourofferDAO, "pricePerUnitName", "price_per_unit");
+        ReflectionTestUtils.setField(tourofferDAO, "descriptionName", "description");
+        ReflectionTestUtils.setField(tourofferDAO, "discountIdName", "discount_id");
+        ReflectionTestUtils.setField(tourofferDAO, "idName", "id");
         expectedTour =  new TourOffer(1, "Active", LocalDate.of(2018,2,19),  LocalDate.of(2018,2,25),
                 1500, 1,"Best tour", 1);
     }
