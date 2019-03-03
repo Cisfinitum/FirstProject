@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.springframework.test.util.ReflectionTestUtils;
 
 
 import static org.junit.Assert.*;
@@ -21,10 +22,15 @@ public class PersonDAOTest {
     public static final int EXPECTED_RESULT = 1;
     public static final int UNEXPECTED_RESULT = -1;
     public static final String EMPTY_EMAIL = "";
+    public static final String EMPTY_PHONE_NUMBER = "";
+    public static final String EMPTY_NAME = "";
     private Integer testId = 1;
     private String testEmail = "user@email.com";
     private String testPassword = "Goodpassword1";
     private String testPersonRoleEnum = "USER";
+    private String testPhoneNumber = "8999999999";
+    private String testFirstName = "Example";
+    private String testLastName = "Example";
     private Person testPerson;
 
     @Mock
@@ -42,7 +48,15 @@ public class PersonDAOTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        testPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf(testPersonRoleEnum));
+        testPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf(testPersonRoleEnum), testPhoneNumber, testFirstName, testLastName);
+        ReflectionTestUtils.setField(personDAO, "tableName", "person");
+        ReflectionTestUtils.setField(personDAO, "id", "id");
+        ReflectionTestUtils.setField(personDAO, "role", "role");
+        ReflectionTestUtils.setField(personDAO, "password", "password");
+        ReflectionTestUtils.setField(personDAO, "email", "email");
+        ReflectionTestUtils.setField(personDAO, "phoneNumber", "phoneNumber");
+        ReflectionTestUtils.setField(personDAO, "lastName", "lastName");
+        ReflectionTestUtils.setField(personDAO, "firstName", "firstName");
     }
 
     @Test
@@ -52,6 +66,9 @@ public class PersonDAOTest {
         when(resultSet.getString("email")).thenReturn(testEmail);
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
+        when(resultSet.getString("phoneNumber")).thenReturn(testPhoneNumber);
+        when(resultSet.getString("firstName")).thenReturn(testFirstName);
+        when(resultSet.getString("lastName")).thenReturn(testLastName);
         when(expectedPerson.getEmail()).thenReturn(testEmail);
         Person actualPerson = personDAO.buildPerson(resultSet);
         assertEquals(expectedPerson.getEmail(), actualPerson.getEmail());
@@ -63,6 +80,9 @@ public class PersonDAOTest {
         when(resultSet.getString("email")).thenReturn(testEmail);
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
+        when(resultSet.getString("phoneNumber")).thenReturn(testPhoneNumber);
+        when(resultSet.getString("firstName")).thenReturn(testFirstName);
+        when(resultSet.getString("lastName")).thenReturn(testLastName);
         personDAO.buildPerson(resultSet);
     }
 
@@ -134,13 +154,62 @@ public class PersonDAOTest {
         when(jdbcTemplate.update(sql, testPassword, EMPTY_EMAIL)).thenReturn(UNEXPECTED_RESULT);
         assertEquals(UNEXPECTED_RESULT, personDAO.updatePassword(EMPTY_EMAIL, testPassword));
     }
+
     @Test
-    public void getIdByEmailGetsNonExistEmail(){
+    public void getIdByEmailGetsNonExistEmail() {
         Integer expectedResult = -1;
-        String nonExistEmail = "admin@mail.com";
-        String sql = "SELECT id FROM person WHERE email = " + "'"+nonExistEmail+ "'";
+        String nonExistEmail = "admin@email.com";
+        String sql = "SELECT id FROM person WHERE email = " + "'" + nonExistEmail + "'";
         when(jdbcTemplate.queryForObject(sql, Integer.class)).thenReturn(-1);
         Integer actualResult = personDAO.getIdByEmail(nonExistEmail);
         assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void updatePhoneNumberPositiveResult() {
+        String sql = "UPDATE person SET phoneNumber = ? WHERE id = ?";
+        when(jdbcTemplate.update(sql, testPhoneNumber, testId)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personDAO.updatePhoneNumberById(testId, testPhoneNumber));
+    }
+
+    @Test
+    public void updatePhoneNumberEmptyInput() {
+        assertEquals(UNEXPECTED_RESULT, personDAO.updatePhoneNumberById(testId, EMPTY_PHONE_NUMBER));
+    }
+
+    @Test
+    public void updateFirstNamePositiveResult() {
+        String sql = "UPDATE person SET firstName = ? WHERE id = ?";
+        when(jdbcTemplate.update(sql, testFirstName, testId)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personDAO.updateFirstNameById(testId, testFirstName));
+    }
+
+    @Test
+    public void updateFirstNameEmptyInput() {
+        assertEquals(UNEXPECTED_RESULT, personDAO.updateFirstNameById(testId, EMPTY_NAME));
+    }
+
+    @Test
+    public void updateLastNamePositiveResult() {
+        String sql = "UPDATE person SET lastName = ? WHERE id = ?";
+        when(jdbcTemplate.update(sql, testLastName, testId)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personDAO.updateLastNameById(testId, testLastName));
+    }
+
+    @Test
+    public void updateLastNameEmptyInput() {
+        assertEquals(UNEXPECTED_RESULT, personDAO.updateLastNameById(testId, EMPTY_NAME));
+    }
+
+    @Test
+    public void updateEmailPositiveResult() {
+        String sql = "UPDATE person SET email = ? WHERE id = ?";
+        when(jdbcTemplate.update(sql, testEmail, testId)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personDAO.updateEmailById(testId, testEmail));
+    }
+
+    @Test
+    public void updateEmailEmptyEmail() {
+        assertEquals(UNEXPECTED_RESULT, personDAO.updateEmailById(testId, EMPTY_EMAIL));
     }
 }
