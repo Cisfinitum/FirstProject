@@ -1,11 +1,14 @@
 package com.epam.service;
 
 import com.epam.model.Person;
+import com.epam.model.Reservation;
 import com.epam.repository.PersonDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PersonService {
@@ -84,5 +87,15 @@ public class PersonService {
             throw new IllegalArgumentException("Email must be not null");
         }
         return personDAO.getIdByEmail(email);
+    }
+
+    public Map<Integer,String> mapOfUsersInformation(List<Reservation> reservations) {
+        Map<Integer, String> map = new HashMap<>();
+        for (Reservation reservation : reservations) {
+            Integer clientId = reservation.getClientId();
+            Person person = getPersonById(clientId);
+            map.put(clientId, person.toString());
+        }
+        return map;
     }
 }
