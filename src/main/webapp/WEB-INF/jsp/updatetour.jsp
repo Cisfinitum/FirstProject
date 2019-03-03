@@ -28,7 +28,7 @@
 <header>
     <nav>
         <div class="nav-wrapper tab " >
-            <a href="index" class="brand-logo">Tour De Team</a>
+            <a href="/index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
                 <li><a href="/listoftours"><spring:message code="tours" /></a></li>
                 <li><a href="/addtour"><spring:message code="addtour" /></a></li>

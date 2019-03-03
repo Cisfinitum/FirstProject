@@ -81,4 +81,33 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
         if (result < 1) return false;
         return true;
     }
+
+    public boolean updatePhoneNumberById(Integer id, String phoneNumber) {
+        int result = personService.updatePhoneNumberById(id, phoneNumber);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
+    }
+
+    public boolean updateFirstNameById(Integer id, String firstName) {
+        int result = personService.updateFirstNameById(id, firstName);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
+    }
+
+    public boolean updateLastNameById(Integer id, String lastName) {
+        int result = personService.updateLastNameById(id, lastName);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
+    }
+
+    public boolean updateEmailById(Integer id, String email) {
+        int result = personService.updateEmailById(id, email);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
+    }
+
 }

@@ -5,6 +5,7 @@ import com.epam.repository.HotelDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -81,23 +82,29 @@ public class HotelService {
         return hotels;
     }
 
-    public ModelAndView addHotel(ModelAndView modelAndView, String name, String country, String city, Integer stars ){
+    public String addHotel(ModelAndView modelAndView, String name, String country, String city, Integer stars , RedirectAttributes redirectAttributes){
         Pattern pattern = Pattern.compile("^[a-zA-Z\\-\\s]*$");
         Matcher countryMatcher = pattern.matcher(country);
         Matcher cityMatcher = pattern.matcher(city);
-        if (name.equals("")) {
-            return modelAndView.addObject("errormessage", "Name is empty");
-        }
-        if (!cityMatcher.matches() || city.equals("")) {
-            return modelAndView.addObject("errormessage", "Invalid name for city");
-        }
-        if (!countryMatcher.matches() || country.equals("")) {
-            return modelAndView.addObject("errormessage", "Invalid name for country");
+        modelAndView.addObject("hotels", getHotels());
+        if (name.equals("")|| !cityMatcher.matches() || city.equals("") || !countryMatcher.matches() || country.equals("")) {
+            redirectAttributes.addFlashAttribute("name", name);
+            redirectAttributes.addFlashAttribute("country", country);
+            redirectAttributes.addFlashAttribute("city", city);
+            redirectAttributes.addFlashAttribute("errormessage", "Please, fill every field with valid values");
+            return "redirect:/hotels";
+
         }
         if (createHotel(new Hotel(name.trim(), country.trim(), city.trim(), stars)) != 1) {
-            return modelAndView.addObject("errormessage", "Some field are empty");
+            redirectAttributes.addFlashAttribute("name", name);
+            redirectAttributes.addFlashAttribute("country", country);
+            redirectAttributes.addFlashAttribute("city", city);
+            redirectAttributes.addFlashAttribute("errormessage", "Some field are empty");
+            return "redirect:/hotels";
         }
-        return modelAndView.addObject("message", "Hotel was created successfully");
+        redirectAttributes.addFlashAttribute("message", "Hotel was created successfully");
+        return "redirect:/hotels";
+
     }
 
 }

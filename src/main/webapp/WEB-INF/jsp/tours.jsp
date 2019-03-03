@@ -36,14 +36,14 @@
                 <li><a href="/clients"><spring:message code="clients" /></a></li>
                 <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
                 <li><a href="/logout"><spring:message code="logout" /></a></li>
-                <li><a href="listoftours?lang=en"><img src="${imgen}" width="48" height="32"></a>
-                    <a href="listoftours?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
+                <li><a href="/listoftours?lang=en"><img src="${imgen}" width="48" height="32"></a>
+                    <a href="/listoftours?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
             </ul>
         </div>
     </nav>
 </header>
 <main>
-        <div class="container">
+        <div class="container" style="width: 90%">
             <h2><spring:message code="tours" /></h2>
             <c:if test="${not empty result}">
                 <span style="color: green; font-weight: bold">${result}</span>
@@ -64,6 +64,8 @@
                     <th><spring:message code="hotel" /></th>
                     <th><spring:message code="tourdescription" /></th>
                     <th><spring:message code="tourdiscount" /></th>
+                    <th><spring:message code="edit" /></th>
+                    <th><spring:message code="delete" /></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -79,17 +81,18 @@
                         <td>${hotels.get(listOfTours.get(i).hotelId).name}</td>
                         <td class="description" title="${listOfTours.get(i).description}">
                                 ${listOfTours.get(i).description}</td>
-                        <td>${listOfTours.get(i).discount}</td>
+                        <td>${listOfTours.get(i).discount} %</td>
                         <td>
                             <c:if test="${isReservedMap.get(listOfTours.get(i).id)}">
-                            <a href="updatetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
-                                <spring:message code="edit" /> </a>
+                            <a href="/updatetour/${listOfTours.get(i).id}">
+                                <i class="material-icons">edit</i>
+                            </a>
                             </c:if>
                         </td>
                         <td>
                             <c:if test="${isReservedMap.get(listOfTours.get(i).id)}">
-                            <a href="deletetour/${listOfTours.get(i).id}" style="background-color:#90caf9" class="btn-small">
-                                <spring:message code="delete" /> </a>
+                            <a href="/deletetour/${listOfTours.get(i).id}" >
+                                <i class="material-icons">delete</i> </a>
                             </c:if>
                         </td>
                     </tr>
@@ -98,6 +101,19 @@
             </table>
             <br>
             <br>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col s6 offset-s5">
+                    <ul class="pagination">
+                        <c:if test="${totalPages>1}">
+                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                <li class="waves-effect"><a href="/listoftours/${i}">${i}</a></li>
+                            </c:forEach>
+                        </c:if>
+                    </ul>
+                </div>
+            </div>
             <br>
             <br>
             <br>

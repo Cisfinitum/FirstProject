@@ -7,16 +7,22 @@ import com.epam.repository.TourOfferDAO;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
+@RunWith(Parameterized.class)
 public class TourOfferServiceTest {
     @Mock
     private TourOfferDAO tourOfferDAO;
@@ -160,6 +166,48 @@ public class TourOfferServiceTest {
     public void searchTourThrowNotFoundException(){
         when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
         when(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now())).thenThrow(NotFoundException.class);
+    }
+
+    @Test
+    public void getToursByPageCheck() {
+        when(tourOfferDAO.getToursByPage(1, 4)).thenReturn(tourOfferList);
+        assertEquals(tourOfferService.getToursByPage(1), tourOfferList);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getToursByPageThrowsIllegalArgumentExceptionForNullValue() {
+        tourOfferService.getToursByPage(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getToursByPageThrowsIllegalArgumentExceptionForIncorrectValue() {
+        tourOfferService.getToursByPage(0);
+    }
+
+    @Test
+    public void getAmountOfToursCheck() {
+        when(tourOfferDAO.getAmountOfTours()).thenReturn(1);
+        assertEquals(tourOfferService.getAmountOfTours(), 1);
+
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                { 4, 1 }, { 5, 2 }, { 1, 1 }, { 0, 0 }
+        });
+    }
+    @Parameterized.Parameter
+    public int pInput;
+
+    @Parameterized.Parameter(1)
+    public int pExpected;
+    @Test
+    public void getNumberOfPagesCheck() {
+        when(tourOfferDAO.getAmountOfTours()).thenReturn(pInput);
+        assertEquals(pExpected, tourOfferService.getNumberOfPages());
+
     }
 }
 

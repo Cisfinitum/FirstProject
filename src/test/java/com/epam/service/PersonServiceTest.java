@@ -20,6 +20,9 @@ public class PersonServiceTest {
     @Mock
     private PersonDAO personDAO;
 
+
+    public static final int EXPECTED_RESULT = 1;
+    public static final String NULL_ARGUMENT = null;
     private List<Person> personList;
     private PersonService personService;
     private Person expectedPerson;
@@ -124,14 +127,56 @@ public class PersonServiceTest {
     }
 
     @Test
-    public void getIdByEmail(){
+    public void getIdByEmail() {
         Integer expectedId = 1;
         when(personDAO.getIdByEmail(testEmail)).thenReturn(expectedId);
-        Integer actualId =personService.getIdByEmail(testEmail);
+        Integer actualId = personService.getIdByEmail(testEmail);
         assertEquals(expectedId, actualId);
     }
+
     @Test(expected = IllegalArgumentException.class)
-    public void getIdByEmailNullEmail(){
+    public void getIdByEmailNullEmail() {
         personService.getIdByEmail("");
+    }
+
+    @Test
+    public void updatePhoneNumberPositiveResult() {
+        when(personDAO.updatePhoneNumberById(testId, testPhoneNumber)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personService.updatePhoneNumberById(testId, testPhoneNumber));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updatePhoneNumberNullArgument() {
+        personService.updatePhoneNumberById(testId, NULL_ARGUMENT);
+    }
+
+    @Test
+    public void updateFirstNamePositiveResult() {
+        when(personDAO.updateFirstNameById(testId, testFirstName)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personService.updateFirstNameById(testId, testFirstName));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateFirstNameNullArgument() { personService.updateFirstNameById(testId, NULL_ARGUMENT);
+    }
+
+    @Test
+    public void updateLastNamePositiveResult() {
+        when(personDAO.updateLastNameById(testId, testLastName)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personService.updateLastNameById(testId, testLastName));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateLastNameNullArgument() { personService.updateLastNameById(testId, NULL_ARGUMENT);
+    }
+
+    @Test
+    public void updateEmailPositiveResult() {
+        when(personDAO.updateEmailById(testId, testEmail)).thenReturn(EXPECTED_RESULT);
+        assertEquals(EXPECTED_RESULT, personService.updateEmailById(testId, testEmail));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateEmailNullArgument() { personService.updateEmailById(testId, NULL_ARGUMENT);
     }
 }
