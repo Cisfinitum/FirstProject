@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.List;
 @PropertySource("classpath:columns.properties")
 @Repository
 public class PersonDAO implements SimplePersonDAO {
-
     @Value("${person.tableName}")
     private String tableName;
     @Value("${person.id}")
@@ -33,6 +33,7 @@ public class PersonDAO implements SimplePersonDAO {
     @Value("${person.lastName}")
     private String lastName;
 
+
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -40,100 +41,100 @@ public class PersonDAO implements SimplePersonDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Person> getPersons(){
-        return jdbcTemplate.query("SELECT * FROM person", (rs, rowNum) -> buildPerson(rs));
+    public List<Person> getPersons() {
+        return jdbcTemplate.query("SELECT * FROM " + tableName, (rs, rowNum) -> buildPerson(rs));
     }
 
-    public Person getPersonById(Integer personId){
-        Object[] parameters = new Object[] { personId };
-        return jdbcTemplate.queryForObject("SELECT * FROM person WHERE id = ?  ", parameters, (rs, rowNum) -> buildPerson(rs));
+    public Person getPersonById(Integer personId) {
+        Object[] parameters = new Object[]{personId};
+        return jdbcTemplate.queryForObject("SELECT * FROM " + tableName + " WHERE " + id + " = ?  ", parameters, (rs, rowNum) -> buildPerson(rs));
     }
 
     Person buildPerson(ResultSet rs) throws SQLException {
         return Person.builder()
-                .id(rs.getInt("id"))
-                .email(rs.getString("email"))
-                .password(rs.getString("password"))
-                .role(PersonRoleEnum.valueOf(rs.getString("role")))
-                .phoneNumber(rs.getString("phoneNumber"))
-                .firstName(rs.getString("firstName"))
-                .lastName(rs.getString("lastName"))
+                .id(rs.getInt(id))
+                .email(rs.getString(email))
+                .password(rs.getString(password))
+                .role(PersonRoleEnum.valueOf(rs.getString(role)))
+                .phoneNumber(rs.getString(phoneNumber))
+                .firstName(rs.getString(firstName))
+                .lastName(rs.getString(lastName))
                 .build();
     }
 
-    public boolean doesEmailExist(String email){
-        if (email == null) throw new IllegalArgumentException("Illegal email argument");
-        if (email.equals("")) return false;
-        List<String> emailsList = jdbcTemplate.query("SELECT email FROM person", (rs, rowNum) -> getEmail(rs));
-        for(String stringEmail:  emailsList){
-            if (stringEmail.equals(email)) return true;
+    public boolean doesEmailExist(String personEmail) {
+        if (personEmail == null) throw new IllegalArgumentException("Illegal email argument");
+        if (personEmail.equals("")) return false;
+        List<String> emailsList = jdbcTemplate.query("SELECT " + email + " FROM " + tableName, (rs, rowNum) -> getEmail(rs));
+        for (String stringEmail : emailsList) {
+            if (stringEmail.equals(personEmail)) return true;
         }
         return false;
     }
 
     String getEmail(ResultSet rs) throws SQLException {
-        return rs.getString("email");
+        return rs.getString(email);
     }
 
     public int addPerson(Person person) {
-        String email = person.getEmail();
-        if (doesEmailExist(email)) return -1;
-        String password = person.getPassword();
-        String role = person.getRole().toString();
-        String phoneNumber = person.getPhoneNumber();
-        String firstName = person.getFirstName();
-        String lastName = person.getLastName();
-        String sql = "INSERT INTO person (email, password, role, phoneNumber, firstName, lastName) VALUES (?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, email, password, role, phoneNumber, firstName, lastName);
+        String personEmail = person.getEmail();
+        if (doesEmailExist(personEmail)) return -1;
+        String personPassword = person.getPassword();
+        String personRole = person.getRole().toString();
+        String personPhoneNumber = person.getPhoneNumber();
+        String personFirstName = person.getFirstName();
+        String personLastName = person.getLastName();
+        String sql = "INSERT INTO " + tableName + " (" + email + ", " + password + ", " + role + ", " + phoneNumber + ", " + firstName + ", " + lastName + ") VALUES (?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, personEmail, personPassword, personRole, personPhoneNumber, personFirstName, personLastName);
     }
 
-    public int addToBlackList(Integer id) {
-        if (id < 1) return -1;
-        String sql = "UPDATE person SET role = 'BLOCKED' WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+    public int addToBlackList(Integer userId) {
+        if (userId < 1) return -1;
+        String sql = "UPDATE " + tableName + " SET " + role + " = 'BLOCKED' WHERE " + id + " = ?";
+        return jdbcTemplate.update(sql, userId);
     }
 
-    public int removeFromBlackList(Integer id) {
-        if (id < 1) return -1;
-        String sql = "UPDATE person SET role = 'USER' WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+    public int removeFromBlackList(Integer userId) {
+        if (userId < 1) return -1;
+        String sql = "UPDATE " + tableName + " SET " + role + " = 'USER' WHERE " + id + " = ?";
+        return jdbcTemplate.update(sql, userId);
     }
 
-    public int giveAdminRights(Integer id) {
-        if (id < 1) return -1;
-        String sql = "UPDATE person SET role = 'ADMIN' WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
+    public int giveAdminRights(Integer userId) {
+        if (userId < 1) return -1;
+        String sql = "UPDATE " + tableName + " SET " + role + " = 'ADMIN' WHERE " + id + " = ?";
+        return jdbcTemplate.update(sql, userId);
     }
 
-    public int updatePassword(String email, String password) {
-        if (email.equals("") || password.equals("")) return -1;
-        String sql = "UPDATE person SET password = ? WHERE email = ?";
-        return jdbcTemplate.update(sql, password, email);
+    public int updatePassword(String userEmail, String userPassword) {
+        if (userEmail.equals("") || userPassword.equals("")) return -1;
+        String sql = "UPDATE " + tableName + " SET " + password + " = ? WHERE " + email + " = ?";
+        return jdbcTemplate.update(sql, userPassword, userEmail);
     }
 
     public List<Person> listOfUsers(Integer page, Integer numOfRows) {
         page = (page - 1) * numOfRows + 1;
-        String sql = "SELECT * FROM person WHERE role != 'ADMIN' ORDER BY id LIMIT " + (page - 1) + "," + numOfRows;
+        String sql = "SELECT * FROM " + tableName + " WHERE " + role + " != 'ADMIN' ORDER BY " + id + " LIMIT " + (page - 1) + "," + numOfRows;
         return jdbcTemplate.query(sql, (rs, rowNum) -> buildPerson(rs));
     }
 
     public int amountOfUsers() {
-        String sql = "SELECT COUNT(*) FROM person WHERE role != 'ADMIN'";
+        String sql = "SELECT COUNT(*) FROM " + tableName + " WHERE " + role + " != 'ADMIN'";
         return jdbcTemplate.queryForObject(sql, new Object[]{}, Integer.class);
     }
 
-    public Integer getIdByEmail(String email) {
-        if (!doesEmailExist(email)) {
+    public Integer getIdByEmail(String userEmail) {
+        if (!doesEmailExist(userEmail)) {
             return -1;
         }
-        String sql = "SELECT id FROM person WHERE email = " + "'"+email+ "'";
+        String sql = "SELECT " + id + " FROM " + tableName + " WHERE " + email + " = " + "'" + userEmail + "'";
         return jdbcTemplate.queryForObject(sql, Integer.class);
     }
 
-    public int updatePasswordById(Integer id, String password) {
-        if (id < 1 || password.equals("")) return -1;
-        String sql = "UPDATE person SET password = ? WHERE id = ?";
-        return jdbcTemplate.update(sql, password, id);
+    public int updatePasswordById(Integer userId, String userPassword) {
+        if (userId < 1 || userPassword.equals("")) return -1;
+        String sql = "UPDATE " + tableName + " SET " + password + " = ? WHERE " + id + " = ?";
+        return jdbcTemplate.update(sql, userPassword, userId);
     }
 
     public int updatePhoneNumberById(Integer personId, String personPhoneNumber) {
