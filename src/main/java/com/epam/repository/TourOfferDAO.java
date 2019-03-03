@@ -31,6 +31,12 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
         return JdbcTemplate.query("SELECT * FROM "+tableName +" ORDER BY id", (rs, rowNum) -> buildTour(rs));
     }
 
+    public List<TourOffer> getToursByPage(Integer from, Integer offset){
+        String sql = "SELECT * from " +tableName+ " LIMIT ? , ?";
+        Object[] parameters = new Object[] { from-1, offset };
+        return JdbcTemplate.query(sql, parameters, (rs, rowNum) -> buildTour(rs));
+    }
+
     public int deleteTour(Integer tourId){
          return JdbcTemplate.update("DELETE FROM "+tableName+" WHERE id = ?", tourId);
     }
@@ -71,12 +77,19 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
         }
         else
             requestSQL = requestSQL.concat("IS NOT NULL");
+        requestSQL = requestSQL + " ORDER BY id";
         return JdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
     }
 
     public TourOffer getTourById(Integer tourId){
         Object[] parameters = new Object[] { tourId };
         return JdbcTemplate.queryForObject ("SELECT * FROM "+tableName+" WHERE id = ?", parameters, (rs, rowNum) -> buildTour(rs));
+    }
+
+    public int getAmountOfTours() {
+        String sql = "SELECT COUNT(*) FROM " +tableName;
+        return JdbcTemplate.queryForObject(
+                sql, Integer.class);
     }
 
     @SneakyThrows(SQLException.class)

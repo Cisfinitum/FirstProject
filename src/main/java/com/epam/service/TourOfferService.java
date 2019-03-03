@@ -22,6 +22,7 @@ public class TourOfferService {
     private final TourOfferDAO tourOfferDAO;
     private final HotelService hotelService;
     private final ReservationService reservationService;
+    public static final int ROWS_PER_PAGE = 4;
 
     @Autowired
     public TourOfferService(TourOfferDAO tourOfferDAO, HotelService hotelService, ReservationService reservationService) {
@@ -46,7 +47,18 @@ public class TourOfferService {
         return toursStatusMap;
     }
 
-    public int deleteTour(Integer tourId) {
+    public List<TourOffer> getToursByPage(Integer pageNum){
+        if ((pageNum == null) || (pageNum < 1)) {
+            throw new IllegalArgumentException("Page number must be integer and > 0");
+        }
+        Integer from = 1;
+        if(pageNum > 1) {
+            from = (pageNum - 1) * ROWS_PER_PAGE + 1;
+        }
+            return tourOfferDAO.getToursByPage(from, ROWS_PER_PAGE);
+    }
+
+    public int deleteTour(Integer tourId){
         if (tourId == null || tourId == 0) {
             log.error("tourId is null or 0");
             throw new IllegalArgumentException("tourId is null or 0");
@@ -156,8 +168,17 @@ public class TourOfferService {
             TourOffer tourOffer = getTourById(tourId);
             Integer hotelId = tourOffer.getHotelId();
             Hotel hotel = hotelService.getHotelById(hotelId);
-            description.put(reservation.getId(), tourOffer.toString() + hotel.toString());
+            description.put(tourId, tourOffer.toString() + hotel.toString());
         }
         return description;
+    }
+
+    public int getAmountOfTours() {
+        return tourOfferDAO.getAmountOfTours();
+    }
+
+    public int getNumberOfPages () {
+        Integer amountOfTours = tourOfferDAO.getAmountOfTours();
+        return (amountOfTours % ROWS_PER_PAGE == 0) ? amountOfTours / ROWS_PER_PAGE : amountOfTours / ROWS_PER_PAGE + 1;
     }
 }

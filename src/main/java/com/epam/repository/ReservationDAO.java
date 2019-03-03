@@ -69,7 +69,7 @@ public class ReservationDAO implements SimpleReservationDAO {
     }
 
     public List<Reservation> getReservationsByPersonId(Integer personId) {
-        String sql = "SELECT * FROM " + tableName + " WHERE " + clientId + " = ? ORDER BY id ";
+        String sql = "SELECT * FROM " + tableName + " WHERE " + clientId + " = ? ORDER BY id";
         Object[] parameters = new Object[] { personId };
         return jdbcTemplate.query(sql, parameters, reservationMapper);
     }
@@ -83,7 +83,7 @@ public class ReservationDAO implements SimpleReservationDAO {
     }
 
     public List<Reservation> listReservations(Integer page, Integer total) {
-        String sql = "SELECT * from " + tableName + " LIMIT " + (page - 1) + "," + total;
+        String sql = "SELECT * from " + tableName + " ORDER BY id LIMIT " + (page - 1) + "," + total;
         return jdbcTemplate.query(sql, reservationMapper);
     }
 
