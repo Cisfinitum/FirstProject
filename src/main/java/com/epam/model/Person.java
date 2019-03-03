@@ -14,4 +14,9 @@ public class Person {
     private final String phoneNumber;
     private final String firstName;
     private final String lastName;
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName + ", \n " + phoneNumber + ", \n" + email;
+    }
 }
