@@ -140,12 +140,19 @@ public class ToursController {
         ModelAndView toursModel = new ModelAndView();
         TourOffer tourOffer = toursOfferService.getTourById(Integer.valueOf(tourId));
         toursModel.addObject("tour",tourOffer);
+        String addTourType;
+        String addDescription;
+        Integer addPrice;
+        Integer addDiscount;
         try{
-            toursOfferService.updateTour(tourOffer, Validator.getTourTypeString(tourType), Validator.getPriceFromString(pricePerPerson),
-                    Validator.getDiscountFromString(discount), Validator.getDescriptionString(tourDescription));
+            addTourType = Validator.getTourTypeString(tourType);
+            addDescription = Validator.getDescriptionString(tourDescription);
+            addPrice = Validator.getPriceFromString(pricePerPerson);
+            addDiscount = Validator.getDiscountFromString(discount);
         } catch (IllegalArgumentException e) {
             return toursModel.addObject("error",e.getMessage());
         }
+        toursOfferService.updateTour(tourOffer, addTourType, addPrice, addDiscount, addDescription);
         toursModel.setViewName("redirect:/listoftours");
         return toursModel;
 
