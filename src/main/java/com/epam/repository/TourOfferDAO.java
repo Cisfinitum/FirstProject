@@ -47,16 +47,12 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
 
     public int deleteTour(Integer tourId) {
         return JdbcTemplate.update("DELETE FROM " + tableName + " WHERE " + id + " = ?", tourId);
+    }
     public List<TourOffer> getToursByPage(Integer from, Integer offset){
         String sql = "SELECT * from " +tableName+ " LIMIT ? , ?";
         Object[] parameters = new Object[] { from-1, offset };
         return JdbcTemplate.query(sql, parameters, (rs, rowNum) -> buildTour(rs));
     }
-
-    public int deleteTour(Integer tourId){
-         return JdbcTemplate.update("DELETE FROM "+tableName+" WHERE id = ?", tourId);
-    }
-
     public int addTour(TourOffer touroffer) {
         return JdbcTemplate.update("INSERT INTO " + tableName + "(" + tourType + " , " + startDate + ", " + endDate + ", " + pricePerUnit + ", " + hotelId + ", " +
                         description + ", " + discount + ") " + "VALUES (?, ?, ?, ?, ?, ?, ?)",

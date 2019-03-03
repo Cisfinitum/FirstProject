@@ -56,7 +56,7 @@ public class PersonDAOTest {
         ReflectionTestUtils.setField(personDAO, "role", "role");
         ReflectionTestUtils.setField(personDAO, "password", "password");
         ReflectionTestUtils.setField(personDAO, "email", "email");
-        ReflectionTestUtils.setField(personDAO, "phoneNumber", "phoneNumber");
+        ReflectionTestUtils.setField(personDAO, "phoneNumber", "phone_number");
         ReflectionTestUtils.setField(personDAO, "lastName", "last_name");
         ReflectionTestUtils.setField(personDAO, "firstName", "first_name");
     }
@@ -68,9 +68,9 @@ public class PersonDAOTest {
         when(resultSet.getString("email")).thenReturn(testEmail);
         when(resultSet.getString("password")).thenReturn(testPassword);
         when(resultSet.getString("role")).thenReturn(testPersonRoleEnum);
-        when(resultSet.getString("phoneNumber")).thenReturn(testPhoneNumber);
-        when(resultSet.getString("firstName")).thenReturn(testFirstName);
-        when(resultSet.getString("lastName")).thenReturn(testLastName);
+        when(resultSet.getString("phone_number")).thenReturn(testPhoneNumber);
+        when(resultSet.getString("first_name")).thenReturn(testFirstName);
+        when(resultSet.getString("last_name")).thenReturn(testLastName);
         when(expectedPerson.getEmail()).thenReturn(testEmail);
         Person actualPerson = personDAO.buildPerson(resultSet);
         assertEquals(expectedPerson.getEmail(), actualPerson.getEmail());
@@ -169,7 +169,7 @@ public class PersonDAOTest {
 
     @Test
     public void updatePhoneNumberPositiveResult() {
-        String sql = "UPDATE person SET phoneNumber = ? WHERE id = ?";
+        String sql = "UPDATE person SET phone_number = ? WHERE id = ?";
         when(jdbcTemplate.update(sql, testPhoneNumber, testId)).thenReturn(EXPECTED_RESULT);
         assertEquals(EXPECTED_RESULT, personDAO.updatePhoneNumberById(testId, testPhoneNumber));
     }
@@ -181,7 +181,7 @@ public class PersonDAOTest {
 
     @Test
     public void updateFirstNamePositiveResult() {
-        String sql = "UPDATE person SET firstName = ? WHERE id = ?";
+        String sql = "UPDATE person SET first_name = ? WHERE id = ?";
         when(jdbcTemplate.update(sql, testFirstName, testId)).thenReturn(EXPECTED_RESULT);
         assertEquals(EXPECTED_RESULT, personDAO.updateFirstNameById(testId, testFirstName));
     }
@@ -193,7 +193,7 @@ public class PersonDAOTest {
 
     @Test
     public void updateLastNamePositiveResult() {
-        String sql = "UPDATE person SET lastName = ? WHERE id = ?";
+        String sql = "UPDATE person SET last_name = ? WHERE id = ?";
         when(jdbcTemplate.update(sql, testLastName, testId)).thenReturn(EXPECTED_RESULT);
         assertEquals(EXPECTED_RESULT, personDAO.updateLastNameById(testId, testLastName));
     }
