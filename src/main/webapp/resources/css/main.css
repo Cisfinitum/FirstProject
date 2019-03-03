@@ -10,18 +10,18 @@ main {
 }
 
 .nav-wrapper{
-    background: #90caf9;
+    background: #8d6e63;
 }
 
 .page-footer{
-    background: #90caf9;
+    background: #8d6e63;
 }
 .mm{
     margin: 10%;
 }
 
 .promo{
-    background: #90caf9;
+    background: #8d6e63;
     border-radius: 20px;
 }
 
@@ -30,7 +30,7 @@ main {
 }
 
 .btn-large{
-    background-color: #90caf9;
+    background-color: #8d6e63;
 }
 .btn-large:hover{
     background-color: #bbdefb;
@@ -47,13 +47,13 @@ main {
 }
 
 .btn{
-    background-color: #90caf9;
+    background-color: #8d6e63;
 }
 .btn:hover{
     background-color: #bbdefb;
 }
 .btn-small{
-    background-color: #90caf9;
+    background-color: #8d6e63;
 }
 .btn-small:hover{
     background-color: #bbdefb;

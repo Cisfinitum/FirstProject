@@ -15,6 +15,9 @@
     <spring:url value="/resources/img/4.jpg" var="img4" />
     <spring:url value="/resources/img/united-kingdom-flag.png" var="imgen" />
     <spring:url value="/resources/img/russia-flag.png" var="imgru" />
+    <spring:url value="/resources/img/castle.png" var="castle" />
+    <spring:url value="/resources/img/dragon.png" var="dragon" />
+    <spring:url value="/resources/img/mage.png" var="mage" />
     <spring:url value="/resources/img/group.png" var="gr" />
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -201,21 +204,21 @@
     <div class="row">
         <div class="col s4">
             <div class="center promo promo-example">
-                <i class="large material-icons mm">security</i>
+                <i class="large material-icons mm"><img src="${castle}"></i>
                 <p class="promo-caption mm"><spring:message code="securitypromo" /></p>
                 <p class="light center mm"><spring:message code="securityp" /></p>
             </div>
         </div>
         <div class="col s4">
             <div class="center promo promo-example">
-                <i class="large material-icons mm">group</i>
+                <i class="large material-icons mm"><img src="${dragon}"></i>
                 <p class="promo-caption mm"><spring:message code="supportpromo" /></p>
                 <p class="light center mm"><spring:message code="supportp" /></p>
             </div>
         </div>
         <div class="col s4">
             <div class="center promo promo-example">
-                <i class="large material-icons mm">settings</i>
+                <i class="large material-icons mm"><img src="${mage}"></i>
                 <p class="promo-caption mm"><spring:message code="conveniencepromo" /></p>
                 <p class="light center mm"><spring:message code="conveniencep" /></p>
             </div>
