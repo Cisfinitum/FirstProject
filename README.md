@@ -58,7 +58,8 @@ apply plugin: 'com.bmuschko.tomcat'
 
 dependencies {
     def tomcatVersion = '9.0.1'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",        "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",        
+    "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
     "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
     }
     tomcat {
