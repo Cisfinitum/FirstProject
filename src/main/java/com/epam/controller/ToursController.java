@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.sql.Date;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -66,15 +68,24 @@ public class ToursController {
                                     @RequestParam String endDate, @RequestParam String numberOfPeople) {
         ModelAndView toursModel = new ModelAndView();
         toursModel.setViewName("homepage");
+        LocalDate addStartDate = null;
+        LocalDate addEndDate = null;
         try {
-            LocalDate addStartDate = Validator.getDate(startDate, true);
-            LocalDate addEndDate = Validator.getDate(endDate, true);
-            toursModel.addObject("hotels", hotelService.getMapOfHotels());
-            toursModel.addObject("list", toursOfferService.searchTours(country, addStartDate, addEndDate));
-            return toursModel;
-        } catch (Exception e) {
-            toursModel.addObject("error", e.getMessage());
-            return toursModel;
+            if(!startDate.isEmpty()) {
+                addStartDate = Date.valueOf(startDate).toLocalDate();
+            }
+            if(!endDate.isEmpty()) {
+                addEndDate = Date.valueOf(endDate).toLocalDate();
+            }
+        } catch (NumberFormatException | DateTimeException e) {
+            return toursModel.addObject("error","Wrong format of Date");
+        }
+        toursModel.addObject("hotels", hotelService.getMapOfHotels());
+        List<TourOffer> searchedListOfTours = toursOfferService.searchTours(country, addStartDate, addEndDate);
+        if(searchedListOfTours.size() == 0) {
+            return toursModel.addObject("error","Search result is empty");
+        } else {
+            return toursModel.addObject("list",searchedListOfTours);
         }
     }
 

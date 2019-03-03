@@ -119,17 +119,15 @@ public class TourOfferService {
     public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate) {
         List<Hotel> myList = hotelService.getHotelsByCountry(country);
         if (myList.size() == 0 && !country.isEmpty()) {
-            log.error("Wrong input country: " + country);
-            throw new IllegalArgumentException("Wrong input country: " + country);
+            return new ArrayList<TourOffer>();
         }
         List<Integer> listOfHotelsId = new ArrayList<>();
         for (Hotel hotel : myList) {
             listOfHotelsId.add(hotel.getId());
         }
-         List<TourOffer> listOfTours = tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
+        List<TourOffer> listOfTours = tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
         if(listOfTours.size() == 0){
-            log.warn("No tours available");
-            throw new NotFoundException("No tours available");
+            return new ArrayList<TourOffer>();
         }
         return listOfTours;
     }
