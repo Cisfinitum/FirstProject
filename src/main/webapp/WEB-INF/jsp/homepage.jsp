@@ -201,28 +201,28 @@
     <div class="row">
         <div class="col s4">
             <div class="center promo promo-example">
-                <i class="large material-icons mm">security</i>
+                <img src="/resources/img/7.png"/>
                 <p class="promo-caption mm"><spring:message code="securitypromo" /></p>
                 <p class="light center mm"><spring:message code="securityp" /></p>
             </div>
         </div>
         <div class="col s4">
             <div class="center promo promo-example">
-                <i class="large material-icons mm">group</i>
+                <img src="/resources/img/5.png"/>
                 <p class="promo-caption mm"><spring:message code="supportpromo" /></p>
                 <p class="light center mm"><spring:message code="supportp" /></p>
             </div>
         </div>
         <div class="col s4">
             <div class="center promo promo-example">
-                <i class="large material-icons mm">settings</i>
+                <img src="/resources/img/6.png"/>
                 <p class="promo-caption mm"><spring:message code="conveniencepromo" /></p>
                 <p class="light center mm"><spring:message code="conveniencep" /></p>
             </div>
         </div>
     </div>
 </div>
-</main>
+</main>ы
 <footer class="page-footer">
     <div class="container">
         <div class="row">
