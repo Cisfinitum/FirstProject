@@ -8,11 +8,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.epam.service.PersonService;
-import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
-        import org.springframework.stereotype.Controller;
-        import org.springframework.ui.ModelMap;
-        import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 import java.util.Map;
@@ -25,6 +22,7 @@ public class ReservationController {
     private final PersonService personService;
     private final TourOfferService tourOfferService;
 
+    @Autowired
     public ReservationController(ReservationService reservationService, PersonService personService, TourOfferService tourOfferService) {
         this.reservationService = reservationService;
         this.personService = personService;
@@ -40,14 +38,18 @@ public class ReservationController {
     public String listReservations(@PathVariable Integer id, @ModelAttribute(name = "message") String message,
                                    @ModelAttribute(name = "errormessage") String errormessage, ModelMap modelMap) {
         int amount = reservationService.totalAmountOfRows;
-        Map<Integer, String> userInfo = personService.mapOfUsersInformation(reservations);
-        Map<Integer, String> tourInfo = tourOfferService.getDescription(reservations);
         List<Reservation> reservations = reservationService.listReservations(id, amount, "NEW");
         List<Reservation> archiveReservations = reservationService.listReservations(1, reservationService.amountOfReservation("ARCHIVED"), "ARCHIVED");
+        Map<Integer, String> userInfo = personService.mapOfUsersInformation(reservations);
+        Map<Integer, String> tourInfo = tourOfferService.getDescription(reservations);
+        Map<Integer, String> archiveUserInfo = personService.mapOfUsersInformation(archiveReservations);
+        Map<Integer, String> archiveTourInfo = tourOfferService.getDescription(archiveReservations);
         int generalAmount = reservationService.amountOfReservation("NEW");
         modelMap.addAttribute("listReservation", reservations);
         modelMap.addAttribute("userInfo", userInfo);
         modelMap.addAttribute("tourInfo", tourInfo);
+        modelMap.addAttribute("archiveUserInfo", archiveUserInfo);
+        modelMap.addAttribute("archiveTourInfo", archiveTourInfo);
         modelMap.addAttribute("listArchiveReservation", archiveReservations);
         modelMap.addAttribute("generalAmount", generalAmount);
         modelMap.addAttribute("amount", (generalAmount % amount == 0) ? generalAmount / amount : generalAmount / amount + 1);

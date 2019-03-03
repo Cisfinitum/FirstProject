@@ -105,9 +105,9 @@
 
                                 <tr>
                                     <th>№</th>
-                                    <th><spring:message code="discountid"/></th>
-                                    <th><spring:message code="clientid"/></th>
-                                    <th><spring:message code="tourid"/></th>
+                                    <th><spring:message code="discount"/></th>
+                                    <th><spring:message code="client"/></th>
+                                    <th><spring:message code="tour"/></th>
                                     <th><spring:message code="nop"/></th>
                                     <th><spring:message code="status"/></th>
                                     <th><spring:message code="totalprice"/></th>
@@ -119,9 +119,9 @@
                                 <c:forEach var="reservation" items="${listArchiveReservation}">
                                 <tr>
                                     <td>${reservation.id}</td>
-                                    <td>${reservation.discount}</td>
-                                    <td>${reservation.clientId}</td>
-                                    <td> ${reservation.tourOfferId}</td>
+                                    <td>${reservation.discount} %</td>
+                                    <td>${archiveUserInfo.get(reservation.clientId)}</td>
+                                    <td> ${archiveTourInfo.get(reservation.tourOfferId)}</td>
                                     <td> ${reservation.numberOfPeople}</td>
                                     <td> ${reservation.status}</td>
                                     <td> ${reservation.totalPrice}</td>
