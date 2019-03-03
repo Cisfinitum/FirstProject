@@ -142,6 +142,25 @@ public class TourOfferService {
             return tourOfferDAO.getTourById(tourId);
         }
     }
+
+    public int checkIfHotelUsed(Integer hotelId){
+        if (hotelId == null || hotelId <= 0) {
+            log.error("toursId is null, negative or 0");
+            throw new IllegalArgumentException("toursId is null, negative or 0");
+        }else {
+            return tourOfferDAO.checkIfHotelsIsUsed(hotelId);
+            }
+    }
+
+    public Map<Integer, Boolean> getMapOfHotelUse(List <Hotel> hotels){
+        Map<Integer, Boolean> map = new HashMap<>();
+        for (Hotel hotel : hotels) {
+            Integer hotelId = hotel.getId();
+            Boolean isHotelUsed = checkIfHotelUsed(hotelId) == 1;
+            map.put(hotelId, isHotelUsed);
+        }
+        return map;
+    }
     public Map<Integer,String> getDescription(List<Reservation> reservations){
         Map<Integer, String> description = new HashMap<>();
         for (Reservation reservation : reservations) {
