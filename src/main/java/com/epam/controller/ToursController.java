@@ -1,5 +1,6 @@
 package com.epam.controller;
 
+import com.epam.Validator.Validator;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.service.HotelService;
@@ -66,20 +67,16 @@ public class ToursController {
 
     @PostMapping("/searchtours")
     public ModelAndView searchTours(@RequestParam String country, @RequestParam String startDate,
-                                    @RequestParam String endDate, @RequestParam String numberOfPeople) {
+                                    @RequestParam String endDate) {
         ModelAndView toursModel = new ModelAndView();
         toursModel.setViewName("homepage");
-        LocalDate addStartDate = null;
-        LocalDate addEndDate = null;
+        LocalDate addStartDate;
+        LocalDate addEndDate;
         try {
-            if(!startDate.isEmpty()) {
-                addStartDate = Date.valueOf(startDate).toLocalDate();
-            }
-            if(!endDate.isEmpty()) {
-                addEndDate = Date.valueOf(endDate).toLocalDate();
-            }
-        } catch (NumberFormatException | DateTimeException e) {
-            return toursModel.addObject("error","Wrong format of Date");
+            addStartDate = Validator.getDateFromString(startDate,true);
+            addEndDate = Validator.getDateFromString(endDate,true);
+        } catch (IllegalArgumentException e) {
+            return toursModel.addObject("error",e.getMessage());
         }
         toursModel.addObject("hotels", hotelService.getMapOfHotels());
         List<TourOffer> searchedListOfTours = toursOfferService.searchTours(country, addStartDate, addEndDate);
@@ -113,7 +110,7 @@ public class ToursController {
                                 @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
         List<Hotel> hotels = hotelService.getHotels();
-        toursModel.addObject("hotelList", hotels );
+        toursModel.addObject("hotelList", hotels);
         toursModel.addObject("tourType", tourType);
         toursModel.addObject("startDate", startDate);
         toursModel.addObject("endDate", endDate);
@@ -121,52 +118,27 @@ public class ToursController {
         toursModel.addObject("discount", discount);
         toursModel.addObject("description", tourDescription);
         toursModel.setViewName("addtour");
-        LocalDate addStartDate;
-        LocalDate addEndDate;
+        TourOffer addTourOffer;
         try {
-            if(!startDate.isEmpty()) {
-                addStartDate = Date.valueOf(startDate).toLocalDate();
-            } else {
-                return toursModel.addObject("error","Empty Date");
-            }
-            if(!endDate.isEmpty()) {
-                addEndDate = Date.valueOf(endDate).toLocalDate();
-            } else {
-                return toursModel.addObject("error","Empty Date");
-            }
-        } catch (NumberFormatException | DateTimeException e) {
-            return toursModel.addObject("error","Wrong format of Date");
-        }
-        Pattern pricePattern = Pattern.compile("[0-9]+");
-        Matcher priceMatcher = pricePattern.matcher(pricePerPerson);
-        Pattern discountPatten = Pattern.compile("[0-9]{1,3}");
-        Matcher discountMatcher = discountPatten.matcher(discount);
-        if (!priceMatcher.matches()) {
-            return toursModel.addObject("error", "Invalid price");
-        } else if (!discountMatcher.matches()||Integer.valueOf(discount)>100) {
-            return toursModel.addObject("error", "Discount may be from 0 to 100");
-        } else if(tourType.isEmpty()){
-            return toursModel.addObject("error", "TourType empty");
-        } else if(tourDescription.isEmpty()){
-            return toursModel.addObject("error", "TourDescription empty");
-        } else {
-            int result = toursOfferService.addTour(TourOffer.builder()
+            addTourOffer = TourOffer.builder()
                     .id(1)
-                    .tourType(tourType)
-                    .startDate(addStartDate)
-                    .endDate(addEndDate)
-                    .pricePerUnit(Integer.valueOf(pricePerPerson))
+                    .tourType(Validator.getTourTypeString(tourType))
+                    .startDate(Validator.getDateFromString(startDate,false))
+                    .endDate(Validator.getDateFromString(endDate,false))
+                    .pricePerUnit(Validator.getPriceFromString(pricePerPerson))
                     .hotelId(1) //stub
-                    .description(tourDescription)
-                    .discount(Integer.valueOf(discount))
-                    .build());
-            if (result == 1) {
-                toursModel.addObject("result", "Success");
-            } else {
-                toursModel.addObject("error", "Failed to add");
-            }
-            return toursModel;
+                    .description(Validator.getDescriptionString(tourDescription))
+                    .discount(Validator.getDiscountFromString(discount))
+                    .build();
+        } catch (IllegalArgumentException e) {
+            return toursModel.addObject("error",e.getMessage());
         }
+
+        if (toursOfferService.addTour(addTourOffer) == 1) {
+                    return toursModel.addObject("result", "Success");
+        } else {
+                    return toursModel.addObject("error", "Failed to add");
+                }
     }
 
     @PostMapping("/updatetour")
