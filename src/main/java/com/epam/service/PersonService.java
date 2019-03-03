@@ -50,23 +50,23 @@ public class PersonService {
     }
 
     public int addToBlackList(Integer id) {
-        if (id == null) throw new IllegalArgumentException("Email must be not null");
+        if (id == null) throw new IllegalArgumentException("Id must be not null");
         return personDAO.addToBlackList(id);
     }
 
     public int removeFromBlackList(Integer id) {
-        if (id == null) throw new IllegalArgumentException("Email must be not null");
+        if (id == null) throw new IllegalArgumentException("Id must be not null");
         return personDAO.removeFromBlackList(id);
     }
     public int updatePasswordById(Integer id, String password) {
         if (id == null || password == null) {
-            throw new IllegalArgumentException("Email and password must be not null");
+            throw new IllegalArgumentException("Id and password must be not null");
         }
         return personDAO.updatePasswordById(id, password);
     }
 
     public int giveAdminRights(Integer id) {
-        if (id == null) throw new IllegalArgumentException("Email must be not null");
+        if (id == null) throw new IllegalArgumentException("Id must be not null");
         return personDAO.giveAdminRights(id);
     }
 
@@ -77,7 +77,6 @@ public class PersonService {
     }
 
     public int amountOfUsers() { return personDAO.amountOfUsers();}
-
 
     public Integer getIdByEmail(String email) {
         if (email.isEmpty()) {
@@ -97,5 +96,33 @@ public class PersonService {
             map.put(clientId, person.toString());
         }
         return map;
+    }
+
+    public int updatePhoneNumberById(Integer id, String phoneNumber) {
+        if (id == null || phoneNumber == null) {
+            throw new IllegalArgumentException("Id and phone number must be not null");
+        }
+        return personDAO.updatePhoneNumberById(id, phoneNumber);
+    }
+
+    public int updateFirstNameById(Integer id, String firstName) {
+        if (id == null || firstName == null) {
+            throw new IllegalArgumentException("Id and first name must be not null");
+        }
+        return personDAO.updateFirstNameById(id, firstName);
+    }
+
+    public int updateLastNameById(Integer id, String lastName) {
+        if (id == null || lastName == null) {
+            throw new IllegalArgumentException("Id and last name must be not null");
+        }
+        return personDAO.updateLastNameById(id, lastName);
+    }
+
+    public int updateEmailById(Integer id, String email) {
+        if (id == null || email == null) {
+            throw new IllegalArgumentException("Id and email must be not null");
+        }
+        return personDAO.updateEmailById(id, email);
     }
 }
