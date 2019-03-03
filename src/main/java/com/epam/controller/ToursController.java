@@ -1,10 +1,9 @@
 package com.epam.controller;
 
-import com.epam.Validator.Validator;
+import com.epam.validator.Validator;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.service.HotelService;
-import com.epam.service.PersonService;
 import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.sql.Date;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.epam.service.TourOfferService.ROWS_PER_PAGE;
 
@@ -32,14 +27,12 @@ public class ToursController {
     private final TourOfferService toursOfferService;
     private final HotelService hotelService;
     private final ReservationService reservationService;
-    private final PersonService personService;
 
     @Autowired
-    public ToursController(TourOfferService toursOfferService, ReservationService reservationService, PersonService personService, HotelService hotelService) {
+    public ToursController(TourOfferService toursOfferService, ReservationService reservationService, HotelService hotelService) {
         this.toursOfferService = toursOfferService;
         this.hotelService = hotelService;
         this.reservationService = reservationService;
-        this.personService = personService;
     }
 
     @GetMapping("/listoftours")
@@ -147,23 +140,15 @@ public class ToursController {
         ModelAndView toursModel = new ModelAndView();
         TourOffer tourOffer = toursOfferService.getTourById(Integer.valueOf(tourId));
         toursModel.addObject("tour",tourOffer);
-        Pattern pricePattern = Pattern.compile("[0-9]+");
-        Matcher priceMatcher = pricePattern.matcher(pricePerPerson);
-        Pattern discountPatten = Pattern.compile("[0-9]{1,3}");
-        Matcher discountMatcher = discountPatten.matcher(discount);
-        if (!priceMatcher.matches()) {
-            return toursModel.addObject("error", "Invalid price");
-        } else if (!discountMatcher.matches()||Integer.valueOf(discount)>100) {
-            return toursModel.addObject("error", "Discount may be from 0 to 100");
-        } else if(tourType.isEmpty()){
-            return toursModel.addObject("error", "TourType empty");
-        } else if(tourDescription.isEmpty()){
-            return toursModel.addObject("error", "TourDescription empty");
-        } else {
-            toursOfferService.updateTour(tourOffer, tourType, Integer.valueOf(pricePerPerson), Integer.valueOf(tourDescription), tourDescription);
-            toursModel.setViewName("redirect:/listoftours");
-            return toursModel;
+        try{
+            toursOfferService.updateTour(tourOffer, Validator.getTourTypeString(tourType), Validator.getPriceFromString(pricePerPerson),
+                    Validator.getDiscountFromString(discount), Validator.getDescriptionString(tourDescription));
+        } catch (IllegalArgumentException e) {
+            return toursModel.addObject("error",e.getMessage());
         }
+        toursModel.setViewName("redirect:/listoftours");
+        return toursModel;
+
     }
 
     @GetMapping("/addtour")

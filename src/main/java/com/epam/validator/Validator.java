@@ -1,4 +1,4 @@
-package com.epam.Validator;
+package com.epam.validator;
 
 import java.sql.Date;
 import java.time.DateTimeException;
@@ -35,7 +35,7 @@ public class Validator {
     public static Integer getDiscountFromString(String discount){
         Pattern discountPatten = Pattern.compile("[0-9]{1,3}");
         Matcher discountMatcher = discountPatten.matcher(discount);
-        if (discountMatcher.matches()||Integer.valueOf(discount)<=100) {
+        if (discountMatcher.matches()&&Integer.valueOf(discount)<=100) {
             return Integer.valueOf(discount);
         } else {
             throw new IllegalArgumentException("Discount must be from 0 to 100");
