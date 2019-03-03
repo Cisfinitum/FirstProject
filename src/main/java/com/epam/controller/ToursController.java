@@ -19,6 +19,8 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.epam.service.TourOfferService.ROWS_PER_PAGE;
+
 
 @Controller
 @Slf4j
@@ -37,9 +39,18 @@ public class ToursController {
     }
 
     @GetMapping("/listoftours")
-    public ModelAndView getToursList(RedirectAttributes redirectAttributes) {
+    public String testadmin(RedirectAttributes redirectAttributes) {
+        return "redirect:/listoftours/1";
+    }
+
+    @GetMapping("/listoftours/{pageNum}")
+    public ModelAndView getToursListByPage(@PathVariable Integer pageNum, ModelMap modelMap, RedirectAttributes redirectAttributes) {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("listOfTours", toursOfferService.getTours());
+        Integer totalRows = toursOfferService.getAmountOfTours();
+        Integer totalPages = toursOfferService.getNumberOfPages();
+        modelMap.addAttribute("rowsPerPage", ROWS_PER_PAGE);
+        modelMap.addAttribute("totalPages", totalPages);
+        toursModel.addObject("listOfTours", toursOfferService.getToursByPage(pageNum));
         toursModel.addObject("hotels", hotelService.getMapOfHotels());
         toursModel.addObject("isReservedMap", toursOfferService.getToursStatusMap());
         if (redirectAttributes != null) {
