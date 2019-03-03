@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,8 +24,10 @@ public class HotelServiceTest {
     private HotelDAO hotelDAO;
     @Mock
     private Hotel expectedHotel;
-    @Spy
+    @Mock
     ModelAndView modelAndView;
+    @Mock
+    RedirectAttributes redirectAttributes;
     private List<Hotel> hotelList;
     Map<Integer,Hotel> expectedHotelsMap;
     @InjectMocks
@@ -95,18 +97,18 @@ public class HotelServiceTest {
     public void addHotel() {
         String testCity = "Bali";
         when(hotelDAO.createHotel(new Hotel(testName, testCountry, testCity, testStars))).thenReturn(1);
-        modelAndView = hotelService.addHotel(modelAndView, testName, testCountry, testCity, testStars);
-        String expectedMessage = "Hotel was created successfully";
-        assertEquals(expectedMessage, modelAndView.getModelMap().get("message"));
+        String actualView = hotelService.addHotel(modelAndView, testName, testCountry, testCity, testStars, redirectAttributes);
+        String expectedView = "redirect:/hotels";
+        assertEquals(expectedView, actualView);
     }
 
     @Test
-    public void addHotelErrorMessage() {
+    public void addHotelWrongValue() {
         String wrongCityName = "777";
         when(hotelDAO.createHotel(new Hotel(testName, testCountry, wrongCityName, testStars))).thenReturn(1);
-        modelAndView = hotelService.addHotel(modelAndView, testName, testCountry, wrongCityName, testStars);
-        String expectedMessage = "Invalid name for city";
-        assertEquals(expectedMessage, modelAndView.getModelMap().get("errormessage"));
+        String actualView = hotelService.addHotel(modelAndView, testName, testCountry, wrongCityName, testStars, redirectAttributes);
+        String expectedView = "redirect:/hotels";
+        assertEquals(expectedView, actualView);
     }
 
     @Test

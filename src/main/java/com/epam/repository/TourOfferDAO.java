@@ -47,6 +47,14 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
 
     public int deleteTour(Integer tourId) {
         return JdbcTemplate.update("DELETE FROM " + tableName + " WHERE " + id + " = ?", tourId);
+    public List<TourOffer> getToursByPage(Integer from, Integer offset){
+        String sql = "SELECT * from " +tableName+ " LIMIT ? , ?";
+        Object[] parameters = new Object[] { from-1, offset };
+        return JdbcTemplate.query(sql, parameters, (rs, rowNum) -> buildTour(rs));
+    }
+
+    public int deleteTour(Integer tourId){
+         return JdbcTemplate.update("DELETE FROM "+tableName+" WHERE id = ?", tourId);
     }
 
     public int addTour(TourOffer touroffer) {
@@ -93,6 +101,12 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
         return JdbcTemplate.queryForObject("SELECT * FROM " + tableName + " WHERE " + id + " = ?", parameters, (rs, rowNum) -> buildTour(rs));
     }
 
+    public int getAmountOfTours() {
+        String sql = "SELECT COUNT(*) FROM " +tableName;
+        return JdbcTemplate.queryForObject(
+                sql, Integer.class);
+    }
+
     @SneakyThrows(SQLException.class)
     TourOffer buildTour(ResultSet rs) {
         return TourOffer.builder()
@@ -105,5 +119,12 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
                 .description(rs.getString(description))
                 .discount(rs.getInt(discount))
                 .build();
+    }
+
+    public int checkIfHotelsIsUsed(Integer id){
+        String sql = "SELECT * FROM " + tableName + " WHERE " + hotelId + " = " + id;
+        List<TourOffer> tourOffers = JdbcTemplate.query(sql, (rs, rowNum) -> buildTour(rs));
+        if (tourOffers.size() != 0) return 1;
+        return 0;
     }
 }

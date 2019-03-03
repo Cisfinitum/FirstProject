@@ -136,4 +136,29 @@ public class PersonDAO implements SimplePersonDAO {
         String sql = "UPDATE " + tableName + " SET " + password + " = ? WHERE " + id + " = ?";
         return jdbcTemplate.update(sql, userPassword, userId);
     }
+
+    public int updatePhoneNumberById(Integer personId, String personPhoneNumber) {
+        if (personId < 1 || personPhoneNumber.equals("")) return -1;
+        String sql = "UPDATE " + tableName + " SET " + phoneNumber  + " = ? WHERE "+ id + " = ?";
+        return jdbcTemplate.update(sql, personPhoneNumber, personId);
+    }
+
+    public int updateFirstNameById(Integer personId, String personFirstName) {
+        if (personId < 1 || personFirstName.equals("")) return -1;
+        String sql = "UPDATE " + tableName + " SET " + firstName + " = ? WHERE "+ id + " = ?";
+        return jdbcTemplate.update(sql, personFirstName, personId);
+    }
+
+    public int updateLastNameById(Integer personId, String personLastName) {
+        if (personId < 1 || personLastName.equals("")) return -1;
+        String sql = "UPDATE " + tableName + " SET " + lastName  + " = ? WHERE "+ id + " = ?";
+        return jdbcTemplate.update(sql, personLastName, personId);
+    }
+
+    public int updateEmailById(Integer personId, String personEmail) {
+        if (personId < 1 || personEmail.equals("") || doesEmailExist(personEmail)) return -1;
+        String sql = "UPDATE " + tableName + " SET " + email + " = ? WHERE " + id + " = ?";
+        return jdbcTemplate.update(sql, personEmail, personId);
+    }
+
 }
