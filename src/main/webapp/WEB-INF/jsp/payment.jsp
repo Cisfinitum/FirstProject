@@ -18,17 +18,17 @@
     <div class="registration">
         <div class="row">
             <P style="font-size: large; color: green"><b>Tour was reserved successfully</b></P>
-            <p style="font-size: large">Number Of People: ${numberOfPeople} </p>
-            <p style="font-size: large">Price per Person ${pricePerUnit} $ </p>
-            <p style="font-size: large">Discount ${discount} %</p>
+            <p style="font-size: large"><spring:message code="people"/> :${numberOfPeople} </p>
+            <p style="font-size: large"><spring:message code="tourprice"/> : ${pricePerUnit} $ </p>
+            <p style="font-size: large"><spring:message code="discount"/>: ${discount} %</p>
             <div class="divider"></div>
-            <p style="font-size: large">Total price is ${totalPrice} $</p>
+            <p style="font-size: large"><spring:message code="totalprice"/>: ${totalPrice} $</p>
             <div class="row">
                 <div class="col s6">
                     <div class="input-field">
                         <form name="user" class="col s12" action="/pay" method="POST">
                             <input type="hidden" name="reservationId" value="${reservationId}">
-                            <button type="submit" class="waves-effect waves-light btn">PAY NOW
+                            <button type="submit" class="waves-effect waves-light btn" style="height: auto; width: auto"><spring:message code="paynow"/>
                             </button>
 
                         </form>
@@ -37,7 +37,7 @@
                 <div class="col s5">
                     <div class="input-field">
                         <form name="later" action="/payLater" method="POST">
-                            <button type="submit" class="waves-effect waves-light btn">PAY LATER
+                            <button type="submit" class="waves-effect waves-light btn" style="height: auto; width: auto"><spring:message code="paylater"/>
                             </button>
                         </form>
                     </div>
