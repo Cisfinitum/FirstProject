@@ -17,7 +17,7 @@
     <spring:url value="/resources/img/united-kingdom-flag.png" var="imgen"/>
     <spring:url value="/resources/img/russia-flag.png" var="imgru"/>
     <spring:url value="/resources/img/group.png" var="gr"/>
-    <spring:url value="/resources/img/user.png" var="imuser"/>
+    <spring:url value="/resources/img/user.jpg" var="imuser"/>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -46,7 +46,7 @@
                 <div class="card-content">
                     <div class="row">
                         <div class="col s2 card-profile-image">
-                            <img src="${imuser}" alt="profile image" class="circle">
+                            <img src="${imuser}" alt="profile image">
                         </div>
                         <div class="col s3">
                             <p class="medium-small grey-text"><spring:message code="emailname" />: ${person.email}</p>
