@@ -67,7 +67,7 @@ public class UserListController {
 
     @PostMapping("/pay/{id}")
     public ModelAndView payForTour(@PathVariable Integer id, @RequestParam(name = "reservationId") Integer reservationId, ModelAndView modelAndView, RedirectAttributes redirectAttributes){
-        reservationService.changeReservationStatusById(reservationId);
+        reservationService.changeReservationStatusById(reservationId, "PAID");
         Person person = personDetailsServiceImpl.getPersonById(id);
         List<Reservation> reservations = reservationService.getReservationsByPersonId(id);
         modelAndView.addObject("person", person);
