@@ -40,7 +40,7 @@ public class TourOfferDAOTest {
     private Integer testpricePerUnit = 1500;
     private Integer testhotel_id = 1;
     private String testdescription = "Best tour";
-    private Integer testdiscount_id = 1;
+    private Integer testdiscount = 1;
 
 
     @Before
@@ -53,7 +53,7 @@ public class TourOfferDAOTest {
         ReflectionTestUtils.setField(tourofferDAO, "hotelIdName", "hotel_id");
         ReflectionTestUtils.setField(tourofferDAO, "pricePerUnitName", "price_per_unit");
         ReflectionTestUtils.setField(tourofferDAO, "descriptionName", "description");
-        ReflectionTestUtils.setField(tourofferDAO, "discountIdName", "discount");
+        ReflectionTestUtils.setField(tourofferDAO, "discountName", "discount");
         ReflectionTestUtils.setField(tourofferDAO, "idName", "id");
         expectedTour =  new TourOffer(1, "Active", LocalDate.of(2018,2,19),  LocalDate.of(2018,2,25),
                 1500, 1,"Best tour", 1);

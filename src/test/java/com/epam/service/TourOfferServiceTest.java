@@ -169,10 +169,10 @@ public class TourOfferServiceTest {
         when(tourOfferService.updateTour(expectedTourOffer,"test",1,1,null)).thenThrow(IllegalArgumentException.class);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void searchTourThrowNotFoundException(){
-        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
-        when(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now())).thenThrow(NotFoundException.class);
+        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now(),1,5)).thenReturn(tourOfferList);
+        when(tourOfferService.searchTours(new ModelAndView(),"test",LocalDate.now(),LocalDate.now(),1)).thenThrow(IllegalArgumentException.class);
     }
 
     @Test

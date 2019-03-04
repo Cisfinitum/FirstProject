@@ -198,7 +198,6 @@ public class TourOfferService {
                 listOfHotelsId.add(hotel.getId());
             }
             return tourOfferDAO.amountOfToursSearched(listOfHotelsId, startDate, endDate);
-
     }
 
     public int getNumberOfPagesSearch (Integer generalAmount) {
