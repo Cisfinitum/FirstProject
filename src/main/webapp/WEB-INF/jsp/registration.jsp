@@ -25,35 +25,35 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="email" type="email" name="email" onchange="return validateEmail()">
-                        <label for="email"><spring:message code="emailname" /></label>
+                        <label for="email" style="font-size: x-large"><spring:message code="emailname" /></label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6">
                         <input id="firstName" type="text" name="firstName" onchange="return validateFirstName()">
-                        <label for="firstName"><spring:message code="firstname" /></label>
+                        <label for="firstName" style="font-size: x-large"><spring:message code="firstname" /></label>
                     </div>
                     <div class="input-field col s6">
                         <input id="lastName" type="text" name="lastName" onchange="return validateLastName()">
-                        <label for="lastName"><spring:message code="lastname" /></label>
+                        <label for="lastName" style="font-size: x-large"><spring:message code="lastname" /></label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="phoneNumber" type="text" name="phoneNumber" onchange="return validatePhoneNumber()">
-                        <label for="phoneNumber"><spring:message code="phoneNumber" /></label>
+                        <label for="phoneNumber" style="font-size: x-large"><spring:message code="phoneNumber" /></label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="password" type="password" name="password" onchange="return validatePassword()">
-                        <label for="password"><spring:message code="passwordname" /></label>
+                        <label for="password" style="font-size: x-large"><spring:message code="passwordname" /></label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="password2" type="password" name="password2" onchange="return checkIfPasswordsAreEqual()">
-                        <label for="password2"><spring:message code="passwordname" /></label>
+                        <label for="password2" style="font-size: x-large"><spring:message code="passwordname" /></label>
                     </div>
                 </div>
                 <div class ="rowregistration">
