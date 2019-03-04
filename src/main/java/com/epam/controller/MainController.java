@@ -38,6 +38,11 @@ public class MainController {
         return "homepage";
     }
 
+    @GetMapping("/contacts")
+    public String contacts(Principal user, ModelMap modelMap) {
+        return "contacts";
+    }
+
     @GetMapping("/403")
     public String badRequest(Principal user, ModelMap modelMap) {
         return "403";

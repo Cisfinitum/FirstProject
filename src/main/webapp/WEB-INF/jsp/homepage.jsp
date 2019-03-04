@@ -70,7 +70,7 @@
             <li class="active"><a href="/index"><spring:message code="homepage" /></a></li>
             <li><a href="/#"><spring:message code="information" /></a></li>
             <li><a href="/#"><spring:message code="feedback" /></a></li>
-            <li><a href="/#"><spring:message code="contacts" /></a></li>
+            <li><a href="/contacts"><spring:message code="contacts" /></a></li>
         </ul>
         <ul  class="right hide-on-med-and-down">
             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
