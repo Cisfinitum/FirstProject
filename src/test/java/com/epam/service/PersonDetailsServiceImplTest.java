@@ -28,11 +28,17 @@ public class PersonDetailsServiceImplTest {
     @Mock
     private Person person;
 
+    public static final int EXPECTED_AFFECT = 1;
+    public static final int UNEXPECTED_AFFECT = 10;
+    public static final int ZERO_AFFECT = 0;
     private Set<GrantedAuthority> roles;
     private PersonDetailsServiceImpl personDetailsServiceImpl;
     private String testEmail = "user";
     private String testPassword = "123";
     private String nonExistEmail = "nonExistingEmail";
+    private String testPhoneNumber = "8999999999";
+    private String testFirstName = "Example";
+    private String testLastName = "Example";
     private Person testPerson;
     private Integer testId;
 
@@ -45,13 +51,13 @@ public class PersonDetailsServiceImplTest {
         testEmail = "user";
         testPassword = "123";
         nonExistEmail = "nonExistingEmail";
-        testPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf("USER"));
+        testPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName);
     }
 
     @Test
     public void loadUserPositiveResult() {
 
-        when(personService.getPerson(testEmail)).thenReturn(new Person(1, testEmail, testPassword, PersonRoleEnum.ADMIN));
+        when(personService.getPerson(testEmail)).thenReturn(new Person(1, testEmail, testPassword, PersonRoleEnum.ADMIN, testPhoneNumber, testFirstName, testLastName));
         when(person.getRole()).thenReturn(PersonRoleEnum.ADMIN);
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumRole()));
         UserDetails expectedPerson = new User(testEmail, testPassword, roles);
@@ -156,5 +162,78 @@ public class PersonDetailsServiceImplTest {
     public void updatePasswordInvalidEmail() {
         when(personService.updatePassword(testEmail, testPassword)).thenReturn(0);
         assertFalse(personDetailsServiceImpl.updatePassword(testEmail, testPassword));
+    }
+
+    @Test
+    public void updatePhoneNumberPositiveResult() {
+        when(personService.updatePhoneNumberById(testId, testPhoneNumber)).thenReturn(EXPECTED_AFFECT);
+        assertTrue(personDetailsServiceImpl.updatePhoneNumberById(testId, testPhoneNumber));
+    }
+
+    @Test(expected = InvalidDataBaseAffectedException.class)
+    public void updatePhoneNumberMoreThanOneRow() {
+        when(personService.updatePhoneNumberById(testId, testPhoneNumber)).thenReturn(UNEXPECTED_AFFECT);
+        personDetailsServiceImpl.updatePhoneNumberById(testId, testPhoneNumber);
+    }
+
+    @Test
+    public void updatePhoneNumberInvalidId() {
+        when(personService.updatePhoneNumberById(testId, testPassword)).thenReturn(ZERO_AFFECT);
+        assertFalse(personDetailsServiceImpl.updatePhoneNumberById(testId, testPassword));
+    }
+
+
+    @Test
+    public void updateFirstNamePositiveResult() {
+        when(personService.updateFirstNameById(testId, testFirstName)).thenReturn(EXPECTED_AFFECT);
+        assertTrue(personDetailsServiceImpl.updateFirstNameById(testId, testFirstName));
+    }
+
+    @Test(expected = InvalidDataBaseAffectedException.class)
+    public void updateFirstNameMoreThanOneRow() {
+        when(personService.updateFirstNameById(testId, testFirstName)).thenReturn(UNEXPECTED_AFFECT);
+        personDetailsServiceImpl.updateFirstNameById(testId, testFirstName);
+    }
+
+    @Test
+    public void updateFirstNameInvalidId() {
+        when(personService.updateFirstNameById(testId, testFirstName)).thenReturn(ZERO_AFFECT);
+        assertFalse(personDetailsServiceImpl.updateFirstNameById(testId, testFirstName));
+    }
+
+    @Test
+    public void updateLastNamePositiveResult() {
+        when(personService.updateLastNameById(testId, testLastName)).thenReturn(EXPECTED_AFFECT);
+        assertTrue(personDetailsServiceImpl.updateLastNameById(testId, testLastName));
+    }
+
+    @Test(expected = InvalidDataBaseAffectedException.class)
+    public void updateLastNameMoreThanOneRow() {
+        when(personService.updateLastNameById(testId, testLastName)).thenReturn(UNEXPECTED_AFFECT);
+        personDetailsServiceImpl.updateLastNameById(testId, testLastName);
+    }
+
+    @Test
+    public void updateLastNameInvalidId() {
+        when(personService.updateLastNameById(testId, testLastName)).thenReturn(ZERO_AFFECT);
+        assertFalse(personDetailsServiceImpl.updateLastNameById(testId, testLastName));
+    }
+
+    @Test
+    public void updateEmailPositiveResult() {
+        when(personService.updateEmailById(testId, testEmail)).thenReturn(EXPECTED_AFFECT);
+        assertTrue(personDetailsServiceImpl.updateEmailById(testId, testEmail));
+    }
+
+    @Test(expected = InvalidDataBaseAffectedException.class)
+    public void updateEmailMoreThanOneRow() {
+        when(personService.updateEmailById(testId, testEmail)).thenReturn(UNEXPECTED_AFFECT);
+        personDetailsServiceImpl.updateEmailById(testId, testEmail);
+    }
+
+    @Test
+    public void updateEmailInvalidId() {
+        when(personService.updateLastNameById(testId, testEmail)).thenReturn(ZERO_AFFECT);
+        assertFalse(personDetailsServiceImpl.updateEmailById(testId, testEmail));
     }
 }

@@ -178,14 +178,14 @@
                         <td>${tour.pricePerUnit}</td>
                         <td>${hotels.get(tour.hotelId).name}</td>
                         <td>${tour.description}</td>
-                        <td>${tour.discountId}</td>
+                        <td>${tour.discount}</td>
                         <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ANONYMOUS')">
                             <td>
                                 <form method="post" action="/reserveTour">
                                     <input name="idOfTour" type="hidden" value="${tour.id}">
                                     <input name="pricePerUnit" type="hidden" value="${tour.pricePerUnit}">
                                     <input name="numberOfPeople" type="hidden" value="${param.get("numberOfPeople")}">
-                                    <input name="discountId" type="hidden" value="1">
+                                    <input name="discount" type="hidden" value="${tour.discount}">
                                     <button class="btn waves-effect waves-light" type="submit" name="action"><spring:message code="reserve" />
                                     </button>
                                 </form>

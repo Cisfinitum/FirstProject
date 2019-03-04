@@ -1,22 +1,29 @@
 package com.epam.service;
 
+import com.epam.exception.NotFoundException;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
+@RunWith(Parameterized.class)
 public class TourOfferServiceTest {
     @Mock
     private TourOfferDAO tourOfferDAO;
@@ -33,11 +40,22 @@ public class TourOfferServiceTest {
 
     private TourOfferService tourOfferService;
 
+    private List<Integer> expectedHotelsId;
+
+    private List<Hotel> expectedHotels;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         tourOfferService = new TourOfferService(tourOfferDAO,hotelService,reservationService);
         tourOfferList = new ArrayList<>();
+        expectedHotels = new ArrayList<>();
+        expectedHotels.add(expectedHotel);
+        when(hotelService.getHotelsByCountry("test")).thenReturn(expectedHotels);
+        expectedHotelsId = new ArrayList<>();
+        for(Hotel hotel: expectedHotels){
+            expectedHotelsId.add(hotel.getId());
+        }
     }
 
     @Test
@@ -58,7 +76,7 @@ public class TourOfferServiceTest {
         when(expectedTourOffer.getPricePerUnit()).thenReturn(1);
         when(expectedTourOffer.getTourType()).thenReturn("test");
         when(expectedTourOffer.getHotelId()).thenReturn(1);
-        when(expectedTourOffer.getDiscountId()).thenReturn(1);
+        when(expectedTourOffer.getDiscount()).thenReturn(1);
         when(expectedTourOffer.getEndDate()).thenReturn(LocalDate.now());
         when(expectedTourOffer.getStartDate()).thenReturn(LocalDate.now());
         when(expectedTourOffer.getId()).thenReturn(1);
@@ -142,13 +160,61 @@ public class TourOfferServiceTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void updateTourThrowExceptionDiscountZero(){
-        when(tourOfferService.updateTour(expectedTourOffer,"test",1,0,"test")).thenThrow(IllegalArgumentException.class);
+    public void updateTourThrowExceptionDiscountNegative(){
+        when(tourOfferService.updateTour(expectedTourOffer,"test",1,-100,"test")).thenThrow(IllegalArgumentException.class);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void updateTourThrowExceptionTourDescriptiontNull(){
         when(tourOfferService.updateTour(expectedTourOffer,"test",1,1,null)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void searchTourThrowNotFoundException(){
+        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
+        when(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now())).thenThrow(NotFoundException.class);
+    }
+
+    @Test
+    public void getToursByPageCheck() {
+        when(tourOfferDAO.getToursByPage(1, 4)).thenReturn(tourOfferList);
+        assertEquals(tourOfferService.getToursByPage(1), tourOfferList);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getToursByPageThrowsIllegalArgumentExceptionForNullValue() {
+        tourOfferService.getToursByPage(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getToursByPageThrowsIllegalArgumentExceptionForIncorrectValue() {
+        tourOfferService.getToursByPage(0);
+    }
+
+    @Test
+    public void getAmountOfToursCheck() {
+        when(tourOfferDAO.getAmountOfTours()).thenReturn(1);
+        assertEquals(tourOfferService.getAmountOfTours(), 1);
+
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                { 4, 1 }, { 5, 2 }, { 1, 1 }, { 0, 0 }
+        });
+    }
+    @Parameterized.Parameter
+    public int pInput;
+
+    @Parameterized.Parameter(1)
+    public int pExpected;
+    @Test
+    public void getNumberOfPagesCheck() {
+        when(tourOfferDAO.getAmountOfTours()).thenReturn(pInput);
+        assertEquals(pExpected, tourOfferService.getNumberOfPages());
+
     }
 }
 

@@ -33,15 +33,29 @@ public class RegistrationController {
     public ModelAndView createUserAccIfPossible(@RequestParam(name="email") String email,
                                                 @RequestParam(name="password") String password,
                                                 @RequestParam(name="password2") String second_password,
+                                                @RequestParam(name="phoneNumber") String phoneNumber,
+                                                @RequestParam(name="firstName") String firstName,
+                                                @RequestParam(name="lastName") String lastName,
                                                 ModelAndView modelAndView,
                                                 RedirectAttributes redirectAttributes) {
         Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9][a-zA-Z0-9\\-\\._]{4,}[a-zA-Z0-9]@[a-z]{2,}\\.[a-z]{2,}$");
         Matcher emailMatcher = emailPattern.matcher(email);
         Pattern passwordPattern = Pattern.compile("^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,15})$");
         Matcher passwordMatcher = passwordPattern.matcher(password);
+        Pattern phoneNumberPattern = Pattern.compile("^[+]?[\\s\\d]{5,}$");
+        Matcher phoneNumberMatcher = phoneNumberPattern.matcher(phoneNumber);
         redirectAttributes.addFlashAttribute("registration_status", "successful registration");
         if (!emailMatcher.matches()) {
             return modelAndView.addObject("message", "Email doesn't match the pattern");
+        }
+        else if (!(firstName != null)) {
+            return modelAndView.addObject("message", "first name");
+        }
+        else if (!(lastName != null)) {
+            return modelAndView.addObject("message", "last name");
+        }
+        else if (!phoneNumberMatcher.matches()) {
+            return modelAndView.addObject("message", "Phone number is not valid");
         }
         else if (!passwordMatcher.matches()) {
             return modelAndView.addObject("message", "Password doesn't match the pattern");
@@ -50,7 +64,7 @@ public class RegistrationController {
             return modelAndView.addObject("message", "Passwords are not equal");
         }
         else {
-            if (!personDetailsServiceImpl.addPerson(new Person(email, password, PersonRoleEnum.valueOf("USER")))) {
+            if (!personDetailsServiceImpl.addPerson(new Person(email, password, PersonRoleEnum.valueOf("USER"), phoneNumber, firstName, lastName))) {
                 return modelAndView.addObject("message", "Current email already exists");
             }
             else {

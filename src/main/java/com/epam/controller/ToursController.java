@@ -20,6 +20,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.epam.service.TourOfferService.ROWS_PER_PAGE;
+
 
 @Controller
 @Slf4j
@@ -38,9 +40,18 @@ public class ToursController {
     }
 
     @GetMapping("/listoftours")
-    public ModelAndView getToursList(RedirectAttributes redirectAttributes) {
+    public String testadmin(RedirectAttributes redirectAttributes) {
+        return "redirect:/listoftours/1";
+    }
+
+    @GetMapping("/listoftours/{pageNum}")
+    public ModelAndView getToursListByPage(@PathVariable Integer pageNum, ModelMap modelMap, RedirectAttributes redirectAttributes) {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.addObject("listOfTours", toursOfferService.getTours());
+        Integer totalRows = toursOfferService.getAmountOfTours();
+        Integer totalPages = toursOfferService.getNumberOfPages();
+        modelMap.addAttribute("rowsPerPage", ROWS_PER_PAGE);
+        modelMap.addAttribute("totalPages", totalPages);
+        toursModel.addObject("listOfTours", toursOfferService.getToursByPage(pageNum));
         toursModel.addObject("hotels", hotelService.getMapOfHotels());
         toursModel.addObject("isReservedMap", toursOfferService.getToursStatusMap());
         if (redirectAttributes != null) {
@@ -105,6 +116,7 @@ public class ToursController {
             LocalDate addStartDate = Validator.getDate(startDate, false);
             LocalDate addEndDate = Validator.getDate(endDate, false);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
+            Integer addDiscount = Validator.getDiscount(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
             Validator.dateDifference(addStartDate,addEndDate);
@@ -116,7 +128,7 @@ public class ToursController {
                     .pricePerUnit(addPricePerPerson)
                     .hotelId(1) //stub
                     .description(tourDescription)
-                    .discountId(1) //stub
+                    .discount(addDiscount)
                     .build());
 
             if (result == 1) {
@@ -148,7 +160,7 @@ public class ToursController {
             TourOffer tourOffer = toursOfferService.getTourById(addTourId);
             toursModel.addObject("tour",tourOffer);
             Integer addPricePerPerson = Validator.getInt(pricePerPerson);
-            Integer addDiscount = Validator.getInt(discount);
+            Integer addDiscount = Validator.getDiscount(discount);
             Validator.checkEmpty(tourType);
             Validator.checkEmpty(tourDescription);
             toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);
@@ -185,8 +197,8 @@ public class ToursController {
     public ModelAndView addReservation(@RequestParam(name = "idOfTour") Integer idOfTour,
                                        @RequestParam(name = "pricePerUnit") Integer pricePerUnit,
                                        @RequestParam(name = "numberOfPeople") Integer numberOfPeople,
-                                       @RequestParam(name = "discountId") Integer discountId,
-                                       Principal principal, ModelAndView modelAndView) {
-        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discountId);
+                                       @RequestParam(name = "discount") Integer discount,
+                                       Principal principal, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
+        return reservationService.reserveTour(modelAndView,principal,idOfTour,pricePerUnit,numberOfPeople,discount, redirectAttributes);
     }
 }

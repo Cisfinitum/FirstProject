@@ -43,7 +43,7 @@
     </nav>
 </header>
 <main>
-    <div class="container">
+    <div class="container" style="width: 90%">
         <h2><spring:message code="reservations" /></h2>
         <form method="POST" action="#">
             <div class="row">
@@ -51,9 +51,9 @@
                     <c:if test="${listReservation.size()>0}">
                         <tr>
                             <th>№</th>
-                            <th><spring:message code="discountid" /></th>
-                            <th><spring:message code="clientid" /></th>
-                            <th><spring:message code="tourid" /></th>
+                            <th><spring:message code="discount" /></th>
+                            <th><spring:message code="client" /></th>
+                            <th><spring:message code="tour" /></th>
                             <th><spring:message code="nop" /></th>
                             <th><spring:message code="status" /></th>
                             <th><spring:message code="totalprice" /></th>
@@ -64,9 +64,9 @@
                     <c:forEach var="reservation" items="${listReservation}">
                     <tr>
                         <td>${reservation.id}</td>
-                        <td>${reservation.discountId}</td>
-                        <td>${reservation.clientId}</td>
-                        <td> ${reservation.tourOfferId}</td>
+                        <td>${reservation.discount} %</td>
+                        <td>${userInfo.get(reservation.clientId)}</td>
+                        <td> ${tourInfo.get(reservation.tourOfferId)}</td>
                         <td> ${reservation.numberOfPeople}</td>
                         <td> ${reservation.status}</td>
                         <td> ${reservation.totalPrice}</td>

@@ -29,7 +29,7 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     private String hotelIdName;
     @Value("${tourOffer.description}")
     private String descriptionName;
-    @Value("${tourOffer.discountId}")
+    @Value("${tourOffer.discount}")
     private String discountIdName;
     @Value("${tourOffer.id}")
     private String idName;
@@ -42,18 +42,23 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     }
 
     public List<TourOffer> getTours(){
-        return JdbcTemplate.query("SELECT * FROM " + tableName, (rs, rowNum) -> buildTour(rs));
+        return JdbcTemplate.query("SELECT * FROM " + tableName + " ORDER BY " + idName, (rs, rowNum) -> buildTour(rs));
     }
 
     public int deleteTour(Integer tourId){
          return JdbcTemplate.update("DELETE FROM " + tableName + " WHERE " + idName + " = ?", tourId);
+    }
+    public List<TourOffer> getToursByPage(Integer from, Integer offset){
+        String sql = "SELECT * from " +tableName+ " LIMIT ? , ?";
+        Object[] parameters = new Object[] { from-1, offset };
+        return JdbcTemplate.query(sql, parameters, (rs, rowNum) -> buildTour(rs));
     }
 
     public int addTour(TourOffer touroffer){
         return JdbcTemplate.update("INSERT INTO " + tableName + "(" + tourTypeName + ", " + startDateName +
                         ", " + endDateName + ", " + pricePerUnitName + ", " + hotelIdName + ", " + descriptionName + ", " + discountIdName + ") " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)",touroffer.getTourType(),touroffer.getStartDate(),touroffer.getEndDate(),
-                touroffer.getPricePerUnit(),touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscountId());
+                touroffer.getPricePerUnit(),touroffer.getHotelId(),touroffer.getDescription(),touroffer.getDiscount());
     }
 
     public int updateTour(TourOffer touroffer){
@@ -94,9 +99,15 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
         return JdbcTemplate.query(requestSQL, (rs, rowNum) -> buildTour(rs));
     }
 
-    public TourOffer getTourById(Integer tourId){
-        Object[] parameters = new Object[] { tourId };
-        return JdbcTemplate.queryForObject ("SELECT * FROM "+tableName+" WHERE id = ?", parameters, (rs, rowNum) -> buildTour(rs));
+    public TourOffer getTourById(Integer tourId) {
+        Object[] parameters = new Object[]{tourId};
+        return JdbcTemplate.queryForObject("SELECT * FROM " + tableName + " WHERE " + id + " = ?", parameters, (rs, rowNum) -> buildTour(rs));
+    }
+
+    public int getAmountOfTours() {
+        String sql = "SELECT COUNT(*) FROM " +tableName;
+        return JdbcTemplate.queryForObject(
+                sql, Integer.class);
     }
 
     public int amountOfToursSearched(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate){
@@ -129,7 +140,7 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
     }
 
     @SneakyThrows(SQLException.class)
-    TourOffer buildTour(ResultSet rs){
+    TourOffer buildTour(ResultSet rs) {
         return TourOffer.builder()
                 .id(rs.getInt(idName))
                 .tourType(rs.getString(tourTypeName))
@@ -140,5 +151,12 @@ public class TourOfferDAO implements SimpleTourOfferDAO {
                 .description(rs.getString(descriptionName))
                 .discountId(rs.getInt(discountIdName))
                 .build();
+    }
+
+    public int checkIfHotelsIsUsed(Integer id){
+        String sql = "SELECT * FROM " + tableName + " WHERE " + hotelId + " = " + id;
+        List<TourOffer> tourOffers = JdbcTemplate.query(sql, (rs, rowNum) -> buildTour(rs));
+        if (tourOffers.size() != 0) return 1;
+        return 0;
     }
 }

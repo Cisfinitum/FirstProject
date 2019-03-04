@@ -2,6 +2,7 @@ package com.epam.service;
 
 import com.epam.exception.NotFoundException;
 import com.epam.model.Hotel;
+import com.epam.model.Reservation;
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ public class TourOfferService {
     private final HotelService hotelService;
     private final ReservationService reservationService;
     public static final int totalAmountOfRows = 5;
+    public static final int ROWS_PER_PAGE = 4;
 
     @Autowired
     public TourOfferService(TourOfferDAO tourOfferDAO, HotelService hotelService, ReservationService reservationService) {
@@ -47,7 +49,18 @@ public class TourOfferService {
         return toursStatusMap;
     }
 
-    public int deleteTour(Integer tourId) {
+    public List<TourOffer> getToursByPage(Integer pageNum){
+        if ((pageNum == null) || (pageNum < 1)) {
+            throw new IllegalArgumentException("Page number must be integer and > 0");
+        }
+        Integer from = 1;
+        if(pageNum > 1) {
+            from = (pageNum - 1) * ROWS_PER_PAGE + 1;
+        }
+            return tourOfferDAO.getToursByPage(from, ROWS_PER_PAGE);
+    }
+
+    public int deleteTour(Integer tourId){
         if (tourId == null || tourId == 0) {
             log.error("tourId is null or 0");
             throw new IllegalArgumentException("tourId is null or 0");
@@ -64,7 +77,7 @@ public class TourOfferService {
             log.error("tourOffer is null");
             throw new IllegalArgumentException("tourOffer is null");
         } else if(tourOffer.getTourType() == null || tourOffer.getPricePerUnit() == null || tourOffer.getHotelId() == null || tourOffer.getId() == null ||
-                tourOffer.getDescription() == null || tourOffer.getDiscountId() == null || tourOffer.getStartDate() == null || tourOffer.getEndDate() == null) {
+                tourOffer.getDescription() == null || tourOffer.getDiscount() == null || tourOffer.getStartDate() == null || tourOffer.getEndDate() == null) {
             log.error("Some fields of tourOffer is empty");
             throw new IllegalArgumentException("Some fields of tourOffer is empty");
         } else {
@@ -82,7 +95,7 @@ public class TourOfferService {
         } else if (addPricePerPerson == null || addPricePerPerson <= 0) {
             log.error("addPricePerPerson is null or 0");
             throw new IllegalArgumentException("addPricePerPerson is null or 0");
-        } else if (addDiscount == null || addDiscount <= 0) {
+        } else if (addDiscount == null || addDiscount < 0) {
             log.error("addDiscount is null or 0");
             throw new IllegalArgumentException("addDiscount is null or 0");
         } else if (tourDescription == null) {
@@ -94,7 +107,7 @@ public class TourOfferService {
         } else {
             tourOffer.setTourType(tourType);
             tourOffer.setPricePerUnit(addPricePerPerson);
-            tourOffer.setDiscountId(addDiscount);
+            tourOffer.setDiscount(addDiscount);
             tourOffer.setDescription(tourDescription);
             int result = tourOfferDAO.updateTour(tourOffer);
             if(result == 0) {
@@ -133,6 +146,45 @@ public class TourOfferService {
         } else {
             return tourOfferDAO.getTourById(tourId);
         }
+    }
+
+    public int checkIfHotelUsed(Integer hotelId){
+        if (hotelId == null || hotelId <= 0) {
+            log.error("toursId is null, negative or 0");
+            throw new IllegalArgumentException("toursId is null, negative or 0");
+        }else {
+            return tourOfferDAO.checkIfHotelsIsUsed(hotelId);
+            }
+    }
+
+    public Map<Integer, Boolean> getMapOfHotelUse(List <Hotel> hotels){
+        Map<Integer, Boolean> map = new HashMap<>();
+        for (Hotel hotel : hotels) {
+            Integer hotelId = hotel.getId();
+            Boolean isHotelUsed = checkIfHotelUsed(hotelId) == 1;
+            map.put(hotelId, isHotelUsed);
+        }
+        return map;
+    }
+    public Map<Integer,String> getDescription(List<Reservation> reservations){
+        Map<Integer, String> description = new HashMap<>();
+        for (Reservation reservation : reservations) {
+            Integer tourId = reservation.getTourOfferId();
+            TourOffer tourOffer = getTourById(tourId);
+            Integer hotelId = tourOffer.getHotelId();
+            Hotel hotel = hotelService.getHotelById(hotelId);
+            description.put(tourId, tourOffer.toString() + hotel.toString());
+        }
+        return description;
+    }
+
+    public int getAmountOfTours() {
+        return tourOfferDAO.getAmountOfTours();
+    }
+
+    public int getNumberOfPages () {
+        Integer amountOfTours = tourOfferDAO.getAmountOfTours();
+        return (amountOfTours % ROWS_PER_PAGE == 0) ? amountOfTours / ROWS_PER_PAGE : amountOfTours / ROWS_PER_PAGE + 1;
     }
 
     public int amountOfToursSearched(String country, LocalDate startDate, LocalDate endDate) {
