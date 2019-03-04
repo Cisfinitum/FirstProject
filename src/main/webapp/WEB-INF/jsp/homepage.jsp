@@ -13,6 +13,7 @@
     <spring:url value="/resources/img/2.jpg" var="img2" />
     <spring:url value="/resources/img/3.jpg" var="img3" />
     <spring:url value="/resources/img/4.jpg" var="img4" />
+    <spring:url value="/resources/img/5.jpg" var="img5" />
     <spring:url value="/resources/img/united-kingdom-flag.png" var="imgen" />
     <spring:url value="/resources/img/russia-flag.png" var="imgru" />
     <spring:url value="/resources/img/castle.png" var="castle" />
@@ -60,6 +61,13 @@
                     <h5 class="light grey-text text-lighten-3"><spring:message code="tagline22" /></h5>
                 </div>
             </li>
+            <li>
+                <img src="${img5}"> <!-- random image -->
+                <div class="caption center-align">
+                    <h3><spring:message code="tagline5" /></h3>
+                    <h5 class="light grey-text text-lighten-3"><spring:message code="tagline22" /></h5>
+                </div>
+            </li>
         </ul>
     </div>
 </header>
@@ -68,26 +76,26 @@
 
 <nav>
     <div class="nav-wrapper">
-        <a href="index" class="brand-logo center">Tour de Team</a>
+        <a href="index" class="brand-logo center" style="font-size: xx-large">Tour de Team</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li class="active"><a href="index"><spring:message code="homepage" /></a></li>
-            <li><a href="#"><spring:message code="information" /></a></li>
-            <li><a href="#"><spring:message code="feedback" /></a></li>
-            <li><a href="#"><spring:message code="contacts" /></a></li>
+            <li class="active" ><a href="index" style="font-size: x-large"><spring:message code="homepage" /></a></li>
+            <li><a href="#"  style="font-size: x-large"><spring:message code="information" /></a></li>
+            <li><a href="#" style="font-size: x-large"><spring:message code="feedback" /></a></li>
+            <li><a href="#" style="font-size: x-large"><spring:message code="contacts" /></a></li>
         </ul>
         <ul  class="right hide-on-med-and-down">
             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
-                <li><a href="/login"><spring:message code="signin" /></a></li>
-                <li><a href="registration"><spring:message code="signup" /></a></li>
+                <li><a href="/login" style="font-size: x-large"  style="font-size: x-large"><spring:message code="signin" /></a></li>
+                <li><a href="registration" style="font-size: x-large"><spring:message code="signup" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
-                <li><a href="/listoftours"><spring:message code="adminpage" /></a></li>
+                <li><a href="/listoftours"  style="font-size: x-large"><spring:message code="adminpage" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_USER')">
-                <li><a href="/clientProfile"><spring:message code="profile" /></a></li>
+                <li><a href="/clientProfile"  style="font-size: x-large"><spring:message code="profile" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
-                <li><a href="/logout"><spring:message code="logout" /></a></li>
+                <li><a href="/logout"  style="font-size: x-large"><spring:message code="logout" /></a></li>
             </sec:authorize>
             <li><a href="homepage?lang=en"><img src="${imgen}" width="48" height="32"></a>
             <a href="homepage?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
@@ -111,21 +119,21 @@
                     <div class="input-field">
                         <i class="material-icons prefix">edit_location</i>
                         <input type="text" id="autocomplete-input" class="autocomplete" name="country">
-                        <label for="autocomplete-input"><spring:message code="country" /></label>
+                        <label for="autocomplete-input" style="font-size: x-large"><spring:message code="country" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
                         <input type="text" id="autocomplete-dateStart" class="datepicker" name="startDate">
-                        <label for="autocomplete-dateStart"><spring:message code="dod" /></label>
+                        <label for="autocomplete-dateStart" style="font-size: x-large"><spring:message code="dod" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
                         <input type="text" id="autocomplete-dateEnd" class="datepicker" name="endDate">
-                        <label for="autocomplete-dateEnd"><spring:message code="ad" /></label>
+                        <label for="autocomplete-dateEnd" style="font-size: x-large"><spring:message code="ad" /></label>
                     </div>
                 </div>
                 <div class="col s2">
@@ -140,7 +148,7 @@
                             <option value="7" data-icon="${gr}" class="right">7</option>
                             <option value="8" data-icon="${gr}" class="right">8</option>
                         </select>
-                        <label><spring:message code="nop" /></label>
+                        <label style="font-size: large"><spring:message code="nop" /></label>
                     </div>
                 </div>
                 <div class="col s1">
@@ -203,23 +211,23 @@
 <div class="container">
     <div class="row">
         <div class="col s4">
-            <div class="center promo promo-example">
-                <i class="large material-icons mm"><img src="${castle}"></i>
-                <p class="promo-caption mm"><spring:message code="securitypromo" /></p>
+            <div class="center promo promo-example" style="height: 65%">
+                <i class="large material-icons mm" ><img src="${castle}"></i>
+                <p class="promo-caption mm" style="font-size: xx-large"><b><spring:message code="securitypromo" /></b></p>
                 <p class="light center mm"><spring:message code="securityp" /></p>
             </div>
         </div>
-        <div class="col s4">
-            <div class="center promo promo-example">
+        <div class="col s4" >
+            <div class="center promo promo-example" style="height: 65%">
                 <i class="large material-icons mm"><img src="${dragon}"></i>
-                <p class="promo-caption mm"><spring:message code="supportpromo" /></p>
+                <p class="promo-caption mm" style="font-size: xx-large"><b><spring:message code="supportpromo" /></b></p>
                 <p class="light center mm"><spring:message code="supportp" /></p>
             </div>
         </div>
         <div class="col s4">
-            <div class="center promo promo-example">
+            <div class="center promo promo-example" style="height: 65%">
                 <i class="large material-icons mm"><img src="${mage}"></i>
-                <p class="promo-caption mm"><spring:message code="conveniencepromo" /></p>
+                <p class="promo-caption mm" style="font-size: xx-large"><b><spring:message code="conveniencepromo" /></b></p>
                 <p class="light center mm"><spring:message code="conveniencep" /></p>
             </div>
         </div>

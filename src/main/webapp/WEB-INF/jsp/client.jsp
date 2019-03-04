@@ -33,7 +33,7 @@
         <div class="nav-wrapper tab ">
             <a href="/index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/logout"><spring:message code="logout" /></a></li>
+                <li><a href="/logout" style="font-size: x-large"><spring:message code="logout" /></a></li>
             </ul>
         </div>
     </nav>
@@ -159,14 +159,17 @@
 
         </table>
     </div>
+    <br>
 </main>
-<div class="footer-copyright">
-    <div class="container">
-        © 2019 Tour de Team
-    </div>
-</div>
-</footer>
 
+<footer class="page-footer">
+
+
+        <div class="container">
+            © 2018 Copyright Text
+        </div>
+
+</footer>
 <!--JavaScript at end of body for optimized loading-->
 <script type="text/javascript" src="${js}"></script>
 <script type="text/javascript" src="${jsprofile}"></script>

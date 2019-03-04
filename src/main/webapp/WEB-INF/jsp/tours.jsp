@@ -28,16 +28,16 @@
 <header>
     <nav>
         <div class="nav-wrapper tab " >
-            <a href="index" class="brand-logo">Tour De Team</a>
+            <a href="/index" class="brand-logo" style="font-size: xx-large">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/listoftours"><spring:message code="tours" /></a></li>
-                <li><a href="/addtour"><spring:message code="addtour" /></a></li>
-                <li><a href="/reservation"><spring:message code="reservations" /></a></li>
-                <li><a href="/clients"><spring:message code="clients" /></a></li>
-                <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
-                <li><a href="/logout"><spring:message code="logout" /></a></li>
-                <li><a href="/listoftours?lang=en"><img src="${imgen}" width="48" height="32"></a>
-                    <a href="/listoftours?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
+                <li><a href="/listoftours" style="font-size: x-large"><spring:message code="tours" /></a></li>
+                <li><a href="/addtour" style="font-size: x-large"><spring:message code="addtour" /></a></li>
+                <li><a href="/reservation" style="font-size: x-large"><spring:message code="reservations" /></a></li>
+                <li><a href="/clients" style="font-size: x-large"><spring:message code="clients" /></a></li>
+                <li style="margin-right: 20px"><a href="/hotels" style="font-size: x-large"><spring:message code="addhotel" /></a></li>
+                <li><a href="/logout" style="font-size: x-large"><spring:message code="logout" /></a></li>
+                <li><a href="/listoftours?lang=en" style="font-size: x-large"><img src="${imgen}" width="48" height="32"></a>
+                    <a href="/listoftours?lang=ru" style="font-size: x-large"><img src="${imgru}" width="48" height="32"></a></li>
             </ul>
         </div>
     </nav>
@@ -51,7 +51,7 @@
             <c:if test="${not empty error}">
                 <span style="color: red; font-weight: bold">${error}</span>
             </c:if>
-            <table>
+            <table style="font-size: x-large">
                 <thead>
                 <tr>
                     <th><spring:message code="id" /></th>
@@ -100,15 +100,12 @@
                 </tbody>
             </table>
             <br>
-            <br>
-            <br>
-            <br>
             <div class="row">
                 <div class="col s6 offset-s5">
-                    <ul class="pagination">
+                    <ul class="pagination" >
                         <c:if test="${totalPages>1}">
                             <c:forEach var="i" begin="1" end="${totalPages}">
-                                <li class="waves-effect"><a href="/listoftours/${i}">${i}</a></li>
+                                <li class="waves-effect"><a href="/listoftours/${i}" style="font-size: xx-large">${i}</a></li>
                             </c:forEach>
                         </c:if>
                     </ul>

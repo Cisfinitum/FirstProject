@@ -2,38 +2,58 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    font-family: fantasy;
+    font-size: x-large;
 }
 
 main {
     flex: 1 0 auto;
     margin-top: 4%;
+    font-family: fantasy;
+    font-size: x-large;
 }
 
 .nav-wrapper{
     background: #8d6e63;
+    font-size: x-large;
+    font-family: fantasy;
+
 }
 
 .page-footer{
     background: #8d6e63;
+    font-size: x-large;
+    font-family: fantasy;
+
 }
 .mm{
     margin: 10%;
+    font-size: x-large;
+    font-family: fantasy;
 }
 
 .promo{
     background: #8d6e63;
     border-radius: 20px;
+    font-size: x-large;
+    font-family: fantasy;
 }
 
 .promo-caption{
-    font-size: 16pt;
+    font-size: x-large;
+    font-family: fantasy;
+
 }
 
 .btn-large{
     background-color: #8d6e63;
+    font-size: x-large;
+    font-family: fantasy;
 }
 .btn-large:hover{
-    background-color: #bbdefb;
+    background-color: #8d6e63;
+    font-size: x-large;
+    font-family: fantasy;
 }
 
 .tabcontent {
@@ -41,20 +61,30 @@ main {
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
+    font-family: fantasy;
+    font-size: x-large;
 }
 .brand-logo{
     margin-left: 30px;
+    font-size: x-large;
 }
 
 .btn{
     background-color: #8d6e63;
+    font-family: fantasy;
+    font-size: x-large;
 }
 .btn:hover{
-    background-color: #bbdefb;
+    background-color: #8d6e63;
+    font-family: fantasy;
+    font-size: x-large;
 }
 .btn-small{
     background-color: #8d6e63;
+    font-family: fantasy;
+    font-size: x-large;
 }
 .btn-small:hover{
-    background-color: #bbdefb;
-}
+    background-color: #8d6e63;
+    font-family: fantasy;
+    font-size: x-large;}

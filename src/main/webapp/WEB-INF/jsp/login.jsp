@@ -25,13 +25,13 @@
                     <div class="rowlogin">
                         <div class="input-field col s12">
                             <input id="login" type="text" name="j_username"  class="validate">
-                            <label for="login"><spring:message code="loginname" /></label>
+                            <label for="login" style="font-size: x-large"> <spring:message code="loginname" /></label>
                         </div>
                     </div>
                     <div class ="rowlogin">
                         <div class="input-field col s12">
-                            <input id="password" type="password" name="j_password" class="validate">
-                            <label for="password"><spring:message code="passwordname" /></label>
+                            <input id="password" type="password" name="j_password" class="validate" >
+                            <label for="password" style="font-size: x-large"><spring:message code="passwordname" /></label>
                         </div>
                     </div>
                     <div class ="rowlogin">
