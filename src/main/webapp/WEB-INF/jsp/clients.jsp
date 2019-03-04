@@ -28,14 +28,14 @@
 <header>
     <nav>
         <div class="nav-wrapper tab " >
-            <a href="index" class="brand-logo" style="font-size: xx-large">Tour De Team</a>
+            <a href="index" class="brand-logo" >Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/listoftours" style="font-size: x-large"><spring:message code="tours" /></a></li>
-                <li><a href="/addtour" style="font-size: x-large"><spring:message code="addtour" /></a></li>
-                <li><a href="/reservation" style="font-size: x-large"><spring:message code="reservations" /></a></li>
-                <li><a href="/clients" style="font-size: x-large"><spring:message code="clients" /></a></li>
-                <li style="margin-right: 20px"><a href="/hotels" style="font-size: x-large"><spring:message code="addhotel" /></a></li>
-                <li><a href="/logout" style="font-size: x-large"><spring:message code="logout" /></a></li>
+                <li><a href="/listoftours"><spring:message code="tours" /></a></li>
+                <li><a href="/addtour"><spring:message code="addtour" /></a></li>
+                <li><a href="/reservation"><spring:message code="reservations" /></a></li>
+                <li><a href="/clients"><spring:message code="clients" /></a></li>
+                <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
                 <li><a href="/clients?lang=en"><img src="${imgen}" width="48" height="32"></a>
                     <a href="/clients?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
             </ul>
@@ -47,7 +47,7 @@
         <h2><spring:message code="clients" /></h2>
         <form method="POST" action="#">
             <div class="row">
-                <table style="font-size: x-large">
+                <table>
                     <c:if test="${listOfUsers.size()>0}">
                         <tr>
                             <th>Id</th>
@@ -79,7 +79,7 @@
                         <ul class="pagination">
                             <c:if test="${generalAmount>4}">
                                 <c:forEach var="i" begin="1" end="${amount}">
-                                    <li class="waves-effect"><a href="/clients/${i}" style="font-size: x-large">${i}</a></li>
+                                    <li class="waves-effect"><a href="/clients/${i}" >${i}</a></li>
                                 </c:forEach>
                             </c:if>
                         </ul>

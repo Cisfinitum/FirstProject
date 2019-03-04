@@ -28,14 +28,14 @@
 <header>
     <nav>
         <div class="nav-wrapper tab ">
-            <a href="index" class="brand-logo"   style="font-size: xx-large">Tour De Team</a>
+            <a href="index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/listoftours"   style="font-size: x-large"><spring:message code="tours" /></a></li>
-                <li><a href="/addtour"   style="font-size: x-large"><spring:message code="addtour" /></a></li>
-                <li><a href="/reservation"   style="font-size: x-large"><spring:message code="reservations" /></a></li>
-                <li><a href="/clients"   style="font-size: x-large"><spring:message code="clients" /></a></li>
-                <li style="margin-right: 20px"><a href="/hotels"   style="font-size: x-large"><spring:message code="addhotel" /></a></li>
-                <li><a href="/logout"   style="font-size: x-large"><spring:message code="logout" /></a></li>
+                <li><a href="/listoftours" ><spring:message code="tours" /></a></li>
+                <li><a href="/addtour" ><spring:message code="addtour" /></a></li>
+                <li><a href="/reservation"><spring:message code="reservations" /></a></li>
+                <li><a href="/clients"   ><spring:message code="clients" /></a></li>
+                <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
                 <li><a href="addtour?lang=en"><img src="${imgen}" width="48" height="32"></a>
                     <a href="addtour?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
             </ul>
@@ -60,7 +60,7 @@
                     <div class="input-field">
                         <input type="text" id="autocomplete-input" class="autocomplete" name="tourType"
                                value="${tourType}">
-                        <label for="autocomplete-input"   style="font-size: x-large"><spring:message code="tourtype" /></label>
+                        <label for="autocomplete-input"><spring:message code="tourtype" /></label>
                     </div>
                 </div>
                 <div class="col s4">
@@ -68,25 +68,25 @@
                         <i class="material-icons prefix">event_available</i>
                         <input type="text" id="autocomplete-date" class="datepicker" name="startDate"
                                value="${startDate}">
-                        <label for="autocomplete-date"   style="font-size: x-large"><spring:message code="dod" /></label>
+                        <label for="autocomplete-date"><spring:message code="dod" /></label>
                     </div>
                 </div>
                 <div class="col s4">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-date2"   style="font-size: x-large" class="datepicker" name="endDate" value="${endDate}">
-                        <label for="autocomplete-date2"   style="font-size: x-large"><spring:message code="ad" /></label>
+                        <input type="text" id="autocomplete-date2" class="datepicker" name="endDate" value="${endDate}">
+                        <label for="autocomplete-date2"><spring:message code="ad" /></label>
                     </div>
                 </div>
                 <div class="col s4">
                     <div class="input-field">
                         <select class="pricePerPerson" name="hotel">
                             <c:forEach var="hotel" items="${hotelList}">
-                                <option value="${hotel.name}" style="font-family: fantasy"> ${hotel.name} ${hotel.numberOfStars}★
+                                <option value="${hotel.name}"> ${hotel.name} ${hotel.numberOfStars}★
                                 </option>
                             </c:forEach>
                         </select>
-                        <label   style="font-size: x-large"><spring:message code="hotel" /></label>
+                        <label><spring:message code="hotel" /></label>
                     </div>
                 </div>
                 <div class="col s4">
@@ -94,7 +94,7 @@
                         <i class="material-icons prefix">local_offer</i>
                         <input type="text" id="autocomplete-input2" class="pricePerPerson" name="pricePerPerson"
                                value="${price}">
-                        <label   style="font-size: x-large" for="autocomplete-input2"><spring:message code="tourprice" /></label>
+                        <label for="autocomplete-input2"><spring:message code="tourprice" /></label>
                     </div>
                 </div>
                 <div class="col s4">
@@ -102,14 +102,14 @@
                         <i class="material-icons prefix">loyalty</i>
                         <input type="text" id="autocomplete-input3" class="pricePerPerson" name="discount"
                                value="${discount}">
-                        <label   style="font-size: x-large" for="autocomplete-input3"><spring:message code="tourdiscount" /></label>
+                        <label    for="autocomplete-input3"><spring:message code="tourdiscount" /></label>
                     </div>
                 </div>
                 <div class="input-field">
                     <div class="input-field col s12">
                         <input type="text" id="textarea1" class="materialize-textarea" name="tourDescription"
                                value="${description}">
-                        <label   style="font-size: x-large" for="textarea1"><spring:message code="tourdescription" /></label>
+                        <label for="textarea1"><spring:message code="tourdescription" /></label>
                     </div>
                 </div>
                 <div class="col s2 offset-s10">

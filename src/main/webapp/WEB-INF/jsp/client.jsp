@@ -33,7 +33,7 @@
         <div class="nav-wrapper tab ">
             <a href="/index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/logout" style="font-size: x-large"><spring:message code="logout" /></a></li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
             </ul>
         </div>
     </nav>
@@ -143,7 +143,7 @@
                             <div id="modal1" class="modal">
                                 <div class="modal-content">
                                     <h4>You are going to pay ${reservation.totalPrice} $</h4>
-                                    <p style="font-size: x-large">Are you sure?</p>
+                                    <p>Are you sure?</p>
                                     <input name="reservationId" type="hidden" value="${reservation.id}">
                                     <div class="modal-footer">
                                         <button type="submit" class="waves-effect waves-light btn">PAY

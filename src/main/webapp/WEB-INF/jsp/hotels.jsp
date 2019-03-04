@@ -26,14 +26,14 @@
 <header>
     <nav>
         <div class="nav-wrapper tab ">
-            <a href="index" class="brand-logo" style="font-size: xx-large">Tour De Team</a>
+            <a href="index" class="brand-logo" >Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/listoftours" style="font-size: x-large"><spring:message code="tours" /></a></li>
-                <li><a href="/addtour" style="font-size: x-large"><spring:message code="addtour" /></a></li>
-                <li><a href="/reservation" style="font-size: x-large"><spring:message code="reservations" /></a></li>
-                <li><a href="/clients" style="font-size: x-large"><spring:message code="clients" /></a></li>
-                <li style="margin-right: 20px"><a href="/hotels" style="font-size: x-large"><spring:message code="addhotel" /></a></li>
-                <li><a href="/logout" style="font-size: x-large"><spring:message code="logout" /></a></li>
+                <li><a href="/listoftours" ><spring:message code="tours" /></a></li>
+                <li><a href="/addtour" ><spring:message code="addtour" /></a></li>
+                <li><a href="/reservation" ><spring:message code="reservations" /></a></li>
+                <li><a href="/clients"><spring:message code="clients" /></a></li>
+                <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
+                <li><a href="/logout"><spring:message code="logout" /></a></li>
                 <li><a href="hotels?lang=en"><img src="${imgen}" width="48" height="32"></a>
                     <a href="hotels?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
             </ul>
@@ -51,19 +51,19 @@
                 <div class="col s3">
                     <div class="input-field">
                         <input type="text" id="name" name="name" class="autocomplete" value="${name}">
-                        <label for="name" style="font-size: x-large"><spring:message code="namesimple" /></label>
+                        <label for="name"><spring:message code="namesimple" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <input type="text" id="country" name="country" class="autocomplete" value="${country}">
-                        <label for="country" style="font-size: x-large"><spring:message code="hotelcountry" /></label>
+                        <label for="country"><spring:message code="hotelcountry" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <input type="text" id="city" name="city" class="autocomplete" value="${city}">
-                        <label for="city" style="font-size: x-large"><spring:message code="hotelcity" /></label>
+                        <label for="city"><spring:message code="hotelcity" /></label>
                     </div>
                 </div>
                 <div class="col s3">
@@ -75,7 +75,7 @@
                             <option value="4">4</option>
                             <option value="5">5</option>
                         </select>
-                        <label for="stars" style="font-size: x-large"><spring:message code="numberofstars" /></label>
+                        <label for="stars"><spring:message code="numberofstars" /></label>
                     </div>
                 </div>
             </div>
@@ -100,8 +100,8 @@
     <div id="modal1" class="modal">
         <div class="modal-content">
             <h4>Hotels</h4>
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder= "Start typing the hotel name" style="font-size: x-large; font-family: fantasy">
-            <table id="myTable" style="font-size: x-large">
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder= "Start typing the hotel name" >
+            <table id="myTable">
                 <c:if test="${hotels.size()>0}">
                     <tr>
                         <th><spring:message code="namesimple"/></th>
@@ -127,7 +127,7 @@
             </table>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat" style="font-size: x-large">Close</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
     </div>
 
