@@ -39,7 +39,7 @@
     </nav>
 </header>
 <main>
-    <div class="container">
+    <div class="container" style="width: 85%">
         <h2><spring:message code="clientprofile" /></h2>
         <div class="profile">
             <div class="avatar card-profile-image">
