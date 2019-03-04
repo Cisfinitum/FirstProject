@@ -163,8 +163,8 @@
     </div>
     <h3 style="text-align:center; color: green">${message}</h3>
     <c:if test="${not empty list}">
-    <div class="container">
-        <table>
+    <div class="container" style="width: 85%">
+        <table style="font-size: x-large;">
             <thead>
             <tr>
                 <th><spring:message code="tourtype" /></th>
@@ -206,6 +206,7 @@
                 </c:forEach>
             </tbody>
         </table>
+        <br>
     </div>
     </c:if>
 <div class="container">

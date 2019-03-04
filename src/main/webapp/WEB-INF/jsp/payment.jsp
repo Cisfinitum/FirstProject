@@ -17,12 +17,12 @@
 <div class="registration-page">
     <div class="registration">
         <div class="row">
-            <P style="font-size: large; color: green"><b>Tour was reserved successfully</b></P>
-            <p style="font-size: large">Number Of People: ${numberOfPeople} </p>
-            <p style="font-size: large">Price per Person ${pricePerUnit} $ </p>
-            <p style="font-size: large">Discount ${discount} %</p>
+            <P style="font-size: x-large; color: green;"><b>Tour was reserved successfully</b></P>
+            <p style="font-size: x-large">Number Of People: ${numberOfPeople} </p>
+            <p style="font-size: x-large">Price per Person ${pricePerUnit} $ </p>
+            <p style="font-size: x-large">Discount ${discount} %</p>
             <div class="divider"></div>
-            <p style="font-size: large">Total price is ${totalPrice} $</p>
+            <p style="font-size: x-large">Total price is ${totalPrice} $</p>
             <div class="row">
                 <div class="col s6">
                     <div class="input-field">
