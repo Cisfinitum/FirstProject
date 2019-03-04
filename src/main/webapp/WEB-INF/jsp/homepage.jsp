@@ -13,8 +13,12 @@
     <spring:url value="/resources/img/2.jpg" var="img2" />
     <spring:url value="/resources/img/3.jpg" var="img3" />
     <spring:url value="/resources/img/4.jpg" var="img4" />
+    <spring:url value="/resources/img/5.jpg" var="img5" />
     <spring:url value="/resources/img/united-kingdom-flag.png" var="imgen" />
     <spring:url value="/resources/img/russia-flag.png" var="imgru" />
+    <spring:url value="/resources/img/castle.png" var="castle" />
+    <spring:url value="/resources/img/dragon.png" var="dragon" />
+    <spring:url value="/resources/img/mage.png" var="mage" />
     <spring:url value="/resources/img/group.png" var="gr" />
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -57,6 +61,13 @@
                     <h5 class="light grey-text text-lighten-3"><spring:message code="tagline22" /></h5>
                 </div>
             </li>
+            <li>
+                <img src="${img5}"> <!-- random image -->
+                <div class="caption center-align">
+                    <h3><spring:message code="tagline5" /></h3>
+                    <h5 class="light grey-text text-lighten-3"><spring:message code="tagline22" /></h5>
+                </div>
+            </li>
         </ul>
     </div>
 </header>
@@ -65,17 +76,17 @@
 
 <nav>
     <div class="nav-wrapper">
-        <a href="index" class="brand-logo center">Tour de Team</a>
+        <a href="index" class="brand-logo center" style="font-size: xx-large">Tour de Team</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li class="active"><a href="index"><spring:message code="homepage" /></a></li>
-            <li><a href="#"><spring:message code="information" /></a></li>
-            <li><a href="#"><spring:message code="feedback" /></a></li>
-            <li><a href="#"><spring:message code="contacts" /></a></li>
+            <li class="active" ><a href="index" style="font-size: x-large"><spring:message code="homepage" /></a></li>
+            <li><a href="#"  style="font-size: x-large"><spring:message code="information" /></a></li>
+            <li><a href="#" style="font-size: x-large"><spring:message code="feedback" /></a></li>
+            <li><a href="#" style="font-size: x-large"><spring:message code="contacts" /></a></li>
         </ul>
         <ul  class="right hide-on-med-and-down">
             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
-                <li><a href="/login"><spring:message code="signin" /></a></li>
-                <li><a href="registration"><spring:message code="signup" /></a></li>
+                <li><a href="/login" style="font-size: x-large"><spring:message code="signin" /></a></li>
+                <li><a href="registration" style="font-size: x-large"><spring:message code="signup" /></a></li>
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <li><a href="/listoftours"><spring:message code="adminpage" /></a></li>
@@ -200,29 +211,29 @@
 <div class="container">
     <div class="row">
         <div class="col s4">
-            <div class="center promo promo-example">
-                <img src="/resources/img/7.png"/>
-                <p class="promo-caption mm"><spring:message code="securitypromo" /></p>
+            <div class="center promo promo-example" style="height: 65%">
+                <i class="large material-icons mm" ><img src="${castle}"></i>
+                <p class="promo-caption mm" style="font-size: xx-large"><b><spring:message code="securitypromo" /></b></p>
                 <p class="light center mm"><spring:message code="securityp" /></p>
             </div>
         </div>
-        <div class="col s4">
-            <div class="center promo promo-example">
-                <img src="/resources/img/5.png"/>
-                <p class="promo-caption mm"><spring:message code="supportpromo" /></p>
+        <div class="col s4" >
+            <div class="center promo promo-example" style="height: 65%">
+                <i class="large material-icons mm"><img src="${dragon}"></i>
+                <p class="promo-caption mm" style="font-size: xx-large"><b><spring:message code="supportpromo" /></b></p>
                 <p class="light center mm"><spring:message code="supportp" /></p>
             </div>
         </div>
         <div class="col s4">
-            <div class="center promo promo-example">
-                <img src="/resources/img/6.png"/>
-                <p class="promo-caption mm"><spring:message code="conveniencepromo" /></p>
+            <div class="center promo promo-example" style="height: 65%">
+                <i class="large material-icons mm"><img src="${mage}"></i>
+                <p class="promo-caption mm" style="font-size: xx-large"><b><spring:message code="conveniencepromo" /></b></p>
                 <p class="light center mm"><spring:message code="conveniencep" /></p>
             </div>
         </div>
     </div>
 </div>
-</main>ы
+</main>
 <footer class="page-footer">
     <div class="container">
         <div class="row">

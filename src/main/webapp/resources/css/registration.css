@@ -2,6 +2,9 @@
     width: 400px;
     padding: 8% 0 0;
     margin: auto;
+    font-size: x-large;
+    font-family: fantasy;
+
 }
 .registration {
     position: relative;
@@ -13,24 +16,39 @@
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     border-radius: 10px;
+    font-size: x-large;
+    font-family: fantasy;
+
 }
 .rowregistration {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
+    font-size: x-large;
+    font-family: fantasy;
+
 }
 .btn{
-    background-color: #90caf9;
+    background-color:  #8d6e63;
+    font-size: x-large;
+    font-family: fantasy;
+
 }
 .btn:hover{
-    background-color: #bbdefb;
+    background-color:  #8d6e63;
+    font-size: x-large;
+    font-family: fantasy;
+
 }
 body {
-    background: #90caf9; /* fallback for old browsers */
-    background: -webkit-linear-gradient(right, #90caf9, #bbdefb);
-    background: -moz-linear-gradient(right, #90caf9, #bbdefb);
-    background: -o-linear-gradient(right, #90caf9, #bbdefb);
-    background: linear-gradient(to left, #90caf9, #bbdefb);
+    background:  #8d6e63; /* fallback for old browsers */
+    background: -webkit-linear-gradient(right,  #8d6e63,  #a1887f );
+    background: -moz-linear-gradient(right,  #8d6e63, #a1887f  );
+    background: -o-linear-gradient(right,  #8d6e63,  #a1887f );
+    background: linear-gradient(to left,  #8d6e63,  #a1887f );
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-size: x-large;
+    font-family: fantasy;
+
 }
