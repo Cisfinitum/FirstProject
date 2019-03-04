@@ -85,7 +85,7 @@
             <c:forEach var="reservation" items="${reservations}">
             <tr>
                 <td>${reservation.id}</td>
-                <td>${description.get(reservation.id)} </td>
+                <td>${description.get(reservation.tourOfferId)} </td>
                 <td> ${reservation.discount}%</td>
                 <td> ${reservation.numberOfPeople}</td>
                 <td> ${reservation.status}</td>
