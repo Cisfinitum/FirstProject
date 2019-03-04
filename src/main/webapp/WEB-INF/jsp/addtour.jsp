@@ -82,7 +82,7 @@
                     <div class="input-field">
                         <select class="pricePerPerson" name="hotel">
                             <c:forEach var="hotel" items="${hotelList}">
-                                <option value="${hotel.name}"> ${hotel.name} ${hotel.numberOfStars}★
+                                <option value="${hotel.id}"> ${hotel.name} ${hotel.numberOfStars}★
                                 </option>
                             </c:forEach>
                         </select>

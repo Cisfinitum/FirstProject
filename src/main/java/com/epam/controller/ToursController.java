@@ -126,7 +126,7 @@ public class ToursController {
                     .startDate(addStartDate)
                     .endDate(addEndDate)
                     .pricePerUnit(addPricePerPerson)
-                    .hotelId(1) //stub
+                    .hotelId(Integer.valueOf(hotel)) //stub
                     .description(tourDescription)
                     .discount(addDiscount)
                     .build());
