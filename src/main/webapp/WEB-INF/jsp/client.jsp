@@ -50,7 +50,7 @@
                         </div>
                         <div class="col s3">
                             <p class="medium-small grey-text"><spring:message code="emailname" />: ${person.email}</p>
-                            <a data-target="modal2" href="#modal2"> <i class="material-icons">settings</i></a>
+                            <a class="waves-effect waves-light modal-trigger" href="#modal2"> <i class="material-icons">settings</i></a>
                             <p class="medium-small grey-text"><spring:message code="firstname" />: ${person.firstName}</p>
                             <p class="medium-small grey-text"><spring:message code="lastname" />: ${person.lastName}</p>
                             <p class="medium-small grey-text"><spring:message code="phoneNumber" />: ${person.phoneNumber}</p>
@@ -66,8 +66,8 @@
                             </div>
                         </div>
                         <!-- Modal Structure -->
-                        <div id="modal2" class="modal modal-fixed-footer">
-                            <div class="modal-content registration-page">
+                        <div id="modal2" class="modal">
+                            <div class="modal-content">
                                 <div class="registration">
                                     <div class="row">
                                         <form name="user" id="change-pwd" class="col s12" autocomplete="off"
