@@ -113,7 +113,7 @@
     </div>
     </div>
     </div>
-    <div class="container">
+    <div class="container" style="width: 85%">
         <h4><spring:message code="reservations" /></h4>
         <table>
             <c:if test="${reservations.size()>0}">
@@ -131,11 +131,11 @@
             <c:forEach var="reservation" items="${reservations}">
             <tr>
                 <td>${reservation.id}</td>
-                <td>${description.get(reservation.id)} </td>
+                <td>${description.get(reservation.tourOfferId)} </td>
                 <td> ${reservation.discount}%</td>
                 <td> ${reservation.numberOfPeople}</td>
                 <td> ${reservation.status}</td>
-                <td> ${reservation.totalPrice}</td>
+                <td> ${reservation.totalPrice} $</td>
                 <td>
                     <form method="post" action="/pay" id="pay">
                         <c:if test="${reservation.status == 'UNPAID'}">
@@ -143,7 +143,7 @@
                             <div id="modal1" class="modal">
                                 <div class="modal-content">
                                     <h4>You are going to pay ${reservation.totalPrice} $</h4>
-                                    <p style="font-size: large">Are you sure?</p>
+                                    <p style="font-size: x-large">Are you sure?</p>
                                     <input name="reservationId" type="hidden" value="${reservation.id}">
                                     <div class="modal-footer">
                                         <button type="submit" class="waves-effect waves-light btn">PAY

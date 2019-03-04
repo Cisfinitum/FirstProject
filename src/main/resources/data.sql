@@ -1,5 +1,5 @@
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('admin@gmail.com', '123','ADMIN', '+79993337821', 'Frodo', 'Frodo Baggins');
+VALUES ('admin@gmail.com', '123','ADMIN', '+79993337821', 'Frodo', 'Baggins');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
 VALUES ('user_1@gmail.com', '123','BLOCKED', '+79993337821', 'Aragorn II', 'Elessar Telcontar');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
