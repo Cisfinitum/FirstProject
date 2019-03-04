@@ -1,25 +1,25 @@
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('admin@gmail.com', '123','ADMIN', '+79993337821', 'Ivan', 'Ivanov');
+VALUES ('admin@gmail.com', '123','ADMIN', '+79993337821', 'Frodo', 'Frodo Baggins');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('user_1@gmail.com', '123','BLOCKED', '+79993337821', 'Example', 'Example');
+VALUES ('user_1@gmail.com', '123','BLOCKED', '+79993337821', 'Aragorn II', 'Elessar Telcontar');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('user_2@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_2@gmail.com', '123','USER', '+79993337821', 'Gollum', 'ex Smeagol ');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('user_3@gmail.com', '123','BLOCKED', '+79993337821', 'Example', 'Example');
+VALUES ('user_3@gmail.com', '123','BLOCKED', '+79993337821', 'Gimli', 'son of Gloin');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('user_4@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_4@gmail.com', '123','USER', '+79993337821', 'Thorin ', 'Oakenshield');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('user@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user@gmail.com', '123','USER', '+79993337821', 'Samwise ', 'Gamgee');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('user_5@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_5@gmail.com', '123','USER', '+79993337821', 'Legolas ', 'son of Thranduil');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('user_6@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_6@gmail.com', '123','USER', '+79993337821', 'Peregrin ', 'Took');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('user_7@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_7@gmail.com', '123','USER', '+79993337821', 'Saruman', 'the White');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('user_8@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_8@gmail.com', '123','USER', '+79993337821', 'Gandalf', 'the Gray');
 INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
-VALUES ('user_9@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_9@gmail.com', '123','USER', '+79993337821', 'Gandalf', 'the White');
 INSERT INTO hotel(name, city, country, number_of_stars)
 VALUES ('Luxury Hotel', 'Moscow', 'Russia', '5');
 INSERT INTO hotel(name, city, country, number_of_stars)
