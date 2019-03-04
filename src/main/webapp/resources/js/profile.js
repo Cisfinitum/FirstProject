@@ -9,9 +9,7 @@ window.onload = function () {
 
 function checkPwdChanged () {
     var url = window.location.href;
-    // Get DIV
     var msg = document.getElementById('idofthedivtohide');
-    // Check if URL contains the keyword
     if( url.search( 'changed' ) > 0 ) {
         // Display the message
         msg.classList.add("show");
