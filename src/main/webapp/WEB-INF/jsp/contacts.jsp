@@ -73,10 +73,10 @@
     <div class="nav-wrapper">
         <a href="index" class="brand-logo center">Tour de Team</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li class="active"><a href="/index"><spring:message code="homepage" /></a></li>
+            <li><a href="/index"><spring:message code="homepage" /></a></li>
             <li><a href="/#"><spring:message code="information" /></a></li>
             <li><a href="/#"><spring:message code="feedback" /></a></li>
-            <li><a href="/#"><spring:message code="contacts" /></a></li>
+            <li class="active"><a href="/contacts"><spring:message code="contacts" /></a></li>
         </ul>
         <ul  class="right hide-on-med-and-down">
             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
@@ -92,8 +92,8 @@
             <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
                 <li><a href="/logout"><spring:message code="logout" /></a></li>
             </sec:authorize>
-            <li><a href="/homepage?lang=en"><img src="${imgen}" width="48" height="32"></a>
-                <a href="/homepage?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
+            <li><a href="/contacts?lang=en"><img src="${imgen}" width="48" height="32"></a>
+                <a href="/contacts?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
         </ul>
     </div>
 </nav>
@@ -110,8 +110,8 @@
                     <span class="card-title"><spring:message code="ekaterinaGoponenko" /></span>
                 </div>
                 <div class="card-content">
-                    <p>I am a very simple card. I am good at containing small bits of information.
-                        I am convenient because I require little markup to use effectively.</p>
+                    <p>Position: Mentor</p>
+                    <p>Ekaterina_Goponenko@epam.com</p>
                 </div>
             </div>
         </div>
@@ -122,8 +122,8 @@
                     <span class="card-title"><spring:message code="nikolaiImbirev" /></span>
                 </div>
                 <div class="card-content">
-                    <p>I am a very simple card. I am good at containing small bits of information.
-                        I am convenient because I require little markup to use effectively.</p>
+                    <p>Position: Mentor</p>
+                    <p>Nikolai_Imbirev@epam.com</p>
                 </div>
             </div>
         </div>
@@ -134,8 +134,8 @@
                     <span class="card-title"><spring:message code="iliaGrigorev" /></span>
                 </div>
                 <div class="card-content">
-                    <p>I am a very simple card. I am good at containing small bits of information.
-                        I am convenient because I require little markup to use effectively.</p>
+                    <p>Position: Developer</p>
+                    <p>Ilia_Grigorev@epam.com</p>
                 </div>
             </div>
         </div>
@@ -146,8 +146,8 @@
                     <span class="card-title"><spring:message code="kseniiaMaltseva" /></span>
                 </div>
                 <div class="card-content">
-                    <p>I am a very simple card. I am good at containing small bits of information.
-                        I am convenient because I require little markup to use effectively.</p>
+                    <p>Position: Developer</p>
+                    <p>Kseniia_Maltseva@epam.com</p>
                 </div>
             </div>
         </div>
@@ -158,8 +158,8 @@
                     <span class="card-title"><spring:message code="fedorKevdin" /></span>
                 </div>
                 <div class="card-content">
-                    <p>I am a very simple card. I am good at containing small bits of information.
-                        I am convenient because I require little markup to use effectively.</p>
+                    <p>Position: Developer</p>
+                    <p>Fedor_Kevdin@epam.com</p>
                 </div>
             </div>
         </div>
@@ -170,8 +170,8 @@
                     <span class="card-title"><spring:message code="levKiselev" /></span>
                 </div>
                 <div class="card-content">
-                    <p>I am a very simple card. I am good at containing small bits of information.
-                        I am convenient because I require little markup to use effectively.</p>
+                    <p>Position: Developer</p>
+                    <p>Lev_Kiselev@epam.com</p>
                 </div>
             </div>
         </div>
