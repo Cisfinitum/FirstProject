@@ -2,6 +2,10 @@ package com.epam.controller;
 
 import com.epam.model.Reservation;
 import com.epam.service.ReservationService;
+import com.epam.service.TourOfferService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
