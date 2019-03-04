@@ -5,12 +5,13 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.springframework.util.StringUtils;
 
 public class Validator {
 
     public static LocalDate getDateFromString(String dateString, Boolean getNullIfEmpty){
         try {
-            if(!dateString.isEmpty()) {
+            if(!StringUtils.isEmpty(dateString)) {
                  return Date.valueOf(dateString).toLocalDate();
             } else if (getNullIfEmpty) {
                 return null;
@@ -43,7 +44,7 @@ public class Validator {
     }
 
     public static String getDescriptionString(String description) {
-        if (!description.isEmpty()) {
+        if (!StringUtils.isEmpty(description)) {
             return description;
         } else {
             throw new IllegalArgumentException("Empty description");
@@ -51,7 +52,7 @@ public class Validator {
     }
 
     public static String getTourTypeString(String tourType) {
-        if (!tourType.isEmpty()) {
+        if (!StringUtils.isEmpty(tourType)) {
             return tourType;
         } else {
             throw new IllegalArgumentException("Empty tour type");
