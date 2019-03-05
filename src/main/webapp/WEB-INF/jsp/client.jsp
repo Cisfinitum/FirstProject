@@ -64,6 +64,7 @@
                                 <spring:message code="changepassword"/>
                             </a>
                             <p style="color: red;">${changeStatus}</p>
+                            <p style="color: green;">${successStatus}</p>
                             <div id="idofthedivtohide" class="hide">
                                 <span><spring:message code="passwordchanged"/></span>
                             </div>

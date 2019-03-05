@@ -83,7 +83,7 @@ public class ClientsController {
             return modelAndView;
         }
         personDetailsServiceImpl.updatePasswordById(clientId, passwordEncoder.encode(password));
-        redirectAttributes.addFlashAttribute("changeStatus", "Successful registration");
+        redirectAttributes.addFlashAttribute("successStatus", "Successful registration");
         modelAndView.setViewName("redirect:/clientProfile");
         return modelAndView;
     }
