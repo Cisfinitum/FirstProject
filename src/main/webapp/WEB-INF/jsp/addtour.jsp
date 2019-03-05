@@ -143,7 +143,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            © 2018 Copyright Text
+            © 2019 Copyright Text
         </div>
     </div>
 </footer>

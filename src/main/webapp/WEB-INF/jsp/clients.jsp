@@ -66,11 +66,11 @@
                             <td>${clients.role}</td>
                             <c:choose>
                                 <c:when test="${clients.role.toString().equals('USER')}">
-                                    <td><a href="addToBlackList/${clients.id}" style="background-color:#b71c1c ; width: 75%" class="btn-small">
+                                    <td><a href="addToBlackList/${clients.id}" style="background-color:#b71c1c ; width: 95%" class="btn-small">
                                         <spring:message code="block" /> </a></td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><a href="removeFromBlackList/${clients.id}" style="width: 75%" class="btn-small"><spring:message code="unblock" /></a></td>
+                                    <td><a href="removeFromBlackList/${clients.id}" style="width: 95%" class="btn-small"><spring:message code="unblock" /></a></td>
                                 </c:otherwise>
                             </c:choose>
                             </c:forEach>
@@ -111,7 +111,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            © 2018 Copyright Text
+            © 2019 Copyright Text
         </div>
     </div>
 </footer>

@@ -143,8 +143,8 @@
                 <td>
                     <form method="post" action="/pay" id="pay">
                         <c:if test="${reservation.status == 'UNPAID'}">
-                            <a class="waves-effect waves-light btn modal-trigger" href="#modal1"><i class="material-icons left">payment</i><spring:message
-                                    code="pay"/></a>
+                            <a class="waves-effect waves-light btn modal-trigger" href="#modal1" style="width: 80%">
+                                <spring:message code="pay"/></a>
                             <div id="modal1" class="modal">
                                 <div class="modal-content">
                                     <h4><spring:message code="goingtopay"/> ${reservation.totalPrice} $</h4>
@@ -165,7 +165,7 @@
                     <br>
                     <c:if test="${reservation.status == 'UNPAID'}">
                         <form method="post" action="/cancelReservation" id="cancel">
-                            <a class="waves-effect waves-light btn modal-trigger" href="#modal2"> <spring:message
+                            <a class="waves-effect waves-light btn modal-trigger" href="#modal2" style="width: 80%"> <spring:message
                                     code="cancelsimple"/></a>
                             <div id="modal2" class="modal">
                                 <div class="modal-content">
@@ -197,7 +197,7 @@
 
 
         <div class="container">
-            © 2018 Copyright Text
+            © 2019 Copyright Text
         </div>
 
 </footer>

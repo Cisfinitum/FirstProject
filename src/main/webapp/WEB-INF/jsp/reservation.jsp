@@ -134,7 +134,7 @@
                                 </tr>
                                 <br>
                             </table>
-                            <a href="/reservation/cleanArchive" style="background-color:#90caf9" class="btn-small">
+                            <a href="/reservation/cleanArchive" class="btn-small">
                                <spring:message code="cleanarchive"/> </a>
                             </c:if>
                         </div>
