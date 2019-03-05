@@ -108,9 +108,9 @@
             <div class="card">
                 <div class="card-image">
                     <img src="${kate}">
-                    <span class="card-title"><spring:message code="ekaterinaGoponenko" /></span>
                 </div>
                 <div class="card-content">
+                    <p><spring:message code="ekaterinaGoponenko" /></p>
                     <p>Position: Mentor</p>
                     <p>Ekaterina_Goponenko@epam.com</p>
                 </div>
@@ -120,9 +120,9 @@
             <div class="card">
                 <div class="card-image">
                     <img src="${nikola}">
-                    <span class="card-title"><spring:message code="nikolaiImbirev" /></span>
                 </div>
                 <div class="card-content">
+                    <p><spring:message code="nikolaiImbirev" /></p>
                     <p>Position: Mentor</p>
                     <p>Nikolai_Imbirev@epam.com</p>
                 </div>
@@ -132,9 +132,9 @@
             <div class="card">
                 <div class="card-image">
                     <img src="${ilya}">
-                    <span class="card-title"><spring:message code="iliaGrigorev" /></span>
                 </div>
                 <div class="card-content">
+                    <p><spring:message code="iliaGrigorev" /></p>
                     <p>Position: Developer</p>
                     <p>Ilia_Grigorev@epam.com</p>
                 </div>
@@ -146,9 +146,9 @@
             <div class="card">
                 <div class="card-image">
                     <img src="${ksusha}">
-                    <span class="card-title"><spring:message code="kseniiaMaltseva" /></span>
                 </div>
                 <div class="card-content">
+                    <p><spring:message code="kseniiaMaltseva" /></p>
                     <p>Position: Developer</p>
                     <p>Kseniia_Maltseva@epam.com</p>
                 </div>
@@ -158,9 +158,9 @@
             <div class="card">
                 <div class="card-image">
                     <img src="${fedor}">
-                    <span class="card-title"><spring:message code="fedorKevdin" /></span>
                 </div>
                 <div class="card-content">
+                    <p><spring:message code="fedorKevdin" /></p>
                     <p>Position: Developer</p>
                     <p>Fedor_Kevdin@epam.com</p>
                 </div>
@@ -170,9 +170,9 @@
             <div class="card">
                 <div class="card-image">
                     <img src="${lev}">
-                    <span class="card-title"><spring:message code="levKiselev" /></span>
                 </div>
                 <div class="card-content">
+                    <p><spring:message code="levKiselev" /></p>
                     <p>Position: Developer</p>
                     <p>Lev_Kiselev@epam.com</p>
                 </div>
