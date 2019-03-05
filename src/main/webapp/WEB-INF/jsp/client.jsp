@@ -70,11 +70,11 @@
                             </div>
                         </div>
                         <!-- Modal Structure -->
-                        <div id="modal" class="modal modal-fixed-footer" style="height: 200%">
+                        <div id="modal" class="modal modal-fixed-footer" >
                             <div class="modal-content registration-page">
                                 <div class="registration">
                                     <div class="row">
-                                        <form name="user" id="change-pwd" class="col s12" autocomplete="off"
+                                        <form name="user" id="change-pwd" class="col s12" autocomplete="off" style="height: 110%"
                                               onsubmit="return validateProfilePageData()" action="/clientProfile" method="POST">
                                             <h4><spring:message code="changepassword"/></h4>
                                             <c:set var="val"><spring:message code="wrongpass"/></c:set>
