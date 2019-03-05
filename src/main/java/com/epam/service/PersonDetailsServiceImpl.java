@@ -27,6 +27,9 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Person person = personService.getPerson(email);
+        if(person == null){
+            throw new UsernameNotFoundException("User not found");
+        }
         Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumRole()));
         return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), roles);
