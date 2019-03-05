@@ -8,6 +8,7 @@ import com.epam.repository.TourOfferDAO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class TourOfferService {
     private final TourOfferDAO tourOfferDAO;
     private final HotelService hotelService;
     private final ReservationService reservationService;
+    public static final int totalAmountOfRows = 5;
     public static final int ROWS_PER_PAGE = 4;
 
     @Autowired
@@ -116,22 +118,25 @@ public class TourOfferService {
         }
     }
 
-    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate) {
+    public List<TourOffer> searchTours(ModelAndView modelAndView, String country, LocalDate startDate, LocalDate endDate, Integer page){
         List<Hotel> myList = hotelService.getHotelsByCountry(country);
-        if (myList.size() == 0 && !country.isEmpty()) {
+        if ( myList.size() == 0 && !country.isEmpty() ) {
             log.error("Wrong input country: " + country);
             throw new IllegalArgumentException("Wrong input country: " + country);
         }
-        List<Integer> listOfHotelsId = new ArrayList<>();
-        for (Hotel hotel : myList) {
-            listOfHotelsId.add(hotel.getId());
+        if (page > 0 && totalAmountOfRows > 0) {
+            if (page > 1) {
+                page = (page - 1) * totalAmountOfRows + 1;
+            }
+            List<Integer> listOfHotelsId = new ArrayList<>();
+            for(Hotel hotel: myList){
+                listOfHotelsId.add(hotel.getId());
+            }
+            return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate, page, totalAmountOfRows);
+
+        } else {
+            throw new IllegalArgumentException("Numbers must be integer and > 0");
         }
-         List<TourOffer> listOfTours = tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate);
-        if(listOfTours.size() == 0){
-            log.warn("No tours available");
-            throw new NotFoundException("No tours available");
-        }
-        return listOfTours;
     }
 
     public TourOffer getTourById(Integer tourId) {
@@ -180,5 +185,22 @@ public class TourOfferService {
     public int getNumberOfPages () {
         Integer amountOfTours = tourOfferDAO.getAmountOfTours();
         return (amountOfTours % ROWS_PER_PAGE == 0) ? amountOfTours / ROWS_PER_PAGE : amountOfTours / ROWS_PER_PAGE + 1;
+    }
+
+    public int amountOfToursSearched(String country, LocalDate startDate, LocalDate endDate) {
+        List<Hotel> myList = hotelService.getHotelsByCountry(country);
+        if( myList.size() == 0 && !country.isEmpty() ){
+            log.error("Wrong input country: "+country);
+            throw new IllegalArgumentException("Wrong input country: "+country);
+        }
+            List<Integer> listOfHotelsId = new ArrayList<>();
+            for(Hotel hotel: myList){
+                listOfHotelsId.add(hotel.getId());
+            }
+            return tourOfferDAO.amountOfToursSearched(listOfHotelsId, startDate, endDate);
+    }
+
+    public int getNumberOfPagesSearch (Integer generalAmount) {
+        return (generalAmount % totalAmountOfRows == 0) ? generalAmount / totalAmountOfRows : generalAmount / totalAmountOfRows + 1;
     }
 }

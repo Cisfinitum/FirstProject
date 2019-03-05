@@ -59,5 +59,5 @@ public interface SimpleTourOfferDAO {
      * @param endDate        end date, can be null
      * @return list of tours
      */
-    List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate);
+    List<TourOffer> searchTours(List<Integer> listOfHotelsId, LocalDate startDate, LocalDate endDate, Integer page, Integer total);
 }

@@ -65,12 +65,12 @@
 
 <nav>
     <div class="nav-wrapper">
-        <a href="index" class="brand-logo center">Tour de Team</a>
+        <a href="/index" class="brand-logo center">Tour de Team</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li class="active"><a href="index"><spring:message code="homepage" /></a></li>
-            <li><a href="#"><spring:message code="information" /></a></li>
-            <li><a href="#"><spring:message code="feedback" /></a></li>
-            <li><a href="#"><spring:message code="contacts" /></a></li>
+            <li class="active"><a href="/index"><spring:message code="homepage" /></a></li>
+            <li><a href="/#"><spring:message code="information" /></a></li>
+            <li><a href="/#"><spring:message code="feedback" /></a></li>
+            <li><a href="/#"><spring:message code="contacts" /></a></li>
         </ul>
         <ul  class="right hide-on-med-and-down">
             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
@@ -86,8 +86,8 @@
             <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
                 <li><a href="/logout"><spring:message code="logout" /></a></li>
             </sec:authorize>
-            <li><a href="homepage?lang=en"><img src="${imgen}" width="48" height="32"></a>
-            <a href="homepage?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
+            <li><a href="/homepage?lang=en"><img src="${imgen}" width="48" height="32"></a>
+            <a href="/homepage?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
         </ul>
     </div>
 </nav>
@@ -97,7 +97,7 @@
 
 <main>
     <div class="container">
-        <form method="POST" action="searchtours">
+        <form method="POST" action="/searchtours/1">
             <div class="row">
                 <c:if test="${not empty error}">
                     <span style="color: red; font-weight: bold">${error}</span>
@@ -107,35 +107,35 @@
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">edit_location</i>
-                        <input type="text" id="autocomplete-input" class="autocomplete" name="country">
+                        <input type="text" id="autocomplete-input" class="autocomplete" name="country" value="${country}">
                         <label for="autocomplete-input"><spring:message code="country" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-dateStart" class="datepicker" name="startDate">
+                        <input type="text" id="autocomplete-dateStart" class="datepicker" name="startDate" value="${startDate}">
                         <label for="autocomplete-dateStart"><spring:message code="dod" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-dateEnd" class="datepicker" name="endDate">
+                        <input type="text" id="autocomplete-dateEnd" class="datepicker" name="endDate" value="${endDate}">
                         <label for="autocomplete-dateEnd"><spring:message code="ad" /></label>
                     </div>
                 </div>
                 <div class="col s2">
                     <div class="input-field">
                         <select class="icons" name="numberOfPeople">
-                            <option value="1" data-icon="${gr}" class="right" selected>1</option>
-                            <option value="2" data-icon="${gr}" class="right">2</option>
-                            <option value="3" data-icon="${gr}" class="right">3</option>
-                            <option value="4" data-icon="${gr}" class="right">4</option>
-                            <option value="5" data-icon="${gr}" class="right">5</option>
-                            <option value="6" data-icon="${gr}" class="right">6</option>
-                            <option value="7" data-icon="${gr}" class="right">7</option>
-                            <option value="8" data-icon="${gr}" class="right">8</option>
+                            <option value="1" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 1 }"> selected </c:if>>1</option>
+                            <option value="2" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 2 }"> selected </c:if> >2</option>
+                            <option value="3" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 3 }"> selected </c:if>>3</option>
+                            <option value="4" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 4 }"> selected </c:if>>4</option>
+                            <option value="5" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 5 }"> selected </c:if>>5</option>
+                            <option value="6" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 6 }"> selected </c:if>>6</option>
+                            <option value="7" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 7 }"> selected </c:if>>7</option>
+                            <option value="8" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 8 }"> selected </c:if>>8</option>
                         </select>
                         <label><spring:message code="nop" /></label>
                     </div>
@@ -151,7 +151,7 @@
         </form>
     </div>
     <h3 style="text-align:center; color: green">${message}</h3>
-    <c:if test="${not empty list}">
+    <c:if test="${list.size()>0}">
     <div class="container">
         <table>
             <thead>
@@ -168,24 +168,24 @@
             </tr>
             </thead>
             <tbody>
-                <c:forEach var="i" begin="0" end="${list.size()-1}">
+            <c:forEach var="tour" items="${list}">
                     <tr>
-                        <td>${list.get(i).tourType}</td>
-                        <td>${hotels.get(list.get(i).hotelId).country}</td>
-                        <td>${hotels.get(list.get(i).hotelId).city}</td>
-                        <td>${list.get(i).startDate}</td>
-                        <td>${list.get(i).endDate}</td>
-                        <td>${list.get(i).pricePerUnit}</td>
-                        <td>${hotels.get(list.get(i).hotelId).name}</td>
-                        <td>${list.get(i).description}</td>
-                        <td>${list.get(i).discount} %</td>
+                        <td>${tour.tourType}</td>
+                        <td>${hotels.get(tour.hotelId).country}</td>
+                        <td>${hotels.get(tour.hotelId).city}</td>
+                        <td>${tour.startDate}</td>
+                        <td>${tour.endDate}</td>
+                        <td>${tour.pricePerUnit}</td>
+                        <td>${hotels.get(tour.hotelId).name}</td>
+                        <td>${tour.description}</td>
+                        <td>${tour.discount} % </td>
                         <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ANONYMOUS')">
                             <td>
                                 <form method="post" action="/reserveTour">
-                                    <input name="idOfTour" type="hidden" value="${list.get(i).id}">
-                                    <input name="pricePerUnit" type="hidden" value="${list.get(i).pricePerUnit}">
+                                    <input name="idOfTour" type="hidden" value="${tour.id}">
+                                    <input name="pricePerUnit" type="hidden" value="${tour.pricePerUnit}">
                                     <input name="numberOfPeople" type="hidden" value="${param.get("numberOfPeople")}">
-                                    <input name="discount" type="hidden" value="${list.get(i).discount}">
+                                    <input name="discount" type="hidden" value="${tour.discount}">
                                     <button class="btn waves-effect waves-light" type="submit" name="action"><spring:message code="reserve" />
                                     </button>
                                 </form>
@@ -197,6 +197,32 @@
         </table>
     </div>
     </c:if>
+        <br>
+        <div class="row">
+            <div class="col s6 offset-s5">
+                <ul class="pagination">
+                    <c:if test="${generalAmount>5}">
+                        <c:forEach var="i" begin="1" end="${amount}">
+                            <li class="waves-effect">
+                            <form method="post" action="/searchtours/${i}">
+                                <input name="country" type="hidden" value="${country}">
+                                <input name="startDate" type="hidden" value="${addStartDate}">
+                                <input name="endDate" type="hidden" value="${addEndDate}">
+                                <input name="numberOfPeople" type="hidden" value="${numberOfPeople}">
+                                <button class="btn waves-light" type="submit" name="action">${i}
+                                </button>
+                            </form>
+                            </li>
+                        </c:forEach>
+                    </c:if>
+                </ul>
+            </div>
+        </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 <div class="container">
     <div class="row">
         <div class="col s4">
@@ -233,10 +259,10 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text"><spring:message code="footerlinks" /></h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="index"><spring:message code="homepage" /></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="information" /></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="feedback" /></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="contacts" /></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/index"><spring:message code="homepage" /></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/#"><spring:message code="information" /></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/#"><spring:message code="feedback" /></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/#"><spring:message code="contacts" /></a></li>
                 </ul>
             </div>
         </div>
