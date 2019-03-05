@@ -1,25 +1,25 @@
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('admin@gmail.com', '123','ADMIN', '+79993337821', 'Frodo', 'Baggins');
+VALUES ('admin@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe','ADMIN', '+79993337821', 'Frodo', 'Baggins');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_1@gmail.com', '123','BLOCKED', '+79993337821', 'Aragorn II', 'Elessar Telcontar');
+VALUES ('user_1@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe','BLOCKED', '+79993337821', 'Aragorn II', 'Elessar Telcontar');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_2@gmail.com', '123','USER', '+79993337821', 'Gollum', 'ex Smeagol ');
+VALUES ('user_2@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe','USER', '+79993337821', 'Gollum', 'ex Smeagol ');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_3@gmail.com', '123','BLOCKED', '+79993337821', 'Gimli', 'son of Gloin');
+VALUES ('user_3@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe','BLOCKED', '+79993337821', 'Gimli', 'son of Gloin');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_4@gmail.com', '123','USER', '+79993337821', 'Thorin ', 'Oakenshield');
+VALUES ('user_4@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe','USER', '+79993337821', 'Thorin ', 'Oakenshield');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user@gmail.com', '123','USER', '+79993337821', 'Samwise ', 'Gamgee');
+VALUES ('user@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe','USER', '+79993337821', 'Samwise ', 'Gamgee');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_5@gmail.com', '123','USER', '+79993337821', 'Legolas ', 'son of Thranduil');
+VALUES ('user_5@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe','USER', '+79993337821', 'Legolas ', 'son of Thranduil');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_6@gmail.com', '123','USER', '+79993337821', 'Peregrin ', 'Took');
+VALUES ('user_6@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe','USER', '+79993337821', 'Peregrin ', 'Took');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_7@gmail.com', '123','USER', '+79993337821', 'Saruman', 'the White');
+VALUES ('user_7@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe','USER', '+79993337821', 'Saruman', 'the White');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_8@gmail.com', '123','USER', '+79993337821', 'Gandalf', 'the Gray');
+VALUES ('user_8@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe','USER', '+79993337821', 'Gandalf', 'the Gray');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_9@gmail.com', '123','USER', '+79993337821', 'Gandalf', 'the White');
+VALUES ('user_9@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe','USER', '+79993337821', 'Gandalf', 'the White');
 INSERT INTO hotel(name, city, country, number_of_stars)
 VALUES ('Ugly goblin', 'Hobbiton', 'Shire', '5');
 INSERT INTO hotel(name, city, country, number_of_stars)

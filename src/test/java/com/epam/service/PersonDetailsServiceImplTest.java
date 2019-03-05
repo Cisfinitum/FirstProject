@@ -14,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +24,10 @@ import static org.mockito.Mockito.when;
 
 
 public class PersonDetailsServiceImplTest {
+
+
+    @Mock
+    private BCryptPasswordEncoder testPasswordEncoder;
     @Mock
     private PersonService personService;
     @Mock
@@ -35,6 +40,8 @@ public class PersonDetailsServiceImplTest {
     private PersonDetailsServiceImpl personDetailsServiceImpl;
     private String testEmail = "user";
     private String testPassword = "123";
+    private BCryptPasswordEncoder passwordEncoder;
+    private String encodedPassword = "encoded";
     private String nonExistEmail = "nonExistingEmail";
     private String testPhoneNumber = "8999999999";
     private String testFirstName = "Example";
@@ -45,13 +52,14 @@ public class PersonDetailsServiceImplTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        personDetailsServiceImpl = new PersonDetailsServiceImpl(personService);
+        personDetailsServiceImpl = new PersonDetailsServiceImpl(personService, testPasswordEncoder);
         roles = new HashSet<>();
+        passwordEncoder = new BCryptPasswordEncoder();
         testId = 1;
         testEmail = "user";
         testPassword = "123";
         nonExistEmail = "nonExistingEmail";
-        testPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName);
+        testPerson = new Person(testId, testEmail, encodedPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName);
     }
 
     @Test
@@ -74,22 +82,11 @@ public class PersonDetailsServiceImplTest {
 
     }
 
-    @Test
-    public void addPersonPositiveResult() {
-        when(personService.addPerson(testPerson)).thenReturn(1);
-        assertTrue(personDetailsServiceImpl.addPerson(testPerson));
-    }
-
-    @Test(expected = InvalidDataBaseAffectedException.class)
-    public void addPersonMoreThanOneRow() {
-        when(personService.addPerson(testPerson)).thenReturn(10);
-        personDetailsServiceImpl.addPerson(testPerson);
-    }
 
     @Test
     public void addPersonInvalidEmail() {
         when(personService.addPerson(testPerson)).thenReturn(0);
-        assertFalse(personDetailsServiceImpl.addPerson(testPerson));
+        assertFalse(personDetailsServiceImpl.addPerson(testEmail, encodedPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName));
     }
 
     @Test

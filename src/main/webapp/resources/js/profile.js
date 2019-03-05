@@ -23,12 +23,12 @@ function checkPwdChanged () {
     }
 }
 
-function validatePageData() {
-    if (!validatePassword()) {
+function validateProfilePageData() {
+    if (!validatePasswordProfile()) {
         document.getElementById('password').focus();
         return false;
     }
-    if (!checkIfPasswordsAreEqual()) {
+    if (!checkIfPasswordsAreEqualProfile()) {
         document.getElementById('password').focus();
         return false;
     }
@@ -39,7 +39,7 @@ function checkPasswordPattern(password) {
     return $re.test(password);
 }
 
-function validatePassword() {
+function validatePasswordProfile() {
     if (!checkPasswordPattern(document.getElementById('password').value)) {
         if (document.getElementById('password').classList.contains('valid')) {
             document.getElementById('password').classList.remove('valid');
@@ -60,8 +60,8 @@ function validatePassword() {
     }
 }
 
-function checkIfPasswordsAreEqual() {
-    if (validatePassword()) {
+function checkIfPasswordsAreEqualProfile() {
+    if (validatePasswordProfile()) {
         if (document.getElementById('password').value !== document.getElementById('password2').value) {
             if (document.getElementById('password2').classList.contains('valid')) {
                 document.getElementById('password2').classList.remove('valid');

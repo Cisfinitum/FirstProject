@@ -4,6 +4,7 @@ import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
 import com.epam.service.PersonDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,11 +49,11 @@ public class RegistrationController {
         if (!emailMatcher.matches()) {
             return modelAndView.addObject("message", "Email doesn't match the pattern");
         }
-        else if (!(firstName != null)) {
-            return modelAndView.addObject("message", "first name");
+        else if (firstName == null || firstName.equals("")) {
+            return modelAndView.addObject("message", "Name must be not empty");
         }
-        else if (!(lastName != null)) {
-            return modelAndView.addObject("message", "last name");
+        else if (lastName == null || lastName.equals("")) {
+            return modelAndView.addObject("message", "Name must be not empty");
         }
         else if (!phoneNumberMatcher.matches()) {
             return modelAndView.addObject("message", "Phone number is not valid");
@@ -64,7 +65,7 @@ public class RegistrationController {
             return modelAndView.addObject("message", "Passwords are not equal");
         }
         else {
-            if (!personDetailsServiceImpl.addPerson(new Person(email, password, PersonRoleEnum.valueOf("USER"), phoneNumber, firstName, lastName))) {
+            if (!personDetailsServiceImpl.addPerson(email, password, PersonRoleEnum.valueOf("USER"), phoneNumber, firstName, lastName)) {
                 return modelAndView.addObject("message", "Current email already exists");
             }
             else {
