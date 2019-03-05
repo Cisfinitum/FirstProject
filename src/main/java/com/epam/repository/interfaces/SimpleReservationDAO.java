@@ -41,12 +41,15 @@ public interface SimpleReservationDAO {
     int getTourOfferById(Integer offerId);
 
     /**
-     * Get number of page and amount of rows on one page
+     * Get number of page, amount of rows on one page and status of reservation
      * Return the list of reservations which represent one page of table
      *
+     * @param page number of page
+     * @param total amount of rows on one page
+     * @param status status of reservation
      * @return list of reservations
      */
-    List<Reservation> listReservations(Integer page, Integer total);
+    List<Reservation> listReservations(Integer page, Integer total, String status);
 
     /**
      * Get reservation id and delete it from the database
@@ -69,9 +72,10 @@ public interface SimpleReservationDAO {
     int updateReservation(Reservation reservation);
 
     /**
-     * Return a number of rows in the table "reservation"
-     *
+     * Get status of reservation
+     * Return a number of rows in the table "reservation" with specified status
+     * @param status archive status
      * @return number of rows
      */
-    int amountOfReservations();
+    int amountOfReservations(String status);
 }

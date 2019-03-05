@@ -38,6 +38,7 @@ CREATE TABLE reservation
   client_id       INT          NOT NULL,
   tour_offer_id    INT          NOT NULL,
   number_of_people INT          NOT NULL,
+  archive_status  VARCHAR(100) NOT NULL,
   status          VARCHAR(100) NOT NULL,
   discount     INT,
   total_price      INT,
