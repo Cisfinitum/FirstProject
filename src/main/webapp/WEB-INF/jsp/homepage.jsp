@@ -212,21 +212,21 @@
 <div class="container">
     <div class="row">
         <div class="col s4">
-            <div class="center promo promo-example" style="height: 65%">
+            <div class="center promo promo-example" style="height: 55%">
                 <i class="large material-icons mm" ><img src="${castle}"></i>
                 <p class="promo-caption mm"><b><spring:message code="securitypromo" /></b></p>
                 <p class="light center mm"><spring:message code="securityp" /></p>
             </div>
         </div>
         <div class="col s4" >
-            <div class="center promo promo-example" style="height: 65%">
+            <div class="center promo promo-example" style="height: 55%">
                 <i class="large material-icons mm"><img src="${dragon}"></i>
                 <p class="promo-caption mm"><b><spring:message code="supportpromo" /></b></p>
                 <p class="light center mm"><spring:message code="supportp" /></p>
             </div>
         </div>
         <div class="col s4">
-            <div class="center promo promo-example" style="height: 65%">
+            <div class="center promo promo-example" style=" height: 55%">
                 <i class="large material-icons mm"><img src="${mage}"></i>
                 <p class="promo-caption mm"><b><spring:message code="conveniencepromo" /></b></p>
                 <p class="light center mm"><spring:message code="conveniencep" /></p>

@@ -48,7 +48,7 @@
                         <div class="col s2 card-profile-image">
                             <img src="${imuser}" alt="profile image">
                         </div>
-                        <div class="col s3">
+                        <div class="col s3" >
                             <p class="medium-small grey-text"><spring:message code="emailname" />: ${person.email}</p>
                             <p class="medium-small grey-text"><spring:message code="firstname" />: ${person.firstName}</p>
                             <p class="medium-small grey-text"><spring:message code="lastname" />: ${person.lastName}</p>

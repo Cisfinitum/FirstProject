@@ -64,11 +64,11 @@
                             <td>${clients.role}</td>
                             <c:choose>
                                 <c:when test="${clients.role.toString().equals('USER')}">
-                                    <td><a href="addToBlackList/${clients.id}" style="background-color:#b71c1c ; width: 55%" class="btn-small">
+                                    <td><a href="addToBlackList/${clients.id}" style="background-color:#b71c1c ; width: 70%" class="btn-small">
                                         <spring:message code="block" /> </a></td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><a href="removeFromBlackList/${clients.id}" style="width: 55%" class="btn-small"><spring:message code="unblock" /></a></td>
+                                    <td><a href="removeFromBlackList/${clients.id}" style="width: 70%" class="btn-small"><spring:message code="unblock" /></a></td>
                                 </c:otherwise>
                             </c:choose>
                             </c:forEach>
