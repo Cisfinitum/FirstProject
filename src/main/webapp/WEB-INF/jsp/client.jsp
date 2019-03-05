@@ -70,7 +70,7 @@
                             </div>
                         </div>
                         <!-- Modal Structure -->
-                        <div id="modal" class="modal modal-fixed-footer" style="height: 120%">
+                        <div id="modal" class="modal modal-fixed-footer" style="height: 200%">
                             <div class="modal-content registration-page">
                                 <div class="registration">
                                     <div class="row">
