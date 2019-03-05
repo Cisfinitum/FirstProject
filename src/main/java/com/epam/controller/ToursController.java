@@ -69,26 +69,24 @@ public class ToursController {
         toursModel.setViewName("homepage");
         LocalDate addStartDate;
         LocalDate addEndDate;
+        toursModel.addObject("country", country);
+        toursModel.addObject("startDate", startDate);
+        toursModel.addObject("endDate", endDate);
+        toursModel.addObject("numberOfPeople", numberOfPeople);
         try {
             addStartDate = Validator.getDateFromString(startDate,true);
             addEndDate = Validator.getDateFromString(endDate,true);
         } catch (IllegalArgumentException e) {
             return toursModel.addObject("error",e.getMessage());
         }
-        int generalAmount = toursOfferService.amountOfToursSearched(country,addStartDate,addEndDate);
-        toursModel.addObject("hotels", hotelService.getMapOfHotels());
         List<TourOffer> searchedListOfTours = toursOfferService.searchTours(country, addStartDate, addEndDate, id);
-        toursModel.addObject("generalAmount", generalAmount);
-        toursModel.addObject("amount", toursOfferService.getNumberOfPagesSearch(generalAmount));
-        toursModel.addObject("country", country);
-        toursModel.addObject("addStartDate", addStartDate);
-        toursModel.addObject("startDate", startDate);
-        toursModel.addObject("endDate", endDate);
-        toursModel.addObject("addEndDate", addEndDate);
-        toursModel.addObject("numberOfPeople", numberOfPeople);
         if(searchedListOfTours.size() == 0) {
             return toursModel.addObject("error","Search result is empty");
         } else {
+            int generalAmount = toursOfferService.amountOfToursSearched(country,addStartDate,addEndDate);
+            toursModel.addObject("hotels", hotelService.getMapOfHotels());
+            toursModel.addObject("generalAmount", generalAmount);
+            toursModel.addObject("amount", toursOfferService.getNumberOfPagesSearch(generalAmount));
             return toursModel.addObject("list",searchedListOfTours);
         }
     }

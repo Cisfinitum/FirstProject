@@ -118,7 +118,7 @@ public class TourOfferService {
         }
     }
 
-    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate) {
+    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate, Integer page) {
         List<Hotel> myList = hotelService.getHotelsByCountry(country);
         if (myList.size() == 0 && !country.isEmpty()) {
             return new ArrayList<TourOffer>();
@@ -131,11 +131,7 @@ public class TourOfferService {
             for(Hotel hotel: myList){
                 listOfHotelsId.add(hotel.getId());
             }
-            List<TourOffer> listOfTours = tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate, page, totalAmountOfRows);
-            if(listOfTours.size() == 0){
-                return new ArrayList<TourOffer>();
-            }
-            return listOfTours;
+            return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate, page, totalAmountOfRows);
         } else {
             throw new IllegalArgumentException("Numbers must be integer and > 0");
         }
