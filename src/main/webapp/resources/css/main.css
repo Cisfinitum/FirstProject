@@ -24,6 +24,7 @@ main {
     margin: 10%;
     font-family: Packard Modern;
 }
+
 .promo{
     background: #8d6e63;
     border-radius: 20px;
@@ -70,4 +71,22 @@ main {
 .btn-small:hover{
     background-color: #8d6e63;
     font-family: Packard Modern;
+}
+.demo {
+    max-width: 1024px;
+    padding: 0 20px;
+    margin: 5% 10%;
+}
+.hide,
+.hide + label ~ div {
+    display: none;
+}
+.hide + label {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    display: inline-block;
+}
+.hide:checked + label + div {
+    display: block;
 }

@@ -41,6 +41,14 @@ public class TourOfferServiceTest {
         tourOfferDAO = new TourOfferDAO(jdbcTemplate);
         tourOfferDAO = Mockito.spy(tourOfferDAO);
         ReflectionTestUtils.setField(tourOfferDAO, "tableName", "tour_offer");
+        ReflectionTestUtils.setField(tourOfferDAO, "tourTypeName", "tour_type");
+        ReflectionTestUtils.setField(tourOfferDAO, "startDateName", "start_date");
+        ReflectionTestUtils.setField(tourOfferDAO, "endDateName", "end_date");
+        ReflectionTestUtils.setField(tourOfferDAO, "hotelIdName", "hotel_id");
+        ReflectionTestUtils.setField(tourOfferDAO, "pricePerUnitName", "price_per_unit");
+        ReflectionTestUtils.setField(tourOfferDAO, "descriptionName", "description");
+        ReflectionTestUtils.setField(tourOfferDAO, "discountName", "discount");
+        ReflectionTestUtils.setField(tourOfferDAO, "idName", "id");
         tourOfferService = new TourOfferService(tourOfferDAO,hotelService,reservationService);
         tourOffers = new ArrayList<>();
         tourOffers.add(tourOffer);
@@ -130,7 +138,6 @@ public class TourOfferServiceTest {
         Mockito.when(tourOffer.getId()).thenReturn(1);
         Mockito.when(tourOffer.getHotelId()).thenReturn(1);
         Mockito.when(tourOffer.getTourType()).thenReturn("dd");
-        Mockito.when(tourOffer.getDiscount()).thenReturn(1);
         Mockito.when(tourOffer.getDiscount()).thenReturn(1);
         Mockito.when(tourOffer.getStartDate()).thenReturn(LocalDate.of(2019, 10, 6));
         Mockito.when(tourOffer.getEndDate()).thenReturn(LocalDate.of(2019, 10, 11));

@@ -52,6 +52,7 @@
                         <tr>
                             <th>Id</th>
                             <th><spring:message code="emailname" /></th>
+                            <th>Info</th>
                             <th><spring:message code="status" /></th>
                             <th></th>
                         </tr>
@@ -61,6 +62,7 @@
                         <tr>
                             <td>${clients.id}</td>
                             <td>${clients.email}</td>
+                            <td><a href="clientinfo/${clients.id}">more</a> </td>
                             <td>${clients.role}</td>
                             <c:choose>
                                 <c:when test="${clients.role.toString().equals('USER')}">

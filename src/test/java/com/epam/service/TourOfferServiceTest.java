@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -91,9 +92,15 @@ public class TourOfferServiceTest {
 
     @Test
     public void searchTourCheck(){
-        tourOfferList.add(expectedTourOffer);
-        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
-        assertEquals(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now()),tourOfferList);
+        List<Hotel> expectedHotels = new ArrayList<>();
+        expectedHotels.add(expectedHotel);
+        when(hotelService.getHotelsByCountry("test")).thenReturn(expectedHotels);
+        List<Integer> expectedHotelsId = new ArrayList<>();
+        for(Hotel hotel: expectedHotels){
+            expectedHotelsId.add(hotel.getId());
+        }
+        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now(),1,5)).thenReturn(tourOfferList);
+        assertEquals(tourOfferService.searchTours(new ModelAndView(),"test",LocalDate.now(),LocalDate.now(),1),tourOfferList);
     }
 
     @Test
@@ -160,12 +167,6 @@ public class TourOfferServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void updateTourThrowExceptionTourDescriptiontNull(){
         when(tourOfferService.updateTour(expectedTourOffer,"test",1,1,null)).thenThrow(IllegalArgumentException.class);
-    }
-
-    @Test(expected = NotFoundException.class)
-    public void searchTourThrowNotFoundException(){
-        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now())).thenReturn(tourOfferList);
-        when(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now())).thenThrow(NotFoundException.class);
     }
 
     @Test

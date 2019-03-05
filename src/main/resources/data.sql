@@ -1,24 +1,24 @@
-INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
+INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
 VALUES ('admin@gmail.com', '123','ADMIN', '+79993337821', 'Frodo', 'Baggins');
-INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
+INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
 VALUES ('user_1@gmail.com', '123','BLOCKED', '+79993337821', 'Aragorn II', 'Elessar Telcontar');
-INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
+INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
 VALUES ('user_2@gmail.com', '123','USER', '+79993337821', 'Gollum', 'ex Smeagol ');
-INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
+INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
 VALUES ('user_3@gmail.com', '123','BLOCKED', '+79993337821', 'Gimli', 'son of Gloin');
-INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
+INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
 VALUES ('user_4@gmail.com', '123','USER', '+79993337821', 'Thorin ', 'Oakenshield');
-INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
+INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
 VALUES ('user@gmail.com', '123','USER', '+79993337821', 'Samwise ', 'Gamgee');
-INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
+INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
 VALUES ('user_5@gmail.com', '123','USER', '+79993337821', 'Legolas ', 'son of Thranduil');
-INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
+INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
 VALUES ('user_6@gmail.com', '123','USER', '+79993337821', 'Peregrin ', 'Took');
-INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
+INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
 VALUES ('user_7@gmail.com', '123','USER', '+79993337821', 'Saruman', 'the White');
-INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
+INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
 VALUES ('user_8@gmail.com', '123','USER', '+79993337821', 'Gandalf', 'the Gray');
-INSERT INTO person(email,  password, role, phoneNumber, firstName, lastName)
+INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
 VALUES ('user_9@gmail.com', '123','USER', '+79993337821', 'Gandalf', 'the White');
 INSERT INTO hotel(name, city, country, number_of_stars)
 VALUES ('Ugly goblin', 'Hobbiton', 'Shire', '5');
@@ -79,10 +79,17 @@ VALUES ('Active','2019-03-07', '2019-03-13', '300000', '3', 'text', '0');
 INSERT INTO tour_offer(tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount)
 VALUES ('Entertaiment','2019-03-08', '2019-03-15', '400000', '5', 'text', '50');
 INSERT INTO tour_offer(tour_type, start_date, end_date, price_per_unit, hotel_id, description, discount)
-VALUES ('Shopping','2019-03-09', '2019-03-14', '500000', '6', 'text', '50');
-INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount, total_price)
-VALUES ('4','3', '5', 'PAID', '0', '500000');
-INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount, total_price)
-VALUES ('3','2', '1', 'PAID', '0', '500000');
-INSERT INTO reservation(client_id, tour_offer_id, number_of_people, status, discount, total_price)
-VALUES ('2','1', '22', 'PAID', '0', '500000');
+VALUES ('Shopping','2019-03-09', '2019-03-14', '500000', '1', 'text', '50');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people, archive_status,status, discount, total_price)
+VALUES ('1','1', '1', 'NEW','PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('1','1', '1', 'NEW','PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('1','1', '1', 'ARCHIVED','PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('1','1', '1', 'NEW','PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('1','1', '1', 'NEW','PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('1','1', '1', 'ARCHIVED','PAID', '1', '500000');
+

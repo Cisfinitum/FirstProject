@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -61,19 +62,30 @@ public class ToursController {
         return toursModel;
     }
 
-    @PostMapping("/searchtours")
-    public ModelAndView searchTours(@RequestParam String country, @RequestParam String startDate,
+    @PostMapping("/searchtours/{id}")
+    public ModelAndView searchTours(@PathVariable Integer id, @RequestParam String country, @RequestParam String startDate,
                                     @RequestParam String endDate, @RequestParam String numberOfPeople) {
         ModelAndView toursModel = new ModelAndView();
-        toursModel.setViewName("homepage");
         try {
             LocalDate addStartDate = Validator.getDate(startDate, true);
             LocalDate addEndDate = Validator.getDate(endDate, true);
             toursModel.addObject("hotels", hotelService.getMapOfHotels());
-            toursModel.addObject("list", toursOfferService.searchTours(country, addStartDate, addEndDate));
+            int generalAmount = toursOfferService.amountOfToursSearched(country,addStartDate,addEndDate);
+            List<TourOffer> tours = toursOfferService.searchTours(toursModel, country, addStartDate, addEndDate,id);
+            toursModel.addObject("list", tours);
+            toursModel.addObject("generalAmount", generalAmount);
+            toursModel.addObject("amount", toursOfferService.getNumberOfPagesSearch(generalAmount));
+            toursModel.addObject("country", country);
+            toursModel.addObject("addStartDate", addStartDate);
+            toursModel.addObject("startDate", startDate);
+            toursModel.addObject("endDate", endDate);
+            toursModel.addObject("addEndDate", addEndDate);
+            toursModel.addObject("numberOfPeople", numberOfPeople);
+            toursModel.setViewName("homepage");
             return toursModel;
         } catch (Exception e) {
             toursModel.addObject("error", e.getMessage());
+            toursModel.setViewName("homepage");
             return toursModel;
         }
     }
