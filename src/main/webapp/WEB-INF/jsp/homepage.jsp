@@ -178,7 +178,7 @@
                         <td>${tour.pricePerUnit}</td>
                         <td>${hotels.get(tour.hotelId).name}</td>
                         <td>${tour.description}</td>
-                        <td>${tour.discount}</td>
+                        <td>${tour.discount}%</td>
                         <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ANONYMOUS')">
                             <td>
                                 <form method="post" action="/reserveTour">
