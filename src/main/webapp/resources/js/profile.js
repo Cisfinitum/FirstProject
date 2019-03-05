@@ -21,20 +21,72 @@ function checkPwdChanged () {
     }
 }
 
-function validatePageData() {
-    if (!validatePassword()) {
-        document.getElementById('password').focus();
-        return false;
-    }
-    if (!checkIfPasswordsAreEqual()) {
-        document.getElementById('password').focus();
-        return false;
-    }
+function checkNamePattern(name) {
+    const $re = new RegExp('^((?=.*[a-zA-Z])[a-zA-Z\\s\'-]+)$');
+    return $re.test(name);
+}
+
+function checkEmailPattern(email) {
+    const $re = new RegExp('^[\\w][\\w\.\\\\-]{2,}[\\w]@[a-zA-Z]{2,}\\.[a-zA-Z]{2,}$');
+    return $re.test(email);
+}
+
+function checkPhoneNumberPattern(phoneNumber) {
+    const $re = new RegExp('^[+]?[\\d\\s]{5,}$');
+    return $re.test(phoneNumber)
 }
 
 function checkPasswordPattern(password) {
     const $re = new RegExp('((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[\\w.\-\]{6,15})');
-    return $re.test(password);
+    return $re.test(password)
+}
+
+function validateEmail(emails) {
+    alert('f');
+    if (!checkEmailPattern(document.getElementById('change-email-field').value)) {
+        if (document.getElementById('change-email-field').classList.contains('valid')) {
+            document.getElementById('change-email-field').classList.remove('valid');
+        }
+        document.getElementById('change-email-field').classList.add('invalid');
+        return false;
+    }
+    else {
+        alert(emails.toString());
+        for (let email in emails) {
+            alert(email.toString());
+            if (email.localeCompare(document.getElementById('change-email-field').value) === 0) {
+                if (document.getElementById('change-email-field').classList.contains('valid')) {
+                    document.getElementById('change-email-field').classList.remove('valid');
+                }
+                document.getElementById('change-email-field').classList.add('invalid');
+                return false;
+            }
+        }
+        if (document.getElementById('change-email-field').classList.contains('invalid')) {
+            document.getElementById('change-email-field').classList.remove('invalid');
+        }
+        document.getElementById('change-email-field').classList.add('valid');
+        return true;
+    }
+}
+
+
+
+function checkPreviousPassword(previousPassword) {
+    if (!(document.getElementById('previous-password').value.localeCompare(previousPassword) == 0)) {
+        if (document.getElementById('previous-password').classList.contains('valid')) {
+            document.getElementById('previous-password').classList.remove('valid');
+        }
+        document.getElementById('previous-password').classList.add('invalid');
+        return false;
+    }
+    else {
+        if (document.getElementById('previous-password').classList.contains('invalid')) {
+            document.getElementById('previous-password').classList.remove('invalid');
+        }
+        document.getElementById('previous-password').classList.add('valid');
+        return true;
+    }
 }
 
 function validatePassword() {
@@ -43,9 +95,6 @@ function validatePassword() {
             document.getElementById('password').classList.remove('valid');
         }
         document.getElementById('password').classList.add('invalid');
-        if (document.getElementById('forpass').innerText === '') {
-            document.getElementById('forpass').innerText = 'password must be at least 6 characters \n with one up-case letter, one low-case and one digit';
-        }
         return false;
     }
     else {
@@ -53,7 +102,6 @@ function validatePassword() {
             document.getElementById('password').classList.remove('invalid');
         }
         document.getElementById('password').classList.add('valid');
-        document.getElementById('forpass').innerText = '';
         return true;
     }
 }
@@ -65,11 +113,9 @@ function checkIfPasswordsAreEqual() {
                 document.getElementById('password2').classList.remove('valid');
             }
             document.getElementById('password2').classList.add('invalid');
-            if (document.getElementById('forpass').innerText === '') {
-                document.getElementById('forpass').innerText = 'passwords must be equal';
-            }
             return false;
-        } else {
+        }
+        else {
             if (document.getElementById('password').classList.contains('invalid')) {
                 document.getElementById('password').classList.remove('invalid');
             }
@@ -78,10 +124,10 @@ function checkIfPasswordsAreEqual() {
             }
             document.getElementById('password').classList.add('valid');
             document.getElementById('password2').classList.add('valid');
-            document.getElementById('forpass').innerText = '';
             return true;
         }
-    } else {
+    }
+    else {
         if (document.getElementById('password2').classList.contains('valid')) {
             document.getElementById('password2').classList.remove('valid');
         }

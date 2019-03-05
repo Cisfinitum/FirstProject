@@ -45,6 +45,11 @@ public class PersonDAO implements SimplePersonDAO {
         return jdbcTemplate.query("SELECT * FROM " + tableName, (rs, rowNum) -> buildPerson(rs));
     }
 
+
+    public List<String> getEmails() {
+        return jdbcTemplate.query("SELECT " + email + " FROM " + tableName, (rs, rowNum) -> email(rs));
+    }
+
     public Person getPersonById(Integer personId) {
         Object[] parameters = new Object[]{personId};
         return jdbcTemplate.queryForObject("SELECT * FROM " + tableName + " WHERE " + id + " = ?  ", parameters, (rs, rowNum) -> buildPerson(rs));
@@ -60,6 +65,10 @@ public class PersonDAO implements SimplePersonDAO {
                 .firstName(rs.getString(firstName))
                 .lastName(rs.getString(lastName))
                 .build();
+    }
+
+    String email(ResultSet rs) throws SQLException {
+        return rs.getString(email);
     }
 
     public boolean doesEmailExist(String personEmail) {

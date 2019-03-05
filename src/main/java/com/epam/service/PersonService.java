@@ -76,6 +76,10 @@ public class PersonService {
         return personDAO.listOfUsers(page, rowNum);
     }
 
+    public List<String> listOfEmails() {
+        return personDAO.getEmails();
+    }
+
     public int amountOfUsers() { return personDAO.amountOfUsers();}
 
     public Integer getIdByEmail(String email) {
