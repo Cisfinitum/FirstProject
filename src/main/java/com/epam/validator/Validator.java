@@ -1,93 +1,61 @@
 package com.epam.validator;
 
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
-
+import java.sql.Date;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.springframework.util.StringUtils;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-
-
-@Slf4j
 public class Validator {
 
-    @SneakyThrows
-    public static LocalDate getDate(String inputDate, Boolean nullResult){
-        String nullPointerDate = "Date is empty. User current input Date: ";
-        String numberOrDateFormatIssue = "Date or Number format exception. User current input Date: ";
-        String[] splitedDate = inputDate.split(" ");
-        LocalDate finalDate;
+    public static LocalDate getDateFromString(String dateString, Boolean getNullIfEmpty){
         try {
-            if (!inputDate.isEmpty()) {
-                finalDate = LocalDate.of(Integer.valueOf(splitedDate[0]), Integer.valueOf(splitedDate[1]),
-                        Integer.valueOf(splitedDate[2]));
+            if(!StringUtils.isEmpty(dateString)) {
+                 return Date.valueOf(dateString).toLocalDate();
+            } else if (getNullIfEmpty) {
+                return null;
             } else {
-                if(!nullResult) {
-                    log.error(nullPointerDate + inputDate);
-                    throw new IllegalArgumentException(nullPointerDate + inputDate);
-                }
-                else
-                    finalDate = null;
+                throw new IllegalArgumentException("Empty Date");
             }
         } catch (NumberFormatException | DateTimeException e) {
-            log.error(numberOrDateFormatIssue + splitedDate[0] + " " +
-                    splitedDate[1] + " " + splitedDate[2] + ".");
-            throw new NumberFormatException(numberOrDateFormatIssue + splitedDate[0] + " " +
-                    splitedDate[1] + " " + splitedDate[2] + ".");
+                throw new IllegalArgumentException("Wrong Date");
         }
-        return finalDate;
-   }
+    }
 
-   @SneakyThrows
-    public static Integer getInt(String inputInt){
-        String negativeOrZeroIssue = "Integer is negative or 0. User current input Integer: ";
-        String numberFormatIssue = "Integer format exception. User current input Integer: ";
-        Integer finalInteger;
-       try {
-           if ((finalInteger=Integer.valueOf(inputInt)) <= 0) {
-               log.error(negativeOrZeroIssue+inputInt);
-               throw new IllegalArgumentException(negativeOrZeroIssue+inputInt);
-           }
-       } catch (NumberFormatException e) {
-           log.error(numberFormatIssue+inputInt);
-           throw new NumberFormatException(numberFormatIssue+inputInt);
-       }
-       return finalInteger;
-   }
-   @SneakyThrows
-    public static Integer getDiscount(String inputInt){
-        String wrongDiscountNumber = "Discount value is negative or bigger than 100. User current input Integer: ";
-        String numberFormatIssue = "Integer format exception. User current input Integer: ";
-        Integer finalInteger;
-       try {
-           finalInteger=Integer.valueOf(inputInt);
-           if (finalInteger < 0 || finalInteger > 100) {
-               log.error(wrongDiscountNumber+inputInt);
-               throw new IllegalArgumentException(wrongDiscountNumber+inputInt);
-           }
-       } catch (NumberFormatException e) {
-           log.error(numberFormatIssue+inputInt);
-           throw new NumberFormatException(numberFormatIssue+inputInt);
-       }
-       return finalInteger;
-   }
-
-   @SneakyThrows
-    public static void checkEmpty(String inputString){
-       String nullPointerString = "String is empty. User current input String: ";
-        if(inputString.isEmpty()){
-            log.error(nullPointerString+inputString);
-            throw new IllegalArgumentException(nullPointerString+inputString);
+    public static Integer getPriceFromString(String price){
+        Pattern pricePattern = Pattern.compile("[0-9]+");
+        Matcher priceMatcher = pricePattern.matcher(price);
+        if (priceMatcher.matches()) {
+            return Integer.valueOf(price);
+        } else {
+            throw new IllegalArgumentException("Wrong price");
         }
-   }
+    }
 
-   @SneakyThrows
-    public static void dateDifference(LocalDate firstDate, LocalDate secondDate){
-       String differenceIssue = "Negative or zero difference between dates. User current input Dates difference: ";
-       if(!(DAYS.between(firstDate,secondDate)>=1)) {
-           log.error(differenceIssue + DAYS.between(firstDate,secondDate));
-           throw new IllegalArgumentException(differenceIssue + DAYS.between(firstDate,secondDate));
-       }
-   }
+    public static Integer getDiscountFromString(String discount){
+        Pattern discountPatten = Pattern.compile("[0-9]{1,3}");
+        Matcher discountMatcher = discountPatten.matcher(discount);
+        if (discountMatcher.matches() && Integer.valueOf(discount) <= 100) {
+            return Integer.valueOf(discount);
+        } else {
+            throw new IllegalArgumentException("Discount must be from 0 to 100");
+        }
+    }
+
+    public static String getDescriptionString(String description) {
+        if (!StringUtils.isEmpty(description)) {
+            return description;
+        } else {
+            throw new IllegalArgumentException("Empty description");
+        }
+    }
+
+    public static String getTourTypeString(String tourType) {
+        if (!StringUtils.isEmpty(tourType)) {
+            return tourType;
+        } else {
+            throw new IllegalArgumentException("Empty tour type");
+        }
+    }
 }

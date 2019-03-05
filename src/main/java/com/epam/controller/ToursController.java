@@ -1,12 +1,12 @@
 package com.epam.controller;
 
+import com.epam.validator.Validator;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.service.HotelService;
 import com.epam.service.PersonService;
 import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
-import com.epam.validator.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,27 +66,28 @@ public class ToursController {
     public ModelAndView searchTours(@PathVariable Integer id, @RequestParam String country, @RequestParam String startDate,
                                     @RequestParam String endDate, @RequestParam String numberOfPeople) {
         ModelAndView toursModel = new ModelAndView();
+        toursModel.setViewName("homepage");
+        LocalDate addStartDate;
+        LocalDate addEndDate;
+        toursModel.addObject("country", country);
+        toursModel.addObject("startDate", startDate);
+        toursModel.addObject("endDate", endDate);
+        toursModel.addObject("numberOfPeople", numberOfPeople);
         try {
-            LocalDate addStartDate = Validator.getDate(startDate, true);
-            LocalDate addEndDate = Validator.getDate(endDate, true);
-            toursModel.addObject("hotels", hotelService.getMapOfHotels());
+            addStartDate = Validator.getDateFromString(startDate,true);
+            addEndDate = Validator.getDateFromString(endDate,true);
+        } catch (IllegalArgumentException e) {
+            return toursModel.addObject("error",e.getMessage());
+        }
+        List<TourOffer> searchedListOfTours = toursOfferService.searchTours(country, addStartDate, addEndDate, id);
+        if(searchedListOfTours.size() == 0) {
+            return toursModel.addObject("error","Search result is empty");
+        } else {
             int generalAmount = toursOfferService.amountOfToursSearched(country,addStartDate,addEndDate);
-            List<TourOffer> tours = toursOfferService.searchTours(toursModel, country, addStartDate, addEndDate,id);
-            toursModel.addObject("list", tours);
+            toursModel.addObject("hotels", hotelService.getMapOfHotels());
             toursModel.addObject("generalAmount", generalAmount);
             toursModel.addObject("amount", toursOfferService.getNumberOfPagesSearch(generalAmount));
-            toursModel.addObject("country", country);
-            toursModel.addObject("addStartDate", addStartDate);
-            toursModel.addObject("startDate", startDate);
-            toursModel.addObject("endDate", endDate);
-            toursModel.addObject("addEndDate", addEndDate);
-            toursModel.addObject("numberOfPeople", numberOfPeople);
-            toursModel.setViewName("homepage");
-            return toursModel;
-        } catch (Exception e) {
-            toursModel.addObject("error", e.getMessage());
-            toursModel.setViewName("homepage");
-            return toursModel;
+            return toursModel.addObject("list",searchedListOfTours);
         }
     }
 
@@ -113,66 +114,59 @@ public class ToursController {
                                 @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
         List<Hotel> hotels = hotelService.getHotels();
-        toursModel.addObject("hotelList", hotels );
+        toursModel.addObject("hotelList", hotels);
+        toursModel.addObject("tourType", tourType);
+        toursModel.addObject("startDate", startDate);
+        toursModel.addObject("endDate", endDate);
+        toursModel.addObject("price", pricePerPerson);
+        toursModel.addObject("discount", discount);
+        toursModel.addObject("description", tourDescription);
+        toursModel.setViewName("addtour");
+        TourOffer addTourOffer;
         try {
-            LocalDate addStartDate = Validator.getDate(startDate, false);
-            LocalDate addEndDate = Validator.getDate(endDate, false);
-            Integer addPricePerPerson = Validator.getInt(pricePerPerson);
-            Integer addDiscount = Validator.getDiscount(discount);
-            Validator.checkEmpty(tourType);
-            Validator.checkEmpty(tourDescription);
-            Validator.dateDifference(addStartDate,addEndDate);
-            int result = toursOfferService.addTour(TourOffer.builder()
+            addTourOffer = TourOffer.builder()
                     .id(1)
-                    .tourType(tourType)
-                    .startDate(addStartDate)
-                    .endDate(addEndDate)
-                    .pricePerUnit(addPricePerPerson)
-                    .hotelId(1) //stub
-                    .description(tourDescription)
-                    .discount(addDiscount)
-                    .build());
-
-            if (result == 1) {
-                toursModel.addObject("result", "Success");
-            } else {
-                toursModel.addObject("error", "Failed to add");
-            }
-            return toursModel;
-
-        } catch (Exception e) {
-            toursModel.addObject("error", e.getMessage());
-            log.error(e.getMessage());
-            toursModel.addObject("tourType", tourType);
-            toursModel.addObject("startDate", startDate);
-            toursModel.addObject("endDate", endDate);
-            toursModel.addObject("price", pricePerPerson);
-            toursModel.addObject("discount", discount);
-            toursModel.addObject("description", tourDescription);
-            return toursModel;
+                    .tourType(Validator.getTourTypeString(tourType))
+                    .startDate(Validator.getDateFromString(startDate,false))
+                    .endDate(Validator.getDateFromString(endDate,false))
+                    .pricePerUnit(Validator.getPriceFromString(pricePerPerson))
+                    .hotelId(Integer.valueOf(hotel))
+                    .description(Validator.getDescriptionString(tourDescription))
+                    .discount(Validator.getDiscountFromString(discount))
+                    .build();
+        } catch (IllegalArgumentException e) {
+            return toursModel.addObject("error",e.getMessage());
         }
+
+        if (toursOfferService.addTour(addTourOffer) == 1) {
+                    return toursModel.addObject("result", "Success");
+        } else {
+                    return toursModel.addObject("error", "Failed to add");
+                }
     }
 
     @PostMapping("/updatetour")
     public ModelAndView updateTour(@RequestParam String tourId, @RequestParam String tourType,
                                    @RequestParam String pricePerPerson, @RequestParam String discount, @RequestParam String tourDescription) {
         ModelAndView toursModel = new ModelAndView();
-        try {
-            Integer addTourId = Validator.getInt(tourId);
-            TourOffer tourOffer = toursOfferService.getTourById(addTourId);
-            toursModel.addObject("tour",tourOffer);
-            Integer addPricePerPerson = Validator.getInt(pricePerPerson);
-            Integer addDiscount = Validator.getDiscount(discount);
-            Validator.checkEmpty(tourType);
-            Validator.checkEmpty(tourDescription);
-            toursOfferService.updateTour(tourOffer,tourType,addPricePerPerson,addDiscount,tourDescription);
-            toursModel.setViewName("redirect:/listoftours");
-            return toursModel;
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            toursModel.addObject("error", e.getMessage());
-            return toursModel;
+        TourOffer tourOffer = toursOfferService.getTourById(Integer.valueOf(tourId));
+        toursModel.addObject("tour",tourOffer);
+        String addTourType;
+        String addDescription;
+        Integer addPrice;
+        Integer addDiscount;
+        try{
+            addTourType = Validator.getTourTypeString(tourType);
+            addDescription = Validator.getDescriptionString(tourDescription);
+            addPrice = Validator.getPriceFromString(pricePerPerson);
+            addDiscount = Validator.getDiscountFromString(discount);
+        } catch (IllegalArgumentException e) {
+            return toursModel.addObject("error",e.getMessage());
         }
+        toursOfferService.updateTour(tourOffer, addTourType, addPrice, addDiscount, addDescription);
+        toursModel.setViewName("redirect:/listoftours");
+        return toursModel;
+
     }
 
     @GetMapping("/addtour")

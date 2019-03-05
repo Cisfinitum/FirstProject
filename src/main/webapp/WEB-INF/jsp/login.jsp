@@ -17,8 +17,7 @@
         <div class="login-page">            <div class="form">
                 <p style="color: red">${message}</p>
                 <c:if test="${not empty param.error}">
-                    <span style="color: red; font-weight: bold">Logging error
-                        : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</span>
+                    <span style="color: red; font-weight: bold"><spring:message code="badcredentials" /></span>
                 </c:if>
                 <form name="passlogform" method="POST" onsubmit="return validate()" action="<c:url value="/j_spring_security_check" />">
                     <p style="color: forestgreen;">${registration_status}</p>

@@ -100,7 +100,7 @@ public class TourOfferServiceTest {
             expectedHotelsId.add(hotel.getId());
         }
         when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now(),1,5)).thenReturn(tourOfferList);
-        assertEquals(tourOfferService.searchTours(new ModelAndView(),"test",LocalDate.now(),LocalDate.now(),1),tourOfferList);
+        assertEquals(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now(),1),tourOfferList);
     }
 
     @Test

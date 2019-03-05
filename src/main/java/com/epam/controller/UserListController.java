@@ -2,6 +2,7 @@ package com.epam.controller;
 
 import com.epam.model.Person;
 import com.epam.model.Reservation;
+import com.epam.model.TourOffer;
 import com.epam.service.PersonDetailsServiceImpl;
 import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
