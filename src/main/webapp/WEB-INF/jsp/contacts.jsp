@@ -103,7 +103,7 @@
 
 <main>
     <div class="row">
-        <div class="col s4 m2">
+        <div class="col s2 m2">
             <div class="card">
                 <div class="card-image">
                     <img src="${kate}">
@@ -115,7 +115,7 @@
                 </div>
             </div>
         </div>
-        <div class="col s4 m2">
+        <div class="col s2 m2">
             <div class="card">
                 <div class="card-image">
                     <img src="${nikola}">
@@ -127,7 +127,7 @@
                 </div>
             </div>
         </div>
-        <div class="col s4 m2">
+        <div class="col s2 m2">
             <div class="card">
                 <div class="card-image">
                     <img src="${ilya}">
@@ -139,7 +139,7 @@
                 </div>
             </div>
         </div>
-        <div class="col s4 m2">
+        <div class="col s2 m2">
             <div class="card">
                 <div class="card-image">
                     <img src="${ksusha}">
@@ -151,7 +151,7 @@
                 </div>
             </div>
         </div>
-        <div class="col s4 m2">
+        <div class="col s2 m2">
             <div class="card">
                 <div class="card-image">
                     <img src="${fedor}">
@@ -163,7 +163,7 @@
                 </div>
             </div>
         </div>
-        <div class="col s4 m2">
+        <div class="col s2 m2">
             <div class="card">
                 <div class="card-image">
                     <img src="${lev}">
