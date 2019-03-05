@@ -28,7 +28,7 @@
 <header>
     <nav>
         <div class="nav-wrapper tab " >
-            <a href="index" class="brand-logo">Tour De Team</a>
+            <a href="/index" class="brand-logo" >Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
                 <li><a href="/listoftours"><spring:message code="tours" /></a></li>
                 <li><a href="/addtour"><spring:message code="addtour" /></a></li>
@@ -66,11 +66,11 @@
                             <td>${clients.role}</td>
                             <c:choose>
                                 <c:when test="${clients.role.toString().equals('USER')}">
-                                    <td><a href="addToBlackList/${clients.id}" style="background-color:#DC143C" class="btn-small">
+                                    <td><a href="addToBlackList/${clients.id}" style="background-color:#b71c1c ; width: 95%" class="btn-small">
                                         <spring:message code="block" /> </a></td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><a href="removeFromBlackList/${clients.id}" class="btn-small"><spring:message code="unblock" /></a></td>
+                                    <td><a href="removeFromBlackList/${clients.id}" style="width: 95%" class="btn-small"><spring:message code="unblock" /></a></td>
                                 </c:otherwise>
                             </c:choose>
                             </c:forEach>
@@ -81,7 +81,7 @@
                         <ul class="pagination">
                             <c:if test="${generalAmount>4}">
                                 <c:forEach var="i" begin="1" end="${amount}">
-                                    <li class="waves-effect"><a href="/clients/${i}">${i}</a></li>
+                                    <li class="waves-effect"><a href="/clients/${i}" >${i}</a></li>
                                 </c:forEach>
                             </c:if>
                         </ul>
@@ -111,7 +111,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            © 2018 Copyright Text
+            © 2019 Copyright Text
         </div>
     </div>
 </footer>

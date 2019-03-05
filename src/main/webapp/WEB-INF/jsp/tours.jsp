@@ -28,7 +28,7 @@
 <header>
     <nav>
         <div class="nav-wrapper tab " >
-            <a href="index" class="brand-logo">Tour De Team</a>
+            <a href="/index" class="brand-logo">Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
                 <li><a href="/listoftours"><spring:message code="tours" /></a></li>
                 <li><a href="/addtour"><spring:message code="addtour" /></a></li>
@@ -36,8 +36,8 @@
                 <li><a href="/clients"><spring:message code="clients" /></a></li>
                 <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
                 <li><a href="/logout"><spring:message code="logout" /></a></li>
-                <li><a href="/listoftours?lang=en"><img src="${imgen}" width="48" height="32"></a>
-                    <a href="/listoftours?lang=ru"><img src="${imgru}" width="48" height="32"></a></li>
+                <li><a href="/listoftours?lang=en" ><img src="${imgen}" width="48" height="32"></a>
+                    <a href="/listoftours?lang=ru" ><img src="${imgru}" width="48" height="32"></a></li>
             </ul>
         </div>
     </nav>
@@ -100,12 +100,9 @@
                 </tbody>
             </table>
             <br>
-            <br>
-            <br>
-            <br>
             <div class="row">
                 <div class="col s6 offset-s5">
-                    <ul class="pagination">
+                    <ul class="pagination" >
                         <c:if test="${totalPages>1}">
                             <c:forEach var="i" begin="1" end="${totalPages}">
                                 <li class="waves-effect"><a href="/listoftours/${i}">${i}</a></li>
@@ -139,7 +136,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            © 2018 Copyright Text
+            © 2019 Copyright Text
         </div>
     </div>
 </footer>
