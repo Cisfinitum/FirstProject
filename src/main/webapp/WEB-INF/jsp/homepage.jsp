@@ -107,35 +107,35 @@
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">edit_location</i>
-                        <input type="text" id="autocomplete-input" class="autocomplete" name="country">
+                        <input type="text" id="autocomplete-input" class="autocomplete" name="country" value="${country}">
                         <label for="autocomplete-input"><spring:message code="country" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-dateStart" class="datepicker" name="startDate">
+                        <input type="text" id="autocomplete-dateStart" class="datepicker" name="startDate" value="${addStartDate}">
                         <label for="autocomplete-dateStart"><spring:message code="dod" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-dateEnd" class="datepicker" name="endDate">
+                        <input type="text" id="autocomplete-dateEnd" class="datepicker" name="endDate" value="${addEndDate}">
                         <label for="autocomplete-dateEnd"><spring:message code="ad" /></label>
                     </div>
                 </div>
                 <div class="col s2">
                     <div class="input-field">
                         <select class="icons" name="numberOfPeople">
-                            <option value="1" data-icon="${gr}" class="right" selected>1</option>
-                            <option value="2" data-icon="${gr}" class="right">2</option>
-                            <option value="3" data-icon="${gr}" class="right">3</option>
-                            <option value="4" data-icon="${gr}" class="right">4</option>
-                            <option value="5" data-icon="${gr}" class="right">5</option>
-                            <option value="6" data-icon="${gr}" class="right">6</option>
-                            <option value="7" data-icon="${gr}" class="right">7</option>
-                            <option value="8" data-icon="${gr}" class="right">8</option>
+                            <option value="1" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 1 }"> selected </c:if>>1</option>
+                            <option value="2" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 2 }"> selected </c:if> >2</option>
+                            <option value="3" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 3 }"> selected </c:if>>3</option>
+                            <option value="4" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 4 }"> selected </c:if>>4</option>
+                            <option value="5" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 5 }"> selected </c:if>>5</option>
+                            <option value="6" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 6 }"> selected </c:if>>6</option>
+                            <option value="7" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 7 }"> selected </c:if>>7</option>
+                            <option value="8" data-icon="${gr}" class="right"  <c:if test="${numberOfPeople == 8 }"> selected </c:if>>8</option>
                         </select>
                         <label><spring:message code="nop" /></label>
                     </div>
@@ -178,7 +178,7 @@
                         <td>${tour.pricePerUnit}</td>
                         <td>${hotels.get(tour.hotelId).name}</td>
                         <td>${tour.description}</td>
-                        <td>${tour.discount}</td>
+                        <td>${tour.discount} % </td>
                         <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ANONYMOUS')">
                             <td>
                                 <form method="post" action="/reserveTour">
