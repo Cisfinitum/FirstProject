@@ -1,6 +1,7 @@
 package com.epam.repository;
 
 import com.epam.model.Reservation;
+import com.epam.model.ReservationArchiveStatusEnum;
 import com.epam.model.ReservationStatusEnum;
 import com.epam.repository.interfaces.SimpleReservationDAO;
 import lombok.SneakyThrows;
@@ -26,6 +27,8 @@ public class ReservationDAO implements SimpleReservationDAO {
     private String tourOfferId;
     @Value("${reservation.numberOfPeople}")
     private String numberOfPeople;
+    @Value("${reservation.archiveStatus}")
+    private String archiveStatus;
     @Value("${reservation.status}")
     private String status;
     @Value("${reservation.discount}")
@@ -50,6 +53,7 @@ public class ReservationDAO implements SimpleReservationDAO {
                 .clientId(rs.getInt(clientId))
                 .tourOfferId(rs.getInt(tourOfferId))
                 .numberOfPeople(rs.getInt(numberOfPeople))
+                .archiveStatus(ReservationArchiveStatusEnum.valueOf(rs.getString(archiveStatus)))
                 .status(ReservationStatusEnum.valueOf(rs.getString(status)))
                 .discount(rs.getInt(discount))
                 .totalPrice(rs.getInt(totalPrice))
@@ -57,8 +61,8 @@ public class ReservationDAO implements SimpleReservationDAO {
     }
 
     public int addReservation(Reservation reservation) {
-        String sql = "INSERT INTO " + tableName + " (" + clientId + ", " + tourOfferId + ", " + numberOfPeople + ", " + status + ", " + discount + ", " + totalPrice + ") VALUES ( ?,?,?,?,?,?)";
-        return jdbcTemplate.update(sql, reservation.getClientId(), reservation.getTourOfferId(), reservation.getNumberOfPeople(),
+        String sql = "INSERT INTO " + tableName + " (" + clientId + ", " + tourOfferId + ", " + numberOfPeople + ", "+ archiveStatus + ", " + status + ", "  + discount + ", " + totalPrice + ") VALUES ( ?,?,?,?,?,?,?)";
+        return jdbcTemplate.update(sql, reservation.getClientId(), reservation.getTourOfferId(), reservation.getNumberOfPeople(), reservation.getArchiveStatus().getEnumArchiveStatus(),
                 reservation.getStatus().getEnumStatus(), reservation.getDiscount(), reservation.getTotalPrice());
     }
 
@@ -69,7 +73,7 @@ public class ReservationDAO implements SimpleReservationDAO {
     }
 
     public List<Reservation> getReservationsByPersonId(Integer personId) {
-        String sql = "SELECT * FROM " + tableName + " WHERE " + clientId + " = ? ORDER BY id";
+        String sql = "SELECT * FROM " + tableName + " WHERE " + clientId + " = ? AND (STATUS = 'PAID' OR STATUS = 'UNPAID') ORDER BY id";
         Object[] parameters = new Object[] { personId };
         return jdbcTemplate.query(sql, parameters, reservationMapper);
     }
@@ -82,8 +86,8 @@ public class ReservationDAO implements SimpleReservationDAO {
         return 0;
     }
 
-    public List<Reservation> listReservations(Integer page, Integer total) {
-        String sql = "SELECT * from " + tableName + " ORDER BY id LIMIT " + (page - 1) + "," + total;
+    public List<Reservation> listReservations(Integer page, Integer total, String status) {
+        String sql = "SELECT * from " + tableName + " WHERE " + archiveStatus + " = '" +status+"' "+ "ORDER BY id LIMIT " + (page - 1) + "," + total;
         return jdbcTemplate.query(sql, reservationMapper);
     }
 
@@ -97,6 +101,7 @@ public class ReservationDAO implements SimpleReservationDAO {
                 tableName + " SET " + clientId + " = ?, " +
                 " " + tourOfferId + "= ? ," +
                 " " + numberOfPeople + "= ?," +
+                " " + archiveStatus + " = ?," +
                 " " + status + " = ?," +
                 " " + discount + "= ?," +
                 " " + tourOfferId + " = ?," +
@@ -111,16 +116,32 @@ public class ReservationDAO implements SimpleReservationDAO {
                 reservation.getId());
     }
 
-    public int amountOfReservations() {
+    public int amountOfReservations(String status) {
+        String sql = "SELECT COUNT(*) FROM " + tableName + " WHERE " + archiveStatus + " = '" + status +"'";
+        return jdbcTemplate.queryForObject(
+                sql, new Object[]{}, Integer.class);
+    }
+    public int amountOfAllReservations() {
         String sql = "SELECT COUNT(*) FROM " + tableName;
         return jdbcTemplate.queryForObject(
                 sql, new Object[]{}, Integer.class);
     }
 
-    public int changeReservationStatusById(Integer reservationId){
+    public int changeReservationStatusById(Integer reservationId, String reservationStatus){
         String sql = "UPDATE " +
-                tableName + " SET " + status + " = 'PAID'" +
+                tableName + " SET " + status + " = '"+ reservationStatus +"'" +
                 " WHERE " + id + "= "+ reservationId;
+        return jdbcTemplate.update(sql);
+    }
+    public int changeArchiveStatusById(Integer reservationId, String reservationStatus){
+        String sql = "UPDATE " +
+                tableName + " SET " + archiveStatus + " = '" + reservationStatus + "'" +
+                " WHERE " + id + "= "+ reservationId;
+        return jdbcTemplate.update(sql);
+    }
+
+    public int cleanArchive(){
+        String sql = "DELETE FROM " + tableName + " WHERE " + archiveStatus + " = " + "'ARCHIVED'";
         return jdbcTemplate.update(sql);
     }
 }
