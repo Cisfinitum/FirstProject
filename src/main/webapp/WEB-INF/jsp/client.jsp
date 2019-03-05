@@ -17,7 +17,7 @@
     <spring:url value="/resources/img/united-kingdom-flag.png" var="imgen"/>
     <spring:url value="/resources/img/russia-flag.png" var="imgru"/>
     <spring:url value="/resources/img/group.png" var="gr"/>
-    <spring:url value="/resources/img/user.png" var="imuser"/>
+    <spring:url value="/resources/img/user.jpg" var="imuser"/>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -39,14 +39,14 @@
     </nav>
 </header>
 <main>
-    <div class="container">
-        <h2><spring:message code="clientprofile"/></h2>
+    <div class="container" style="width: 85%">
+        <h2><spring:message code="clientprofile" /></h2>
         <div class="profile">
             <div class="avatar card-profile-image">
                 <div class="card-content">
                     <div class="row">
                         <div class="col s2 card-profile-image">
-                            <img src="${imuser}" alt="profile image" class="circle">
+                            <img src="${imuser}" alt="profile image">
                         </div>
                         <div class="col s3">
                             <p class="medium-small grey-text"><spring:message code="emailname"/>: ${person.email}</p>
@@ -123,8 +123,8 @@
     </div>
     </div>
     </div>
-    <div class="container" style="width: 90%;">
-        <h4><spring:message code="reservations"/></h4>
+    <div class="container" style="width: 85%">
+        <h4><spring:message code="reservations" /></h4>
         <table>
             <c:if test="${reservations.size()>0}">
                 <tr>
@@ -145,12 +145,12 @@
                 <td> ${reservation.discount}%</td>
                 <td> ${reservation.numberOfPeople}</td>
                 <td> ${reservation.status}</td>
-                <td> ${reservation.totalPrice}</td>
+                <td> ${reservation.totalPrice} $</td>
                 <td>
                     <form method="post" action="/pay" id="pay">
                         <c:if test="${reservation.status == 'UNPAID'}">
-                            <a class="waves-effect waves-light btn modal-trigger" href="#modal1"><i class="material-icons left">payment</i><spring:message
-                                    code="pay"/></a>
+                            <a class="waves-effect waves-light btn modal-trigger" href="#modal1" style="width: 80%">
+                                <spring:message code="pay"/></a>
                             <div id="modal1" class="modal">
                                 <div class="modal-content">
                                     <h4><spring:message code="goingtopay"/> ${reservation.totalPrice} $</h4>
@@ -171,7 +171,7 @@
                     <br>
                     <c:if test="${reservation.status == 'UNPAID'}">
                         <form method="post" action="/cancelReservation" id="cancel">
-                            <a class="waves-effect waves-light btn modal-trigger" href="#modal2"> <spring:message
+                            <a class="waves-effect waves-light btn modal-trigger" href="#modal2" style="width: 80%"> <spring:message
                                     code="cancelsimple"/></a>
                             <div id="modal2" class="modal">
                                 <div class="modal-content">
@@ -196,12 +196,16 @@
 
         </table>
     </div>
+    <br>
 </main>
-<div class="footer-copyright">
-    <div class="container">
-        © 2019 Tour de Team
-    </div>
-</div>
+
+<footer class="page-footer">
+
+
+        <div class="container">
+            © 2019 Copyright Text
+        </div>
+
 </footer>
 
 <!--JavaScript at end of body for optimized loading-->

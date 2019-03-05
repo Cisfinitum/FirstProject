@@ -85,7 +85,7 @@
                         <ul class="pagination">
                             <c:if test="${generalAmount>4}">
                                 <c:forEach var="i" begin="1" end="${amount}">
-                                    <li class="waves-effect"><a href="/reservation/${i}">${i}</a></li>
+                                    <li class="waves-effect"><a href="/reservation/${i}"   >${i}</a></li>
                                 </c:forEach>
                             </c:if>
                         </ul>
@@ -134,7 +134,7 @@
                                 </tr>
                                 <br>
                             </table>
-                            <a href="/reservation/cleanArchive" style="background-color:#90caf9" class="btn-small">
+                            <a href="/reservation/cleanArchive" class="btn-small">
                                <spring:message code="cleanarchive"/> </a>
                             </c:if>
                         </div>
@@ -155,8 +155,8 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text"><spring:message code="footerlinks"/></h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="index"><spring:message code="homepage"/></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="information"/></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/index"><spring:message code="homepage"/></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/info"><spring:message code="information"/></a></li>
                     <li><a class="grey-text text-lighten-3" href="#"><spring:message code="feedback"/></a></li>
                     <li><a class="grey-text text-lighten-3" href="#"><spring:message code="contacts"/></a></li>
                 </ul>

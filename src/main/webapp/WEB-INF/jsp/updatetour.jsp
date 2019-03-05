@@ -99,8 +99,8 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text"><spring:message code="footerlinks"/></h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="index"><spring:message code="homepage"/></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="information"/></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/index"><spring:message code="homepage"/></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/info"><spring:message code="information"/></a></li>
                     <li><a class="grey-text text-lighten-3" href="#"><spring:message code="feedback"/></a></li>
                     <li><a class="grey-text text-lighten-3" href="#"><spring:message code="contacts"/></a></li>
                 </ul>
@@ -109,7 +109,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            © 2018 Copyright Text
+            © 2019 Copyright Text
         </div>
     </div>
 </footer>

@@ -29,14 +29,14 @@ public class HotelServiceTest {
     public void getHotelById() {
         Hotel actualHotel = hotelService.getHotelById(1);
 
-        Assert.assertEquals("Russia", actualHotel.getCountry());
+        Assert.assertEquals("Shire", actualHotel.getCountry());
     }
 
     @Test
     public void getHotelsByCountry() {
-        List<Hotel> actualHotels = hotelService.getHotelsByCountry("Russia");
+        List<Hotel> actualHotels = hotelService.getHotelsByCountry("Gondor");
 
-        Assert.assertEquals(1, actualHotels.size());
+        Assert.assertEquals(7, actualHotels.size());
     }
 
     @Test
