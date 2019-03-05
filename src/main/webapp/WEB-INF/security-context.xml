@@ -31,7 +31,9 @@
     </http>
 
     <authentication-manager>
-        <authentication-provider user-service-ref='MyPersonDetailsService'/>
+        <authentication-provider user-service-ref="MyPersonDetailsService">
+            <password-encoder ref="passwordEncoder"/>
+        </authentication-provider>
     </authentication-manager>
 
 </beans:beans>

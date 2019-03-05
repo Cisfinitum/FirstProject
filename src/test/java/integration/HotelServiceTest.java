@@ -3,7 +3,6 @@ package integration;
 import com.epam.model.Hotel;
 import com.epam.service.HotelService;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = {TestConfig.class})
 public class HotelServiceTest {
 
     @Autowired
     private HotelService hotelService;
-
-
 
     @Test
     public void getHotels() {
