@@ -63,17 +63,18 @@
                             <a class="btn waves-effect waves-light modal-trigger" data-target="modal" href="#modal">
                                 <spring:message code="changepassword"/>
                             </a>
+                            <p style="color: red;">${changeStatus}</p>
                             <div id="idofthedivtohide" class="hide">
                                 <span><spring:message code="passwordchanged"/></span>
                             </div>
                         </div>
                         <!-- Modal Structure -->
-                        <div id="modal" class="modal modal-fixed-footer">
+                        <div id="modal" class="modal modal-fixed-footer" style="height: 120%">
                             <div class="modal-content registration-page">
                                 <div class="registration">
                                     <div class="row">
                                         <form name="user" id="change-pwd" class="col s12" autocomplete="off"
-                                              onsubmit="return validatePageData()" action="" method="POST">
+                                              onsubmit="return validateProfilePageData()" action="/clientProfile" method="POST">
                                             <h4><spring:message code="changepassword"/></h4>
                                             <c:set var="val"><spring:message code="wrongpass"/></c:set>
                                             <input id="wrongpass" type="hidden" value="${val}"/>
@@ -81,16 +82,20 @@
                                             <p style="color: red;">${message}</p>
                                             <div class="row">
                                                 <div class="input-field col s6">
-                                                    <input id="password" type="password" class="validate"
-                                                           name="password" onchange="return validatePassword()"
+                                                    <input id="previous-password" type="password" name="previous-password" autocomplete="off">
+                                                    <label for="previous-password"><spring:message code="previousPassword"/></label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s6">
+                                                    <input id="password" type="password" name="password" onchange="return validatePasswordProfile()"
                                                            autocomplete="off">
                                                     <label for="password"><spring:message code="newpassword"/></label>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="input-field col s6">
-                                                    <input id="password2" type="password" class="validate"
-                                                           name="password2" onchange="return checkIfPasswordsAreEqual()"
+                                                    <input id="password2" type="password" name="password2" onchange="return checkIfPasswordsAreEqualProfile()"
                                                            autocomplete="off">
                                                     <label for="password2"><spring:message
                                                             code="confirmnewpassword"/></label>

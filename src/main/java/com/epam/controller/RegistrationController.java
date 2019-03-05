@@ -49,11 +49,11 @@ public class RegistrationController {
         if (!emailMatcher.matches()) {
             return modelAndView.addObject("message", "Email doesn't match the pattern");
         }
-        else if (!(firstName != null)) {
-            return modelAndView.addObject("message", "first name");
+        else if (firstName == null || firstName.equals("")) {
+            return modelAndView.addObject("message", "Name must be not empty");
         }
-        else if (!(lastName != null)) {
-            return modelAndView.addObject("message", "last name");
+        else if (lastName == null || lastName.equals("")) {
+            return modelAndView.addObject("message", "Name must be not empty");
         }
         else if (!phoneNumberMatcher.matches()) {
             return modelAndView.addObject("message", "Phone number is not valid");
