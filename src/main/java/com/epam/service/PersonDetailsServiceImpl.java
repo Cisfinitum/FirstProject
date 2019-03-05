@@ -113,4 +113,7 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
         return true;
     }
 
+    public Person getPersonById(Integer id) {
+        return personService.getPersonById(id);
+    }
 }

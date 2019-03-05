@@ -47,14 +47,14 @@ public class TourOfferDAOTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         ReflectionTestUtils.setField(tourofferDAO, "tableName", "tour_offer");
-        ReflectionTestUtils.setField(tourofferDAO, "tourType", "tour_type");
-        ReflectionTestUtils.setField(tourofferDAO, "startDate", "start_date");
-        ReflectionTestUtils.setField(tourofferDAO, "endDate", "end_date");
-        ReflectionTestUtils.setField(tourofferDAO, "hotelId", "hotel_id");
-        ReflectionTestUtils.setField(tourofferDAO, "pricePerUnit", "price_per_unit");
-        ReflectionTestUtils.setField(tourofferDAO, "description", "description");
-        ReflectionTestUtils.setField(tourofferDAO, "discount", "discount");
-        ReflectionTestUtils.setField(tourofferDAO, "id", "id");
+        ReflectionTestUtils.setField(tourofferDAO, "tourTypeName", "tour_type");
+        ReflectionTestUtils.setField(tourofferDAO, "startDateName", "start_date");
+        ReflectionTestUtils.setField(tourofferDAO, "endDateName", "end_date");
+        ReflectionTestUtils.setField(tourofferDAO, "hotelIdName", "hotel_id");
+        ReflectionTestUtils.setField(tourofferDAO, "pricePerUnitName", "price_per_unit");
+        ReflectionTestUtils.setField(tourofferDAO, "descriptionName", "description");
+        ReflectionTestUtils.setField(tourofferDAO, "discountName", "discount");
+        ReflectionTestUtils.setField(tourofferDAO, "idName", "id");
         expectedTour =  new TourOffer(1, "Active", LocalDate.of(2018,2,19),  LocalDate.of(2018,2,25),
                 1500, 1,"Best tour", 1);
     }
