@@ -21,7 +21,7 @@ public class PaymentController {
 
     @PostMapping("/pay")
     public ModelAndView payForTour(@RequestParam(name = "reservationId") Integer reservationId, ModelAndView modelAndView, RedirectAttributes redirectAttributes){
-        reservationService.changeReservationStatusById(reservationId);
+        reservationService.changeReservationStatusById(reservationId, "PAID");
         redirectAttributes.addFlashAttribute("paymentMessage", "Tour was paid successfully");
         modelAndView.setViewName("redirect:/clientProfile");
         return modelAndView;
@@ -46,6 +46,15 @@ public class PaymentController {
         modelAndView.addObject("numberOfPeople", numberOfPeople);
         modelAndView.addObject("discount", discount);
         modelAndView.setViewName("payment");
+        return modelAndView;
+    }
+
+
+    @PostMapping("/cancelReservation")
+    public ModelAndView cancelReservation(@RequestParam(name = "reservationId") Integer reservationId, ModelAndView modelAndView, RedirectAttributes redirectAttributes){
+        reservationService.changeReservationStatusById(reservationId, "CANCELED");
+        redirectAttributes.addFlashAttribute("cancelMessage", "Reservation was canceled");
+        modelAndView.setViewName("redirect:/clientProfile");
         return modelAndView;
     }
 }

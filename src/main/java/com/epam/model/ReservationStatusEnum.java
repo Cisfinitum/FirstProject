@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 public enum  ReservationStatusEnum {
     PAID("PAID"),
-    UNPAID("UNPAID");
+    UNPAID("UNPAID"),
+    CANCELED("CANCELED");
 
     private String enumStatus;
 }

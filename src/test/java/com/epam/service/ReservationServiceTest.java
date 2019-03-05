@@ -45,6 +45,7 @@ public class ReservationServiceTest {
     private Integer testDiscountId = 1;
     private Integer numberOfPeople = 5;
     private Integer testPricePerUnit = 100;
+    private String testStatus = "NEW";
 
     @Before
     public void setUp() {
@@ -71,15 +72,15 @@ public class ReservationServiceTest {
 
     @Test
     public void listReservations() {
-        when(reservationDAO.listReservations(testPage, testTotal)).thenReturn(expectedReservationsList);
-        actualReservationList = reservationService.listReservations(testPage, testTotal);
+        when(reservationDAO.listReservations(testPage, testTotal, testStatus)).thenReturn(expectedReservationsList);
+        actualReservationList = reservationService.listReservations(testPage, testTotal, testStatus);
         assertEquals(expectedReservationsList, actualReservationList);
     }
 
     @Test
     public void listReservationsReturnsNull() {
-        when(reservationDAO.listReservations(testPage, testTotal)).thenReturn(null);
-        actualReservationList = reservationService.listReservations(testPage, testTotal);
+        when(reservationDAO.listReservations(testPage, testTotal, testStatus)).thenReturn(null);
+        actualReservationList = reservationService.listReservations(testPage, testTotal, testStatus);
         assertNull(actualReservationList);
     }
 
@@ -121,32 +122,58 @@ public class ReservationServiceTest {
         when(principal.getName()).thenReturn(testEmail);
         when(personService.getIdByEmail(testEmail)).thenReturn(1);
         modelAndView = reservationService.reserveTour(modelAndView, principal, testId, testPricePerUnit, numberOfPeople, testDiscountId, redirectAttributes);
-        assertEquals(expectedView , modelAndView.getViewName());
+        assertEquals(expectedView, modelAndView.getViewName());
     }
 
     @Test
-    public void reserveTourUserDidNotLogIn(){
+    public void reserveTourUserDidNotLogIn() {
         principal = null;
         String expectedView = "login";
         modelAndView = reservationService.reserveTour(modelAndView, principal, testId, testPricePerUnit, numberOfPeople, testDiscountId, redirectAttributes);
-        assertEquals(expectedView , modelAndView.getViewName());
+        assertEquals(expectedView, modelAndView.getViewName());
     }
 
     @Test
-    public void changeReservationStatusById(){
-        when(reservationDAO.changeReservationStatusById(testId)).thenReturn(1);
-        Integer actualResult = reservationService.changeReservationStatusById(testId);
+    public void changeReservationStatusById() {
+        when(reservationDAO.changeReservationStatusById(testId, testStatus)).thenReturn(1);
+        Integer actualResult = reservationService.changeReservationStatusById(testId, testStatus);
         Integer expectedResult = 1;
         assertEquals(expectedResult, actualResult);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void changeStatusThrowsIllegalArgumentExc(){
-        reservationService.changeReservationStatusById(-1);
+    public void changeStatusThrowsIllegalArgumentExc() {
+        reservationService.changeReservationStatusById(-1, "NEW");
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void changeStatusThrowsNoSuchElementExc(){
-        reservationService.changeReservationStatusById(null);
+    public void changeStatusThrowsNoSuchElementExc() {
+        reservationService.changeReservationStatusById(null, null);
+    }
+
+    @Test
+    public void cleanArchive() {
+        Integer expectedAmount = 1;
+        when(reservationDAO.cleanArchive()).thenReturn(expectedAmount);
+        Integer actualAmount = reservationService.cleanArchive();
+        assertEquals(expectedAmount, actualAmount);
+    }
+
+    @Test
+    public void changeStatusById(){
+        Integer expectedAmount = 1;
+        when(reservationDAO.changeArchiveStatusById(testId, testStatus)).thenReturn(expectedAmount);
+        Integer actualAmount = reservationService.changeArchiveStatusById(testId, testStatus);
+        assertEquals(expectedAmount, actualAmount);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void changeStatusByIdThrowsIllegalArgumentExcp(){
+        Integer wrongId = -1;
+        reservationService.changeArchiveStatusById(wrongId, testStatus);
+    }
+    @Test(expected = NoSuchElementException.class)
+    public void changeStatusByIdThrowsNoSuchElementExcp(){
+        reservationService.changeArchiveStatusById(null, null);
     }
 }
