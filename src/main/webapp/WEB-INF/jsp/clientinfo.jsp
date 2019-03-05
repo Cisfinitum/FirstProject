@@ -17,7 +17,7 @@
     <spring:url value="/resources/img/united-kingdom-flag.png" var="imgen"/>
     <spring:url value="/resources/img/russia-flag.png" var="imgru"/>
     <spring:url value="/resources/img/group.png" var="gr"/>
-    <spring:url value="/resources/img/user.png" var="imuser"/>
+    <spring:url value="/resources/img/user.jpg" var="imuser"/>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -44,7 +44,7 @@
     </nav>
 </header>
 <main>
-    <div class="container">
+    <div class="container" style="width: 85%">
         <h2><spring:message code="clientprofile" /></h2>
         <div class="profile">
             <div class="avatar card-profile-image">
@@ -67,7 +67,7 @@
     </div>
     </div>
     </div>
-    <div class="container">
+    <div class="container" style="width: 85%">
         <h4><spring:message code="reservations" /></h4>
         <table>
             <c:if test="${reservations.size()>0}">

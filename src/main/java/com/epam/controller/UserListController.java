@@ -2,8 +2,10 @@ package com.epam.controller;
 
 import com.epam.model.Person;
 import com.epam.model.Reservation;
+import com.epam.model.TourOffer;
 import com.epam.service.PersonDetailsServiceImpl;
 import com.epam.service.ReservationService;
+import com.epam.service.TourOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/clients")
@@ -21,12 +24,15 @@ public class UserListController {
 
     private final PersonDetailsServiceImpl personDetailsServiceImpl;
     private final ReservationService reservationService;
+    private final TourOfferService tourOfferService;
 
     @Autowired
-    UserListController(PersonDetailsServiceImpl personDetailsServiceImpl, ReservationService reservationService) {
+    public UserListController(PersonDetailsServiceImpl personDetailsServiceImpl, ReservationService reservationService, TourOfferService tourOfferService) {
         this.personDetailsServiceImpl = personDetailsServiceImpl;
         this.reservationService = reservationService;
+        this.tourOfferService = tourOfferService;
     }
+
     @GetMapping
     public String clientsPage() {
         return "redirect:/clients/1";
@@ -59,7 +65,9 @@ public class UserListController {
     public ModelAndView clientInfoPage(@PathVariable Integer id, ModelAndView modelAndView) {
         Person person = personDetailsServiceImpl.getPersonById(id);
         List<Reservation> reservations = reservationService.getReservationsByPersonId(id);
+        Map<Integer, String> tourInfo = tourOfferService.getDescription(reservations);
         modelAndView.addObject("person", person);
+        modelAndView.addObject("description", tourInfo);
         modelAndView.addObject("reservations", reservations);
         modelAndView.setViewName("/clientinfo");
         return modelAndView;
