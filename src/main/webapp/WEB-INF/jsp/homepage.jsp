@@ -65,7 +65,7 @@
 
 <nav>
     <div class="nav-wrapper">
-        <a href="index" class="brand-logo center">Tour de Team</a>
+        <a href="/index" class="brand-logo center">Tour de Team</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
             <li class="active"><a href="/index"><spring:message code="homepage" /></a></li>
             <li><a href="/#"><spring:message code="information" /></a></li>
