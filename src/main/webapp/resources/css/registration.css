@@ -2,6 +2,7 @@
     width: 400px;
     padding: 8% 0 0;
     margin: auto;
+    font-family: Packard Modern;
 }
 .registration {
     position: relative;
@@ -13,19 +14,21 @@
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     border-radius: 10px;
-
+    font-family: Packard Modern;
 }
 .rowregistration {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
+    font-family: Packard Modern;
 }
 .btn{
     background-color:  #8d6e63;
+    font-family: Packard Modern;
 }
 .btn:hover{
     background-color:  #8d6e63;
-
+    font-family: Packard Modern;
 }
 body {
     background:  #8d6e63; /* fallback for old browsers */
@@ -35,4 +38,5 @@ body {
     background: linear-gradient(to left,  #8d6e63,  #a1887f );
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-family: Packard Modern;
 }
