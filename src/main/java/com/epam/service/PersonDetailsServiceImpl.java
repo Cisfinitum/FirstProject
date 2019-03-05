@@ -2,6 +2,7 @@ package com.epam.service;
 
 import com.epam.exception.InvalidDataBaseAffectedException;
 import com.epam.model.Person;
+import com.epam.model.PersonRoleEnum;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
@@ -18,9 +20,11 @@ import java.util.Set;
 public class PersonDetailsServiceImpl implements UserDetailsService{
 
     private final PersonService personService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public PersonDetailsServiceImpl(PersonService personService) {
+    public PersonDetailsServiceImpl(PersonService personService, BCryptPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
         this.personService = personService;
     }
 
@@ -35,7 +39,9 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
         return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), roles);
     }
 
-    public boolean addPerson(Person person) {
+    public boolean addPerson(String email, String password, PersonRoleEnum role, String phoneNumber, String firstName, String lastName) {
+        String encodedPassword = passwordEncoder.encode(password);
+        Person person = new Person(email, encodedPassword, PersonRoleEnum.valueOf("USER"), phoneNumber, firstName, lastName);
         int result = personService.addPerson(person);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;

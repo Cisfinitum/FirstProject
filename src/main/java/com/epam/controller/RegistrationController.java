@@ -19,13 +19,10 @@ import java.util.regex.Pattern;
 public class RegistrationController {
 
     private final PersonDetailsServiceImpl personDetailsServiceImpl;
-    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    RegistrationController(PersonDetailsServiceImpl personDetailsServiceImpl,
-                           BCryptPasswordEncoder passwordEncoder) {
+    RegistrationController(PersonDetailsServiceImpl personDetailsServiceImpl) {
         this.personDetailsServiceImpl = personDetailsServiceImpl;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/registration")
@@ -68,8 +65,7 @@ public class RegistrationController {
             return modelAndView.addObject("message", "Passwords are not equal");
         }
         else {
-            String encodedPassword = passwordEncoder.encode(password);
-            if (!personDetailsServiceImpl.addPerson(new Person(email, encodedPassword, PersonRoleEnum.valueOf("USER"), phoneNumber, firstName, lastName))) {
+            if (!personDetailsServiceImpl.addPerson(email, password, PersonRoleEnum.valueOf("USER"), phoneNumber, firstName, lastName)) {
                 return modelAndView.addObject("message", "Current email already exists");
             }
             else {
