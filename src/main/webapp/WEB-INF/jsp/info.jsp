@@ -89,80 +89,85 @@
     </div>
 </nav>
 <main>
+    <h2 style="text-align: center"><spring:message code="techologies"/> </h2>
+    <br>
     <div class="container">
+        <div class="row">
+            <div class="col s4">
+                <ul class="collection">
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/jsp.png" alt="" class="circle">
+                        <span class="title"> JSP </span>
+                    </li>
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/mockito.jpg" alt="" class="circle">
+                        <span class="title"> Mockito </span>
+                    </li>
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/junit.jpg" alt="" class="circle">
+                        <span class="title"> JUnit</span>
+                    </li>
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/h2.jpg" alt="" class="circle">
+                        <span class="title"> H2</span>
+                    </li>
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/gradle.png" alt="" class="circle">
+                        <span class="title"> Gradle</span>
+                    </li>
 
-        <ul>
-            <li >
-                <span > JSP</span>
-            </li>
-        </ul>
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <img src="/resources/img/jsp.png" alt="" class="circle">
-                <span class="title"> Data Base: H2</span>
-            </li>
-        </ul>
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <img src="/resources/img/jsp.png" alt="" class="circle">
-                <span class="title"> Spring Jdbc</span>
-            </li>
-        </ul>
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <img src="/resources/img/jsp.png" alt="" class="circle">
-                <span class="title"> Gradle</span>
-            </li>
-        </ul>
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <img src="/resources/img/jsp.png" alt="" class="circle">
-                <span class="title"> Tomcat</span>
-            </li>
-        </ul>
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <img src="/resources/img/jsp.png" alt="" class="circle">
-                <span class="title"> Spring Security</span>
-            </li>
-        </ul>
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <img src="/resources/img/jsp.png" alt="" class="circle">
-                <span class="title"> Spring JDBC</span>
-            </li>
-        </ul>
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <img src="/resources/img/jsp.png" alt="" class="circle">
-                <span class="title"> Spring MVC</span>
-            </li>
-        </ul>
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <img src="/resources/img/jsp.png" alt="" class="circle">
-                <span class="title"> Spring i18n</span>
-            </li>
-        </ul>
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <img src="/resources/img/jsp.png" alt="" class="circle">
-                <span class="title"> log4j</span>
-            </li>
-        </ul>
-        <ul class="collection">
-            <li class="collection-item avatar">
-                <img src="/resources/img/jsp.png" alt="" class="circle">
-                <span class="title"> junit</span>
-            </li>
-        </ul>
- <ul class="collection">
-            <li class="collection-item avatar">
-                <img src="/resources/img/jsp.png" alt="" class="circle">
-                <span class="title"> junit</span>
-            </li>
-        </ul>
+                </ul>
+            </div>
+            <div class="col s4">
+                <ul class="collection">
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/sping.jpg" alt="" class="circle">
+                        <span class="title"> Spring Security</span>
+                    </li>
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/sping.jpg" alt="" class="circle">
+                        <span class="title"> Spring JDBC</span>
+                    </li>
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/sping.jpg" alt="" class="circle">
+                        <span class="title"> Spring MVC</span>
+                    </li>
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/sping.jpg" alt="" class="circle">
+                        <span class="title"> Spring i18n</span>
+                    </li>
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/log4j.jpg" alt="" class="circle">
+                        <span class="title"> log4j</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col s4">
+                <ul class="collection">
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/tomcat.jpg" class="circle">
+                        <span class="title"> Tomcat</span>
+                    </li>
 
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/github.png" alt="" class="circle">
+                        <span class="title"> GitHub</span>
+                    </li>
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/travis.png" alt="" class="circle">
+                        <span class="title">Travis</span>
+                    </li>
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/git.png" alt="" class="circle">
+                        <span class="title"> Git</span>
+                    </li>
+                    <li class="collection-item avatar">
+                        <img src="/resources/img/trello.png" alt="" class="circle">
+                        <span class="title"> Trello</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </main>
 <footer class="page-footer">
