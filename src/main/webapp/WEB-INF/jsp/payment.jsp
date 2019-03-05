@@ -18,7 +18,7 @@
     <div class="registration">
         <div class="row">
             <P style="font-size: large; color: green"><b><spring:message code="successreservation"/> </b></P>
-            <p style="font-size: large"><spring:message code="people"/> :${numberOfPeople} </p>
+            <p style="font-size: large"><spring:message code="people"/> : ${numberOfPeople} </p>
             <p style="font-size: large"><spring:message code="tourprice"/> : ${pricePerUnit} $ </p>
             <p style="font-size: large"><spring:message code="discount"/>: ${discount} %</p>
             <div class="divider"></div>
