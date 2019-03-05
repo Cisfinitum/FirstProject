@@ -118,11 +118,10 @@ public class TourOfferService {
         }
     }
 
-    public List<TourOffer> searchTours(ModelAndView modelAndView, String country, LocalDate startDate, LocalDate endDate, Integer page){
+    public List<TourOffer> searchTours(String country, LocalDate startDate, LocalDate endDate, Integer page) {
         List<Hotel> myList = hotelService.getHotelsByCountry(country);
-        if ( myList.size() == 0 && !country.isEmpty() ) {
-            log.error("Wrong input country: " + country);
-            throw new IllegalArgumentException("Wrong input country: " + country);
+        if (myList.size() == 0 && !country.isEmpty()) {
+            return new ArrayList<TourOffer>();
         }
         if (page > 0 && totalAmountOfRows > 0) {
             if (page > 1) {
@@ -133,7 +132,6 @@ public class TourOfferService {
                 listOfHotelsId.add(hotel.getId());
             }
             return tourOfferDAO.searchTours(listOfHotelsId, startDate, endDate, page, totalAmountOfRows);
-
         } else {
             throw new IllegalArgumentException("Numbers must be integer and > 0");
         }

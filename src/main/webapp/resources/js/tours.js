@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 document.addEventListener('DOMContentLoaded', function () {
     var elems = document.querySelectorAll('.datepicker');
-    var instances = M.Datepicker.init(elems, {format:'yyyy mm dd'});
+    var instances = M.Datepicker.init(elems, {format:'yyyy-mm-dd', showClearBtn: true});
 });
 document.addEventListener('DOMContentLoaded', function () {
     var elems = document.querySelectorAll('select');
@@ -61,7 +61,3 @@ function myFunction() {
         }
     }
 };
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.carousel');
-    var instances = M.Carousel.init(elems, {});
-});
