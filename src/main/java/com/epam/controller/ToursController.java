@@ -77,6 +77,8 @@ public class ToursController {
             toursModel.addObject("amount", toursOfferService.getNumberOfPagesSearch(generalAmount));
             toursModel.addObject("country", country);
             toursModel.addObject("addStartDate", addStartDate);
+            toursModel.addObject("startDate", startDate);
+            toursModel.addObject("endDate", endDate);
             toursModel.addObject("addEndDate", addEndDate);
             toursModel.addObject("numberOfPeople", numberOfPeople);
             toursModel.setViewName("homepage");

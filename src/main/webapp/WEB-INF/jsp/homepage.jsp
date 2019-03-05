@@ -114,14 +114,14 @@
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-dateStart" class="datepicker" name="startDate" value="${addStartDate}">
+                        <input type="text" id="autocomplete-dateStart" class="datepicker" name="startDate" value="${startDate}">
                         <label for="autocomplete-dateStart"><spring:message code="dod" /></label>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <i class="material-icons prefix">event_available</i>
-                        <input type="text" id="autocomplete-dateEnd" class="datepicker" name="endDate" value="${addEndDate}">
+                        <input type="text" id="autocomplete-dateEnd" class="datepicker" name="endDate" value="${endDate}">
                         <label for="autocomplete-dateEnd"><spring:message code="ad" /></label>
                     </div>
                 </div>
