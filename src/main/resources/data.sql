@@ -92,4 +92,8 @@ INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_statu
 VALUES ('1','1', '1', 'NEW','PAID', '1', '500000');
 INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
 VALUES ('1','1', '1', 'ARCHIVED','PAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('6','1', '1', 'NEW','UNPAID', '1', '500000');
+INSERT INTO reservation(client_id, tour_offer_id, number_of_people,archive_status, status, discount, total_price)
+VALUES ('6','1', '1', 'NEW','CANCELED', '1', '500000');
 
