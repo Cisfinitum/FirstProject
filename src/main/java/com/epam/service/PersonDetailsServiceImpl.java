@@ -41,7 +41,7 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
 
     public boolean addPerson(String email, String password, PersonRoleEnum role, String phoneNumber, String firstName, String lastName) {
         String encodedPassword = passwordEncoder.encode(password);
-        Person person = new Person(email, encodedPassword, PersonRoleEnum.valueOf("USER"), phoneNumber, firstName, lastName);
+        Person person = new Person(email, encodedPassword, role, phoneNumber, firstName, lastName);
         int result = personService.addPerson(person);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
