@@ -17,27 +17,32 @@
 <div class="registration-page">
     <div class="registration">
         <div class="row">
-            <P style="font-size: large; color: green"><b>Tour was reserved successfully</b></P>
+            <P style="font-size: large; color: green"><b><spring:message code="successreservation"/> </b></P>
             <p style="font-size: large"><spring:message code="people"/> :${numberOfPeople} </p>
             <p style="font-size: large"><spring:message code="tourprice"/> : ${pricePerUnit} $ </p>
             <p style="font-size: large"><spring:message code="discount"/>: ${discount} %</p>
             <div class="divider"></div>
             <p style="font-size: large"><spring:message code="totalprice"/>: ${totalPrice} $</p>
+        </div>
             <div class="row">
                 <div class="col s6">
                     <div class="input-field">
                         <form name="user" class="col s12" action="/pay" method="POST">
                             <input type="hidden" name="reservationId" value="${reservationId}">
-                            <button type="submit" class="waves-effect waves-light btn" style="height: auto; width: auto"><spring:message code="paynow"/>
+                            <button type="submit" class="waves-effect waves-light btn-large" style="height: auto; width: auto; line-height: 1.5;"><spring:message code="paynow"/>
                             </button>
 
                         </form>
                     </div>
                 </div>
+                <div class="col s1">
+                    <div class="input-field">
+                    </div>
+                </div>
                 <div class="col s5">
                     <div class="input-field">
                         <form name="later" action="/payLater" method="POST">
-                            <button type="submit" class="waves-effect waves-light btn" style="height: auto; width: auto"><spring:message code="paylater"/>
+                            <button type="submit" class="waves-effect waves-light btn-large" style="height: auto; width: auto; line-height: 1.5"><spring:message code="paylater"/>
                             </button>
                         </form>
                     </div>
