@@ -68,7 +68,7 @@
         <a href="index" class="brand-logo center">Tour de Team</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
             <li class="active"><a href="/index"><spring:message code="homepage" /></a></li>
-            <li><a href="/#"><spring:message code="information" /></a></li>
+            <li><a href="/info"><spring:message code="information" /></a></li>
             <li><a href="/#"><spring:message code="feedback" /></a></li>
             <li><a href="/#"><spring:message code="contacts" /></a></li>
         </ul>
