@@ -1,25 +1,25 @@
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('admin@gmail.com', '123','ADMIN', '+79993337821', 'Ivan', 'Ivanov');
+VALUES ('admin@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe', 'ADMIN', '+79993337821', 'Ivan', 'Ivanov');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_1@gmail.com', '123','BLOCKED', '+79993337821', 'Example', 'Example');
+VALUES ('user_1@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe', 'BLOCKED', '+79993337821', 'Example', 'Example');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_2@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_2@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe', 'USER', '+79993337821', 'Example', 'Example');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_3@gmail.com', '123','BLOCKED', '+79993337821', 'Example', 'Example');
+VALUES ('user_3@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe', 'BLOCKED', '+79993337821', 'Example', 'Example');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_4@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_4@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe', 'USER', '+79993337821', 'Example', 'Example');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe', 'USER', '+79993337821', 'Example', 'Example');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_5@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_5@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe', 'USER', '+79993337821', 'Example', 'Example');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_6@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_6@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe', 'USER', '+79993337821', 'Example', 'Example');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_7@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_7@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe', 'USER', '+79993337821', 'Example', 'Example');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_8@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_8@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe', 'USER', '+79993337821', 'Example', 'Example');
 INSERT INTO person(email,  password, role, phone_number, first_name, last_name)
-VALUES ('user_9@gmail.com', '123','USER', '+79993337821', 'Example', 'Example');
+VALUES ('user_9@gmail.com', '$2a$10$Ie3lXAEPBoJWGSdNd/TXf.yLwg8sp0fFZZPR/mi0lmdRxHhQOktUe', 'USER', '+79993337821', 'Example', 'Example');
 INSERT INTO hotel(name, city, country, number_of_stars)
 VALUES ('Luxury Hotel', 'Moscow', 'Russia', '5');
 INSERT INTO hotel(name, city, country, number_of_stars)
