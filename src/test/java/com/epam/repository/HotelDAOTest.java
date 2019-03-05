@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.util.ReflectionTestUtils;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -35,6 +37,12 @@ public class HotelDAOTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        ReflectionTestUtils.setField(hotelDAO, "tableName", "hotel");
+        ReflectionTestUtils.setField(hotelDAO, "id", "id");
+        ReflectionTestUtils.setField(hotelDAO, "name", "name");
+        ReflectionTestUtils.setField(hotelDAO, "city", "city");
+        ReflectionTestUtils.setField(hotelDAO, "country", "country");
+        ReflectionTestUtils.setField(hotelDAO, "numberOfStars", "number_of_stars");
     }
 
     @Test

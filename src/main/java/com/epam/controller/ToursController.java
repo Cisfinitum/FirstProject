@@ -4,6 +4,7 @@ import com.epam.validator.Validator;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.service.HotelService;
+import com.epam.service.PersonService;
 import com.epam.service.ReservationService;
 import com.epam.service.TourOfferService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -27,12 +29,14 @@ public class ToursController {
     private final TourOfferService toursOfferService;
     private final HotelService hotelService;
     private final ReservationService reservationService;
+    private final PersonService personService;
 
     @Autowired
-    public ToursController(TourOfferService toursOfferService, ReservationService reservationService, HotelService hotelService) {
+    public ToursController(TourOfferService toursOfferService, ReservationService reservationService, PersonService personService, HotelService hotelService) {
         this.toursOfferService = toursOfferService;
         this.hotelService = hotelService;
         this.reservationService = reservationService;
+        this.personService = personService;
     }
 
     @GetMapping("/listoftours")
@@ -58,9 +62,9 @@ public class ToursController {
         return toursModel;
     }
 
-    @PostMapping("/searchtours")
-    public ModelAndView searchTours(@RequestParam String country, @RequestParam String startDate,
-                                    @RequestParam String endDate) {
+    @PostMapping("/searchtours/{id}")
+    public ModelAndView searchTours(@PathVariable Integer id, @RequestParam String country, @RequestParam String startDate,
+                                    @RequestParam String endDate, @RequestParam String numberOfPeople) {
         ModelAndView toursModel = new ModelAndView();
         toursModel.setViewName("homepage");
         LocalDate addStartDate;
@@ -71,8 +75,17 @@ public class ToursController {
         } catch (IllegalArgumentException e) {
             return toursModel.addObject("error",e.getMessage());
         }
+        int generalAmount = toursOfferService.amountOfToursSearched(country,addStartDate,addEndDate);
         toursModel.addObject("hotels", hotelService.getMapOfHotels());
-        List<TourOffer> searchedListOfTours = toursOfferService.searchTours(country, addStartDate, addEndDate);
+        List<TourOffer> searchedListOfTours = toursOfferService.searchTours(country, addStartDate, addEndDate, id);
+        toursModel.addObject("generalAmount", generalAmount);
+        toursModel.addObject("amount", toursOfferService.getNumberOfPagesSearch(generalAmount));
+        toursModel.addObject("country", country);
+        toursModel.addObject("addStartDate", addStartDate);
+        toursModel.addObject("startDate", startDate);
+        toursModel.addObject("endDate", endDate);
+        toursModel.addObject("addEndDate", addEndDate);
+        toursModel.addObject("numberOfPeople", numberOfPeople);
         if(searchedListOfTours.size() == 0) {
             return toursModel.addObject("error","Search result is empty");
         } else {
@@ -119,7 +132,7 @@ public class ToursController {
                     .startDate(Validator.getDateFromString(startDate,false))
                     .endDate(Validator.getDateFromString(endDate,false))
                     .pricePerUnit(Validator.getPriceFromString(pricePerPerson))
-                    .hotelId(1) //stub
+                    .hotelId(Integer.valueOf(hotel))
                     .description(Validator.getDescriptionString(tourDescription))
                     .discount(Validator.getDiscountFromString(discount))
                     .build();

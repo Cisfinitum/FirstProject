@@ -58,3 +58,21 @@ main {
 .btn-small:hover{
     background-color: #bbdefb;
 }
+.demo {
+    max-width: 1024px;
+    padding: 0 20px;
+    margin: 5% 10%;
+}
+.hide,
+.hide + label ~ div {
+    display: none;
+}
+.hide + label {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    display: inline-block;
+}
+.hide:checked + label + div {
+    display: block;
+}

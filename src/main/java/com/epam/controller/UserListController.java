@@ -1,13 +1,17 @@
 package com.epam.controller;
 
 import com.epam.model.Person;
+import com.epam.model.Reservation;
 import com.epam.service.PersonDetailsServiceImpl;
+import com.epam.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -16,10 +20,12 @@ import java.util.List;
 public class UserListController {
 
     private final PersonDetailsServiceImpl personDetailsServiceImpl;
+    private final ReservationService reservationService;
 
     @Autowired
-    UserListController(PersonDetailsServiceImpl personDetailsServiceImpl) {
+    UserListController(PersonDetailsServiceImpl personDetailsServiceImpl, ReservationService reservationService) {
         this.personDetailsServiceImpl = personDetailsServiceImpl;
+        this.reservationService = reservationService;
     }
     @GetMapping
     public String clientsPage() {
@@ -47,5 +53,27 @@ public class UserListController {
     public String removeFromBlackList(@PathVariable Integer id) {
         personDetailsServiceImpl.removeFromBlackList(id);
         return "redirect:/clients";
+    }
+
+    @GetMapping("/clientinfo/{id}")
+    public ModelAndView clientInfoPage(@PathVariable Integer id, ModelAndView modelAndView) {
+        Person person = personDetailsServiceImpl.getPersonById(id);
+        List<Reservation> reservations = reservationService.getReservationsByPersonId(id);
+        modelAndView.addObject("person", person);
+        modelAndView.addObject("reservations", reservations);
+        modelAndView.setViewName("/clientinfo");
+        return modelAndView;
+    }
+
+    @PostMapping("/pay/{id}")
+    public ModelAndView payForTour(@PathVariable Integer id, @RequestParam(name = "reservationId") Integer reservationId, ModelAndView modelAndView, RedirectAttributes redirectAttributes){
+        reservationService.changeReservationStatusById(reservationId, "PAID");
+        Person person = personDetailsServiceImpl.getPersonById(id);
+        List<Reservation> reservations = reservationService.getReservationsByPersonId(id);
+        modelAndView.addObject("person", person);
+        modelAndView.addObject("reservations", reservations);
+        modelAndView.addObject("paymentMessage", "Tour was approved successfully");
+        modelAndView.setViewName("/clientinfo");
+        return modelAndView;
     }
 }
