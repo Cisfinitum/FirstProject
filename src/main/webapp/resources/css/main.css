@@ -2,38 +2,46 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    font-family: Packard Modern;
 }
 
 main {
     flex: 1 0 auto;
     margin-top: 4%;
+    font-family: Packard Modern;
 }
 
 .nav-wrapper{
-    background: #90caf9;
+    background: #8d6e63;
+    font-family: Packard Modern;
 }
 
 .page-footer{
-    background: #90caf9;
+    background: #8d6e63;
+    font-family: Packard Modern;
 }
-.mm{
+.mm {
     margin: 10%;
+    font-family: Packard Modern;
 }
 
 .promo{
-    background: #90caf9;
+    background: #8d6e63;
     border-radius: 20px;
+    font-family: Packard Modern;
 }
 
 .promo-caption{
-    font-size: 16pt;
+    font-family: Packard Modern;
 }
 
 .btn-large{
-    background-color: #90caf9;
+    background-color: #8d6e63;
+    font-family: Packard Modern;
 }
 .btn-large:hover{
-    background-color: #bbdefb;
+    background-color: #8d6e63;
+    font-family: Packard Modern;
 }
 
 .tabcontent {
@@ -41,20 +49,44 @@ main {
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
+    font-family: Packard Modern;
 }
 .brand-logo{
     margin-left: 30px;
+    font-family: Packard Modern;
 }
 
 .btn{
-    background-color: #90caf9;
+    background-color: #8d6e63;
+    font-family: Packard Modern;
 }
 .btn:hover{
-    background-color: #bbdefb;
+    background-color: #8d6e63;
+    font-family: Packard Modern;
 }
 .btn-small{
-    background-color: #90caf9;
+    background-color: #8d6e63;
+    font-family: Packard Modern;
 }
 .btn-small:hover{
-    background-color: #bbdefb;
+    background-color: #8d6e63;
+    font-family: Packard Modern;
+}
+.demo {
+    max-width: 1024px;
+    padding: 0 20px;
+    margin: 5% 10%;
+}
+.hide,
+.hide + label ~ div {
+    display: none;
+}
+.hide + label {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    display: inline-block;
+}
+.hide:checked + label + div {
+    display: block;
 }

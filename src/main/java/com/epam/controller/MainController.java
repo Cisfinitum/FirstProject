@@ -66,4 +66,9 @@ public class MainController {
     public String notFoundPage() {
         return "404";
     }
+
+    @GetMapping("/info")
+    public String info(Principal user, ModelMap modelMap) {
+        return "info";
+    }
 }

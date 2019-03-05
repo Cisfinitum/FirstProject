@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 document.addEventListener('DOMContentLoaded', function () {
     var elems = document.querySelectorAll('.datepicker');
-    var instances = M.Datepicker.init(elems, {format:'yyyy mm dd'});
+    var instances = M.Datepicker.init(elems, {format:'yyyy-mm-dd', showClearBtn: true});
 });
 document.addEventListener('DOMContentLoaded', function () {
     var elems = document.querySelectorAll('select');
@@ -36,11 +36,11 @@ function openContent(evt, cityName) {
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active"
 };
+
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems, {});
 });
-
 function myFunction() {
     // Declare variables
     var input, filter, table, tr, td, i;

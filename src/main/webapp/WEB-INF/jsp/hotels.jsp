@@ -26,11 +26,11 @@
 <header>
     <nav>
         <div class="nav-wrapper tab ">
-            <a href="index" class="brand-logo">Tour De Team</a>
+            <a href="index" class="brand-logo" >Tour De Team</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 20px">
-                <li><a href="/listoftours"><spring:message code="tours" /></a></li>
-                <li><a href="/addtour"><spring:message code="addtour" /></a></li>
-                <li><a href="/reservation"><spring:message code="reservations" /></a></li>
+                <li><a href="/listoftours" ><spring:message code="tours" /></a></li>
+                <li><a href="/addtour" ><spring:message code="addtour" /></a></li>
+                <li><a href="/reservation" ><spring:message code="reservations" /></a></li>
                 <li><a href="/clients"><spring:message code="clients" /></a></li>
                 <li style="margin-right: 20px"><a href="/hotels"><spring:message code="addhotel" /></a></li>
                 <li><a href="/logout"><spring:message code="logout" /></a></li>
@@ -100,7 +100,7 @@
     <div id="modal1" class="modal">
         <div class="modal-content">
             <h4>Hotels</h4>
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder= "Start typing the hotel name">
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder= "Start typing the hotel name" >
             <table id="myTable">
                 <c:if test="${hotels.size()>0}">
                     <tr>
@@ -142,8 +142,8 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text"><spring:message code="footerlinks"/></h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="index"><spring:message code="homepage"/></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#"><spring:message code="information"/></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/index"><spring:message code="homepage"/></a></li>
+                    <li><a class="grey-text text-lighten-3" href="/info"><spring:message code="information"/></a></li>
                     <li><a class="grey-text text-lighten-3" href="#"><spring:message code="feedback"/></a></li>
                     <li><a class="grey-text text-lighten-3" href="#"><spring:message code="contacts"/></a></li>
                 </ul>
@@ -152,7 +152,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            © 2018 Copyright Text
+            © 2019 Copyright Text
         </div>
     </div>
 </footer>

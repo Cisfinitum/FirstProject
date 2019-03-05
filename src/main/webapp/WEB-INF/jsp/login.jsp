@@ -17,20 +17,19 @@
         <div class="login-page">            <div class="form">
                 <p style="color: red">${message}</p>
                 <c:if test="${not empty param.error}">
-                    <span style="color: red; font-weight: bold">Logging error
-                        : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</span>
+                    <span style="color: red; font-weight: bold"><spring:message code="badcredentials" /></span>
                 </c:if>
                 <form name="passlogform" method="POST" onsubmit="return validate()" action="<c:url value="/j_spring_security_check" />">
                     <p style="color: forestgreen;">${registration_status}</p>
                     <div class="rowlogin">
                         <div class="input-field col s12">
                             <input id="login" type="text" name="j_username"  class="validate">
-                            <label for="login"><spring:message code="loginname" /></label>
+                            <label for="login"> <spring:message code="loginname" /></label>
                         </div>
                     </div>
                     <div class ="rowlogin">
                         <div class="input-field col s12">
-                            <input id="password" type="password" name="j_password" class="validate">
+                            <input id="password" type="password" name="j_password" class="validate" >
                             <label for="password"><spring:message code="passwordname" /></label>
                         </div>
                     </div>
