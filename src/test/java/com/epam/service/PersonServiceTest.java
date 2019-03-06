@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
@@ -37,7 +36,6 @@ public class PersonServiceTest {
     private Person testPerson;
     private String testEmail;
     private String testPassword;
-    private String testEncodedPassword;
     private Integer testId;
     private String testPhoneNumber = "8999999999";
     private String testFirstName = "Example";
@@ -89,18 +87,6 @@ public class PersonServiceTest {
         personService.addPerson(NULL_ARGUMENT, NULL_ARGUMENT, PersonRoleEnum.valueOf("USER"), NULL_ARGUMENT, NULL_ARGUMENT, NULL_ARGUMENT);
     }
 
-//    @Test
-//    public void updatePasswordPositiveResult() {
-//        int expectedResult = 1;
-//        when(personDAO.updatePassword(testEmail, testPassword)).thenReturn(1);
-//        assertEquals(expectedResult, personService.updatePassword(testEmail, testPassword));
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void updatePasswordEmailIsNull() {
-//        personService.updatePassword(null, testPassword);
-//    }
-//
     @Test
     public void addToBlackListPositiveResult() {
         when(personDAO.addToBlackList(testId)).thenReturn(1);
@@ -297,44 +283,4 @@ public class PersonServiceTest {
         when(personDAO.updateEmailById(testId, testEmail)).thenReturn(UNEXPECTED_RESULT);
         personService.updateEmailById(testId, testEmail);
     }
-//    @Test
-//    public void updatePhoneNumberPositiveResult() {
-//        when(personDAO.updatePhoneNumberById(testId, testPhoneNumber)).thenReturn(EXPECTED_RESULT);
-//        assertEquals(EXPECTED_RESULT, personService.updatePhoneNumberById(testId, testPhoneNumber));
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void updatePhoneNumberNullArgument() {
-//        personService.updatePhoneNumberById(testId, NULL_ARGUMENT);
-//    }
-//
-//    @Test
-//    public void updateFirstNamePositiveResult() {
-//        when(personDAO.updateFirstNameById(testId, testFirstName)).thenReturn(EXPECTED_RESULT);
-//        assertEquals(EXPECTED_RESULT, personService.updateFirstNameById(testId, testFirstName));
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void updateFirstNameNullArgument() { personService.updateFirstNameById(testId, NULL_ARGUMENT);
-//    }
-//
-//    @Test
-//    public void updateLastNamePositiveResult() {
-//        when(personDAO.updateLastNameById(testId, testLastName)).thenReturn(EXPECTED_RESULT);
-//        assertEquals(EXPECTED_RESULT, personService.updateLastNameById(testId, testLastName));
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void updateLastNameNullArgument() { personService.updateLastNameById(testId, NULL_ARGUMENT);
-//    }
-//
-//    @Test
-//    public void updateEmailPositiveResult() {
-//        when(personDAO.updateEmailById(testId, testEmail)).thenReturn(EXPECTED_RESULT);
-//        assertEquals(EXPECTED_RESULT, personService.updateEmailById(testId, testEmail));
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void updateEmailNullArgument() { personService.updateEmailById(testId, NULL_ARGUMENT);
-//    }
 }
