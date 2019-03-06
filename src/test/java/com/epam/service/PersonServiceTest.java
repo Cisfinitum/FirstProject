@@ -4,7 +4,9 @@ package com.epam.service;
 import com.epam.exception.InvalidDataBaseAffectedException;
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
+import com.epam.model.Reservation;
 import com.epam.repository.PersonDAO;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -17,11 +19,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 public class PersonServiceTest {
     @Mock
     private PersonDAO personDAO;
+
+    @Mock
+    private Reservation reservation;
 
     @Mock
     private BCryptPasswordEncoder testPasswordEncoder;
@@ -283,5 +289,55 @@ public class PersonServiceTest {
     public void updateEmailDBException() {
         when(personDAO.updateEmailById(testId, testEmail)).thenReturn(UNEXPECTED_RESULT);
         personService.updateEmailById(testId, testEmail);
+    }
+
+    @Test
+    public void mapOfUsersInformation() {
+        when(reservation.getClientId()).thenReturn(1);
+        when(personDAO.getPersonById(1)).thenReturn(expectedPerson);
+        List<Reservation> reservations = new ArrayList<>();
+        reservations.add(reservation);
+
+        Map<Integer, String> actual = personService.mapOfUsersInformation(reservations);
+
+        assertEquals(expectedPerson.toString(), actual.get(1));
+    }
+
+    @Test
+    public void mapOfUsersInformationEmptyList() {
+        List<Reservation> reservations = new ArrayList<>();
+
+        Map<Integer, String> actual = personService.mapOfUsersInformation(reservations);
+
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    public void listOfUsers() {
+        Integer page = 1;
+        Integer rowNum = 1;
+        when(personDAO.listOfUsers(page, rowNum)).thenReturn(personList);
+
+        List<Person> actual = personService.listOfUsers(page, rowNum);
+
+        assertEquals(personList, actual);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void listOfUserPageRowNull() {
+
+        List<Person> actual = personService.listOfUsers(null, null);
+
+        assertEquals(personList, actual);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void listOfUserPageOrRowNegative() {
+        Integer rowNum = -1;
+        Integer page = -1;
+
+        List<Person> actual = personService.listOfUsers(page, rowNum);
+
+        assertEquals(personList, actual);
     }
 }
