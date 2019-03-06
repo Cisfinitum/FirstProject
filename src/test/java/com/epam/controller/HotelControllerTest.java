@@ -27,6 +27,8 @@ public class HotelControllerTest {
     HotelController hotelController;
     @Spy
     ModelMap modelMap;
+    @Spy
+    ModelAndView modelAndView;
     @Mock
     TourOfferService tourOfferService;
     @Spy
@@ -55,12 +57,40 @@ public class HotelControllerTest {
         actualView = hotelController.hotelPage(testMessage, testMessage, testMessage, testMessage, testMessage, modelMap);
         assertEquals(expectedView, actualView);
     }
+    @Test
+    public void hotelPageVerify() {
+        when(hotelService.getHotels()).thenReturn(hotels);
+        when(tourOfferService.getMapOfHotelUse(hotels)).thenReturn(hotelMap);
+        hotelController.hotelPage(testMessage, testMessage, testMessage, testMessage, testMessage, modelMap);
+        verify(hotelService).getHotels();
+    }
+    @Test
+    public void hotelPageVerify2() {
+        when(hotelService.getHotels()).thenReturn(hotels);
+        when(tourOfferService.getMapOfHotelUse(hotels)).thenReturn(hotelMap);
+        hotelController.hotelPage(testMessage, testMessage, testMessage, testMessage, testMessage, modelMap);
+        verify(tourOfferService).getMapOfHotelUse(anyList());
+    }
 
     @Test
     public void deleteReservation() {
+        expectedView = "redirect:/hotels";
+        actualView = hotelController.deleteReservation(testNumber, redirectAttributes);
+        assertEquals(expectedView, actualView);
     }
 
     @Test
     public void addHotel() {
+        expectedView = "redirect:/hotels";
+        when(hotelService.addHotel(modelAndView, testMessage, testMessage, testMessage,testNumber, redirectAttributes)).thenReturn("redirect:/hotels");
+        actualView = hotelController.addHotel(testMessage, testMessage, testMessage, testNumber, modelAndView, redirectAttributes);
+        assertEquals(expectedView, actualView);
+    }
+    @Test
+    public void addHotelVerify() {
+        expectedView = "redirect:/hotels";
+        when(hotelService.addHotel(modelAndView, testMessage, testMessage, testMessage,testNumber, redirectAttributes)).thenReturn("redirect:/hotels");
+        hotelController.addHotel(testMessage, testMessage, testMessage, testNumber, modelAndView, redirectAttributes);
+        verify(hotelService).addHotel(modelAndView, testMessage, testMessage, testMessage,testNumber, redirectAttributes);
     }
 }
