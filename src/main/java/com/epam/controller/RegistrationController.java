@@ -1,11 +1,8 @@
 package com.epam.controller;
 
-import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
-import com.epam.service.PersonDetailsServiceImpl;
 import com.epam.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
