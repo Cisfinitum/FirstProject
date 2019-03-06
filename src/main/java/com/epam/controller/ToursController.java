@@ -1,12 +1,9 @@
 package com.epam.controller;
 
+import com.epam.service.*;
 import com.epam.validator.Validator;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
-import com.epam.service.HotelService;
-import com.epam.service.PersonService;
-import com.epam.service.ReservationService;
-import com.epam.service.TourOfferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 

@@ -2,7 +2,6 @@ package integration;
 
 import com.epam.exception.NotFoundException;
 import com.epam.model.TourOffer;
-import com.epam.repository.ReservationDAO;
 import com.epam.repository.TourOfferDAO;
 import com.epam.service.HotelService;
 import com.epam.service.ReservationService;
@@ -49,7 +48,7 @@ public class TourOfferServiceTest {
         ReflectionTestUtils.setField(tourOfferDAO, "descriptionName", "description");
         ReflectionTestUtils.setField(tourOfferDAO, "discountName", "discount");
         ReflectionTestUtils.setField(tourOfferDAO, "idName", "id");
-        tourOfferService = new TourOfferService(tourOfferDAO,hotelService,reservationService);
+        tourOfferService = new TourOfferService(tourOfferDAO, hotelService,reservationService);
         tourOffers = new ArrayList<>();
         tourOffers.add(tourOffer);
 
@@ -156,5 +155,26 @@ public class TourOfferServiceTest {
                 "WHERE id = ?",
             tourOffer.getTourType(), tourOffer.getStartDate(), tourOffer.getEndDate(), tourOffer.getPricePerUnit(), tourOffer.getHotelId(),
             tourOffer.getDescription(), tourOffer.getDiscount(), tourOffer.getId());
+    }
+
+    @Test
+    public void checkIfHotelsIsUsedTrue() {
+        Mockito.when(jdbcTemplate.query(Mockito.anyString(), Mockito.any(RowMapper.class))).thenReturn(tourOffers);
+        Integer actualCheckIfHotelsIsUsed = tourOfferService.checkIfHotelUsed(1);
+        Assert.assertEquals((Integer)1, actualCheckIfHotelsIsUsed);
+    }
+
+    @Test
+    public void checkIfHotelsIsUsedFalse() {
+        Mockito.when(jdbcTemplate.query(Mockito.anyString(), Mockito.any(RowMapper.class))).thenReturn(new ArrayList());
+        Integer actualCheckIfHotelsIsUsed = tourOfferService.checkIfHotelUsed(1);
+        Assert.assertEquals((Integer)0, actualCheckIfHotelsIsUsed);
+    }
+
+    @Test
+    public void getAmountOfTours() {
+        Mockito.when(jdbcTemplate.queryForObject("SELECT COUNT(*) FROM tour_offer",Integer.class)).thenReturn(10);
+        Integer actualAmountOfTours = tourOfferDAO.getAmountOfTours();
+        Assert.assertEquals((Integer)10, actualAmountOfTours);
     }
 }
