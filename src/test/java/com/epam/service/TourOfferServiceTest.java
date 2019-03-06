@@ -11,13 +11,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
@@ -48,7 +46,7 @@ public class TourOfferServiceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tourOfferService = new TourOfferService(tourOfferDAO,hotelService,reservationService);
+        tourOfferService = new TourOfferService(tourOfferDAO, hotelService,reservationService);
         tourOfferList = new ArrayList<>();
         expectedHotels = new ArrayList<>();
         expectedHotels.add(expectedHotel);
