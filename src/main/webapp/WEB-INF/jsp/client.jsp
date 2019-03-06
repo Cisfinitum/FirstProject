@@ -123,6 +123,7 @@
     </div>
     </div>
     </div>
+<sec:authorize access="hasRole('ROLE_USER')">
     <div class="container" style="width: 85%">
         <h4><spring:message code="reservations" /></h4>
         <table>
@@ -196,6 +197,7 @@
 
         </table>
     </div>
+</sec:authorize>
     <br>
 </main>
 
