@@ -4,6 +4,8 @@ import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.Date;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 
 import static org.mockito.Mockito.when;
@@ -74,11 +76,5 @@ public class ValidatorTest {
     @SneakyThrows
     public void getDateFromStringThrowExceptionIfEmpty() {
         when(Validator.getDateFromString("",false)).thenThrow(IllegalArgumentException.class);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    @SneakyThrows
-    public void getDateFromStringThrowException() {
-        when(Validator.getDateFromString("test",false)).thenThrow(IllegalArgumentException.class);
     }
 }
