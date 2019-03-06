@@ -4,7 +4,9 @@ package com.epam.service;
 import com.epam.exception.InvalidDataBaseAffectedException;
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
+import com.epam.model.Reservation;
 import com.epam.repository.PersonDAO;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -24,11 +26,15 @@ public class PersonServiceTest {
 
     @Mock
     private PersonDAO personDAO;
+
+    @Mock
+    private Reservation reservation;
+
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
 
-    public static final int EXPECTED_RESULT = 1;
-    public static final String NULL_ARGUMENT = null;
+    private static final int EXPECTED_RESULT = 1;
+    private static final String NULL_ARGUMENT = null;
     private static final int UNEXPECTED_RESULT = 10;
     private List<Person> personList;
     private PersonService personService;
@@ -75,6 +81,15 @@ public class PersonServiceTest {
         personService.getPerson(null);
     }
 
+    @Test(expected = InvalidDataBaseAffectedException.class)
+    public void addPersonPositiveResultDB() {
+        when(passwordEncoder.encode(testPassword)).thenReturn(testPassword);
+        when(personDAO.addPerson(testPerson)).thenReturn(1);
+        when(personDAO.addPerson(testPerson)).thenReturn(UNEXPECTED_RESULT);
+
+        personService.addPerson(testEmail, testPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName);
+    }
+
     @Test
     public void addPersonPositiveResult() {
         when(passwordEncoder.encode(testPassword)).thenReturn(testPassword);
@@ -86,6 +101,8 @@ public class PersonServiceTest {
     public void addPersonNullArgument() {
         personService.addPerson(NULL_ARGUMENT, NULL_ARGUMENT, PersonRoleEnum.valueOf("USER"), NULL_ARGUMENT, NULL_ARGUMENT, NULL_ARGUMENT);
     }
+
+
 
     @Test
     public void addToBlackListPositiveResult() {
@@ -282,5 +299,65 @@ public class PersonServiceTest {
     public void updateEmailDBException() {
         when(personDAO.updateEmailById(testId, testEmail)).thenReturn(UNEXPECTED_RESULT);
         personService.updateEmailById(testId, testEmail);
+    }
+
+    @Test
+    public void mapOfUsersInformation() {
+        when(reservation.getClientId()).thenReturn(1);
+        when(personDAO.getPersonById(1)).thenReturn(expectedPerson);
+        List<Reservation> reservations = new ArrayList<>();
+        reservations.add(reservation);
+
+        Map<Integer, String> actual = personService.mapOfUsersInformation(reservations);
+
+        assertEquals(expectedPerson.toString(), actual.get(1));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getPersonById() {
+        personService.getPersonById(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getIdByEmailIllegalArgument() {
+        personService.getIdByEmail(NULL_ARGUMENT);
+    }
+
+    @Test
+    public void mapOfUsersInformationEmptyList() {
+        List<Reservation> reservations = new ArrayList<>();
+
+        Map<Integer, String> actual = personService.mapOfUsersInformation(reservations);
+
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    public void listOfUsers() {
+        Integer page = 1;
+        Integer rowNum = 1;
+        when(personDAO.listOfUsers(page, rowNum)).thenReturn(personList);
+
+        List<Person> actual = personService.listOfUsers(page, rowNum);
+
+        assertEquals(personList, actual);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void listOfUserPageRowNull() {
+
+        List<Person> actual = personService.listOfUsers(null, null);
+
+        assertEquals(personList, actual);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void listOfUserPageOrRowNegative() {
+        Integer rowNum = -1;
+        Integer page = -1;
+
+        List<Person> actual = personService.listOfUsers(page, rowNum);
+
+        assertEquals(personList, actual);
     }
 }
