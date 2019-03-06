@@ -13,16 +13,12 @@ public final class Validator {
     }
 
     public static LocalDate getDateFromString(String dateString, Boolean getNullIfEmpty){
-        try {
-            if(!StringUtils.isEmpty(dateString)) {
-                 return Date.valueOf(dateString).toLocalDate();
-            } else if (getNullIfEmpty) {
-                return null;
-            } else {
-                throw new IllegalArgumentException("Empty Date");
-            }
-        } catch (NumberFormatException | DateTimeException e) {
-                throw new IllegalArgumentException("Wrong Date");
+        if (!StringUtils.isEmpty(dateString)) {
+            return Date.valueOf(dateString).toLocalDate();
+        } else if (getNullIfEmpty) {
+            return null;
+        } else {
+            throw new IllegalArgumentException("Empty Date");
         }
     }
 
