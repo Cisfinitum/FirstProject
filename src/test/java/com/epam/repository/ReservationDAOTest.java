@@ -9,10 +9,14 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -24,6 +28,8 @@ public class ReservationDAOTest {
     private ResultSet resultSet;
     @Mock
     private Reservation expectedReservation;
+    @Mock
+    private JdbcTemplate jdbcTemplate;
 
     private ReservationArchiveStatusEnum archiveStatusEnum = ReservationArchiveStatusEnum.NEW;
     private ReservationStatusEnum reservationStatusEnum = ReservationStatusEnum.PAID;
@@ -71,5 +77,12 @@ public class ReservationDAOTest {
         when(resultSet.getInt("id")).thenThrow(new SQLException());
         reservationDAO.buildReservation(resultSet);
     }
-
+//
+//    @Test
+//    public void listReservations(){
+//        List<Reservation> reservations = new ArrayList<Reservation>();
+//        reservations.add(expectedReservation);
+//        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(reservations);
+//        verify(jdbcTemplate).query(anyString(), any(Object[].class), any(RowMapper.class));
+//    }
 }
