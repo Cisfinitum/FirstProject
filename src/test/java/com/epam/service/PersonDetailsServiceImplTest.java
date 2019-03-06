@@ -49,6 +49,7 @@ public class PersonDetailsServiceImplTest {
         nonExistEmail = "nonExistingEmail";
     }
 
+
     @Test
     public void loadUserPositiveResult() {
         when(personService.getPerson(testEmail)).thenReturn(new Person(1, testEmail, testPassword, PersonRoleEnum.ADMIN, testPhoneNumber, testFirstName, testLastName));
@@ -66,65 +67,4 @@ public class PersonDetailsServiceImplTest {
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumRole()));
         personDetailsServiceImpl.loadUserByUsername(nonExistEmail);
     }
-
-
-//    @Test
-//    public void addPersonInvalidEmail() {
-//        when(personService.addPerson(testPerson)).thenReturn(0);
-//        assertFalse(personDetailsServiceImpl.addPerson(testEmail, encodedPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName));
-//    }
-//
-//    @Test
-//    public void addToBlackListPositiveResult() {
-//        when(personService.addToBlackList(testId)).thenReturn(1);
-//        assertTrue(personDetailsServiceImpl.addToBlackList(testId));
-//    }
-//
-//    @Test(expected = InvalidDataBaseAffectedException.class)
-//    public void addToBlackListMoreThanOneRow() {
-//        when(personService.addToBlackList(testId)).thenReturn(10);
-//        personDetailsServiceImpl.addToBlackList(testId);
-//    }
-//
-//    @Test
-//    public void addToBlackListInvalidEmail() {
-//        when(personService.addToBlackList(testId)).thenReturn(0);
-//        assertFalse(personDetailsServiceImpl.addToBlackList(testId));
-//    }
-//
-//    @Test
-//    public void removeFromBlackListPositiveResult() {
-//        when(personService.removeFromBlackList(testId)).thenReturn(1);
-//        assertTrue(personDetailsServiceImpl.removeFromBlackList(testId));
-//    }
-//
-//    @Test(expected = InvalidDataBaseAffectedException.class)
-//    public void removeFromBlackListMoreThanOneRow() {
-//        when(personService.removeFromBlackList(testId)).thenReturn(10);
-//        personDetailsServiceImpl.removeFromBlackList(testId);
-//    }
-//
-//    @Test
-//    public void removeFromBlackListInvalidEmail() {
-//        when(personService.removeFromBlackList(testId)).thenReturn(0);
-//        assertFalse(personDetailsServiceImpl.removeFromBlackList(testId));
-//    }
-//
-//    @Test
-//    public void giveAdminRightsPositiveResult() {
-//        when(personService.giveAdminRights(testId)).thenReturn(1);
-//        assertTrue(personDetailsServiceImpl.giveAdminRights(testId));
-//    }
-//
-//    @Test(expected = InvalidDataBaseAffectedException.class)
-//    public void giveAdminRightsMoreThanOneRow() {
-//        when(personService.giveAdminRights(testId)).thenReturn(10);
-//        personDetailsServiceImpl.giveAdminRights(testId);
-//    }
-//
-//    @Test
-//    public void giveAdminRightsInvalidEmail() {
-//        when(personService.giveAdminRights(testId)).thenReturn(0);
-//        assertFalse(personDetailsServiceImpl.giveAdminRights(testId));
-//    }
 }

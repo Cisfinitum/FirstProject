@@ -11,18 +11,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 public class PersonServiceTest {
+
     @Mock
     private PersonDAO personDAO;
 
@@ -30,15 +31,15 @@ public class PersonServiceTest {
     private Reservation reservation;
 
     @Mock
-    private BCryptPasswordEncoder testPasswordEncoder;
-
+    private BCryptPasswordEncoder passwordEncoder;
 
     private static final int EXPECTED_RESULT = 1;
-    private static final int UNEXPECTED_RESULT = 10;
     private static final String NULL_ARGUMENT = null;
+    private static final int UNEXPECTED_RESULT = 10;
     private List<Person> personList;
     private PersonService personService;
     private Person expectedPerson;
+    private Person testPerson;
     private String testEmail;
     private String testPassword;
     private Integer testId;
@@ -52,8 +53,9 @@ public class PersonServiceTest {
         testId = 1;
         testEmail = "user";
         testPassword = "1111";
+        testPerson = new Person(testEmail, testPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName);
         expectedPerson = new Person(testId, testEmail, testPassword, PersonRoleEnum.valueOf("ADMIN"), testPhoneNumber, testFirstName, testLastName);
-        personService = new PersonService(personDAO, testPasswordEncoder);
+        personService = new PersonService(personDAO, passwordEncoder);
         personList = new ArrayList<>();
         personList.add(expectedPerson);
     }
@@ -66,30 +68,87 @@ public class PersonServiceTest {
         assertEquals(expectedPerson, actualPerson);
     }
 
-//    @Test
-//    public void getPersonNotFound() {
-//        String name = "isNotExist";
-//        when(personDAO.getPersons()).thenReturn(personList);
-//        Person actualPerson = personService.getPerson(name);
-//        assertNull(actualPerson);
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void getPersonEmailIsNull() {
-//        personService.getPerson(null);
-//    }
-//
-//    @Test
-//    public void addPersonPositiveResult() {
-//        int expectedResult = 1;
-//        when(personDAO.addPerson(expectedPerson)).thenReturn(1);
-//        assertEquals(expectedResult, personService.addPerson(expectedPerson));
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void addPersonNullArgument() {
-//        personService.getPerson(null);
-//    }
+    @Test
+    public void getPersonNotFound() {
+        String name = "isNotExist";
+        when(personDAO.getPersons()).thenReturn(personList);
+        Person actualPerson = personService.getPerson(name);
+        assertNull(actualPerson);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getPersonEmailIsNull() {
+        personService.getPerson(null);
+    }
+
+    @Test(expected = InvalidDataBaseAffectedException.class)
+    public void addPersonPositiveResultDB() {
+        when(passwordEncoder.encode(testPassword)).thenReturn(testPassword);
+        when(personDAO.addPerson(testPerson)).thenReturn(1);
+        when(personDAO.addPerson(testPerson)).thenReturn(UNEXPECTED_RESULT);
+
+        personService.addPerson(testEmail, testPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName);
+    }
+
+    @Test
+    public void addPersonPositiveResult() {
+        when(passwordEncoder.encode(testPassword)).thenReturn(testPassword);
+        when(personDAO.addPerson(testPerson)).thenReturn(1);
+        assertTrue(personService.addPerson(testEmail, testPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addPersonNullArgument() {
+        personService.addPerson(NULL_ARGUMENT, NULL_ARGUMENT, PersonRoleEnum.valueOf("USER"), NULL_ARGUMENT, NULL_ARGUMENT, NULL_ARGUMENT);
+    }
+
+
+
+    @Test
+    public void addToBlackListPositiveResult() {
+        when(personDAO.addToBlackList(testId)).thenReturn(1);
+        assertTrue(personService.addToBlackList(testId));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addToBlackListEmailIsNull() {
+        personService.addToBlackList(null);
+    }
+
+    @Test
+    public void removeFromBlackList() {
+        when(personDAO.removeFromBlackList(testId)).thenReturn(1);
+        assertTrue(personService.removeFromBlackList(testId));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void removeFromBlackListEmailIsNull() {
+        personService.removeFromBlackList(null);
+    }
+
+    @Test
+    public void giveAdminRightsPositiveResult() {
+        when(personDAO.giveAdminRights(testId)).thenReturn(1);
+        assertTrue(personService.giveAdminRights(testId));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void giveAdminRightsEmailIsNull() {
+        personService.giveAdminRights(null);
+    }
+
+    @Test
+    public void getIdByEmail() {
+        Integer expectedId = 1;
+        when(personDAO.getIdByEmail(testEmail)).thenReturn(expectedId);
+        Integer actualId = personService.getIdByEmail(testEmail);
+        assertEquals(expectedId, actualId);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getIdByEmailNullEmail() {
+        personService.getIdByEmail("");
+    }
 
     @Test
     public void updatePasswordPositiveResult() {
@@ -146,55 +205,6 @@ public class PersonServiceTest {
     public void updatePasswordByPasswordsNull() {
         personService.updatePasswordById(testId, NULL_ARGUMENT);
     }
-//    @Test
-//    public void addToBlackListPositiveResult() {
-//        int expectedResult = 1;
-//        when(personDAO.addToBlackList(testId)).thenReturn(1);
-//        assertEquals(expectedResult, personService.addToBlackList(testId));
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void addToBlackListEmailIsNull() {
-//        personService.addToBlackList(null);
-//    }
-//
-//    @Test
-//    public void removeFromBlackList() {
-//        int expectedResult = 1;
-//        when(personDAO.removeFromBlackList(testId)).thenReturn(1);
-//        assertEquals(expectedResult, personService.removeFromBlackList(testId));
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void removeFromBlackListEmailIsNull() {
-//        personService.removeFromBlackList(null);
-//    }
-//
-//    @Test
-//    public void giveAdminRightsPositiveResult() {
-//        int expectedResult = 1;
-//        when(personDAO.giveAdminRights(testId)).thenReturn(1);
-//        assertEquals(expectedResult, personService.giveAdminRights(testId));
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void giveAdminRightsEmailIsNull() {
-//        personService.giveAdminRights(null);
-//    }
-//
-//    @Test
-//    public void getIdByEmail() {
-//        Integer expectedId = 1;
-//        when(personDAO.getIdByEmail(testEmail)).thenReturn(expectedId);
-//        Integer actualId = personService.getIdByEmail(testEmail);
-//        assertEquals(expectedId, actualId);
-//    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void getIdByEmailNullEmail() {
-//        personService.getIdByEmail("");
-//    }
-
     @Test
     public void updatePhoneNumberPositiveResult() {
         when(personDAO.updatePhoneNumberById(testId, testPhoneNumber)).thenReturn(EXPECTED_RESULT);
@@ -301,6 +311,16 @@ public class PersonServiceTest {
         Map<Integer, String> actual = personService.mapOfUsersInformation(reservations);
 
         assertEquals(expectedPerson.toString(), actual.get(1));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getPersonById() {
+        personService.getPersonById(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getIdByEmailIllegalArgument() {
+        personService.getIdByEmail(NULL_ARGUMENT);
     }
 
     @Test
