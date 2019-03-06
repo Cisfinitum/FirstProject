@@ -1,9 +1,12 @@
 package com.epam.service;
 
+import com.epam.exception.InvalidDataBaseAffectedException;
 import com.epam.model.Person;
+import com.epam.model.PersonRoleEnum;
 import com.epam.model.Reservation;
 import com.epam.repository.PersonDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -14,10 +17,12 @@ import java.util.Map;
 public class PersonService {
 
     private final PersonDAO personDAO;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public PersonService(PersonDAO personDAO) {
+    public PersonService(PersonDAO personDAO, BCryptPasswordEncoder passwordEncoder) {
         this.personDAO = personDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Person getPerson(String email) {
@@ -37,37 +42,64 @@ public class PersonService {
         }
     }
 
-    public int addPerson(Person person) {
-        if (person == null) throw new IllegalArgumentException("Person must be not null");
-        return personDAO.addPerson(person);
+    public boolean addPerson(String email, String password, PersonRoleEnum role, String phoneNumber, String firstName, String lastName) {
+        if (email == null) throw new IllegalArgumentException("Email must be not null");
+        if (password == null) throw new IllegalArgumentException("Password must be not null");
+        if (role == null) throw new IllegalArgumentException("Role must be not null");
+        if (phoneNumber == null) throw new IllegalArgumentException("Phone number must be not null");
+        if (firstName == null) throw new IllegalArgumentException("First name must be not null");
+        if (lastName == null) throw new IllegalArgumentException("Last name must be not null");
+        String encodedPassword = passwordEncoder.encode(password);
+        Person person = new Person(email, encodedPassword, role, phoneNumber, firstName, lastName);
+        Integer result = personDAO.addPerson(person);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
-    public int updatePassword(String email, String password) {
+    public boolean updatePassword(String email, String password) {
         if (email == null || password == null) {
             throw new IllegalArgumentException("Email and password must be not null");
         }
-        return personDAO.updatePassword(email, password);
+        Integer result = personDAO.updatePassword(email, password);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
-    public int addToBlackList(Integer id) {
+    public boolean addToBlackList(Integer id) {
         if (id == null) throw new IllegalArgumentException("Id must be not null");
-        return personDAO.addToBlackList(id);
+        Integer result = personDAO.addToBlackList(id);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
-    public int removeFromBlackList(Integer id) {
+    public boolean removeFromBlackList(Integer id) {
         if (id == null) throw new IllegalArgumentException("Id must be not null");
-        return personDAO.removeFromBlackList(id);
+        Integer result = personDAO.removeFromBlackList(id);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
-    public int updatePasswordById(Integer id, String password) {
+
+    public boolean updatePasswordById(Integer id, String password) {
         if (id == null || password == null) {
             throw new IllegalArgumentException("Id and password must be not null");
         }
-        return personDAO.updatePasswordById(id, password);
+        Integer result = personDAO.updatePasswordById(id, password);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
-    public int giveAdminRights(Integer id) {
+
+    public boolean giveAdminRights(Integer id) {
         if (id == null) throw new IllegalArgumentException("Id must be not null");
-        return personDAO.giveAdminRights(id);
+        Integer result = personDAO.giveAdminRights(id);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
     public List<Person> listOfUsers(Integer page, Integer rowNum) {
@@ -98,31 +130,44 @@ public class PersonService {
         return map;
     }
 
-    public int updatePhoneNumberById(Integer id, String phoneNumber) {
+    public boolean updatePhoneNumberById(Integer id, String phoneNumber) {
         if (id == null || phoneNumber == null) {
             throw new IllegalArgumentException("Id and phone number must be not null");
         }
-        return personDAO.updatePhoneNumberById(id, phoneNumber);
+        Integer result = personDAO.updatePhoneNumberById(id, phoneNumber);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
-    public int updateFirstNameById(Integer id, String firstName) {
+
+    public boolean updateFirstNameById(Integer id, String firstName) {
         if (id == null || firstName == null) {
             throw new IllegalArgumentException("Id and first name must be not null");
         }
-        return personDAO.updateFirstNameById(id, firstName);
+        Integer result = personDAO.updateFirstNameById(id, firstName);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
-    public int updateLastNameById(Integer id, String lastName) {
+    public boolean updateLastNameById(Integer id, String lastName) {
         if (id == null || lastName == null) {
             throw new IllegalArgumentException("Id and last name must be not null");
         }
-        return personDAO.updateLastNameById(id, lastName);
+        Integer result =  personDAO.updateLastNameById(id, lastName);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 
-    public int updateEmailById(Integer id, String email) {
+    public boolean updateEmailById(Integer id, String email) {
         if (id == null || email == null) {
             throw new IllegalArgumentException("Id and email must be not null");
         }
-        return personDAO.updateEmailById(id, email);
+        Integer result = personDAO.updateEmailById(id, email);
+        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+        if (result < 1) return false;
+        return true;
     }
 }
