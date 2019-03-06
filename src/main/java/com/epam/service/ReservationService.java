@@ -1,177 +1,167 @@
 package com.epam.service;
 
 import com.epam.model.Reservation;
-import com.epam.model.ReservationArchiveStatusEnum;
-import com.epam.model.ReservationStatusEnum;
-import com.epam.repository.ReservationDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-@Service
-public class ReservationService {
-    private final ReservationDAO reservationDAO;
-    private final PersonService personService;
-    public int totalAmountOfRows = 4;
+public interface ReservationService {
+    int totalAmountOfRows = 4;
 
-    @Autowired
-    public ReservationService(ReservationDAO reservationDAO, PersonService personService) {
-        this.reservationDAO = reservationDAO;
-        this.personService = personService;
-    }
+    /**
+     * Get the instance of a reservation and add it to the database using DAO layer
+     *
+     * @param reservation the instance of a reservation
+     * @return 1 if reservation was added successfully
+     * @throws IllegalArgumentException         if clientId and status of the reservation are null
+     * @throws java.util.NoSuchElementException if the instance of the reservation is null
+     */
+    int addReservation(Reservation reservation);
 
 
-    public int addReservation(Reservation reservation) {
-        if (reservation != null) {
-            if (reservation.getClientId() != null && reservation.getStatus() != null) {
-                return reservationDAO.addReservation(reservation);
-            } else {
-                throw new IllegalArgumentException("Some fields are empty");
-            }
-        } else {
-            throw new NoSuchElementException("Such reservation does not exist.");
-        }
-    }
+    /**
+     * Get id and return the instance of the reservation with specified id
+     *
+     * @param id reservation id
+     * @return the instance of a reservation
+     * @throws IllegalArgumentException if the id is negative
+     * @throws IllegalArgumentException if the the id is null
+     */
+    Reservation getReservationById(Integer id);
 
-    Reservation getReservationById(Integer id) {
-        if (id != null) {
-            if (id > 0) {
-                return reservationDAO.getReservationById(id);
-            } else {
-                throw new IllegalArgumentException("Id must be > 0");
-            }
-        } else {
-            throw new IllegalArgumentException("Id must be specified.");
-        }
-    }
 
-    public List<Reservation> getReservationsByPersonId(Integer personId) {
-        if (personId != null) {
-            if (personId > 0) {
-                return reservationDAO.getReservationsByPersonId(personId);
-            } else {
-                throw new IllegalArgumentException("Id must be > 0");
-            }
-        } else {
-            throw new IllegalArgumentException("Id must be specified.");
-        }
-    }
+    /**
+     * Get person id and return the list of reservations with specified person id
+     *
+     * @param personId person id
+     * @return the list of the reservation
+     * @throws IllegalArgumentException if the person id is negative
+     * @throws IllegalArgumentException if the person id is null
+     */
+    List<Reservation> getReservationsByPersonId(Integer personId);
 
-    public List<Reservation> listReservations(Integer page, Integer total, String status) {
 
-        if (page >= 0 && total >= 0) {
-            if (page > 1) {
-                page = (page - 1) * total + 1;
-            }
-            return reservationDAO.listReservations(page, total, status);
-        } else {
-            throw new IllegalArgumentException("Numbers must be integer and >= 0");
-        }
-    }
+    /**
+     * Get number of page, total amount of rows on one page and reservation status
+     * Return the list of reservations with specified status
+     *
+     * @param page   number of the page
+     * @param total  total amount of rows on one page
+     * @param status reservation status
+     * @return list of reservation
+     * @throws IllegalArgumentException if page or total are negative
+     */
+    List<Reservation> listReservations(Integer page, Integer total, String status);
 
-    public int removeReservation(Integer id) {
-        if (id != null) {
-            if (id > 0) {
-                return reservationDAO.removeReservation(id);
-            } else {
-                throw new IllegalArgumentException("Id must be > 0");
-            }
-        } else {
-            throw new NoSuchElementException("Reservation with such id does not exist.");
-        }
-    }
-    public int getTourOfferById(Integer tourOfferId) {
-        if (tourOfferId != null) {
-            if (tourOfferId > 0) {
-                return reservationDAO.getTourOfferById(tourOfferId);
-            } else {
-                throw new IllegalArgumentException("Id must be > 0");
-            }
-        } else {
-            throw new IllegalArgumentException("Tour offer with such id does not exist.");
-        }
-    }
 
-    int updateReservation(Reservation reservation) {
-        if (reservation != null) {
-            if (reservation.getId() != null) {
-                return reservationDAO.updateReservation(reservation);
-            } else {
-                throw new IllegalArgumentException("Id must be specified");
-            }
-        } else {
-            throw new NoSuchElementException("There is no such reservation.");
-        }
-    }
+    /**
+     * Get reservation id and delete it from the database using DAO layer
+     *
+     * @param id reservation id
+     * @return 1 if one reservation was deleted
+     * @throws IllegalArgumentException         if yhe id is negative
+     * @throws java.util.NoSuchElementException if reservation with such id does not exist
+     */
+    int removeReservation(Integer id);
 
-    public int amountOfReservation(String status) {
-        return reservationDAO.amountOfReservations(status);
-    }
-    public int amountOfAllReservations() {
-        return reservationDAO.amountOfAllReservations();
-    }
 
-    public int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discount) {
-        if (numberOfPeople > 0 && pricePerUnit > 0 && discount >= 0) {
-            return pricePerUnit * numberOfPeople  - (pricePerUnit * numberOfPeople * discount / 100);
-        } else {
-            throw new IllegalArgumentException("All arguments must be more than zero");
-        }
-    }
+    /**
+     * Get tour offer id and check if there are reservations with such tour offer id in the
+     * database using DAO layer return 0 if there are no such reservations
+     * 1 if there are such reservations in the database
+     *
+     * @param tourOfferId tour offer id
+     * @return 1 if reservations with such id exist
+     * 0 if such reservations don't exist
+     * @throws IllegalArgumentException if tour offer id is null
+     * @throws IllegalArgumentException if tour offer id is negative
+     */
+    int getTourOfferById(Integer tourOfferId);
 
-    public ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discount, RedirectAttributes redirectAttributes){
-        if (principal == null) {
-            modelAndView.setViewName("login");
-            modelAndView.addObject("message", "Please, sign in.");
-            return modelAndView;
-        } else {
-            String email = principal.getName();
-            modelAndView.setViewName("homepage");
-            Integer clientId = personService.getIdByEmail(email);
-            Integer totalPrice = getTotalPrice(numberOfPeople, pricePerUnit, discount);
-            Reservation reservation = new Reservation(clientId, idOfTour, numberOfPeople, ReservationStatusEnum.UNPAID, discount, totalPrice, ReservationArchiveStatusEnum.NEW);
-            addReservation(reservation);
-            Integer reservationId = amountOfAllReservations();
-            modelAndView.setViewName("redirect:/payment");
-            redirectAttributes.addFlashAttribute("reservationId", reservationId);
-            redirectAttributes.addFlashAttribute("pricePerUnit", pricePerUnit);
-            redirectAttributes.addFlashAttribute("discount", discount);
-            redirectAttributes.addFlashAttribute("totalPrice", totalPrice);
-            redirectAttributes.addFlashAttribute("numberOfPeople", numberOfPeople);
-            return modelAndView;
-        }
-    }
 
-    public int changeReservationStatusById(Integer id, String status) {
-        if(id != null){
-            if (id > 0){
-                return reservationDAO.changeReservationStatusById(id, status);
-            } else {
-                throw new IllegalArgumentException("id must be positive");
-            }
-        } else {
-            throw new NoSuchElementException("id must be specified");
-        }
-    }
+    /**
+     * Get the instance of a reservation and update its values in the database using DAO layer
+     *
+     * @param reservation the instance of a reservation
+     * @return 1 if one reservation was updated
+     * @throws IllegalArgumentException         if the instance of a reservation is null
+     * @throws java.util.NoSuchElementException if such reservation does not exist
+     */
+    int updateReservation(Reservation reservation);
 
-    public int changeArchiveStatusById(Integer id, String status) {
-        if(id != null && status != null){
-            if (id > 0){
-                return reservationDAO.changeArchiveStatusById(id, status);
-            } else {
-                throw new IllegalArgumentException("id must be positive");
-            }
-        } else {
-            throw new NoSuchElementException("all values must be specified");
-        }
-    }
 
-    public int cleanArchive(){
-        return reservationDAO.cleanArchive();
-    }
+    /**
+     * Get status of a reservation and return the amount of reservation with such status
+     *
+     * @param status reservation status
+     * @return amount of reservations with specified status
+     */
+    int amountOfReservation(String status);
+
+
+    /**
+     * Return amount of rows in the reservation table
+     *
+     * @return all amount of rows
+     */
+    int amountOfAllReservations();
+
+
+    /**
+     * Get number of people, price per one person and amount of discount and calculate total amount according to the parameters
+     *
+     * @param numberOfPeople number of people
+     * @param pricePerUnit   price per one person
+     * @param discount       amount of discount
+     * @return total price of tour
+     * @throws IllegalArgumentException if at least one of parameter is negative
+     */
+    int getTotalPrice(Integer numberOfPeople, Integer pricePerUnit, Integer discount);
+
+
+    /**
+     * Get reservation id and reservation status, and change reservation status in reservation with specified id
+     *
+     * @param id     reservation id
+     * @param status reservation status
+     * @return 1 if exactly one reservation status was updated
+     * @throws IllegalArgumentException         if id is null
+     * @throws java.util.NoSuchElementException if reservation with specified id does not exist
+     */
+    int changeReservationStatusById(Integer id, String status);
+
+
+    /**
+     * Delete all reservations from the database using DAO layer with status "ARCHIVED"
+     *
+     * @return amount of deleted reservations
+     */
+    int cleanArchive();
+
+    /**
+     * Get reservation id and reservation status, and change reservation status in reservation with specified id
+     *
+     * @param id     reservation id
+     * @param status reservation status
+     * @return 1 if exactly one reservation status was updated
+     * @throws IllegalArgumentException         if id is null
+     * @throws java.util.NoSuchElementException if reservation with specified id does not exist
+     */
+    int changeArchiveStatusById(Integer id, String status);
+
+    /**
+     * Get parameters, calculate total price and change reservation status to paid or unpaid
+     *
+     * @param modelAndView       model and view
+     * @param principal          principal
+     * @param idOfTour           tour offer id
+     * @param pricePerUnit       price per person
+     * @param numberOfPeople     number of people
+     * @param discount           discount
+     * @param redirectAttributes redirect attributes
+     * @return model and view
+     */
+    ModelAndView reserveTour(ModelAndView modelAndView, Principal principal, Integer idOfTour, Integer pricePerUnit, Integer numberOfPeople, Integer discount, RedirectAttributes redirectAttributes);
 }
