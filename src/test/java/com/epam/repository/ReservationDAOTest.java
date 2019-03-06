@@ -28,8 +28,6 @@ public class ReservationDAOTest {
     private ResultSet resultSet;
     @Mock
     private Reservation expectedReservation;
-    @Mock
-    private JdbcTemplate jdbcTemplate;
 
     private ReservationArchiveStatusEnum archiveStatusEnum = ReservationArchiveStatusEnum.NEW;
     private ReservationStatusEnum reservationStatusEnum = ReservationStatusEnum.PAID;
@@ -77,12 +75,4 @@ public class ReservationDAOTest {
         when(resultSet.getInt("id")).thenThrow(new SQLException());
         reservationDAO.buildReservation(resultSet);
     }
-//
-//    @Test
-//    public void listReservations(){
-//        List<Reservation> reservations = new ArrayList<Reservation>();
-//        reservations.add(expectedReservation);
-//        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(reservations);
-//        verify(jdbcTemplate).query(anyString(), any(Object[].class), any(RowMapper.class));
-//    }
 }

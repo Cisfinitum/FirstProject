@@ -109,7 +109,6 @@ public class ReservationControllerTest {
 
     @Test
     public void listReservation(){
-        reservationService.totalAmountOfRows = testNumber;
         when(reservationService.listReservations(testNumber, testNumber,  testStatus)).thenReturn(reservations);
         when(personService.mapOfUsersInformation(reservations)).thenReturn(new HashMap<>());
         when(tourOfferService.getDescription(reservations)).thenReturn(new HashMap<>());
@@ -119,7 +118,6 @@ public class ReservationControllerTest {
     }
     @Test
     public void listReservationVerifyMethod(){
-        reservationService.totalAmountOfRows = testNumber;
         when(reservationService.listReservations(testNumber, testNumber,  testStatus)).thenReturn(reservations);
         when(personService.mapOfUsersInformation(reservations)).thenReturn(new HashMap<>());
         when(tourOfferService.getDescription(reservations)).thenReturn(new HashMap<>());
@@ -129,7 +127,6 @@ public class ReservationControllerTest {
     }
     @Test
     public void listReservationVerifyMethod2(){
-        reservationService.totalAmountOfRows = testNumber;
         when(reservationService.listReservations(testNumber, testNumber,  testStatus)).thenReturn(reservations);
         when(personService.mapOfUsersInformation(reservations)).thenReturn(new HashMap<>());
         when(tourOfferService.getDescription(reservations)).thenReturn(new HashMap<>());
@@ -139,7 +136,6 @@ public class ReservationControllerTest {
     }
     @Test
     public void listReservationVerifyMethod3(){
-        reservationService.totalAmountOfRows = testNumber;
         when(reservationService.listReservations(testNumber, testNumber,  testStatus)).thenReturn(reservations);
         when(personService.mapOfUsersInformation(reservations)).thenReturn(new HashMap<>());
         when(tourOfferService.getDescription(reservations)).thenReturn(new HashMap<>());
