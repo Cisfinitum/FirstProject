@@ -19,32 +19,32 @@ public class MainController {
     }
 
     @GetMapping("/homepage")
-    public String homePage (Principal user, ModelMap modelMap) {
+    public String homePage () {
         return "/homepage";
     }
 
     @GetMapping("/testuser")
-    public String testUser(Principal user, ModelMap modelMap) {
+    public String testUser() {
         return "testuser";
     }
 
     @GetMapping("/testpage")
-    public String testPage(Principal user, ModelMap modelMap) {
+    public String testPage() {
         return "testpage";
     }
 
     @GetMapping("/index")
-    public String index(Principal user, ModelMap modelMap) {
+    public String index() {
         return "homepage";
     }
 
     @GetMapping("/contacts")
-    public String contacts(Principal user, ModelMap modelMap) {
+    public String contacts() {
         return "contacts";
     }
 
     @GetMapping("/403")
-    public String badRequest(Principal user, ModelMap modelMap) {
+    public String badRequest() {
         return "403";
     }
 
@@ -58,7 +58,7 @@ public class MainController {
     }
 
     @GetMapping("/access-denied")
-    public String accessDeniedPage (Principal user, ModelMap modelMap) {
+    public String accessDeniedPage () {
         return "/access-denied";
     }
 
@@ -68,7 +68,9 @@ public class MainController {
     }
 
     @GetMapping("/info")
-    public String info(Principal user, ModelMap modelMap) {
+    public String info() {
         return "info";
     }
+
+
 }
