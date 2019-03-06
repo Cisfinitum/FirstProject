@@ -25,46 +25,32 @@ import static org.mockito.Mockito.when;
 
 public class PersonDetailsServiceImplTest {
 
-
-    @Mock
-    private BCryptPasswordEncoder testPasswordEncoder;
     @Mock
     private PersonService personService;
     @Mock
     private Person person;
 
-    public static final int EXPECTED_AFFECT = 1;
-    public static final int UNEXPECTED_AFFECT = 10;
-    public static final int ZERO_AFFECT = 0;
     private Set<GrantedAuthority> roles;
     private PersonDetailsServiceImpl personDetailsServiceImpl;
     private String testEmail = "user";
     private String testPassword = "123";
-    private BCryptPasswordEncoder passwordEncoder;
-    private String encodedPassword = "encoded";
     private String nonExistEmail = "nonExistingEmail";
     private String testPhoneNumber = "8999999999";
     private String testFirstName = "Example";
     private String testLastName = "Example";
-    private Person testPerson;
-    private Integer testId;
 
-    @Before
+  @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        personDetailsServiceImpl = new PersonDetailsServiceImpl(personService, testPasswordEncoder);
+        personDetailsServiceImpl = new PersonDetailsServiceImpl(personService);
         roles = new HashSet<>();
-        passwordEncoder = new BCryptPasswordEncoder();
-        testId = 1;
         testEmail = "user";
         testPassword = "123";
         nonExistEmail = "nonExistingEmail";
-        testPerson = new Person(testId, testEmail, encodedPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName);
     }
 
     @Test
     public void loadUserPositiveResult() {
-
         when(personService.getPerson(testEmail)).thenReturn(new Person(1, testEmail, testPassword, PersonRoleEnum.ADMIN, testPhoneNumber, testFirstName, testLastName));
         when(person.getRole()).thenReturn(PersonRoleEnum.ADMIN);
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumRole()));
@@ -79,6 +65,66 @@ public class PersonDetailsServiceImplTest {
         when(person.getRole()).thenReturn(PersonRoleEnum.ADMIN);
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumRole()));
         personDetailsServiceImpl.loadUserByUsername(nonExistEmail);
-
     }
+
+
+//    @Test
+//    public void addPersonInvalidEmail() {
+//        when(personService.addPerson(testPerson)).thenReturn(0);
+//        assertFalse(personDetailsServiceImpl.addPerson(testEmail, encodedPassword, PersonRoleEnum.valueOf("USER"), testPhoneNumber, testFirstName, testLastName));
+//    }
+//
+//    @Test
+//    public void addToBlackListPositiveResult() {
+//        when(personService.addToBlackList(testId)).thenReturn(1);
+//        assertTrue(personDetailsServiceImpl.addToBlackList(testId));
+//    }
+//
+//    @Test(expected = InvalidDataBaseAffectedException.class)
+//    public void addToBlackListMoreThanOneRow() {
+//        when(personService.addToBlackList(testId)).thenReturn(10);
+//        personDetailsServiceImpl.addToBlackList(testId);
+//    }
+//
+//    @Test
+//    public void addToBlackListInvalidEmail() {
+//        when(personService.addToBlackList(testId)).thenReturn(0);
+//        assertFalse(personDetailsServiceImpl.addToBlackList(testId));
+//    }
+//
+//    @Test
+//    public void removeFromBlackListPositiveResult() {
+//        when(personService.removeFromBlackList(testId)).thenReturn(1);
+//        assertTrue(personDetailsServiceImpl.removeFromBlackList(testId));
+//    }
+//
+//    @Test(expected = InvalidDataBaseAffectedException.class)
+//    public void removeFromBlackListMoreThanOneRow() {
+//        when(personService.removeFromBlackList(testId)).thenReturn(10);
+//        personDetailsServiceImpl.removeFromBlackList(testId);
+//    }
+//
+//    @Test
+//    public void removeFromBlackListInvalidEmail() {
+//        when(personService.removeFromBlackList(testId)).thenReturn(0);
+//        assertFalse(personDetailsServiceImpl.removeFromBlackList(testId));
+//    }
+//
+//    @Test
+//    public void giveAdminRightsPositiveResult() {
+//        when(personService.giveAdminRights(testId)).thenReturn(1);
+//        assertTrue(personDetailsServiceImpl.giveAdminRights(testId));
+//    }
+//
+//    @Test(expected = InvalidDataBaseAffectedException.class)
+//    public void giveAdminRightsMoreThanOneRow() {
+//        when(personService.giveAdminRights(testId)).thenReturn(10);
+//        personDetailsServiceImpl.giveAdminRights(testId);
+//    }
+//
+//    @Test
+//    public void giveAdminRightsInvalidEmail() {
+//        when(personService.giveAdminRights(testId)).thenReturn(0);
+//        assertFalse(personDetailsServiceImpl.giveAdminRights(testId));
+//    }
 }

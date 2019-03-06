@@ -20,11 +20,9 @@ import java.util.Set;
 public class PersonDetailsServiceImpl implements UserDetailsService{
 
     private final PersonService personService;
-    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public PersonDetailsServiceImpl(PersonService personService, BCryptPasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    public PersonDetailsServiceImpl(PersonService personService) {
         this.personService = personService;
     }
 

@@ -51,17 +51,16 @@ public class PersonService {
         if (lastName == null) throw new IllegalArgumentException("Last name must be not null");
         String encodedPassword = passwordEncoder.encode(password);
         Person person = new Person(email, encodedPassword, role, phoneNumber, firstName, lastName);
-        Integer result = personDAO.addPerson(person);
+        int result = personDAO.addPerson(person);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
-        if (result < 1) return false;
-        return true;
+        return result == 1;
     }
 
     public boolean updatePassword(String email, String password) {
         if (email == null || password == null) {
             throw new IllegalArgumentException("Email and password must be not null");
         }
-        Integer result = personDAO.updatePassword(email, password);
+        int result = personDAO.updatePassword(email, password);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
@@ -69,7 +68,7 @@ public class PersonService {
 
     public boolean addToBlackList(Integer id) {
         if (id == null) throw new IllegalArgumentException("Id must be not null");
-        Integer result = personDAO.addToBlackList(id);
+        int result = personDAO.addToBlackList(id);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
@@ -77,7 +76,7 @@ public class PersonService {
 
     public boolean removeFromBlackList(Integer id) {
         if (id == null) throw new IllegalArgumentException("Id must be not null");
-        Integer result = personDAO.removeFromBlackList(id);
+        int result = personDAO.removeFromBlackList(id);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
@@ -87,7 +86,7 @@ public class PersonService {
         if (id == null || password == null) {
             throw new IllegalArgumentException("Id and password must be not null");
         }
-        Integer result = personDAO.updatePasswordById(id, password);
+        int result = personDAO.updatePasswordById(id, password);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
@@ -96,7 +95,7 @@ public class PersonService {
 
     public boolean giveAdminRights(Integer id) {
         if (id == null) throw new IllegalArgumentException("Id must be not null");
-        Integer result = personDAO.giveAdminRights(id);
+        int result = personDAO.giveAdminRights(id);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
@@ -134,7 +133,7 @@ public class PersonService {
         if (id == null || phoneNumber == null) {
             throw new IllegalArgumentException("Id and phone number must be not null");
         }
-        Integer result = personDAO.updatePhoneNumberById(id, phoneNumber);
+        int result = personDAO.updatePhoneNumberById(id, phoneNumber);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
@@ -145,7 +144,7 @@ public class PersonService {
         if (id == null || firstName == null) {
             throw new IllegalArgumentException("Id and first name must be not null");
         }
-        Integer result = personDAO.updateFirstNameById(id, firstName);
+        int result = personDAO.updateFirstNameById(id, firstName);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
@@ -155,7 +154,7 @@ public class PersonService {
         if (id == null || lastName == null) {
             throw new IllegalArgumentException("Id and last name must be not null");
         }
-        Integer result =  personDAO.updateLastNameById(id, lastName);
+        int result =  personDAO.updateLastNameById(id, lastName);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
@@ -165,7 +164,7 @@ public class PersonService {
         if (id == null || email == null) {
             throw new IllegalArgumentException("Id and email must be not null");
         }
-        Integer result = personDAO.updateEmailById(id, email);
+        int result = personDAO.updateEmailById(id, email);
         if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
         if (result < 1) return false;
         return true;
