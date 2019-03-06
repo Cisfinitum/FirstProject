@@ -156,4 +156,25 @@ public class TourOfferServiceTest {
             tourOffer.getTourType(), tourOffer.getStartDate(), tourOffer.getEndDate(), tourOffer.getPricePerUnit(), tourOffer.getHotelId(),
             tourOffer.getDescription(), tourOffer.getDiscount(), tourOffer.getId());
     }
+
+    @Test
+    public void checkIfHotelsIsUsedTrue() {
+        Mockito.when(jdbcTemplate.query(Mockito.anyString(), Mockito.any(RowMapper.class))).thenReturn(tourOffers);
+        Integer actualCheckIfHotelsIsUsed = tourOfferService.checkIfHotelUsed(1);
+        Assert.assertEquals((Integer)1, actualCheckIfHotelsIsUsed);
+    }
+
+    @Test
+    public void checkIfHotelsIsUsedFalse() {
+        Mockito.when(jdbcTemplate.query(Mockito.anyString(), Mockito.any(RowMapper.class))).thenReturn(new ArrayList());
+        Integer actualCheckIfHotelsIsUsed = tourOfferService.checkIfHotelUsed(1);
+        Assert.assertEquals((Integer)0, actualCheckIfHotelsIsUsed);
+    }
+
+    @Test
+    public void getAmountOfTours() {
+        Mockito.when(jdbcTemplate.queryForObject("SELECT COUNT(*) FROM tour_offer",Integer.class)).thenReturn(10);
+        Integer actualAmountOfTours = tourOfferDAO.getAmountOfTours();
+        Assert.assertEquals((Integer)10, actualAmountOfTours);
+    }
 }

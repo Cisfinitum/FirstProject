@@ -1,8 +1,10 @@
 package com.epam.service;
 
-import com.epam.model.Hotel;
-import com.epam.model.TourOffer;
+import com.epam.exception.NotFoundException;
+import com.epam.model.*;
 import com.epam.repository.TourOfferDAO;
+import net.bytebuddy.implementation.bytecode.Throw;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,10 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -31,6 +30,8 @@ public class TourOfferServiceTest {
     private ReservationService reservationService;
     @Mock
     private Hotel expectedHotel;
+    @Mock
+    private Reservation expectedReservation;
 
     private List<TourOffer> tourOfferList;
 
@@ -40,6 +41,8 @@ public class TourOfferServiceTest {
 
     private List<Hotel> expectedHotels;
 
+    private List<Reservation> expectedReservations;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -47,11 +50,26 @@ public class TourOfferServiceTest {
         tourOfferList = new ArrayList<>();
         expectedHotels = new ArrayList<>();
         expectedHotels.add(expectedHotel);
+        expectedReservations = new ArrayList<>();
+        expectedReservations.add(expectedReservation);
         when(hotelService.getHotelsByCountry("test")).thenReturn(expectedHotels);
         expectedHotelsId = new ArrayList<>();
         for(Hotel hotel: expectedHotels){
             expectedHotelsId.add(hotel.getId());
         }
+        when(expectedTourOffer.getTourType()).thenReturn("test");
+        when(expectedTourOffer.getPricePerUnit()).thenReturn(1);
+        when(expectedTourOffer.getHotelId()).thenReturn(1);
+        when(expectedTourOffer.getId()).thenReturn(1);
+        when(expectedTourOffer.getDescription()).thenReturn("test");
+        when(expectedTourOffer.getDiscount()).thenReturn(1);
+        when(expectedTourOffer.getStartDate()).thenReturn(LocalDate.now());
+        when(expectedTourOffer.getEndDate()).thenReturn(LocalDate.now());
+        when(expectedHotel.getId()).thenReturn(1);
+        when(expectedHotel.getName()).thenReturn("test");
+        when(expectedHotel.getCountry()).thenReturn("test");
+        when(expectedHotel.getNumberOfStars()).thenReturn(1);
+        when(expectedHotel.getCity()).thenReturn("test");
     }
 
     @Test
@@ -68,14 +86,6 @@ public class TourOfferServiceTest {
 
     @Test
     public void addTourCheck(){
-        when(expectedTourOffer.getDescription()).thenReturn("test");
-        when(expectedTourOffer.getPricePerUnit()).thenReturn(1);
-        when(expectedTourOffer.getTourType()).thenReturn("test");
-        when(expectedTourOffer.getHotelId()).thenReturn(1);
-        when(expectedTourOffer.getDiscount()).thenReturn(1);
-        when(expectedTourOffer.getEndDate()).thenReturn(LocalDate.now());
-        when(expectedTourOffer.getStartDate()).thenReturn(LocalDate.now());
-        when(expectedTourOffer.getId()).thenReturn(1);
         when(tourOfferDAO.addTour(expectedTourOffer)).thenReturn(1);
         assertEquals(tourOfferService.addTour(expectedTourOffer),1);
     }
@@ -116,7 +126,7 @@ public class TourOfferServiceTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addTourThrowException(){
+    public void addTourThrowExceptionTourIsNull(){
         when(tourOfferService.addTour(null)).thenThrow(IllegalArgumentException.class);
     }
 
@@ -138,6 +148,12 @@ public class TourOfferServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void updateTourThrowExceptionTourType(){
         when(tourOfferService.updateTour(expectedTourOffer,null,1,1,"test")).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTourThrowExceptionReservationExist(){
+        when(reservationService.getTourOfferById(expectedTourOffer.getId())).thenReturn(1);
+        when(tourOfferService.updateTour(expectedTourOffer,"test",1,1,"test")).thenThrow(IllegalArgumentException.class);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -205,6 +221,169 @@ public class TourOfferServiceTest {
         when(tourOfferDAO.getAmountOfTours()).thenReturn(pInput);
         assertEquals(pExpected, tourOfferService.getNumberOfPages());
 
+    }
+
+    @Test
+    public void getToursByPage(){
+        when(tourOfferDAO.getToursByPage(5, 4)).thenReturn(tourOfferList);
+        assertEquals(tourOfferService.getToursByPage(2), tourOfferList);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void deleteTourThrowExceptionReservationExist(){
+        when(reservationService.getTourOfferById(1)).thenReturn(1);
+        when(tourOfferService.deleteTour(1)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addTourThrowExceptionTourTypeIsNull(){
+        when(expectedTourOffer.getTourType()).thenReturn(null);
+        when(tourOfferService.addTour(expectedTourOffer)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addTourThrowExceptionPriceIsNull(){
+        when(expectedTourOffer.getPricePerUnit()).thenReturn(null);
+        when(tourOfferService.addTour(expectedTourOffer)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addTourThrowExceptionHotelIsNull(){
+        when(expectedTourOffer.getHotelId()).thenReturn(null);
+        when(tourOfferService.addTour(expectedTourOffer)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addTourThrowExceptionIdIsNull(){
+        when(expectedTourOffer.getId()).thenReturn(null);
+        when(tourOfferService.addTour(expectedTourOffer)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addTourThrowExceptionDescriptionIsNull(){
+        when(expectedTourOffer.getDescription()).thenReturn(null);
+        when(tourOfferService.addTour(expectedTourOffer)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addTourThrowExceptionDiscountIsNull(){
+        when(expectedTourOffer.getDiscount()).thenReturn(null);
+        when(tourOfferService.addTour(expectedTourOffer)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addTourThrowExceptionStartDateIsNull(){
+        when(expectedTourOffer.getStartDate()).thenReturn(null);
+        when(tourOfferService.addTour(expectedTourOffer)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addTourThrowExceptionEndDateIsNull(){
+        when(expectedTourOffer.getEndDate()).thenReturn(null);
+        when(tourOfferService.addTour(expectedTourOffer)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void searchToursThrowExceptionPageIsZero(){
+        when(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now(),0)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void searchToursCountryNotFoundAndNotEmpty(){
+        String countryInvalid = "NotFound";
+        when(hotelService.getHotelsByCountry(countryInvalid)).thenReturn(new ArrayList<>());
+        Assert.assertEquals(tourOfferService.searchTours(countryInvalid,LocalDate.now(),LocalDate.now(),1),new ArrayList<>());
+    }
+
+    @Test
+    public void searchToursCountryNotFoundAndEmpty(){
+        String countryInvalid = "";
+        when(hotelService.getHotelsByCountry(countryInvalid)).thenReturn(new ArrayList<>());
+        Assert.assertEquals(tourOfferService.searchTours(countryInvalid,LocalDate.now(),LocalDate.now(),1),new ArrayList<>());
+    }
+
+    @Test
+    public void searchToursPageBiggerThanOne(){
+        when(tourOfferDAO.searchTours(expectedHotelsId,LocalDate.now(),LocalDate.now(),6,5)).thenReturn(tourOfferList);
+        Assert.assertEquals(tourOfferService.searchTours("test",LocalDate.now(),LocalDate.now(),2),tourOfferList);
+    }
+
+    @Test
+    public void getNumberOfPagesSearchEqualToTotal(){
+        Assert.assertEquals(tourOfferService.getNumberOfPagesSearch(5),1);
+    }
+
+    @Test
+    public void getNumberOfPagesSearchBiggerThanTotal(){
+        Assert.assertEquals(tourOfferService.getNumberOfPagesSearch(8),2);
+    }
+
+    @Test
+    public void checkIfHotelUsed(){
+        Assert.assertEquals(tourOfferService.checkIfHotelUsed(1),tourOfferDAO.checkIfHotelsIsUsed(1));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkIfHotelUsedThrowExceptionIfIntegerIsNull(){
+        when(tourOfferService.checkIfHotelUsed(null)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkIfHotelUsedThrowExceptionIfIntegerIsNegativeOrZero(){
+        when(tourOfferService.checkIfHotelUsed(-1)).thenThrow(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void getToursStatusMapIfReservationExist(){
+        tourOfferList.add(expectedTourOffer);
+        when(tourOfferService.getTours()).thenReturn(tourOfferList);
+        when(reservationService.getTourOfferById(expectedTourOffer.getId())).thenReturn(1);
+        Map<Integer,Boolean> actualToursStatusMap = new HashMap<>();
+        actualToursStatusMap.put(expectedTourOffer.getId(),false);
+        Assert.assertEquals(tourOfferService.getToursStatusMap(),actualToursStatusMap);
+    }
+
+    @Test
+    public void getToursStatusMapIfReservationNotExist(){
+        tourOfferList.add(expectedTourOffer);
+        when(tourOfferService.getTours()).thenReturn(tourOfferList);
+        when(reservationService.getTourOfferById(expectedTourOffer.getId())).thenReturn(0);
+        Map<Integer,Boolean> actualToursStatusMap = new HashMap<>();
+        actualToursStatusMap.put(expectedTourOffer.getId(),true);
+        Assert.assertEquals(tourOfferService.getToursStatusMap(),actualToursStatusMap);
+    }
+
+    @Test
+    public void getMapOfHotelUseIfHotelUsed(){
+        when(expectedHotel.getId()).thenReturn(1);
+        when(tourOfferService.checkIfHotelUsed(expectedHotel.getId())).thenReturn(1);
+        Map<Integer,Boolean> actualMapOfHotels = new HashMap<>();
+        actualMapOfHotels.put(expectedHotel.getId(),true);
+        Assert.assertEquals(tourOfferService.getMapOfHotelUse(expectedHotels),actualMapOfHotels);
+    }
+
+    @Test
+    public void getMapOfHotelUseIfHotelNotUsed(){
+        when(expectedHotel.getId()).thenReturn(1);
+        when(tourOfferService.checkIfHotelUsed(expectedHotel.getId())).thenReturn(0);
+        Map<Integer,Boolean> actualMapOfHotels = new HashMap<>();
+        actualMapOfHotels.put(expectedHotel.getId(),false);
+        Assert.assertEquals(tourOfferService.getMapOfHotelUse(expectedHotels),actualMapOfHotels);
+    }
+
+    @Test
+    public void getDescription(){
+        when(expectedReservation.getTourOfferId()).thenReturn(1);
+        when(tourOfferService.getTourById(1)).thenReturn(expectedTourOffer);
+        when(hotelService.getHotelById(1)).thenReturn(expectedHotel);
+        Map<Integer, String> actualMapOfDescription = new HashMap<>();
+        actualMapOfDescription.put(expectedHotel.getId(),expectedTourOffer.toString()+expectedHotel.toString());
+        Assert.assertEquals(tourOfferService.getDescription(expectedReservations),actualMapOfDescription);
+    }
+
+    @Test
+    public void amountOfToursSearched(){
+        Assert.assertEquals(tourOfferService.amountOfToursSearched("test", LocalDate.now(), LocalDate.now()),tourOfferDAO.amountOfToursSearched(expectedHotelsId, LocalDate.now(), LocalDate.now()));
     }
 }
 
