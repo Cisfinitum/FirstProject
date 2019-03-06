@@ -7,7 +7,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.springframework.util.StringUtils;
 
-public class Validator {
+public final class Validator {
+
+    private Validator() {
+    }
 
     public static LocalDate getDateFromString(String dateString, Boolean getNullIfEmpty){
         try {
