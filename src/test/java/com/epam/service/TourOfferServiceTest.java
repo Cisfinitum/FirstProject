@@ -1,17 +1,14 @@
 package com.epam.service;
 
-import com.epam.exception.NotFoundException;
 import com.epam.model.Hotel;
 import com.epam.model.TourOffer;
 import com.epam.repository.TourOfferDAO;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,7 +17,6 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
@@ -47,7 +43,7 @@ public class TourOfferServiceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        tourOfferService = new TourOfferService(tourOfferDAO,hotelService,reservationService);
+        tourOfferService = new TourOfferService(tourOfferDAO, hotelService,reservationService);
         tourOfferList = new ArrayList<>();
         expectedHotels = new ArrayList<>();
         expectedHotels.add(expectedHotel);

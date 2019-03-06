@@ -19,7 +19,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class HotelServiceTest {
+public class HotelServiceImplTest {
     @Mock
     private HotelDAO hotelDAO;
     @Mock
@@ -31,7 +31,7 @@ public class HotelServiceTest {
     private List<Hotel> hotelList;
     Map<Integer,Hotel> expectedHotelsMap;
     @InjectMocks
-    private HotelService hotelService;
+    private HotelServiceImpl hotelServiceImpl;
     private int expectedResultPositive = 1;
     private String testName = "hotel";
     private String testCountry = "Indonesia";
@@ -52,21 +52,21 @@ public class HotelServiceTest {
     @Test
     public void getHotels() {
         when(hotelDAO.getHotels()).thenReturn(hotelList);
-        List<Hotel> actualResult = hotelService.getHotels();
+        List<Hotel> actualResult = hotelServiceImpl.getHotels();
         assertEquals(hotelList, actualResult);
     }
 
     @Test (expected = IllegalArgumentException.class)
     @SneakyThrows
     public void getHotelsByCountryThrowsException() {
-        hotelService.getHotelsByCountry(null);
+        hotelServiceImpl.getHotelsByCountry(null);
     }
 
     @Test
     @SneakyThrows
     public void createHotel() {
         when(hotelDAO.createHotel(expectedHotel)).thenReturn(1);
-        int actualResult = hotelService.createHotel(expectedHotel);
+        int actualResult = hotelServiceImpl.createHotel(expectedHotel);
         assertEquals(actualResult,expectedResultPositive);
     }
 
@@ -74,14 +74,14 @@ public class HotelServiceTest {
     @SneakyThrows
     public void createHotelThrowsException() {
         when(expectedHotel.getName()).thenReturn(null);
-        hotelService.createHotel(expectedHotel);
+        hotelServiceImpl.createHotel(expectedHotel);
     }
 
     @Test
     @SneakyThrows
     public void updateHotel() {
         when(hotelDAO.updateHotel(expectedHotel)).thenReturn(1);
-        int actualResult = hotelService.updateHotel(expectedHotel);
+        int actualResult = hotelServiceImpl.updateHotel(expectedHotel);
         assertEquals(actualResult,expectedResultPositive);
     }
 
@@ -89,7 +89,7 @@ public class HotelServiceTest {
     @SneakyThrows
     public void deleteHotel() {
         when(hotelDAO.deleteHotel(1)).thenReturn(1);
-        int actualResult = hotelService.deleteHotel(1);
+        int actualResult = hotelServiceImpl.deleteHotel(1);
         assertEquals(actualResult, expectedResultPositive);
     }
 
@@ -97,7 +97,7 @@ public class HotelServiceTest {
     public void addHotel() {
         String testCity = "Bali";
         when(hotelDAO.createHotel(new Hotel(testName, testCountry, testCity, testStars))).thenReturn(1);
-        String actualView = hotelService.addHotel(modelAndView, testName, testCountry, testCity, testStars, redirectAttributes);
+        String actualView = hotelServiceImpl.addHotel(modelAndView, testName, testCountry, testCity, testStars, redirectAttributes);
         String expectedView = "redirect:/hotels";
         assertEquals(expectedView, actualView);
     }
@@ -106,15 +106,15 @@ public class HotelServiceTest {
     public void addHotelWrongValue() {
         String wrongCityName = "777";
         when(hotelDAO.createHotel(new Hotel(testName, testCountry, wrongCityName, testStars))).thenReturn(1);
-        String actualView = hotelService.addHotel(modelAndView, testName, testCountry, wrongCityName, testStars, redirectAttributes);
+        String actualView = hotelServiceImpl.addHotel(modelAndView, testName, testCountry, wrongCityName, testStars, redirectAttributes);
         String expectedView = "redirect:/hotels";
         assertEquals(expectedView, actualView);
     }
 
     @Test
     public void getMapOfHotels(){
-        when(hotelService.getHotels()).thenReturn(hotelList);
-        assertEquals(expectedHotelsMap,hotelService.getMapOfHotels());
+        when(hotelServiceImpl.getHotels()).thenReturn(hotelList);
+        assertEquals(expectedHotelsMap, hotelServiceImpl.getMapOfHotels());
     }
 
 }

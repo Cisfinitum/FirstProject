@@ -13,7 +13,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
-public class HotelServiceTest {
+public class HotelServiceImplTest {
 
     @Autowired
     private HotelService hotelService;

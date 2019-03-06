@@ -2,7 +2,6 @@ package integration;
 
 import com.epam.exception.NotFoundException;
 import com.epam.model.TourOffer;
-import com.epam.repository.ReservationDAO;
 import com.epam.repository.TourOfferDAO;
 import com.epam.service.HotelService;
 import com.epam.service.ReservationService;
@@ -49,7 +48,7 @@ public class TourOfferServiceTest {
         ReflectionTestUtils.setField(tourOfferDAO, "descriptionName", "description");
         ReflectionTestUtils.setField(tourOfferDAO, "discountName", "discount");
         ReflectionTestUtils.setField(tourOfferDAO, "idName", "id");
-        tourOfferService = new TourOfferService(tourOfferDAO,hotelService,reservationService);
+        tourOfferService = new TourOfferService(tourOfferDAO, hotelService,reservationService);
         tourOffers = new ArrayList<>();
         tourOffers.add(tourOffer);
 
