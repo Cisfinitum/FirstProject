@@ -26,7 +26,7 @@ public class ReservationServiceTest {
     @Mock
     private Reservation expectedReservation;
     @InjectMocks
-    ReservationService reservationService;
+    ReservationServiceImpl reservationService;
     @Mock
     Principal principal;
     @Spy
