@@ -3,6 +3,7 @@ package com.epam.controller;
 import com.epam.model.Person;
 import com.epam.model.PersonRoleEnum;
 import com.epam.service.PersonDetailsServiceImpl;
+import com.epam.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,11 @@ import java.util.regex.Pattern;
 @Controller
 public class RegistrationController {
 
-    private final PersonDetailsServiceImpl personDetailsServiceImpl;
+    private final PersonService personService;
 
     @Autowired
-    RegistrationController(PersonDetailsServiceImpl personDetailsServiceImpl) {
-        this.personDetailsServiceImpl = personDetailsServiceImpl;
+    RegistrationController(PersonService personDetailsServiceImpl) {
+        this.personService = personDetailsServiceImpl;
     }
 
     @GetMapping("/registration")
@@ -65,7 +66,7 @@ public class RegistrationController {
             return modelAndView.addObject("message", "Passwords are not equal");
         }
         else {
-            if (!personDetailsServiceImpl.addPerson(email, password, PersonRoleEnum.valueOf("USER"), phoneNumber, firstName, lastName)) {
+            if (!personService.addPerson(email, password, PersonRoleEnum.valueOf("USER"), phoneNumber, firstName, lastName)) {
                 return modelAndView.addObject("message", "Current email already exists");
             }
             else {

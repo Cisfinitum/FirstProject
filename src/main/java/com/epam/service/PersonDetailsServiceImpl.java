@@ -20,11 +20,9 @@ import java.util.Set;
 public class PersonDetailsServiceImpl implements UserDetailsService{
 
     private final PersonService personService;
-    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public PersonDetailsServiceImpl(PersonService personService, BCryptPasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    public PersonDetailsServiceImpl(PersonService personService) {
         this.personService = personService;
     }
 
@@ -38,88 +36,85 @@ public class PersonDetailsServiceImpl implements UserDetailsService{
         roles.add(new SimpleGrantedAuthority(person.getRole().getEnumRole()));
         return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), roles);
     }
+//
+//    public boolean addPerson(String email, String password, PersonRoleEnum role, String phoneNumber, String firstName, String lastName) {
+//        String encodedPassword = passwordEncoder.encode(password);
+//        Person person = new Person(email, encodedPassword, role, phoneNumber, firstName, lastName);
+//        int result = personService.addPerson(person);
+//        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+//        if (result < 1) return false;
+//        return true;
+//    }
 
-    public boolean addPerson(String email, String password, PersonRoleEnum role, String phoneNumber, String firstName, String lastName) {
-        String encodedPassword = passwordEncoder.encode(password);
-        Person person = new Person(email, encodedPassword, role, phoneNumber, firstName, lastName);
-        int result = personService.addPerson(person);
-        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
-        if (result < 1) return false;
-        return true;
-    }
+//    public boolean addToBlackList(Integer id) {
+//        int result = personService.addToBlackList(id);
+//        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+//        if (result < 1) return false;
+//        return true;
+//    }
 
-    public boolean addToBlackList(Integer id) {
-        int result = personService.addToBlackList(id);
-        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
-        if (result < 1) return false;
-        return true;
-    }
+//    public boolean removeFromBlackList(Integer id) {
+//        int result = personService.removeFromBlackList(id);
+//        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+//        if (result < 1) return false;
+//        return true;
+//    }
 
-    public boolean removeFromBlackList(Integer id) {
-        int result = personService.removeFromBlackList(id);
-        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
-        if (result < 1) return false;
-        return true;
-    }
+//    public boolean giveAdminRights(Integer id) {
+//        int result = personService.giveAdminRights(id);
+//        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+//        if (result < 1) return false;
+//        return true;
+//    }
 
-    public boolean giveAdminRights(Integer id) {
-        int result = personService.giveAdminRights(id);
-        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
-        if (result < 1) return false;
-        return true;
-    }
+//    public boolean updatePassword(String email, String password) {
+//        int result = personService.updatePassword(email, password);
+//        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+//        if (result < 1) return false;
+//        return true;
+//    }
 
-    public boolean updatePassword(String email, String password) {
-        int result = personService.updatePassword(email, password);
-        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
-        if (result < 1) return false;
-        return true;
-    }
+//    public List<Person> listOfUsers(Integer page, Integer rowNum) {
+//        return personService.listOfUsers(page, rowNum);
+//    }
 
-    public List<Person> listOfUsers(Integer page, Integer rowNum) {
-        return personService.listOfUsers(page, rowNum);
-    }
+//    public int amountOfUsers() {
+//        return personService.amountOfUsers();
+//    }
 
-    public int amountOfUsers() {
-        return personService.amountOfUsers();
-    }
+//    public boolean updatePasswordById(Integer id, String password) {
+//        int result = personService.updatePasswordById(id, password);
+//        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+//        if (result < 1) return false;
+//        return true;
+//    }
 
-    public boolean updatePasswordById(Integer id, String password) {
-        int result = personService.updatePasswordById(id, password);
-        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
-        if (result < 1) return false;
-        return true;
-    }
+//    public boolean updatePhoneNumberById(Integer id, String phoneNumber) {
+//        int result = personService.updatePhoneNumberById(id, phoneNumber);
+//        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+//        if (result < 1) return false;
+//        return true;
+//    }
+//
+//    public boolean updateFirstNameById(Integer id, String firstName) {
+//        int result = personService.updateFirstNameById(id, firstName);
+//        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+//        if (result < 1) return false;
+//        return true;
+//    }
+//
+//    public boolean updateLastNameById(Integer id, String lastName) {
+//        int result = personService.updateLastNameById(id, lastName);
+//        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+//        if (result < 1) return false;
+//        return true;
+//    }
 
-    public boolean updatePhoneNumberById(Integer id, String phoneNumber) {
-        int result = personService.updatePhoneNumberById(id, phoneNumber);
-        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
-        if (result < 1) return false;
-        return true;
-    }
+//    public boolean updateEmailById(Integer id, String email) {
+//        int result = personService.updateEmailById(id, email);
+//        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
+//        if (result < 1) return false;
+//        return true;
+//    }
 
-    public boolean updateFirstNameById(Integer id, String firstName) {
-        int result = personService.updateFirstNameById(id, firstName);
-        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
-        if (result < 1) return false;
-        return true;
-    }
-
-    public boolean updateLastNameById(Integer id, String lastName) {
-        int result = personService.updateLastNameById(id, lastName);
-        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
-        if (result < 1) return false;
-        return true;
-    }
-
-    public boolean updateEmailById(Integer id, String email) {
-        int result = personService.updateEmailById(id, email);
-        if (result > 1) throw new InvalidDataBaseAffectedException("Affected more then one row");
-        if (result < 1) return false;
-        return true;
-    }
-
-    public Person getPersonById(Integer id) {
-        return personService.getPersonById(id);
-    }
 }

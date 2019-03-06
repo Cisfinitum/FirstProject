@@ -82,7 +82,7 @@ public class ClientsController {
             modelAndView.setViewName("redirect:/clientProfile");
             return modelAndView;
         }
-        personDetailsServiceImpl.updatePasswordById(clientId, passwordEncoder.encode(password));
+        personService.updatePasswordById(clientId, passwordEncoder.encode(password));
         redirectAttributes.addFlashAttribute("successStatus", "Successful update");
         modelAndView.setViewName("redirect:/clientProfile");
         return modelAndView;

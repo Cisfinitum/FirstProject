@@ -36,9 +36,7 @@ public class PersonServiceTest {
 
     @Test
     public void addPerson() {
-        Person expectedPerson = new Person("email", "password", PersonRoleEnum.USER, testPhoneNumber, testFirstName, testLastName);
-
-        personService.addPerson(expectedPerson);
+        personService.addPerson("email", "password", PersonRoleEnum.USER, testPhoneNumber, testFirstName, testLastName);
 
         List<Person> persons = personDAO.getPersons();
         Assert.assertTrue(persons.stream().anyMatch(person -> person.getEmail().equals("email")));
