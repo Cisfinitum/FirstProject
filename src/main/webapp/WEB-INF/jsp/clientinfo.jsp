@@ -67,7 +67,9 @@
     </div>
     </div>
     </div>
+
     <div class="container" style="width: 85%">
+        <p class="medium-small green-text">${paymentMessage}</p>
         <h4><spring:message code="reservations" /></h4>
         <table>
             <c:if test="${reservations.size()>0}">
@@ -90,7 +92,6 @@
                 <td> ${reservation.numberOfPeople}</td>
                 <td> ${reservation.status}</td>
                 <td> ${reservation.totalPrice}</td>
-                <p class="medium-small green-text">${paymentMessage}</p>
                 <td>
                     <form method="post" action="/clients/pay/${person.id}" id="pay">
                         <c:if test="${reservation.status == 'UNPAID'}">
