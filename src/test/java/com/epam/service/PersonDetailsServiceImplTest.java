@@ -49,6 +49,7 @@ public class PersonDetailsServiceImplTest {
         nonExistEmail = "nonExistingEmail";
     }
 
+
     @Test
     public void loadUserPositiveResult() {
         when(personService.getPerson(testEmail)).thenReturn(new Person(1, testEmail, testPassword, PersonRoleEnum.ADMIN, testPhoneNumber, testFirstName, testLastName));
